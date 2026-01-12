@@ -110,7 +110,7 @@ p,
 
 a.font-bodySmall {
   @apply no-underline;
-  @apply hover:text-orangeHover;
+  @apply hover:text-black;
 
   &::after {
     content: '↗';
