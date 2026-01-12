@@ -85,21 +85,7 @@ class Asset
 
         if ('url' == $returnType) {
             if (file_exists(self::viteHotFile())) {
-                $hotFileUrl = trim(file_get_contents(self::viteHotFile()));
-                // Safety check: Don't use localhost URLs in production
-                // This prevents CORS errors when dist/hot file is accidentally deployed
-                if (strpos($hotFileUrl, 'localhost') !== false || strpos($hotFileUrl, '127.0.0.1') !== false) {
-                    // Check if we're in a development environment
-                    $isDevelopment = (defined('WP_ENV') && (WP_ENV === 'development' || WP_ENV === 'local')) ||
-                                     (defined('WP_DEBUG') && WP_DEBUG === true) ||
-                                     (function_exists('wp_get_environment_type') && in_array(wp_get_environment_type(), ['local', 'development'], true));
-                    
-                    // If we're not in development, ignore the hot file and use built assets
-                    if (!$isDevelopment) {
-                        return file_exists($filePath) ? get_template_directory_uri() . '/dist/' . $assetSuffix : get_template_directory_uri() . '/' . $assetSuffix;
-                    }
-                }
-                return trailingslashit($hotFileUrl) . $asset;
+                return trailingslashit(trim(file_get_contents(self::viteHotFile()))) . $asset;
             }
             return file_exists($filePath) ? get_template_directory_uri() . '/dist/' . $assetSuffix : get_template_directory_uri() . '/' . $assetSuffix;
         }

@@ -12,6 +12,7 @@
     "watch": "vite build -w",
     "build": "run-s --silent checkVersion build:production",
     "build:production": "rimraf ./dist/hot && cross-env NODE_ENV=production vite build",
+    "deploy": "npm run build && echo '✓ Build complete! Now commit and push the dist/ folder for WP Pusher deployment.'",
     "lint": "run-p --silent lint:*",
     "lint:scripts": "cross-env standard",
     "lint:styles": "cross-env stylelint '**/*.scss'",
