@@ -11,7 +11,7 @@
     "serve": "vite dev",
     "watch": "vite build -w",
     "build": "run-s --silent checkVersion build:production",
-    "build:production": "cross-env NODE_ENV=production vite build",
+    "build:production": "rimraf ./dist/hot && cross-env NODE_ENV=production vite build",
     "lint": "run-p --silent lint:*",
     "lint:scripts": "cross-env standard",
     "lint:styles": "cross-env stylelint '**/*.scss'",
