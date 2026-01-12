@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html class="html {{ body_class }} page-{{ post.slug }}" id="theTop" lang="{{ site.language|locale_format }}" {{ site.language_attributes }}>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }} {{ __('Feed', 'flynt') }}" href="{{ site.rss2 | e('esc_url') }}">
+    {{ function('wp_head') }}
+  </head>
+  <body>
+    <div class="page-transition-overlay"></div>
+    {% block layout %}
+      <div 
+        class="pageWrapper bg-black">
+        <header class="w-full">
+          {% block header %}
+            <div class="hidden lg:block w-full h-[55px] fixed top-0 left-0 z-[3000]">
+              <div class="w-full max-w-screen-max mx-auto flex flex-row justify-between gap-sm">
+                {{ renderComponent('NavigationMain') }}
+              </div>
+            </div>
+            {{ renderComponent('NavigationBurger') }}
+          {% endblock %}
+        </header>
+        <main id="mainContent" class="mainContent" aria-label="{{ __('Content', 'flynt') }}">
+          <a href="#mainContent" class="skipLink">
+            {{ __("Skip to main content", "flynt") }}
+          </a>
+          {% if function('post_password_required') %}
+            {{ function('get_the_password_form') }}
+          {% else %}
+            {% block content %}
+              No <code>{{ '{% block content %}' }}</code> defined for this template.
+            {% endblock %}
+          {% endif %}
+        </main>
+        <footer class="mainFooter" id="theFooter">
+          {% block footer %}
+            {{ renderComponent('NavigationFooter') }}
+          {% endblock %}
+        </footer>
+      </div>
+    {% endblock %}
+    <div class="wpFooter">
+      {{ function('wp_footer') }}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+@font-face {
+  font-display: swap;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../assets/fonts/Inter-VariableFont_opsz,wght.woff2') format('woff2');
+}
+
+html {
+  color: var(--white);
+  font-size: var(--base-font-size-mobile, 16px);
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  // scroll-behavior: smooth; // Disabled for GSAP smooth scroll
+
+  @media (min-width: $breakpoint-mobile) {
+    font-size: var(--base-font-size-mobile, 14px);
+  }
+
+  @media (min-width: $breakpoint-desktop) {
+    font-size: var(--base-font-size-desktop, 16px);
+  }
+}
+
+:disabled {
+  pointer-events: none;
+}
+
+::selection {
+  background: var(--white);
+  color: var(--black);
+}
+
+body {
+  color: var(--white);
+  font-family: var(--primary-font-family, 'Inter', Arial, sans-serif);
+}
+
+#{$heading-selectors} {
+  line-height: calc(1em + 0.5rem);
+}

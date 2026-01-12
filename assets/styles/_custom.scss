@@ -1,0 +1,290 @@
+/**
+* GSAP Smooth Scroll Styles
+*/
+
+body {
+  height: auto !important;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+// Ensure full-height sections work properly
+.pageWrapper {
+  // min-height: 100vh;
+  // position: relative;
+  // // Page transition slide-from-top: initially hidden above viewport
+  // transform: translateY(-100vh);
+  // will-change: transform; // Optimize for transform animation
+}
+
+// Black overlay for page transition (added by JS, removed after animation)
+.page-transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 99999;
+  pointer-events: none;
+  opacity: 1;
+}
+
+/**
+* Custom Classes
+*/
+
+.mobileHidden {
+  @apply hidden;
+
+  @media (min-width: $breakpoint-mobile) {
+    @apply block;
+  }
+}
+
+.desktopHidden {
+  @apply block;
+  
+  @media (min-width: $breakpoint-mobile) {
+    @apply hidden;
+  }
+}
+
+.angle {
+  &-tr {
+    clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 7.5%, 90% 0);
+  }
+
+  &-br {
+    clip-path: polygon(0 0, 0 100%, 90% 100%, 100% 90%, 100% 0);
+  }
+}
+
+// Menu Home
+
+html:not(.home) {
+  .mainMenu {
+      transition: all 0.3s ease-in-out;
+
+      &.bottom {
+          transition: all 0.3s ease-in-out;
+          position: fixed;
+          top: 0;
+      }
+
+      &.top {
+          position: fixed;
+          top: 0;
+      }
+  }
+}
+
+html.home {
+  .mainContent {
+      @apply mt-0;
+  }
+
+  .mainMenu {
+      transition: all 0.3s ease-in-out;
+
+      &.bottom {
+          transition: all 0.3s ease-in-out;
+          position: absolute;
+          bottom: 0;
+      }
+
+      &.top {
+          transition: all 0.3s ease-in-out;
+          position: fixed;
+          top: 0;
+      }
+  }
+}
+
+// Logo hover styles
+
+.logo-image {
+  &:hover{
+      .cls-1 {
+          fill: var(--orangeHover);
+      }
+  }
+}
+
+// Orange Pages
+
+.bg-orange {
+  .logo-image {
+      &:hover{
+          .cls-1 {
+              fill: var(--white);
+          }
+      }
+  }
+
+  a {
+      &:hover {
+          @apply text-white;
+      }
+  }
+
+  .menu-item {
+      &:hover {
+          @apply text-white;
+      }
+  }
+
+  flynt-component[name='NavigationMain'] {
+    .current-menu-item {
+            @apply text-white;
+            
+            &:hover {
+                @apply text-white;
+                @apply no-underline;
+            }
+        }
+    }
+
+  .hamburger {
+      &:hover {
+          line {
+              @apply stroke-white;
+          }
+      }
+  }
+
+  .openFooter {
+      &:hover {
+          line {
+              @apply stroke-white;
+          }
+      }
+  }
+
+  .language-menu-item {
+      &:hover {
+          @apply text-white;
+      }
+  }
+
+  .mainContent {
+      .wysiwyg {
+          a {
+              @apply text-black;
+              @apply no-underline;
+              @apply hover:text-white;
+          }
+      }
+  }
+
+  .mainFooter .menu-container {
+      @apply border-t;
+  }
+}
+
+/* Prevent flash of content before page load animation */
+.page-load-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-load-animation.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Prevent body scroll during animation */
+body.page-loading {
+  overflow: hidden;
+}
+
+/* Prevent body scroll when footer is open */
+body.footer-open {
+  overflow: hidden;
+}
+
+// Footer toggle styles with fade animation
+.mainFooter {
+  position: relative;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  
+  &.show {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      overflow-y: auto;
+      opacity: 1;
+
+      flynt-component[name='NavigationFooter'] {
+          height: calc(100vh - 55px);
+      }
+  }
+}
+
+// Cookie banner
+
+#cookie-notice {
+  @apply flex flex-row justify-end items-center;
+  @apply bottom-0 lg:bottom-[70px];
+  @apply right-0;
+  @apply bg-transparent !important;
+  font-family: 'FKGroteskNeue', Arial, sans-serif !important;
+  
+
+  .cookie-notice-container {
+      @apply flex flex-row justify-between items-center;
+      @apply w-full md:w-[50%] !important;
+      @apply p-xs lg:py-0 lg:px-[5px];
+
+      span,
+      button {
+          font-size: 1rem !important;
+      }
+
+      .cn-text-container {
+          @apply m-0;
+      }
+  
+      .cn-button {
+          @apply bg-transparent !important;
+      }
+  
+      .cn-close-icon {
+          @apply hidden;
+      }
+  }
+}
+
+// Language footer menu mobile
+.language-en {
+    @apply absolute;
+    @apply top-xs;
+    @apply right-md;
+    @apply lg:relative;
+    @apply lg:top-auto;
+    @apply lg:right-auto;
+}
+
+.language-de {
+    @apply absolute;
+    @apply top-xs;
+    @apply right-xs;
+    @apply lg:relative;
+    @apply lg:top-auto;
+    @apply lg:right-auto;
+}
