@@ -16,7 +16,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-ecbf5980.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -39,7 +39,7 @@
     "css": [
       "assets/script-b3ce9496.css"
     ],
-    "file": "assets/script-f7d58558.js",
+    "file": "assets/script-c1d884ec.js",
     "imports": [
       "assets/main.js"
     ],
@@ -131,7 +131,7 @@
   },
   "Components/ZZZ/BlockCta/Assets/facebook.svg": {
     "file": "assets/facebook-8975c208.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/facebook.svg"
+    "src": "Components/ZZZ/BlockCta/Assets/linkedin.svg"
   },
   "Components/ZZZ/BlockCta/Assets/instagram.svg": {
     "file": "assets/instagram-5bab2c82.svg",
@@ -139,7 +139,7 @@
   },
   "Components/ZZZ/BlockCta/Assets/linkedin.svg": {
     "file": "assets/facebook-8975c208.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/facebook.svg"
+    "src": "Components/ZZZ/BlockCta/Assets/linkedin.svg"
   },
   "Components/ZZZ/BlockCta/Assets/logo.svg": {
     "file": "assets/logo-eeb7436e.svg",
@@ -196,7 +196,7 @@
     "src": "Components/ZZZ/HeroSliderComposite/script.js"
   },
   "Components/ZZZ/HeroVideoBackground/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-ecbf5980.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -213,7 +213,7 @@
     "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
-    "file": "assets/script-6c8f1d70.js",
+    "file": "assets/script-2bd956ac.js",
     "imports": [
       "assets/main.js"
     ],
@@ -297,7 +297,7 @@
     "src": "assets/admin.js"
   },
   "assets/admin.scss": {
-    "file": "assets/admin-931b39f7.css",
+    "file": "assets/admin-58b1f987.css",
     "isEntry": true,
     "src": "assets/admin.scss"
   },
@@ -359,12 +359,12 @@
       "Components/ZZZ/SliderLogos/script.js",
       "Components/ZZZ/SliderQuotes/script.js"
     ],
-    "file": "assets/main-48f10be1.js",
+    "file": "assets/main-bc280a92.js",
     "isEntry": true,
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-15ef5a94.css",
+    "file": "assets/main-11cce7f8.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
@@ -374,7 +374,7 @@
     "src": "assets/print.scss"
   },
   "assets/tinyMce.scss": {
-    "file": "assets/tinyMce-049de978.css",
+    "file": "assets/tinyMce-bfef4828.css",
     "isEntry": true,
     "src": "assets/tinyMce.scss"
   },
