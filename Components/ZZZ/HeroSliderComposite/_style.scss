@@ -35,7 +35,7 @@ flynt-component[name='HeroSliderComposite'] {
     align-items: center;
     display: flex;
     flex-flow: row wrap;
-    gap: var(--spacingSmall);
+    gap: theme('spacing.small');
     justify-content: space-between;
     position: absolute;
     top: 400px;

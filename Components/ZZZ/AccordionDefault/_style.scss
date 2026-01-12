@@ -2,14 +2,14 @@ flynt-component[name='AccordionDefault'] {
   scroll-margin-top: 96px;
   
   .content {
-    padding: var(--spacingLarge) 0;
+    padding: theme('spacing.large') 0;
   }
 
   .accordion {
     @include reset-list;
     display: flex;
     flex-flow: column wrap;
-    gap: var(--spacingSmall);
+    gap: theme('spacing.small');
   }
 
   .panel {
@@ -22,7 +22,7 @@ flynt-component[name='AccordionDefault'] {
       font-weight: 800;
       justify-content: space-between;
       margin: 0;
-      padding: var(--spacingSmall);
+      padding: theme('spacing.small');
       position: relative;
       width: 100%;
       z-index: 2;
@@ -37,7 +37,7 @@ flynt-component[name='AccordionDefault'] {
     // do not add margins or padding to this, it will break the layout
     &-content {
       margin: 0 auto;
-      padding: var(--spacingSmall);
+      padding: theme('spacing.small');
       transition: all 0.3s ease-in-out;
       z-index: 1;
     }

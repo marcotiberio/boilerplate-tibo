@@ -25,7 +25,7 @@ body {
 .mobileHidden {
   @apply hidden;
 
-  @media (min-width: $breakpoint-mobile) {
+  @screen mobile {
     @apply block;
   }
 }
@@ -33,7 +33,7 @@ body {
 .desktopHidden {
   @apply block;
   
-  @media (min-width: $breakpoint-mobile) {
+  @screen mobile {
     @apply hidden;
   }
 }

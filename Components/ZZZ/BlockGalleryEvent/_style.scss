@@ -2,26 +2,26 @@ flynt-component[name='blockGalleryEvent'] {
   height: auto;
   scroll-margin-top: 96px;
 
-  @media (min-width: $breakpoint-tablet) {
-    padding: var(--spacingLarge) var(--spacingLarge) 0;
+  @screen tablet {
+    padding: theme('spacing.large') theme('spacing.large') 0;
   }
 
   .wrapper {
     align-items: center;
     display: flex;
     flex-flow: row wrap;
-    gap: var(--spacingSmall);
+    gap: theme('spacing.small');
     margin-block-start: 0;
-    padding-bottom: var(--spacingSmall);
+    padding-bottom: theme('spacing.small');
 
-    @media (min-width: $breakpoint-mobile + 1) {
-      gap: var(--spacingLarge);
-      padding-bottom: var(--spacingLarge);
+    @media (min-width: calc(theme('screens.mobile') + 1px)) {
+      gap: theme('spacing.large');
+      padding-bottom: theme('spacing.large');
     }
 
-    @media (min-width: $breakpoint-desktop) {
-      gap: var(--spacingLarge);
-      padding-bottom: var(--spacingLarge);
+    @screen desktop {
+      gap: theme('spacing.large');
+      padding-bottom: theme('spacing.large');
     }
   }
 
@@ -32,8 +32,8 @@ flynt-component[name='blockGalleryEvent'] {
     justify-content: space-between;
     transition: all 0.2s linear;
 
-    @media (min-width: $breakpoint-mobile + 1) {
-      margin-bottom: var(--spacingLarge);
+    @media (min-width: calc(theme('screens.mobile') + 1px)) {
+      margin-bottom: theme('spacing.large');
       width: 45%;
     }
 
@@ -60,12 +60,12 @@ flynt-component[name='blockGalleryEvent'] {
         align-items: flex-start;
         flex-flow: column;
         justify-content: space-between;
-        padding: var(--spacingSmall) 0;
+        padding: theme('spacing.small') 0;
         text-align: left;
         transition: all 0.2s linear;
         width: 100%;
 
-        @media (max-width: $breakpoint-desktop - 1) {
+        @media (max-width: calc(theme('screens.desktop') - 1px)) {
           display: flex;
           position: relative;
         }

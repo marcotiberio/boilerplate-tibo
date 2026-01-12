@@ -1,0 +1,22 @@
+:root {
+    /* Colors (Primitives) */
+    --white: #fff;
+    --black: #000000;
+  
+    /* Colors (Tokens) */
+    --brandColor: var(--black);
+    --accentColor: var(--black);
+
+    --textColor: var(--black);
+    --linkColor: var(--black);
+  
+    --bgColor: var(--black);
+  
+    --hoverColor: var(--black);
+    --activeColor: var(--black);
+  
+    --errorColor: var(--black);
+    --successColor: var(--black);
+    --dangerColor: var(--black);
+  }
+  

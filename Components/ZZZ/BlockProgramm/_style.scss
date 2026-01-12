@@ -6,12 +6,12 @@
     max-width: 1680px;
     width: 100%;
 
-    @media (max-width: $breakpoint-mobile) {
+    @media (max-width: theme('screens.mobile')) {
       margin: 0;
       max-width: 100%;
     }
 
-    @media (max-width: $breakpoint-tablet) {
+    @media (max-width: theme('screens.tablet')) {
       grid-column-end: 9;
       grid-column-start: 1;
     }
@@ -19,12 +19,12 @@
 
 
   .alm-filters-container {
-    column-gap: var(--spacingSmall);
+    column-gap: theme('spacing.small');
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     margin-bottom: 0;
 
-    @media (max-width: $breakpoint-mobile) {
+    @media (max-width: theme('screens.mobile')) {
       grid-template-columns: 1fr;
       row-gap: 10px;
     }
@@ -99,7 +99,7 @@
       .alm-filters--reset {
         @apply mt-md;
 
-        @media (max-width: $breakpoint-mobile) {
+        @media (max-width: theme('screens.mobile')) {
           @apply mt-sm;
         }
       }
@@ -125,7 +125,7 @@
   .programm-calendar {
     display: flex;
     flex-flow: column wrap;
-    padding-bottom: var(--spacingSmall);
+    padding-bottom: theme('spacing.small');
 
     .post-event {
       @apply py-sm;
@@ -142,7 +142,7 @@
         @apply text-[1.25rem];
         @apply gap-sm;
 
-        @media (max-width: $breakpoint-mobile) {
+        @media (max-width: theme('screens.mobile')) {
           grid-template-columns: 1fr;
           row-gap: 5px;
         }
@@ -150,7 +150,7 @@
         .post {
           &--date-time {
 
-            @media (max-width: $breakpoint-mobile) {
+            @media (max-width: theme('screens.mobile')) {
               @apply flex;
               @apply flex-row;
               @apply justify-between;
@@ -160,7 +160,7 @@
             .inner {
               @apply max-w-[160px];
 
-              @media (max-width: $breakpoint-mobile) {
+              @media (max-width: theme('screens.mobile')) {
                 @apply max-w-[140px];
               }
             }
@@ -184,7 +184,7 @@
               @apply block;
             }
 
-            @media (max-width: $breakpoint-mobile) {
+            @media (max-width: theme('screens.mobile')) {
               @apply flex;
               @apply flex-row;
               @apply justify-start;
@@ -205,7 +205,7 @@
             @apply text-[1.375rem];
             line-height: 1.5rem;
 
-            @media (max-width: $breakpoint-mobile) {
+            @media (max-width: theme('screens.mobile')) {
               @apply pb-xs;
             }
 
@@ -216,7 +216,7 @@
           }
 
           &--speakers {
-            @media (max-width: $breakpoint-mobile) {
+            @media (max-width: theme('screens.mobile')) {
               @apply pb-xs;
               @apply flex;
 
@@ -262,7 +262,7 @@
               @apply block;
             }
 
-            @media (max-width: $breakpoint-mobile) {
+            @media (max-width: theme('screens.mobile')) {
               @apply w-1/2;
               @apply flex;
               @apply flex-col;
@@ -288,7 +288,7 @@
 
       .mobile-variant {
         @apply hidden;
-        @media (max-width: $breakpoint-mobile) {
+        @media (max-width: theme('screens.mobile')) {
           @apply flex;
           @apply flex-row;
         }

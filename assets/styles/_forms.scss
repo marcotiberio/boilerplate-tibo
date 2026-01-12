@@ -9,14 +9,12 @@ fieldset {
 
 legend {
   color: var(--color-text);
-  font-size: var(--bodyFontSize);
   font-weight: 700;
   padding: 0;
 }
 
 label {
   color: var(--color-text-muted);
-  font-size: var(--bodyFontSizeSmall);
   font-weight: 500 !important;
 }
 
@@ -27,7 +25,6 @@ label {
   border-radius: 0 !important;
   caret-color: var(--color-text) !important;
   color: var(--color-text) !important;
-  font-size: var(--bodyFontSizeSmall) !important;
   margin-bottom: 15px;
   max-width: 100%;
   outline: none !important;

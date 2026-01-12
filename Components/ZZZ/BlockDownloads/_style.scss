@@ -2,10 +2,10 @@ flynt-component[name='BlockDownloads'] {
   scroll-margin-top: 96px;
   
   .wrapper {
-    padding-bottom: var(--spacingLarge);
+    padding-bottom: theme('spacing.large');
     width: 100%;
 
-    @media (max-width: $breakpoint-tablet - 1) {
+    @media (max-width: calc(theme('screens.tablet') - 1px)) {
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
@@ -16,6 +16,6 @@ flynt-component[name='BlockDownloads'] {
     align-items: flex-start;
     display: flex;
     flex-flow: row wrap;
-    gap: var(--spacingLarge);
+    gap: theme('spacing.large');
   }
 }

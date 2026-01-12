@@ -8,7 +8,7 @@ flynt-component[name='BlockWysiwygTwoCol'] {
       height: auto;
       width: 100%;
   
-      @media (max-width: $breakpoint-mobile) {
+      @media (max-width: theme('screens.mobile')) {
         display: block;
       }
 
@@ -16,11 +16,11 @@ flynt-component[name='BlockWysiwygTwoCol'] {
         grid-column-end: 5;
         grid-column-start: 2;
 
-        @media (max-width: $breakpoint-tablet) {
+        @media (max-width: theme('screens.tablet')) {
           grid-column-start: 1;
         }
 
-        @media (max-width: $breakpoint-mobile) {
+        @media (max-width: theme('screens.mobile')) {
           margin-top: 1.2rem;
         }
       }
@@ -29,11 +29,11 @@ flynt-component[name='BlockWysiwygTwoCol'] {
         grid-column-end: 8;
         grid-column-start: 5;
 
-        @media (max-width: $breakpoint-tablet) {
+        @media (max-width: theme('screens.tablet')) {
           grid-column-start: 2;
         }
 
-        @media (max-width: $breakpoint-mobile) {
+        @media (max-width: theme('screens.mobile')) {
           margin-top: 1.2rem;
         }
       }

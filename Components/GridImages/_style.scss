@@ -93,14 +93,14 @@ flynt-component[name='GridImages'] {
 .grid-images-lightbox {
   .lightbox-close {
     position: absolute;
-    top: var(--spacing-xs, 1rem);
-    right: var(--spacing-xs, 1rem);
+    top: theme('spacing.xs', 1rem);
+    right: theme('spacing.xs', 1rem);
     color: white;
     font-family: var(--font-body, inherit);
     font-size: 1.5rem;
     line-height: 1;
-    width: var(--spacing-md, 2rem);
-    height: var(--spacing-md, 2rem);
+    width: theme('spacing.md', 2rem);
+    height: theme('spacing.md', 2rem);
     display: none;
     align-items: center;
     justify-content: center;
@@ -124,8 +124,8 @@ flynt-component[name='GridImages'] {
     font-family: var(--font-h2, inherit);
     font-size: 2rem;
     line-height: 1;
-    width: var(--spacing-lg, 3rem);
-    height: var(--spacing-lg, 3rem);
+    width: theme('spacing.lg', 3rem);
+    height: theme('spacing.lg', 3rem);
     display: none;
     align-items: center;
     justify-content: center;
@@ -141,11 +141,11 @@ flynt-component[name='GridImages'] {
     }
 
     &.lightbox-prev {
-      left: var(--spacing-md, 1rem);
+      left: theme('spacing.md', 1rem);
     }
 
     &.lightbox-next {
-      right: var(--spacing-md, 1rem);
+      right: theme('spacing.md', 1rem);
     }
   }
 

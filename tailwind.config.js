@@ -29,18 +29,12 @@ module.exports = {
     fontFamily: {
       sans: ['Inter', 'Arial', 'sans-serif']
     },
-    // fontSize: {
-    //   body: ['1.5rem'],
-    //   bodySmall: ['0.875rem'],
-    //   button: ['1rem'],
-    //   heroTitle: ['5rem'],
-    //   heroSubtitle: ['3.125rem'],
-    //   h1: ['2.25rem'],
-    //   h2: ['1.75rem'],
-    //   h3: ['1.25rem'],
-    //   bodyMenu: ['1rem']
-    // },
     screens: {
+      // Breakpoints from _variables.scss
+      mobile: '640px',   // $breakpoint-mobile
+      tablet: '780px',   // $breakpoint-tablet
+      desktop: '1180px', // $breakpoint-desktop
+      // Additional breakpoints
       sm: '640px',
       md: '780px',
       lg: '1024px',
@@ -76,7 +70,14 @@ module.exports = {
         lg: '75px',
         xl: '100px',
         xxl: '120px',
-        max: '160px'
+        max: '160px',
+        // Spacing variables from _variables.scss
+        xSmall: '10px',
+        small: '20px',
+        medium: '35px',
+        large: '50px',
+        xLarge: '75px',
+        xxLarge: '125px'
       } 
     },
     safelist: [

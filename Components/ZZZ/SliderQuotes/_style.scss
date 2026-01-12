@@ -10,7 +10,7 @@ flynt-component[name='SliderQuotes'] {
     .swiper-slide {
       display: flex;
 
-      @media (max-width: $breakpoint-mobile) {
+      @media (max-width: theme('screens.mobile')) {
         width: 80%;
       }
     }

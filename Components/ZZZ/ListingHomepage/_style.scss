@@ -2,7 +2,7 @@ flynt-component[name='ListingHomepage'] {
   .listing {
     column-count: 2;
 
-    @media (min-width: $breakpoint-tablet) {
+    @screen tablet {
       column-count: 3;
       // display: flex;
       // flex-flow: row wrap;
@@ -23,7 +23,7 @@ flynt-component[name='ListingHomepage'] {
     }
 
     figure {
-      padding: var(--spacingSmall);
+      padding: theme('spacing.small');
     }
 
     .content {
@@ -45,7 +45,6 @@ flynt-component[name='ListingHomepage'] {
 
       .readingTime {
         color: var(--color-text-muted);
-        font-size: var(--bodyFontSizeSmall);
       }
     }
   }

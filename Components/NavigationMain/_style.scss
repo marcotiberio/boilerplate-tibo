@@ -24,12 +24,12 @@ flynt-component[name='NavigationMain'] {
   .submenu {
     align-items: flex-start;
     background: var(--white);
-    column-gap: var(--spacingSmall);
+    column-gap: theme('spacing.small');
     display: flex;
     flex-flow: row wrap;
     height: auto;
     justify-content: space-between;
-    padding: var(--spacingXSmall) 0;
+    padding: theme('spacing.xSmall') 0;
     position: absolute;
     text-align: center;
     top: 66px;
@@ -37,7 +37,7 @@ flynt-component[name='NavigationMain'] {
   }
 
   .button {
-    @media (min-width: $breakpoint-desktop) {
+    @screen desktop {
       font-size: 1.25rem;
     }
   }

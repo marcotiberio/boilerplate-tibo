@@ -1,7 +1,7 @@
 flynt-component[name='BlockAnnouncement'] {
   padding: 0;
 
-  @media (max-width: $breakpoint-tablet) {
+  @media (max-width: theme('screens.tablet')) {
     display: none;
   }
 
@@ -14,7 +14,7 @@ flynt-component[name='BlockAnnouncement'] {
     flex-flow: column wrap;
     height: 135px;
     justify-content: center;
-    padding: 0 var(--spacingLarge);
+    padding: 0 theme('spacing.large');
     position: fixed;
     right: 0;
     text-align: center;

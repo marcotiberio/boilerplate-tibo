@@ -2,7 +2,7 @@
   @include reset-list;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--flow-space);
+  gap: 1.5625rem;
   justify-content: center;
   margin-block-end: calc(var(--component-spacing) / 2);
 }
