@@ -9,7 +9,7 @@ flynt-component[name='NavigationBurger'] {
 
   .wrapper {
     align-items: center;
-    background-color: var(--blue);
+    background-color: var(--black);
     display: flex;
     inset-block-start: 0;
     inset-inline: 0;
@@ -36,7 +36,7 @@ flynt-component[name='NavigationBurger'] {
   }
 
   .current-language-menu-item {
-    @apply text-orange;
+    @apply text-black;
   }
 
   @import 'Partials/hamburger';

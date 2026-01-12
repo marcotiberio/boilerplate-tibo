@@ -1,8 +1,8 @@
-<flynt-component load:on="visible" name="BlockManifesto" class="bg-blue">
+<flynt-component load:on="visible" name="BlockManifesto" class="bg-black">
   <div class="w-full h-[calc(100vh_-_106px)] max-w-screen-max mx-auto px-sm pt-sm pb-lg md:px-lg md:py-lg flex flex-col justify-between">
     {% if preContentTitle %}
       <div class="preContent">
-        <div class="preContentTitle text-grey">
+        <div class="preContentTitle text-black">
           <h2>{{ preContentTitle }}</h2>
         </div>
       </div>
@@ -20,8 +20,8 @@
                   alt="{{ panel.panelImage.alt|e }}">
               </div>
               <div class="w-2/3">
-                <h3 class="text-grey break-all">{{ panel.panelTitle|e }}</h3>
-                <div class="text-grey wysiwyg">{{ panel.panelIntro|e('wp_kses_post') }}</div>
+                <h3 class="text-black break-all">{{ panel.panelTitle|e }}</h3>
+                <div class="text-black wysiwyg">{{ panel.panelIntro|e('wp_kses_post') }}</div>
               </div>
             </div>
             <div class="flex justify-center mt-sm">
@@ -34,7 +34,7 @@
           </div>
           <div 
             x-show="isOpen" 
-            class="panel-content absolute top-0 right-0 w-full lg:w-[66vw] h-full bg-grey px-sm py-md lg:px-lg lg:py-xl" 
+            class="panel-content absolute top-0 right-0 w-full lg:w-[66vw] h-full bg-white px-sm py-md lg:px-lg lg:py-xl" 
             x-transition:enter="transition cubic-bezier(0.19, 1, 0.22, 1) duration-800" 
             x-transition:enter-start="opacity-0" 
             x-transition:enter-end="opacity-100" 

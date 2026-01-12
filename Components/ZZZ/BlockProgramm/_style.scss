@@ -32,13 +32,13 @@
     .alm-filter {
       .alm-filter--title {
         .alm-filter--toggle {
-          border: 1px solid var(--green);
+          border: 1px solid var(--black);
           // font-size: 1rem;
           @apply px-sm;
           @apply py-xs;
           @apply m-0;
           @apply rounded-button;
-          @apply text-green;
+          @apply text-black;
           @apply flex;
           @apply justify-between;
         }
@@ -80,18 +80,18 @@
         @apply py-[5px];
 
         &:hover {
-          @apply bg-green;
+          @apply bg-black;
           @apply text-white;
         }
 
         &[selected='selected'] {
-          @apply bg-green;
+          @apply bg-black;
           @apply text-white;
         }
       }
 
       .alm-filter--item {
-        border: 1px solid var(--green) !important;
+        border: 1px solid var(--black) !important;
       }
     }
 
@@ -335,8 +335,8 @@
 
   #post4172 {
     &::before {
-      border-top: 1px solid var(--green);
-      color: var(--green) !important;
+      border-top: 1px solid var(--black);
+      color: var(--black) !important;
       content: '11. Dezember 2023';
       display: flex;
       font-size: 30px;
@@ -348,8 +348,8 @@
 
   #post4173 {
     &::before {
-      border-top: 1px solid var(--green);
-      color: var(--green) !important;
+      border-top: 1px solid var(--black);
+      color: var(--black) !important;
       content: '12. Dezember 2023';
       display: flex;
       font-size: 30px;
@@ -361,8 +361,8 @@
   
   #post4174 {
     &::before {
-      border-top: 1px solid var(--green);
-      color: var(--green) !important;
+      border-top: 1px solid var(--black);
+      color: var(--black) !important;
       content: '13. Dezember 2023';
       display: flex;
       font-size: 30px;

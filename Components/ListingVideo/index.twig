@@ -47,7 +47,7 @@
           <!-- All Category Filter -->
           <div 
             class="font-body !mb-0 cursor-pointer px-xs md:px-sm py-xs transition-colors filter-button relative"
-            :class="selectedCategory === '' ? 'text-red' : 'text-white border-transparent'"
+            :class="selectedCategory === '' ? 'text-black' : 'text-white border-transparent'"
             @click="
               if (selectedCategory !== '') {
                 selectedCategory = '';
@@ -61,7 +61,7 @@
             {% for category in categories %}
               <div 
                 class="font-body !mb-0 cursor-pointer px-xs md:px-sm py-xs transition-colors filter-button relative"
-                :class="selectedCategory === '{{ category.slug }}' ? 'text-red' : 'text-white border-transparent'"
+                :class="selectedCategory === '{{ category.slug }}' ? 'text-black' : 'text-white border-transparent'"
                 @click="
                   if (selectedCategory !== '{{ category.slug }}') {
                     selectedCategory = '{{ category.slug }}';

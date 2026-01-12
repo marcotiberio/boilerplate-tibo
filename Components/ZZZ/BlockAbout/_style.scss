@@ -40,10 +40,10 @@ flynt-component[name='BlockAbout'] {
     #{$input-selectors} {
       appearance: none;
       background-color: transparent;
-      border: 1px solid var(--blue);
+      border: 1px solid var(--black);
       border-radius: 0;
-      caret-color: var(--blue);
-      color: var(--blue);
+      caret-color: var(--black);
+      color: var(--black);
       font-size: var(--body-font-size-small);
       max-width: 100%;
       outline: none;
@@ -94,11 +94,11 @@ flynt-component[name='BlockAbout'] {
       @apply w-fit;
       @apply z-50;
       @apply bg-transparent;
-      @apply hover:bg-blue;
-      @apply text-blue;
+      @apply hover:bg-black;
+      @apply text-black;
       @apply hover:text-white;
       @apply border;
-      @apply border-blue;
+      @apply border-black;
       @apply hover:border-transparent;
     }
   }

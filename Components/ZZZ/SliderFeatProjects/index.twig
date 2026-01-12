@@ -4,7 +4,7 @@
     <div class="flex flex-col md:flex-row justify-between items-start gap-sm lg:gap-md">
       {% if blockTitle %}
         <div class="w-full md:w-[20%]">
-          <div class="uppercase text-blue font-bold mb-sm">{{ blockTitle }}</div>
+          <div class="uppercase text-black font-bold mb-sm">{{ blockTitle }}</div>
         </div>
       {% endif %}
       <div data-ref="slider" class="slider swiper-container w-full md:w-[80%] h-full">
@@ -18,7 +18,7 @@
                   data-sizes="auto"
                   alt="{{ image.imageImage.alt|e }}">
                 <div class="h-full w-full flex flex-col gap-md justify-center align-middle items-center">
-                  <div class="text-h2 mt-sm w-full text-left text-blue">{{ image.imageTitle }}</div>
+                  <div class="text-h2 mt-sm w-full text-left text-black">{{ image.imageTitle }}</div>
                   {# {% if image.imageLink %}
                     <a class="button button--acqua" href="{{ image.imageLink .url }}"{% if image.imageLink.target %} target="{{ image.imageLink.target }}" rel="noreferrer noopener"{% endif %}>
                       {{ image.imageLink .title|e }}

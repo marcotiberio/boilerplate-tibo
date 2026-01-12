@@ -1,5 +1,5 @@
 {% if items|length > 0 %}
-  <flynt-component load:on="visible" name="ListingCovers" class="bg-grey">
+  <flynt-component load:on="visible" name="ListingCovers" class="bg-white">
     <div class="w-full max-w-screen-lg mx-auto boxed">
       {% if preContentTitle %}
       <div class="w-full flex justify-between items-center">
@@ -17,7 +17,7 @@
                   data-srcset="{{function('wp_get_attachment_image_srcset', item.thumbnail.id)}}"
                   data-sizes="auto">
                 <div class="content-inner mt-[10px]">
-                  <div class="title text-blue text-h2">{{ item.title }}</div>
+                  <div class="title text-black text-h2">{{ item.title }}</div>
                 </div>
               </a>
             </div>

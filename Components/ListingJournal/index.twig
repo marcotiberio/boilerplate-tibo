@@ -20,8 +20,8 @@
           
           <!-- All Category Filter -->
           <div 
-            class="font-body !mb-0 cursor-pointer hover:text-orangeHover w-fit"
-            :class="selectedCategory === '' ? 'text-orangeHover' : ''"
+            class="font-body !mb-0 cursor-pointer hover:text-black w-fit"
+            :class="selectedCategory === '' ? 'text-black' : ''"
             @click="
               if (selectedCategory !== '') {
                 isTransitioning = true;
@@ -42,8 +42,8 @@
           ] %}
           {% for journalCategory in journalCategories %}
             <div 
-              class="font-body !mb-0 cursor-pointer hover:text-orangeHover w-fit"
-              :class="selectedCategory === '{{ journalCategory.slug }}' ? 'text-orangeHover' : ''"
+              class="font-body !mb-0 cursor-pointer hover:text-black w-fit"
+              :class="selectedCategory === '{{ journalCategory.slug }}' ? 'text-black' : ''"
               @click="
                 if (selectedCategory !== '{{ journalCategory.slug }}') {
                   isTransitioning = true;
@@ -74,7 +74,7 @@
           {% set postCategorySlugs = allTerms|map(term => hardcodedCategories[term.name]|default(term.name|lower|replace({' ' : '-'}))) %}
 
           <div 
-            class="fade-in post w-full py-sm [&_h2]:hover:text-orangeHover border-b last:border-b-0 hover:cursor-pointer transition-opacity duration-300" 
+            class="fade-in post w-full py-sm [&_h2]:hover:text-black border-b last:border-b-0 hover:cursor-pointer transition-opacity duration-300" 
             x-show="(selectedCategory === '' || ['{{ postCategorySlugs|join("','") }}'].includes(selectedCategory)) && 
                      (searchQuery === '' || '{{ post.title|lower }}'.includes(searchQuery.toLowerCase()))"
             :class="isTransitioning ? 'opacity-0' : 'opacity-100'"

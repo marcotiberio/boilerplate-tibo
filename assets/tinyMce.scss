@@ -64,7 +64,7 @@ p,
 
   a {
     @apply no-underline;
-    @apply hover:text-orangeHover;
+    @apply hover:text-black;
 
     &::after {
       content: '↗';
@@ -90,7 +90,7 @@ p,
 
   a {
     @apply no-underline;
-    @apply hover:text-orangeHover;
+    @apply hover:text-black;
 
     &::after {
       content: '↗';

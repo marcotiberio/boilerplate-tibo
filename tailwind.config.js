@@ -22,24 +22,9 @@ module.exports = {
     },
     colors: {
       white: '#ffffff',
-      black: '#090019',
-      red: '#ec0e5c',
-      orange: '#fa642e',
-      orangeHover: '#fe4400',
-      yellow: '#ffdd47',
-      green: '#7bdb8f',
-      beige: '#f6f4ca',
-      blue: '#6690ff',
-      lightblue: '#b1d1e4',
-      grey: '#f9f9f9',
-      darkgrey: '#28321E',
-      acqua: '#51bad9',
-      azulgrey: '#e6ecee',
+      black: '#000000',
       current: 'currentColor',
-      transparent: 'transparent',
-      blog: '#7bdb8f',
-      event: '#6690ff',
-      lernen: '#ff904f'
+      transparent: 'transparent'
     },
     fontFamily: {
       sans: ['Inter', 'Arial', 'sans-serif']

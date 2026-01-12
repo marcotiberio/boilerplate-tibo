@@ -44,7 +44,7 @@ p,
 
   a {
     @apply no-underline;
-    @apply hover:text-red;
+    @apply hover:text-black;
 
     &::after {
       content: '↗';
@@ -71,7 +71,7 @@ samp {
 
   a {
     @apply no-underline;
-    @apply hover:text-red;
+    @apply hover:text-black;
 
     &::after {
       content: '↗';
@@ -92,7 +92,7 @@ samp {
 a.font-bodySmall {
   line-height: 1;
   @apply no-underline;
-  @apply hover:text-orangeHover;
+  @apply hover:text-black;
 
   &::after {
     content: '↗';

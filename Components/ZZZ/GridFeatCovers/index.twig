@@ -4,7 +4,7 @@
       <div class="flex flex-col md:flex-row justify-between items-start gap-sm lg:gap-md">
         {% if blockTitle %}
         <div class="w-full md:w-[20%]">
-          <div class="uppercase text-blue font-bold mb-sm">{{ blockTitle }}</div>
+          <div class="uppercase text-black font-bold mb-sm">{{ blockTitle }}</div>
           <div class="w-fit">
             <a href="{{ labels.allPostsLink.url }}" class="button button--blue">{{ labels.allPosts }}</a>
           </div>
@@ -20,7 +20,7 @@
                     data-srcset="{{function('wp_get_attachment_image_srcset', post.thumbnail.id)}}"
                     data-sizes="auto">
                   <div class="content-inner mt-[10px]">
-                    <div class="title text-blue text-h2">{{ post.title }}</div>
+                    <div class="title text-black text-h2">{{ post.title }}</div>
                   </div>
                 </a>
               </div>

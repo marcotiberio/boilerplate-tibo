@@ -19,8 +19,8 @@
         
         <!-- All Category Filter -->
         <div 
-          class="font-body !mb-0 cursor-pointer hover:text-orangeHover w-fit"
-          :class="selectedCategory === '' ? 'text-orangeHover' : ''"
+          class="font-body !mb-0 cursor-pointer hover:text-black w-fit"
+          :class="selectedCategory === '' ? 'text-black' : ''"
           @click="
             if (selectedCategory !== '') {
               isTransitioning = true;
@@ -40,8 +40,8 @@
         ] %}
         {% for projektCategory in projektCategories %}
           <div 
-            class="font-body !mb-0 cursor-pointer hover:text-orangeHover w-fit"
-            :class="selectedCategory === '{{ projektCategory.slug }}' ? 'text-orangeHover' : ''"
+            class="font-body !mb-0 cursor-pointer hover:text-black w-fit"
+            :class="selectedCategory === '{{ projektCategory.slug }}' ? 'text-black' : ''"
             @click="
               if (selectedCategory !== '{{ projektCategory.slug }}') {
                 isTransitioning = true;
@@ -70,7 +70,7 @@
           } %}
           {% set postCategorySlugs = projektCategoryTerms|map(term => hardcodedCategories[term.name]|default(term.name|lower|replace({' ' : '-'}))) %}
           <div 
-            class="post {{ item.width }} hover:cursor-pointer transition-opacity duration-300 [&_h2]:hover:text-orangeHover [&_.customText]:hover:text-orangeHover [&_.customText]:hover:opacity-100" 
+            class="post {{ item.width }} hover:cursor-pointer transition-opacity duration-300 [&_h2]:hover:text-black [&_.customText]:hover:text-black [&_.customText]:hover:opacity-100" 
             x-show="(selectedCategory === '' || ['{{ postCategorySlugs|join("','") }}'].includes(selectedCategory)) && 
                     (searchQuery === '' || '{{ project.title|lower }}'.includes(searchQuery.toLowerCase()))"
             :class="isTransitioning ? 'opacity-0' : 'opacity-100'"
