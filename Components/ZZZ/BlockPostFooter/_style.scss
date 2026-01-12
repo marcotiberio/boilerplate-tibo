@@ -13,25 +13,24 @@ flynt-component[name='BlockPostFooter'] {
   .author {
     display: flex;
     flex-direction: column;
-    gap: calc(var(--flow-space) / 2);
+    gap: calc(1.5625rem / 2);
     text-align: start;
 
-    @media (min-width: $breakpoint-tablet) {
+    @screen tablet {
       flex-direction: row;
-      gap: var(--flow-space);
+      gap: 1.5625rem;
     }
 
     .avatar-image {
       border-radius: 50%;
       width: 64px;
 
-      @media (min-width: $breakpoint-tablet) {
+      @screen tablet {
         width: 96px;
       }
     }
 
     .details {
-      --flow-space: 0.5rem;
       display: flex;
       flex: 1;
       flex-direction: column;

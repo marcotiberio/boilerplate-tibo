@@ -29,7 +29,7 @@
 * Applies a flexbox grid (based on css variables) to a container element.
 * All direct children will be modified to create a column based grid.
 */
-@mixin grid($columns: 1, $alignment: flex-start, $row-gap: var(--flow-space), $column-gap: var(--flow-space) ) {
+@mixin grid($columns: 1, $alignment: flex-start, $row-gap: 1.5625rem, $column-gap: 1.5625rem) {
   --grid-columns: #{$columns};
   --grid-alignment: #{$alignment};
   --grid-row-gap: #{$row-gap};

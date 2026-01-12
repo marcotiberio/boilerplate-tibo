@@ -42,13 +42,13 @@ button {
   &--fullRed {
     @apply text-white;
     
-    @apply bg-red;
+    @apply bg-black;
     @apply border;
-    @apply border-red;
+    @apply border-black;
 
     &:hover,
     &:focus {
-      @apply text-red;
+      @apply text-black;
       @apply bg-white;
     }
   }
@@ -523,6 +523,6 @@ button {
   &:hover,
   &:focus {
     background-image: url('data:image/svg+xml,%3Csvg width="186" height="48" viewBox="0 0 186 48" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M0.5 0.5H177.453L185.5 9.19584V47.5H0.5V0.5Z" fill="black" stroke="black"/%3E%3C/svg%3E');
-    color: var(--yellow);
+    color: var(--white);
   }
 }

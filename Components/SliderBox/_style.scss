@@ -27,13 +27,13 @@ flynt-component[name='SliderBox'] {
 
   .swiper-pagination-bullet {
     background: transparent !important;
-    border: 1px solid var(--red) !important;
+    border: 1px solid var(--black) !important;
     height: 15px;
     opacity: 1;
     width: 15px;
 
     &-active {
-      background: var(--red) !important;
+      background: var(--black) !important;
     }
   }
 }

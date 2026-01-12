@@ -18,19 +18,6 @@ body {
   // will-change: transform; // Optimize for transform animation
 }
 
-// Black overlay for page transition (added by JS, removed after animation)
-.page-transition-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  z-index: 99999;
-  pointer-events: none;
-  opacity: 1;
-}
-
 /**
 * Custom Classes
 */
@@ -38,7 +25,7 @@ body {
 .mobileHidden {
   @apply hidden;
 
-  @media (min-width: $breakpoint-mobile) {
+  @screen mobile {
     @apply block;
   }
 }
@@ -46,7 +33,7 @@ body {
 .desktopHidden {
   @apply block;
   
-  @media (min-width: $breakpoint-mobile) {
+  @screen mobile {
     @apply hidden;
   }
 }
@@ -107,7 +94,7 @@ html.home {
 .logo-image {
   &:hover{
       .cls-1 {
-          fill: var(--orangeHover);
+          fill: var(--black);
       }
   }
 }
@@ -191,7 +178,7 @@ html.home {
   width: 100%;
   height: 100%;
   z-index: 9999;
-  background: var(--orange);
+  background: var(--black);
   display: flex;
   align-items: center;
   justify-content: center;

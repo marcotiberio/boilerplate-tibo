@@ -2,13 +2,13 @@ flynt-component[name='ListingPastEvents'] {
   .grid {
     align-items: stretch;
     display: grid;
-    gap: var(--spacingLarge);
+    gap: theme('spacing.large');
 
-    @media (min-width: $breakpoint-mobile) {
+    @screen mobile {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @media (min-width: $breakpoint-tablet) {
+    @screen tablet {
       grid-template-columns: repeat(3, 1fr);
     }
   }
@@ -48,7 +48,6 @@ flynt-component[name='ListingPastEvents'] {
 
       .readingTime {
         color: var(--color-text-muted);
-        font-size: var(--bodyFontSizeSmall);
       }
     }
   }

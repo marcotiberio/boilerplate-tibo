@@ -7,11 +7,11 @@ flynt-component[name='ListComponents'] {
     margin-inline: auto;
     max-width: var(--posts-max-width);
 
-    @media (min-width: $breakpoint-tablet) {
+    @screen tablet {
       --grid-columns: 2;
     }
 
-    @media (min-width: $breakpoint-tablet) {
+    @screen tablet {
       --grid-columns: 3;
     }
   }

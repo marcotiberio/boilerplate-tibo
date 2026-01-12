@@ -15,11 +15,11 @@ html {
   -ms-overflow-style: -ms-autohiding-scrollbar;
   // scroll-behavior: smooth; // Disabled for GSAP smooth scroll
 
-  @media (min-width: $breakpoint-mobile) {
+  @screen mobile {
     font-size: var(--base-font-size-mobile, 14px);
   }
 
-  @media (min-width: $breakpoint-desktop) {
+  @screen desktop {
     font-size: var(--base-font-size-desktop, 16px);
   }
 }

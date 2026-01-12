@@ -3,7 +3,7 @@
   <div class="wrapper max-w-screen-max mx-auto boxed grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-sm lg:gap-xl">
     {% if preContentHtml or header %}
       <div>
-        <h1 class="text-blue">{{ header|e}}</h1>
+        <h1 class="text-black">{{ header|e}}</h1>
         <div class="wysiwyg">{{ preContentHtml|e('wp_kses_post')}}</div>
       </div>
     {% endif %}

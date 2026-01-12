@@ -19,7 +19,7 @@
         <div class="swiper-wrapper flex flex-row">
           {% for item in items %}
             <div 
-              class="slider-item swiper-slide post [&_.group]:hover:text-orangeHover hover:cursor-pointer" 
+              class="slider-item swiper-slide post [&_.group]:hover:text-black hover:cursor-pointer" 
               x-show="(selectedCategories.length === 0 || selectedCategories.some(cat => {{ item.postType|default([])|json_encode }}.includes(cat))) &&
                      (searchQuery === '' || '{{ item.title|lower }}'.includes(searchQuery.toLowerCase()))"
               x-transition:enter="transition ease-out duration-100"

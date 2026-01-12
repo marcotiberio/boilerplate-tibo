@@ -8,7 +8,7 @@ flynt-component {
   scroll-margin-block-start: 60px;
   scroll-margin-top: 60px;
 
-  @media (min-width: $breakpoint-desktop) {
+  @screen desktop {
     scroll-margin-block-start: 77px;
     scroll-margin-top: 77px;
   }
@@ -55,22 +55,20 @@ flynt-component {
 }
 
 .preContent {
-  margin: 0 0 var(--spacingSmall);
-  max-width: var(--contentMaxWidth);
+  margin: 0 0 theme('spacing.small');
   text-align: left;
 
-  @media (min-width: $breakpoint-tablet) {
-    margin: 0 0 var(--spacingLarge);
+  @screen tablet {
+    margin: 0 0 theme('spacing.large');
   }
 }
 
 .postContent {
-  margin: var(--spacingSmall) 0 0;
-  max-width: var(--contentMaxWidth);
+  margin: theme('spacing.small') 0 0;
   text-align: left;
 
-  @media (min-width: $breakpoint-tablet) {
-    margin: var(--spacingLarge) 0 0;
+  @screen tablet {
+    margin: theme('spacing.large') 0 0;
   }
 }
 
@@ -130,7 +128,7 @@ flynt-component {
 .mobileHidden {
   @apply hidden;
 
-  @media (min-width: $breakpoint-mobile) {
+  @screen mobile {
     @apply block;
   }
 }
@@ -138,7 +136,7 @@ flynt-component {
 .desktopHidden {
   @apply block;
   
-  @media (min-width: $breakpoint-mobile) {
+  @screen mobile {
     @apply hidden;
   }
 }

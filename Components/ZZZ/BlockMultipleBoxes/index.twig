@@ -27,7 +27,7 @@
             <div class="accordion">
               {% if box.title %}
                 <div x-data="{ open: false }" class="panel">
-                  <button @click="open = !open" class="panel-trigger font-body !mb-0 uppercase px-xs py-sm flex flex-row justify-between items-center w-full" type="button" aria-expanded="false" aria-controls="content-{{ loop.index }}" style="background-color: {% if box.colorBackground %}{{ box.colorBackground }}{% else %}var(--green){% endif %}; color:{% if box.colorText %}{{ box.colorText }}{% else %}var(--white){% endif %};">
+                  <button @click="open = !open" class="panel-trigger font-body !mb-0 uppercase px-xs py-sm flex flex-row justify-between items-center w-full" type="button" aria-expanded="false" aria-controls="content-{{ loop.index }}" style="background-color: {% if box.colorBackground %}{{ box.colorBackground }}{% else %}var(--black){% endif %}; color:{% if box.colorText %}{{ box.colorText }}{% else %}var(--white){% endif %};">
                     <div class="title">{{ box.title|e('wp_kses_post') }}</div>
                     <div :class="{'rotate180': open}">
                       <span class="">↓</span>

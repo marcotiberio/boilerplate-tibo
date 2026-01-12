@@ -22,40 +22,19 @@ module.exports = {
     },
     colors: {
       white: '#ffffff',
-      black: '#090019',
-      red: '#ec0e5c',
-      orange: '#fa642e',
-      orangeHover: '#fe4400',
-      yellow: '#ffdd47',
-      green: '#7bdb8f',
-      beige: '#f6f4ca',
-      blue: '#6690ff',
-      lightblue: '#b1d1e4',
-      grey: '#f9f9f9',
-      darkgrey: '#28321E',
-      acqua: '#51bad9',
-      azulgrey: '#e6ecee',
+      black: '#000000',
       current: 'currentColor',
-      transparent: 'transparent',
-      blog: '#7bdb8f',
-      event: '#6690ff',
-      lernen: '#ff904f'
+      transparent: 'transparent'
     },
     fontFamily: {
       sans: ['Inter', 'Arial', 'sans-serif']
     },
-    // fontSize: {
-    //   body: ['1.5rem'],
-    //   bodySmall: ['0.875rem'],
-    //   button: ['1rem'],
-    //   heroTitle: ['5rem'],
-    //   heroSubtitle: ['3.125rem'],
-    //   h1: ['2.25rem'],
-    //   h2: ['1.75rem'],
-    //   h3: ['1.25rem'],
-    //   bodyMenu: ['1rem']
-    // },
     screens: {
+      // Breakpoints from _variables.scss
+      mobile: '640px',   // $breakpoint-mobile
+      tablet: '780px',   // $breakpoint-tablet
+      desktop: '1180px', // $breakpoint-desktop
+      // Additional breakpoints
       sm: '640px',
       md: '780px',
       lg: '1024px',
@@ -91,7 +70,14 @@ module.exports = {
         lg: '75px',
         xl: '100px',
         xxl: '120px',
-        max: '160px'
+        max: '160px',
+        // Spacing variables from _variables.scss
+        xSmall: '10px',
+        small: '20px',
+        medium: '35px',
+        large: '50px',
+        xLarge: '75px',
+        xxLarge: '125px'
       } 
     },
     safelist: [

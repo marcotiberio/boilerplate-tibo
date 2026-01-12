@@ -1,4 +1,4 @@
-const domain = 'localhost:10084l'
+const domain = 'localhost:10130'
 const dest = './dist'
 
 const host = `https://${domain}`
