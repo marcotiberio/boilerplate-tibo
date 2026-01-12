@@ -18,19 +18,6 @@ body {
   // will-change: transform; // Optimize for transform animation
 }
 
-// Black overlay for page transition (added by JS, removed after animation)
-.page-transition-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  z-index: 99999;
-  pointer-events: none;
-  opacity: 1;
-}
-
 /**
 * Custom Classes
 */
