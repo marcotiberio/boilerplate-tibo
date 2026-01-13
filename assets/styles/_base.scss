@@ -1,13 +1,13 @@
 @font-face {
   font-display: swap;
-  font-family: 'Inter';
+  font-family: 'Retail';
   font-style: normal;
   font-weight: 400;
   src: url('../assets/fonts/Inter-VariableFont_opsz,wght.woff2') format('woff2');
 }
 
 html {
-  color: var(--white);
+  @apply bg-beige text-blue;
   font-size: var(--base-font-size-mobile, 16px);
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -34,7 +34,6 @@ html {
 }
 
 body {
-  color: var(--white);
   font-family: var(--primary-font-family, 'Inter', Arial, sans-serif);
 }
 
