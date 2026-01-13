@@ -72,7 +72,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockWysiwyg\getACFLayout(),
                     Components\GridImages\getACFLayout(),
                     Components\GridImageText\getACFLayout(),
-                    Components\HeroHeaderHome\getACFLayout(),
+                    Components\HeroImage\getACFLayout(),
                     // Components\ListingJournal\getACFLayout(),
                     Components\ListingVideoFeat\getACFLayout(),
                     Components\ListingVideo\getACFLayout(),

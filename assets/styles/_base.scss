@@ -2,8 +2,16 @@
   font-display: swap;
   font-family: 'Retail';
   font-style: normal;
-  font-weight: 400;
-  src: url('../assets/fonts/Inter-VariableFont_opsz,wght.woff2') format('woff2');
+  font-weight: 500;
+  src: url('../assets/fonts/Retail-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Retail';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../assets/fonts/Retail-Bold.woff2') format('woff2');
 }
 
 html {
@@ -29,14 +37,10 @@ html {
 }
 
 ::selection {
-  background: var(--white);
-  color: var(--black);
+  @apply text-beige bg-blue;
 }
 
 body {
-  font-family: var(--primary-font-family, 'Inter', Arial, sans-serif);
-}
-
-#{$heading-selectors} {
-  line-height: calc(1em + 0.5rem);
+  @apply text-blue;
+  font-family: var(--primary-font-family, 'Retail', Arial, sans-serif);
 }
