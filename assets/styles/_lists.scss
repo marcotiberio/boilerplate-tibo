@@ -9,22 +9,22 @@
   
       li {
         font-size: inherit;
-        line-height: 1.2 !important;
+        line-height: var(--body-line-height, 1.2) !important;
         margin-bottom: 0;
         margin-left: 3rem;
         text-indent: -1.2rem;
 
         &.font-body {
-          font-size: 1.25rem;
-          line-height: 1.2;
-          @screen lgplus {
-            font-size: 1.25rem;
+          font-size: var(--body-size-mobile, 1.25rem);
+          line-height: var(--body-line-height, 1.2);
+          @screen desktop {
+            font-size: var(--body-size-desktop, 1.25rem);
           }
         }
 
         &.font-bodySmall {
-          font-size: 1rem;
-          line-height: 1;
+          font-size: var(--body-small-size, 0.75rem);
+          line-height: var(--body-small-line-height, 1.2);
         }
 
         &::before {
@@ -35,26 +35,28 @@
     }
   
     li {
-      font-size: 1.25rem;
-      line-height: 1.2 !important;
+      font-size: var(--body-size-mobile, 1.25rem);
+      line-height: var(--body-line-height, 1.2) !important;
       margin-bottom: 0;
       margin-left: 3rem;
-        text-indent: -1.2rem;
+      text-indent: -1.2rem;
+
+      @screen desktop {
+        font-size: var(--body-size-desktop, 1.25rem);
+      }
 
       &.font-body {
-        font-size: 1.25rem;
-        line-height: 1.2;
-        @screen lgplus {
-          font-size: 1.25rem;
+        font-size: var(--body-size-mobile, 1.25rem);
+        line-height: var(--body-line-height, 1.2);
+        @screen desktop {
+          font-size: var(--body-size-desktop, 1.25rem);
         }
       }
 
       &.font-bodySmall {
-        font-size: 1rem;
-        line-height: 1;
+        font-size: var(--body-small-size, 0.75rem);
+        line-height: var(--body-small-line-height, 1.2);
       }
-
-      
 
       &::before {
         content: '-';
@@ -72,25 +74,25 @@
       margin-bottom: 0;
   
       li {
-        font-size: 1.25rem;
-        line-height: 1.2 !important;
+        font-size: var(--body-size-mobile, 1.25rem);
+        line-height: var(--body-line-height, 1.2) !important;
         margin-left: 1.65rem;
         // text-indent: -1.65rem;
 
-        @screen lgplus {
-          font-size: inherit;
+        @screen desktop {
+          font-size: var(--body-size-desktop, 1.25rem);
         }
       }
     }
   
     li {
-      font-size: inherit;
-      line-height: 1.2 !important;
+      font-size: var(--body-size-mobile, 1.25rem);
+      line-height: var(--body-line-height, 1.2) !important;
       margin-left: 1.65rem;
       // text-indent: -1.65rem;
 
-      @screen lgplus {
-        font-size: inherit;
+      @screen desktop {
+        font-size: var(--body-size-desktop, 1.25rem);
       }
     }
   }
@@ -100,7 +102,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
   color: var(--color-text);
-  font-size: var(--body-font-size-small);
+  font-size: var(--body-small-size, 0.75rem);
   max-width: 100%;
   width: 100%;
 
@@ -120,49 +122,11 @@ table {
 
   th {
     color: var(--color-text-muted);
-    font-weight: 500;
+    font-weight: var(--body-font-weight, 500);
   }
 
   td {
     min-width: 25ch;
-  }
-
-  thead {
-    background-color: var(--color-background-secondary);
-    border-block-end: solid 2px var(--color-border);
-  }
-
-  tr {
-    &:nth-child(even) {
-      background-color: var(--color-background-secondary);
-    }
-  }
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  color: var(--color-text);
-  max-width: 100%;
-  width: 100%;
-
-  caption {
-    caption-side: bottom;
-    color: var(--color-text-muted);
-    margin-block-start: calc(1.5625rem / 2);
-    text-align: start;
-  }
-
-  td,
-  th {
-    padding: 0.9rem 1rem;
-    text-align: inherit;
-    vertical-align: top;
-  }
-
-  th {
-    color: var(--color-text-muted);
-    font-weight: 500;
   }
 
   thead {

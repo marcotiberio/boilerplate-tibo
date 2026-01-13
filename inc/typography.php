@@ -56,6 +56,34 @@ add_action('acf/init', function () {
             ],
         ],
         [
+            'label' => __('Body Text - Font Weight', 'flynt'),
+            'instructions' => __('Font weight for body text (e.g., 400, 500, 700). Medium = 500, Bold = 700', 'flynt'),
+            'name' => 'bodyFontWeight',
+            'type' => 'select',
+            'choices' => [
+                '500' => '500 (Medium)',
+                '700' => '700 (Bold)',
+            ],
+            'default_value' => '500',
+            'wrapper' => [
+                'width' => 50,
+            ],
+        ],
+        [
+            'label' => __('Heading Font Weight', 'flynt'),
+            'instructions' => __('Font weight for all headings (H1, H2, H3, H4). Medium = 500, Bold = 700', 'flynt'),
+            'name' => 'headingFontWeight',
+            'type' => 'select',
+            'choices' => [
+                '500' => '500 (Medium)',
+                '700' => '700 (Bold)',
+            ],
+            'default_value' => '700',
+            'wrapper' => [
+                'width' => 50,
+            ],
+        ],
+        [
             'label' => __('Heading 1 - Size (Mobile)', 'flynt'),
             'instructions' => __('H1 font size in rem for mobile devices.', 'flynt'),
             'name' => 'h1SizeMobile',
@@ -354,6 +382,34 @@ add_action('acf/init', function () {
                 'width' => 50,
             ],
         ],
+        [
+            'label' => __('Menu - Font Weight', 'flynt'),
+            'instructions' => __('Font weight for menu/navigation. Medium = 500, Bold = 700', 'flynt'),
+            'name' => 'menuFontWeight',
+            'type' => 'select',
+            'choices' => [
+                '500' => '500 (Medium)',
+                '700' => '700 (Bold)',
+            ],
+            'default_value' => '500',
+            'wrapper' => [
+                'width' => 50,
+            ],
+        ],
+        [
+            'label' => __('Button - Font Weight', 'flynt'),
+            'instructions' => __('Font weight for buttons. Medium = 500, Bold = 700', 'flynt'),
+            'name' => 'buttonFontWeight',
+            'type' => 'select',
+            'choices' => [
+                '500' => '500 (Medium)',
+                '700' => '700 (Bold)',
+            ],
+            'default_value' => '500',
+            'wrapper' => [
+                'width' => 50,
+            ],
+        ],
     ], 'Typography');
 });
 
@@ -386,6 +442,18 @@ add_action('wp_head', function () {
     $h2SizeDesktop = !empty($typographyOptions['h2SizeDesktop']) 
         ? floatval($typographyOptions['h2SizeDesktop']) 
         : 2;
+    $h3SizeMobile = !empty($typographyOptions['h3SizeMobile']) 
+        ? floatval($typographyOptions['h3SizeMobile']) 
+        : 1.75;
+    $h3SizeDesktop = !empty($typographyOptions['h3SizeDesktop']) 
+        ? floatval($typographyOptions['h3SizeDesktop']) 
+        : 2;
+    $h4SizeMobile = !empty($typographyOptions['h4SizeMobile']) 
+        ? floatval($typographyOptions['h4SizeMobile']) 
+        : 1.75;
+    $h4SizeDesktop = !empty($typographyOptions['h4SizeDesktop']) 
+        ? floatval($typographyOptions['h4SizeDesktop']) 
+        : 2;
     $bodySizeMobile = !empty($typographyOptions['bodySizeMobile']) 
         ? floatval($typographyOptions['bodySizeMobile']) 
         : 1.25;
@@ -404,6 +472,12 @@ add_action('wp_head', function () {
     $h2LineHeight = !empty($typographyOptions['h2LineHeight']) 
         ? floatval($typographyOptions['h2LineHeight']) 
         : 1.2;
+    $h3LineHeight = !empty($typographyOptions['h3LineHeight']) 
+        ? floatval($typographyOptions['h3LineHeight']) 
+        : 1.2;
+    $h4LineHeight = !empty($typographyOptions['h4LineHeight']) 
+        ? floatval($typographyOptions['h4LineHeight']) 
+        : 1.2;
     $bodyLineHeight = !empty($typographyOptions['bodyLineHeight']) 
         ? floatval($typographyOptions['bodyLineHeight']) 
         : 1.2;
@@ -413,6 +487,18 @@ add_action('wp_head', function () {
     $menuLineHeight = !empty($typographyOptions['menuLineHeight']) 
         ? floatval($typographyOptions['menuLineHeight']) 
         : 1.2;
+    $headingFontWeight = !empty($typographyOptions['headingFontWeight']) 
+        ? esc_attr($typographyOptions['headingFontWeight']) 
+        : '700';
+    $bodyFontWeight = !empty($typographyOptions['bodyFontWeight']) 
+        ? esc_attr($typographyOptions['bodyFontWeight']) 
+        : '500';
+    $menuFontWeight = !empty($typographyOptions['menuFontWeight']) 
+        ? esc_attr($typographyOptions['menuFontWeight']) 
+        : '500';
+    $buttonFontWeight = !empty($typographyOptions['buttonFontWeight']) 
+        ? esc_attr($typographyOptions['buttonFontWeight']) 
+        : '500';
     
     // Build CSS variables
     $css = ":root {\n";
@@ -425,13 +511,23 @@ add_action('wp_head', function () {
     $css .= "  --h2-size-mobile: {$h2SizeMobile}rem;\n";
     $css .= "  --h2-size-desktop: {$h2SizeDesktop}rem;\n";
     $css .= "  --h2-line-height: {$h2LineHeight};\n";
+    $css .= "  --h3-size-mobile: {$h3SizeMobile}rem;\n";
+    $css .= "  --h3-size-desktop: {$h3SizeDesktop}rem;\n";
+    $css .= "  --h3-line-height: {$h3LineHeight};\n";
+    $css .= "  --h4-size-mobile: {$h4SizeMobile}rem;\n";
+    $css .= "  --h4-size-desktop: {$h4SizeDesktop}rem;\n";
+    $css .= "  --h4-line-height: {$h4LineHeight};\n";
+    $css .= "  --heading-font-weight: {$headingFontWeight};\n";
     $css .= "  --body-size-mobile: {$bodySizeMobile}rem;\n";
     $css .= "  --body-size-desktop: {$bodySizeDesktop}rem;\n";
     $css .= "  --body-line-height: {$bodyLineHeight};\n";
+    $css .= "  --body-font-weight: {$bodyFontWeight};\n";
     $css .= "  --body-small-size: {$bodySmallSize}rem;\n";
     $css .= "  --body-small-line-height: {$bodySmallLineHeight};\n";
     $css .= "  --menu-size: {$menuSize}rem;\n";
     $css .= "  --menu-line-height: {$menuLineHeight};\n";
+    $css .= "  --menu-font-weight: {$menuFontWeight};\n";
+    $css .= "  --button-font-weight: {$buttonFontWeight};\n";
     $css .= "}\n";
     
     echo "<style id='flynt-typography-css'>\n{$css}\n</style>\n";
