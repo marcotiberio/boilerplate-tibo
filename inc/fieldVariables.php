@@ -73,6 +73,7 @@ function getColorText()
         ),
         'name' => 'colorText',
         'type' => 'color_picker',
+        'default_value' => '#0066FF',
         'wrapper' => [
             'width' => 100,
         ],
