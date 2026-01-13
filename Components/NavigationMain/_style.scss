@@ -1,14 +1,4 @@
 flynt-component[name='NavigationMain'] {
-  .navigation {
-    background: rgba(255, 255, 255, 0);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-    
-    .admin-bar & {
-      inset-block-start: var(--wp-admin--admin-bar--height);
-    }
-  }
-
   // .current-menu-item {
   //   .link {
   //     @apply text-black;
