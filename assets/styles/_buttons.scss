@@ -5,11 +5,13 @@ button {
 .button {
   @include reset-link;
   appearance: none;
-  font-family: 'Inter', Arial, sans-serif;
-  font-size: 1rem;
-  line-height: 1;
+  font-family: var(--primary-font-family, 'Inter', Arial, sans-serif);
+  font-size: var(--button-size, 1rem);
+  line-height: var(--button-line-height, 1.2);
   @apply w-fit;
-  @apply p-[10px];
+  @apply px-sm;
+  @apply py-xs;
+  @apply rounded-button;
   @apply flex;
   @apply justify-center;
   @apply items-center;
@@ -17,7 +19,6 @@ button {
   @apply relative;
   @apply text-center;
   @apply no-underline;
-  @apply uppercase;
   @apply whitespace-nowrap;
 
   &:disabled {
@@ -26,11 +27,11 @@ button {
     pointer-events: none;
   }
 
-  &--fullWhite {
-    @apply text-black;
-    @apply bg-white;
+  &--fullBlue {
+    @apply text-white;
+    @apply bg-blue;
     @apply border;
-    @apply border-white;
+    @apply border-blue;
 
     &:hover,
     &:focus {
@@ -39,17 +40,16 @@ button {
     }
   }
 
-  &--fullRed {
+  &--fullOrange {
     @apply text-white;
-    
-    @apply bg-black;
+    @apply bg-orange;
     @apply border;
-    @apply border-black;
+    @apply border-orange;
 
     &:hover,
     &:focus {
-      @apply text-black;
-      @apply bg-white;
+      @apply text-orange;
+      @apply bg-transparent;
     }
   }
 
