@@ -36,10 +36,10 @@ flynt-component {
   @apply w-full;
   @apply max-w-screen-max;
   @apply mx-auto;
-  @apply px-xs;
-  @apply py-md;
-  @apply md:px-sm;
-  @apply md:py-lg;
+  @apply px-sm;
+  @apply py-sm;
+  @apply md:px-xl;
+  @apply md:py-xl;
 
   // &--small {
   //   @apply py-xs;
