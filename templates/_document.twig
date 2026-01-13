@@ -9,10 +9,10 @@
   <body>
     {% block layout %}
       <div 
-        class="pageWrapper bg-black">
+        class="pageWrapper">
         <header class="w-full">
           {% block header %}
-            <div class="hidden lg:block w-full h-[55px] fixed top-0 left-0 z-[3000]">
+            <div class="hidden lg:block w-full fixed top-0 left-0 z-[3000]">
               <div class="w-full max-w-screen-max mx-auto flex flex-row justify-between gap-sm">
                 {{ renderComponent('NavigationMain') }}
               </div>
@@ -20,7 +20,7 @@
             {{ renderComponent('NavigationBurger') }}
           {% endblock %}
         </header>
-        <main id="mainContent" class="mainContent" aria-label="{{ __('Content', 'flynt') }}">
+        <main id="mainContent" class="mainContent mt-[66px] min-h-[calc(100vh-66px)]" aria-label="{{ __('Content', 'flynt') }}">
           <a href="#mainContent" class="skipLink">
             {{ __("Skip to main content", "flynt") }}
           </a>
