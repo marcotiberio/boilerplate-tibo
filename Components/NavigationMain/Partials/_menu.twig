@@ -2,7 +2,7 @@
   {% for item in items %}
     {# regular menu item #}
     {% if not item.children %}
-      <div class="item font-menu flex align-middle items-center hover:underline underline-offset-4 no-underline font-bodyMenu {{ item.classes|join(' ') }} {{- item.current ? ' underline underline-offset-4' }} {{- item.target == '_blank' ? ' external-link' }} {{- item.object == 'page' ? ' page-item' }} {{- item.object == 'post' ? ' post-item' }}">
+      <div class="item font-menu flex align-middle items-center hover:underline underline-offset-4 no-underline {{ item.classes|join(' ') }} {{- item.current ? ' underline underline-offset-4' }} {{- item.target == '_blank' ? ' external-link' }} {{- item.object == 'page' ? ' page-item' }} {{- item.object == 'post' ? ' post-item' }}">
         <a class="link flex align-middle items-center no-underline transition-transform duration-200 ease-in-out" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
           {{ item.title }}
         </a>
@@ -10,7 +10,7 @@
     {% endif %}
     {# menu with submenu item #}
     {% if item.children %}
-      <div x-data="{ showDropdown: false }" class="item font-menu flex align-middle items-center open-submenu font-bodyMenu hover:underline {{ item.classes|join(' ') }} {{- item.current ? ' underline underline-offset-4' }} {{- item.target == '_blank' ? ' external-link' }} {{- item.object == 'page' ? ' page-item' }} {{- item.object == 'post' ? ' post-item' }}" >
+      <div x-data="{ showDropdown: false }" class="item font-menu flex align-middle items-center open-submenu hover:underline {{ item.classes|join(' ') }} {{- item.current ? ' underline underline-offset-4' }} {{- item.target == '_blank' ? ' external-link' }} {{- item.object == 'page' ? ' page-item' }} {{- item.object == 'post' ? ' post-item' }}" >
         <a 
           @mouseover="showDropdown = true"
           @mouseleave="showDropdown = false"

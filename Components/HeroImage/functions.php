@@ -1,6 +1,6 @@
 <?php
 
-namespace Flynt\Components\HeroHeaderHome;
+namespace Flynt\Components\HeroImage;
 
 use Flynt\FieldVariables;
 use Flynt\Utils\Asset;
@@ -13,7 +13,7 @@ add_action('init', function () {
     ]);
 });
 
-add_filter('Flynt/addComponentData?name=HeroHeaderHome', function ($data) {
+add_filter('Flynt/addComponentData?name=HeroImage', function ($data) {
     $data['menu'] = Timber::get_menu('navigation_main') ?? Timber::get_pages_menu();
     $data['logo'] = [
         'src' => get_theme_mod('custom_header_logo') ? get_theme_mod('custom_header_logo') : Asset::requireUrl('assets/images/logo.svg'),
@@ -26,8 +26,8 @@ add_filter('Flynt/addComponentData?name=HeroHeaderHome', function ($data) {
 function getACFLayout()
 {
     return [
-        'name' => 'heroHeaderHome',
-        'label' => __('Hero', 'flynt'),
+        'name' => 'HeroImage',
+        'label' => __('Hero (Image)', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Image', 'flynt'),
@@ -35,22 +35,6 @@ function getACFLayout()
                 'type' => 'tab',
                 'placement' => 'top',
                 'endpoint' => 0,
-            ],
-            [
-                'label' => __('Video Embed ID - Landscape', 'flynt'),
-                'name' => 'videoIDLandscape',
-                'type' => 'text',
-                'wrapper' => [
-                    'width' => 50
-                ],
-            ],
-            [
-                'label' => __('Video Embed ID - Portrait', 'flynt'),
-                'name' => 'videoIDPortrait',
-                'type' => 'text',
-                'wrapper' => [
-                    'width' => 50
-                ],
             ],
             [
                 'label' => __('Image Desktop', 'flynt'),

@@ -84,11 +84,14 @@ function getConfig()
         'textcolor_map' => [
             '000000', 'Black',
             'ffffff', 'White',
-            'fe4400', 'Orange',
+            '3d6bff', 'Blue',
+            'fef7ca', 'Beige',
         ],
         'blockformats' => [
             'Heading 1' => 'h1',
             'Heading 2' => 'h2',
+            'Heading 3' => 'h3',
+            'Heading 4' => 'h4',
             'Paragraph' => 'p',
             'Small Text' => 'samp',
         ],
@@ -133,6 +136,11 @@ function getConfig()
                         'classes' => 'font-bodySmall',
                         'selector' => '*'
                     ],
+                    [
+                        'title' => 'X-Small',
+                        'classes' => 'font-bodyXSmall',
+                        'selector' => '*'
+                    ],
                 ]
             ],
             [
@@ -140,15 +148,15 @@ function getConfig()
                 'icon' => '',
                 'items' => [
                     [
-                        'title' => 'Button Outline',
-                        'classes' => 'button button--outline',
+                        'title' => 'Button Full Blue',
+                        'classes' => 'button button--fullBlue',
                         'selector' => 'a'
                     ],
                     [
-                        'title' => 'Link No Arrow',
-                        'classes' => 'link-NoArrow',
+                        'title' => 'Button Full Orange',
+                        'classes' => 'button button--fullOrange',
                         'selector' => 'a'
-                    ],
+                    ]
                 ]
             ],
         ],

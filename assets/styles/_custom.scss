@@ -40,44 +40,25 @@ body {
   
 
   .cookie-notice-container {
-      @apply flex flex-row justify-between items-center;
-      @apply w-full md:w-[50%] !important;
-      @apply p-xs lg:py-0 lg:px-[5px];
+    @apply flex flex-row justify-between items-center;
+    @apply w-full md:w-[50%] !important;
+    @apply p-xs lg:py-0 lg:px-[5px];
 
-      span,
-      button {
-          font-size: 1rem !important;
-      }
+    span,
+    button {
+        font-size: 1rem !important;
+    }
 
-      .cn-text-container {
-          @apply m-0;
-      }
-  
-      .cn-button {
-          @apply bg-transparent !important;
-      }
-  
-      .cn-close-icon {
-          @apply hidden;
-      }
+    .cn-text-container {
+        @apply m-0;
+    }
+
+    .cn-button {
+        @apply bg-transparent !important;
+    }
+
+    .cn-close-icon {
+        @apply hidden;
+    }
   }
-}
-
-// Language footer menu mobile
-.language-en {
-    @apply absolute;
-    @apply top-xs;
-    @apply right-md;
-    @apply lg:relative;
-    @apply lg:top-auto;
-    @apply lg:right-auto;
-}
-
-.language-de {
-    @apply absolute;
-    @apply top-xs;
-    @apply right-xs;
-    @apply lg:relative;
-    @apply lg:top-auto;
-    @apply lg:right-auto;
 }
