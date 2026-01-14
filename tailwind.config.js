@@ -27,6 +27,7 @@ module.exports = {
       transparent: 'transparent',
       // Project colors
       blue: '#3d6bff',
+      blueDark: '#1545de',
       orange: '#fd4e04',
       beige: '#fef7ca',
     },
