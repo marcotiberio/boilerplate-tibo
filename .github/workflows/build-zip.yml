@@ -1,0 +1,74 @@
+name: Build Theme ZIP
+
+on:
+  push:
+    branches:
+      - '**' # Run on all branches
+  workflow_dispatch: # Allows manual triggering from GitHub UI
+
+jobs:
+  build:
+    name: Build Theme and Create ZIP
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build theme
+        run: npm run build
+
+      - name: Create ZIP file
+        id: create-zip
+        run: |
+          # Create a temporary directory for the zip contents
+          mkdir -p theme-package
+          
+          # Copy all tracked files (these are not gitignored)
+          git ls-files -z | xargs -0 -I {} sh -c '
+            mkdir -p "theme-package/$(dirname "{}")"
+            cp -r "{}" "theme-package/{}" 2>/dev/null || true
+          '
+          
+          # Include the dist folder (built assets) even though it's gitignored
+          if [ -d "dist" ]; then
+            cp -r dist theme-package/dist
+          fi
+          
+          # Remove any git-related files from the package
+          find theme-package -name ".git*" -delete 2>/dev/null || true
+          rm -rf theme-package/.github 2>/dev/null || true
+          
+          # Create ZIP file
+          cd theme-package
+          zip -r ../theme.zip . -q
+          cd ..
+          
+          # Get theme name from style.css or use default
+          THEME_NAME=$(grep -i "Theme Name:" style.css 2>/dev/null | cut -d: -f2 | xargs || echo "boilerplate-tibo")
+          THEME_NAME_CLEAN=$(echo "$THEME_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | sed 's/[^a-z0-9-]//g')
+          VERSION=$(grep -i "Version:" style.css 2>/dev/null | cut -d: -f2 | xargs || echo "1.0.0")
+          
+          # Rename with theme name and version
+          ZIP_FILENAME="${THEME_NAME_CLEAN}-${VERSION}.zip"
+          mv theme.zip "$ZIP_FILENAME"
+          
+          echo "zip_file=$ZIP_FILENAME" >> $GITHUB_OUTPUT
+          echo "Created ZIP: $ZIP_FILENAME"
+          ls -lh "$ZIP_FILENAME"
+
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: theme-package-${{ github.ref_name }}
+          path: ${{ steps.create-zip.outputs.zip_file }}
+          retention-days: 30
