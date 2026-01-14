@@ -30,7 +30,8 @@ jobs:
       - name: Sanitize branch name
         id: branch-name
         run: |
-          BRANCH_NAME=$(echo "${{ github.ref_name }}" | tr '/' '-')
+          # Remove "website/" prefix if present, otherwise use branch name as-is
+          BRANCH_NAME=$(echo "${{ github.ref_name }}" | sed 's|^website/||')
           echo "branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
 
       - name: Create ZIP file
@@ -75,6 +76,6 @@ jobs:
       - name: Upload ZIP artifact
         uses: actions/upload-artifact@v4
         with:
-          name: theme-package-${{ steps.branch-name.outputs.branch }}
+          name: ${{ steps.branch-name.outputs.branch }}
           path: ${{ steps.create-zip.outputs.zip_file }}
           retention-days: 30
