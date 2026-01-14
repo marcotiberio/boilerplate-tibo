@@ -37,14 +37,14 @@ flynt-component {
   @apply max-w-screen-max;
   @apply mx-auto;
   @apply px-xs;
-  @apply py-xs;
+  @apply py-sm;
   @apply md:px-xl;
   @apply md:py-xl;
 
-  // &--small {
-  //   @apply py-xs;
-  //   @apply sm:py-sm;
-  // }
+  &--small {
+    @apply py-sm;
+    @apply sm:py-sm;
+  }
   
 
   // &--large {

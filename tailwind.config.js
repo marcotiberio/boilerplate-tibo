@@ -14,9 +14,8 @@ module.exports = {
     },
     borderRadius: {
       none: '0',
-      DEFAULT: '24px',
+      DEFAULT: '12px',
       image: '24px',
-      container: '24px',
       button: '50px',
       full: '9999px'
     },
@@ -69,13 +68,13 @@ module.exports = {
       },
       spacing: {
         min: '5px',
-        xs: '15px',
-        sm: '30px',
-        md: '50px',
-        lg: '75px',
-        xl: '100px',
-        xxl: '120px',
-        max: '160px',
+        xs: '12px',
+        sm: '24px',
+        md: '46px',
+        lg: '60px',
+        xl: '80px',
+        xxl: '100px',
+        max: '120px',
         // Spacing variables from _variables.scss
         xSmall: '10px',
         small: '20px',
