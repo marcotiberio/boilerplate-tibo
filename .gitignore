@@ -9,8 +9,6 @@ lib-cov
 *.log
 *.out
 *.pid
-Components/PremiumComponents
-/dist
 node_modules
 npm-debug.log
 
@@ -59,7 +57,4 @@ $RECYCLE.BIN/
 # Project specific
 .idea
 yarn-error.log
-# vendor
 .env
-# dist
-# dist/hot

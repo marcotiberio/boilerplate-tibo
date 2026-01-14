@@ -44,16 +44,11 @@ jobs:
           # Create folder with theme name (WordPress requires theme files in a folder)
           mkdir -p "$THEME_NAME_CLEAN"
           
-          # Copy all tracked files (these are not gitignored)
+          # Copy all tracked files (dist is now tracked, so it will be included automatically)
           git ls-files -z | xargs -0 -I {} sh -c "
             mkdir -p \"$THEME_NAME_CLEAN/\$(dirname \"{}\")\"
             cp -r \"{}\" \"$THEME_NAME_CLEAN/{}\" 2>/dev/null || true
           "
-          
-          # Include the dist folder (built assets) even though it's gitignored
-          if [ -d "dist" ]; then
-            cp -r dist "$THEME_NAME_CLEAN/dist"
-          fi
           
           # Remove any git-related files from the package
           find "$THEME_NAME_CLEAN" -name ".git*" -delete 2>/dev/null || true
