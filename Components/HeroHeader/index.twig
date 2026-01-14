@@ -1,0 +1,25 @@
+<flynt-component
+  load:on="idle" 
+  name="HeroHeader" 
+  class="" 
+  style="
+    color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
+    background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};"
+  >
+  <div class="boxed flex flex-col justify-center items-center gap-sm">
+    {% if blockTitle %}
+      <div class="font-h2">{{ blockTitle }}</div>
+    {% endif %}
+    {% if contentHtml %}
+      <div class="wysiwyg">{{ contentHtml|e('wp_kses_post') }}</div>
+    {% endif %}
+    {# {% if buttonLink %}
+      <a 
+        class="button button--fullBlue" 
+        href="{{ buttonLink.url }}" 
+        {% if buttonLink.target %} target="{{ buttonLink.target }}" rel="noreferrer noopener"{% endif %}>
+        {{ buttonLink.title }}
+      </a>
+    {% endif %}  #}
+  </div>
+</flynt-component>
