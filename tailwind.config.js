@@ -14,9 +14,9 @@ module.exports = {
     },
     borderRadius: {
       none: '0',
-      DEFAULT: '0',
+      DEFAULT: '24px',
       image: '24px',
-      container: '20px',
+      container: '24px',
       button: '50px',
       full: '9999px'
     },
@@ -27,6 +27,7 @@ module.exports = {
       transparent: 'transparent',
       // Project colors
       blue: '#3d6bff',
+      blueDark: '#1545de',
       orange: '#fd4e04',
       beige: '#fef7ca',
     },

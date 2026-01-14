@@ -1,16 +1,4 @@
 flynt-component[name='NavigationMain'] {
-  // .current-menu-item {
-  //   .link {
-  //     @apply text-black;
-  //   }
-
-  //   .current-menu-item {
-  //     .link {
-  //       @apply text-black;
-  //     }
-  //   }
-  // }
-
   .submenu {
     align-items: flex-start;
     background: var(--white);
@@ -24,11 +12,5 @@ flynt-component[name='NavigationMain'] {
     text-align: center;
     top: 66px;
     width: fit-content;
-  }
-
-  .button {
-    @screen desktop {
-      font-size: 1.25rem;
-    }
   }
 }
