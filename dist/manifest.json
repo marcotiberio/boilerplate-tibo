@@ -1,6 +1,6 @@
 {
   "Components/BlockGalleryMedia/script.js": {
-    "file": "assets/script-48bc6e8a.js",
+    "file": "assets/script-ecbf5980.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -16,7 +16,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-ecbf5980.js",
+    "file": "assets/script-48bc6e8a.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -24,7 +24,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -39,7 +39,7 @@
     "css": [
       "assets/script-b3ce9496.css"
     ],
-    "file": "assets/script-c1d884ec.js",
+    "file": "assets/script-4d398ad3.js",
     "imports": [
       "assets/main.js"
     ],
@@ -54,14 +54,6 @@
     ],
     "isDynamicEntry": true,
     "src": "Components/GridPostsArchive/script.js"
-  },
-  "Components/HeroHeaderHome/script.js": {
-    "file": "assets/script-4f489cac.js",
-    "imports": [
-      "_helpers-0bb72b7a.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "Components/HeroHeaderHome/script.js"
   },
   "Components/ListComponents/script.js": {
     "file": "assets/script-6fca4744.js",
@@ -196,7 +188,7 @@
     "src": "Components/ZZZ/HeroSliderComposite/script.js"
   },
   "Components/ZZZ/HeroVideoBackground/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -213,7 +205,7 @@
     "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
-    "file": "assets/script-2bd956ac.js",
+    "file": "assets/script-c0f2e633.js",
     "imports": [
       "assets/main.js"
     ],
@@ -301,13 +293,13 @@
     "isEntry": true,
     "src": "assets/admin.scss"
   },
-  "assets/fonts/FKGroteskNeue-Regular.woff2": {
-    "file": "assets/FKGroteskNeue-Regular-ed06a1e4.woff2",
-    "src": "assets/fonts/FKGroteskNeue-Regular.woff2"
+  "assets/fonts/Retail-Bold.woff2": {
+    "file": "assets/Retail-Bold-6aa0376f.woff2",
+    "src": "assets/fonts/Retail-Bold.woff2"
   },
-  "assets/fonts/Inter-VariableFont_opsz,wght.woff2": {
-    "file": "assets/Inter-VariableFont_opsz_wght-ac833b69.woff2",
-    "src": "assets/fonts/Inter-VariableFont_opsz,wght.woff2"
+  "assets/fonts/Retail-Medium.woff2": {
+    "file": "assets/Retail-Medium-4405ad81.woff2",
+    "src": "assets/fonts/Retail-Medium.woff2"
   },
   "assets/icons/facebook.svg": {
     "file": "assets/facebook-3e628692.svg",
@@ -334,7 +326,6 @@
       "Components/BlockVideoText/script.js",
       "Components/GridImages/script.js",
       "Components/GridPostsArchive/script.js",
-      "Components/HeroHeaderHome/script.js",
       "Components/ListComponents/script.js",
       "Components/ListingJournalRelated/script.js",
       "Components/ListingVideosRelated/script.js",
@@ -359,12 +350,12 @@
       "Components/ZZZ/SliderLogos/script.js",
       "Components/ZZZ/SliderQuotes/script.js"
     ],
-    "file": "assets/main-bc280a92.js",
+    "file": "assets/main-a4847ba1.js",
     "isEntry": true,
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-11cce7f8.css",
+    "file": "assets/main-01de25f8.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
@@ -374,7 +365,7 @@
     "src": "assets/print.scss"
   },
   "assets/tinyMce.scss": {
-    "file": "assets/tinyMce-bfef4828.css",
+    "file": "assets/tinyMce-749fd32d.css",
     "isEntry": true,
     "src": "assets/tinyMce.scss"
   },
