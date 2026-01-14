@@ -50,6 +50,20 @@ jobs:
             cp -r \"{}\" \"$THEME_NAME_CLEAN/{}\" 2>/dev/null || true
           "
           
+          # Verify style.css was copied (WordPress requirement)
+          if [ ! -f "$THEME_NAME_CLEAN/style.css" ]; then
+            echo "ERROR: style.css is missing! Attempting to copy it directly..."
+            if [ -f "style.css" ]; then
+              cp style.css "$THEME_NAME_CLEAN/style.css"
+              echo "style.css copied successfully"
+            else
+              echo "ERROR: style.css not found in source directory!"
+              exit 1
+            fi
+          else
+            echo "✓ style.css found in package"
+          fi
+          
           # Remove any git-related files from the package
           find "$THEME_NAME_CLEAN" -name ".git*" -delete 2>/dev/null || true
           rm -rf "$THEME_NAME_CLEAN/.github" 2>/dev/null || true
@@ -57,6 +71,18 @@ jobs:
           # Create ZIP file containing the theme folder (WordPress requirement)
           ZIP_FILENAME="${THEME_NAME_CLEAN}.zip"
           zip -r "$ZIP_FILENAME" "$THEME_NAME_CLEAN" -q
+          
+          # Verify ZIP structure
+          echo "Verifying ZIP structure..."
+          unzip -l "$ZIP_FILENAME" | head -20
+          echo ""
+          echo "Checking for style.css in ZIP..."
+          if unzip -l "$ZIP_FILENAME" | grep -q "style.css"; then
+            echo "✓ style.css found in ZIP"
+          else
+            echo "ERROR: style.css not found in ZIP!"
+            exit 1
+          fi
           
           echo "zip_file=$ZIP_FILENAME" >> $GITHUB_OUTPUT
           echo "Created ZIP: $ZIP_FILENAME"
