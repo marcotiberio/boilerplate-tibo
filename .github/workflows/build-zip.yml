@@ -68,6 +68,13 @@ jobs:
           find "$THEME_NAME_CLEAN" -name ".git*" -delete 2>/dev/null || true
           rm -rf "$THEME_NAME_CLEAN/.github" 2>/dev/null || true
           
+          # Remove extended attributes (macOS ._ files) that can cause WordPress issues
+          find "$THEME_NAME_CLEAN" -name "._*" -delete 2>/dev/null || true
+          # Also remove extended attributes using xattr if available (Linux)
+          if command -v xattr >/dev/null 2>&1; then
+            find "$THEME_NAME_CLEAN" -exec xattr -c {} \; 2>/dev/null || true
+          fi
+          
           # Verify style.css exists and is not empty before creating ZIP
           echo "Final verification before ZIP creation:"
           if [ -f "$THEME_NAME_CLEAN/style.css" ]; then
@@ -88,8 +95,19 @@ jobs:
           
           # Create ZIP file containing the theme folder (WordPress requirement)
           # WordPress requires: theme-name.zip contains theme-name/ folder with style.css at root
+          # Use flags that ensure WordPress compatibility:
+          # -r: recursive
+          # -X: don't save extra file attributes (WordPress compatibility)
+          # -q: quiet mode
+          # Note: Creating ZIP from outside the folder to preserve folder structure
           ZIP_FILENAME="${THEME_NAME_CLEAN}.zip"
-          zip -r "$ZIP_FILENAME" "$THEME_NAME_CLEAN" -q
+          zip -r "$ZIP_FILENAME" "$THEME_NAME_CLEAN" -X -q
+          
+          # Verify the ZIP was created correctly
+          if [ ! -f "$ZIP_FILENAME" ]; then
+            echo "ERROR: ZIP file was not created!"
+            exit 1
+          fi
           
           # Verify ZIP structure - WordPress requires: theme-name/style.css
           echo "Verifying ZIP structure..."
