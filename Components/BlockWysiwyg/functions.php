@@ -60,6 +60,7 @@ function getACFLayout()
                 'layout' => 'row',
                 'sub_fields' => [
                     FieldVariables\getColorBackground(),
+                    FieldVariables\getColorText(),
                 ]
             ]
         ]
