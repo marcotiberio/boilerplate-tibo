@@ -1,6 +1,6 @@
 <flynt-component
-  load:on="visible" name="HeroImage"
-  class="w-full lgplus:w-screen {{ height|default('h-screen') }} mx-auto relative overflow-hidden">
+  load:on="visible" name="HeroMultimedia"
+  class="w-full lgplus:w-screen mx-auto relative overflow-hidden">
   {% if image %}
     <img 
       data-ref="backgroundImageDesktop"
@@ -18,6 +18,36 @@
       alt="{{ imageMobile.alt|e | default('') }}"
       loading="eager"
     />
+  {% endif %}
+  {% if videoFile %}
+    <div class="hidden lgplus:block w-full h-full max-h-[calc(100vh_-_66px)]">
+      <video 
+        class="w-full h-full" 
+        autoplay 
+        muted 
+        loop 
+        playsinline
+        preload="auto"
+        data-video-url="{{ videoFile.url }}">
+        <source src="{{ videoFile.url }}" type="{{ videoFile.mime_type }}">
+        {{ __('Your browser does not support the video tag.', 'flynt') }}
+      </video>
+    </div>
+  {% endif %}
+  {% if videoFileMobile %}
+    <div class="block lgplus:hidden w-full h-full max-h-[calc(100vh_-_55px)]">
+      <video 
+        class="w-full h-full" 
+        autoplay 
+        muted 
+        loop 
+        playsinline
+        preload="auto"
+        data-video-url="{{ videoFileMobile.url }}">
+        <source src="{{ videoFileMobile.url }}" type="{{ videoFileMobile.mime_type }}">
+        {{ __('Your browser does not support the video tag.', 'flynt') }}
+      </video>
+    </div>
   {% endif %}
   <div class="absolute inset-0 z-10 pointer-events-none"></div>
     <div class="boxed px-xs py-sm md:p-sm flex flex-col gap-sm">

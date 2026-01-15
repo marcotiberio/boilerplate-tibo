@@ -83,35 +83,10 @@ function getACFLayout()
                 'endpoint' => 0,
             ],
             [
-                'label' => __('Button 1', 'flynt'),
-                'name' => 'buttonLink1',
-                'type' => 'link',
-                'required' => 0,
-                'wrapper' => [
-                    'width' => 50
-                ],
-            ],
-            [
-                'label' => __('Button 2', 'flynt'),
-                'name' => 'buttonLink2',
-                'type' => 'link',
-                'required' => 0,
-                'wrapper' => [
-                    'width' => 50
-                ],
-            ],
-            [
-                'label' => __('Anchor Scroll Buttons', 'flynt'),
-                'name' => 'anchorScrollButtonsTab',
-                'type' => 'tab',
-                'placement' => 'top',
-                'endpoint' => 0,
-            ],
-            [
-                'label' => __('Anchor Scroll Buttons', 'flynt'),
-                'name' => 'repeaterButtons',
+                'label' => __('Regular Buttons', 'flynt'),
+                'name' => 'regularButtons',
                 'type' => 'repeater',
-                'layout' => 'row',
+                'layout' => 'table',
                 'button_label' => __('Add Button', 'flynt'),
                 'sub_fields' => [
                     [
@@ -120,11 +95,50 @@ function getACFLayout()
                         'type' => 'link',
                         'required' => 0,
                         'wrapper' => [
-                            'width' => 100
+                            'width' => 70
+                        ],
+                    ],
+                    [
+                        'label' => __('Button Style', 'flynt'),
+                        'name' => 'buttonStyle',
+                        'type' => 'select',
+                        'choices' => [
+                            'button--fullBlue' => __('Full Blue', 'flynt'),
+                            'button--fullOrange' => __('Full Orange', 'flynt'),
+                        ],
+                        'default_value' => 'button--fullBlue',
+                        'required' => 0,
+                        'wrapper' => [
+                            'width' => 30
                         ],
                     ],
                 ],
             ],
+            // [
+            //     'label' => __('Anchor Scroll Buttons', 'flynt'),
+            //     'name' => 'anchorScrollButtonsTab',
+            //     'type' => 'tab',
+            //     'placement' => 'top',
+            //     'endpoint' => 0,
+            // ],
+            // [
+            //     'label' => __('Anchor Scroll Buttons', 'flynt'),
+            //     'name' => 'repeaterButtons',
+            //     'type' => 'repeater',
+            //     'layout' => 'row',
+            //     'button_label' => __('Add Button', 'flynt'),
+            //     'sub_fields' => [
+            //         [
+            //             'label' => __('Button', 'flynt'),
+            //             'name' => 'buttonLink',
+            //             'type' => 'link',
+            //             'required' => 0,
+            //             'wrapper' => [
+            //                 'width' => 100
+            //             ],
+            //         ],
+            //     ],
+            // ],
             [
                 'label' => __('Options', 'flynt'),
                 'name' => 'optionsTab',

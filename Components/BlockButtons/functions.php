@@ -51,6 +51,17 @@ function getACFLayout()
                 'layout' => 'row',
                 'sub_fields' => [
                     FieldVariables\getColorBackground(),
+                    [
+                        'label' => __('Fixed Position?', 'flynt'),
+                        'name' => 'fixed',
+                        'instructions' => __('If enabled, the buttons will be fixed to the bottom of the screen.', 'flynt'),
+                        'type' => 'true_false',
+                        'default_value' => 1,
+                        'ui' => 1,
+                        'wrapper' => [
+                            'width' => 100
+                        ],
+                    ],
                 ]
             ]
         ]
