@@ -5,10 +5,11 @@ button {
 .button {
   @include reset-link;
   appearance: none;
-  font-family: var(--primary-font-family, 'Inter', Arial, sans-serif);
-  font-size: var(--button-size, 1rem);
+  font-family: var(--button-font-family, var(--primary-font-family, 'Inter', Arial, sans-serif));
+  font-size: var(--button-font-size, 1rem);
   line-height: var(--button-line-height, 1.2);
   font-weight: var(--button-font-weight, 500);
+  text-transform: var(--button-text-transform, none);
   @apply w-fit;
   @apply px-sm;
   @apply py-xs;
@@ -28,44 +29,44 @@ button {
     pointer-events: none;
   }
 
-  &--fullBlue {
-    @apply text-beige;
-    @apply bg-blue;
-    @apply border;
-    @apply border-blue;
+  // &--fullBlue {
+  //   @apply text-beige;
+  //   @apply bg-blue;
+  //   @apply border;
+  //   @apply border-blue;
 
-    &:hover,
-    &:focus {
-      @apply text-beige;
-      @apply bg-blueDark;
-    }
-  }
+  //   &:hover,
+  //   &:focus {
+  //     @apply text-beige;
+  //     @apply bg-blueDark;
+  //   }
+  // }
 
-  &--fullOrange {
-    @apply text-white;
-    @apply bg-orange;
-    @apply border;
-    @apply border-orange;
+  // &--fullOrange {
+  //   @apply text-white;
+  //   @apply bg-orange;
+  //   @apply border;
+  //   @apply border-orange;
 
-    &:hover,
-    &:focus {
-      @apply text-orange;
-      @apply bg-transparent;
-    }
-  }
+  //   &:hover,
+  //   &:focus {
+  //     @apply text-orange;
+  //     @apply bg-transparent;
+  //   }
+  // }
 
-  &--outline {
-    @apply text-black;
-    @apply bg-transparent;
-    @apply border;
-    @apply border-black;
+  // &--outline {
+  //   @apply text-black;
+  //   @apply bg-transparent;
+  //   @apply border;
+  //   @apply border-black;
 
-    &:hover,
-    &:focus {
-      color: var(--white) !important;
-      @apply bg-black;
-    }
-  }
+  //   &:hover,
+  //   &:focus {
+  //     color: var(--white) !important;
+  //     @apply bg-black;
+  //   }
+  // }
 
   &--link {
     @apply text-white;

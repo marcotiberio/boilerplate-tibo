@@ -67,21 +67,19 @@ module.exports = {
         4: '4px'
       },
       spacing: {
-        min: '5px',
-        xs: '12px',
-        sm: '24px',
-        md: '46px',
-        lg: '60px',
-        xl: '80px',
-        xxl: '100px',
-        max: '120px',
-        // Spacing variables from _variables.scss
-        xSmall: '10px',
-        small: '20px',
-        medium: '35px',
-        large: '50px',
-        xLarge: '75px',
-        xxLarge: '125px'
+        // Spacing values using CSS variables from spacings.php
+        min: 'var(--spacing-min, 6px)',
+        xs: 'var(--spacing-xs, 12px)',
+        sm: 'var(--spacing-sm, 24px)',
+        md: 'var(--spacing-md, 46px)',
+        lg: 'var(--spacing-lg, 60px)',
+        xl: 'var(--spacing-xl, 80px)',
+        xxl: 'var(--spacing-xxl, 100px)',
+        max: 'var(--spacing-max, 120px)',
+        // Spacing variables from _variables.scss (using CSS variables)
+        xSmall: 'var(--spacing-xs, 10px)',
+        small: 'var(--spacing-sm, 20px)',
+        large: 'var(--spacing-lg, 50px)'
       } 
     },
     safelist: [
