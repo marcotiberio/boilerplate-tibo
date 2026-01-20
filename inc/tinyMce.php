@@ -96,53 +96,8 @@ function getConfig()
             'Small Text' => 'samp',
         ],
         'styleformats' => [
-            // [
-            //     'title' => 'Headings',
-            //     'icon' => '',
-            //     'items' => [
-            //         [
-            //             'title' => 'Title',
-            //             'classes' => 'font-heroTitle',
-            //             'selector' => '*'
-            //         ],
-            //         [
-            //             'title' => 'Subtitle',
-            //             'classes' => 'font-heroSubtitle',
-            //             'selector' => '*'
-            //         ],
-            //         [
-            //             'title' => 'Heading 3',
-            //             'classes' => 'h3',
-            //             'selector' => '*'
-            //         ],
-            //         [
-            //             'title' => 'Heading 4',
-            //             'classes' => 'h4',
-            //             'selector' => '*'
-            //         ],
-            //     ]
-            // ],
-            [
-                'title' => 'Text',
-                'icon' => '',
-                'items' => [
-                    [
-                        'title' => 'Regular',
-                        'classes' => 'font-body',
-                        'selector' => '*'
-                    ],
-                    [
-                        'title' => 'Small',
-                        'classes' => 'font-bodySmall',
-                        'selector' => '*'
-                    ],
-                    [
-                        'title' => 'X-Small',
-                        'classes' => 'font-bodyXSmall',
-                        'selector' => '*'
-                    ],
-                ]
-            ],
+            // Font styles are now managed dynamically via Custom Font Styles in Typography options
+            // Only non-font style formats (like buttons) are defined here
             [
                 'title' => 'Buttons/Links',
                 'icon' => '',
