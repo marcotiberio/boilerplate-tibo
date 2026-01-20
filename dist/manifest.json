@@ -1,6 +1,6 @@
 {
   "Components/BlockGalleryMedia/script.js": {
-    "file": "assets/script-ecbf5980.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -16,7 +16,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-48bc6e8a.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -24,7 +24,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-48bc6e8a.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -39,7 +39,7 @@
     "css": [
       "assets/script-b3ce9496.css"
     ],
-    "file": "assets/script-4d398ad3.js",
+    "file": "assets/script-cafc09ab.js",
     "imports": [
       "assets/main.js"
     ],
@@ -91,6 +91,14 @@
     ],
     "isDynamicEntry": true,
     "src": "Components/NavigationBurger/script.js"
+  },
+  "Components/NavigationFooter/script.js": {
+    "file": "assets/script-3d9badd6.js",
+    "imports": [
+      "_helpers-0bb72b7a.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "Components/NavigationFooter/script.js"
   },
   "Components/SliderBox/script.js": {
     "file": "assets/script-f8e40592.js",
@@ -188,7 +196,7 @@
     "src": "Components/ZZZ/HeroSliderComposite/script.js"
   },
   "Components/ZZZ/HeroVideoBackground/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-ecbf5980.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -205,7 +213,7 @@
     "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
-    "file": "assets/script-c0f2e633.js",
+    "file": "assets/script-a7bc417b.js",
     "imports": [
       "assets/main.js"
     ],
@@ -273,8 +281,8 @@
       "_swiper-bundle-917ff535.js"
     ]
   },
-  "_script-9ba1850d.js": {
-    "file": "assets/script-9ba1850d.js",
+  "_script-db2e204d.js": {
+    "file": "assets/script-db2e204d.js",
     "isDynamicEntry": true
   },
   "_swiper-bundle-917ff535.js": {
@@ -289,7 +297,7 @@
     "src": "assets/admin.js"
   },
   "assets/admin.scss": {
-    "file": "assets/admin-58b1f987.css",
+    "file": "assets/admin-e9823c21.css",
     "isEntry": true,
     "src": "assets/admin.scss"
   },
@@ -300,6 +308,10 @@
   "assets/fonts/Retail-Medium.woff2": {
     "file": "assets/Retail-Medium-4405ad81.woff2",
     "src": "assets/fonts/Retail-Medium.woff2"
+  },
+  "assets/icons/chevron-down.svg": {
+    "file": "assets/chevron-down-ec010283.svg",
+    "src": "assets/icons/chevron-down.svg"
   },
   "assets/icons/facebook.svg": {
     "file": "assets/facebook-3e628692.svg",
@@ -330,14 +342,14 @@
       "Components/ListingJournalRelated/script.js",
       "Components/ListingVideosRelated/script.js",
       "Components/NavigationBurger/script.js",
-      "_script-9ba1850d.js",
+      "Components/NavigationFooter/script.js",
+      "_script-db2e204d.js",
       "Components/SliderBox/script.js",
       "Components/SliderBoxText/script.js",
-      "_script-9ba1850d.js",
       "Components/ZZZ/AccordionSystems/script.js",
       "Components/ZZZ/BlockPostArchive/script.js",
       "Components/ZZZ/BlockProductSpecs/script.js",
-      "_script-9ba1850d.js",
+      "_script-db2e204d.js",
       "Components/ZZZ/HeroImageText/script.js",
       "Components/ZZZ/HeroSlider/script.js",
       "Components/ZZZ/HeroSliderComposite/script.js",
@@ -350,12 +362,12 @@
       "Components/ZZZ/SliderLogos/script.js",
       "Components/ZZZ/SliderQuotes/script.js"
     ],
-    "file": "assets/main-a4847ba1.js",
+    "file": "assets/main-52f4dba1.js",
     "isEntry": true,
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-01de25f8.css",
+    "file": "assets/main-80636217.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
@@ -365,7 +377,7 @@
     "src": "assets/print.scss"
   },
   "assets/tinyMce.scss": {
-    "file": "assets/tinyMce-749fd32d.css",
+    "file": "assets/tinyMce-31d58b11.css",
     "isEntry": true,
     "src": "assets/tinyMce.scss"
   },

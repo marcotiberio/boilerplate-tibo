@@ -8,7 +8,7 @@ function getACFLayout()
 {
     return [
         'name' => 'blockWysiwyg',
-        'label' => __('Block: Text Editor', 'flynt'),
+        'label' => __('Text Editor', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('General', 'flynt'),
@@ -23,11 +23,10 @@ function getACFLayout()
                 'type' => 'button_group',
                 'choices' => [
                     'left' => sprintf('<i class=\'dashicons dashicons-align-left\' title=\'%1$s\'></i>', __('Text on the left (half-width)', 'flynt')),
-                    'center_narrow' => sprintf('<i class=\'dashicons dashicons-align-center\' title=\'%1$s\'></i>', __('Text centered (narrow)', 'flynt')),
-                    'center_full' => sprintf('<i class=\'dashicons dashicons-menu-alt3\' title=\'%1$s\'></i>', __('Text centered (full-width)', 'flynt')),
+                    'center' => sprintf('<i class=\'dashicons dashicons-menu-alt3\' title=\'%1$s\'></i>', __('Text centered (full-width)', 'flynt')),
                     'right' => sprintf('<i class=\'dashicons dashicons-align-right\' title=\'%1$s\'></i>', __('Text on the right (half-width)', 'flynt'))
                 ],
-                'default_value' => 'center_narrow',
+                'default_value' => 'center',
             ],
             [
                 'label' => __('Content', 'flynt'),
@@ -38,30 +37,14 @@ function getACFLayout()
                 'media_upload' => 1,
                 'required' => 1,
             ],
-            [
-                'label' => __('Button', 'flynt'),
-                'name' => 'buttonLink',
-                'type' => 'link',
-                'required' => 0,
-                'wrapper' => [
-                    'width' => 100
-                ],
-            ],
             // [
-            //     'label' => __('Form', 'flynt'),
-            //     'name' => 'formTab',
-            //     'type' => 'tab',
-            //     'placement' => 'top',
-            //     'endpoint' => 0
-            // ],
-            // [
-            //     'label' => __('Form', 'flynt'),
-            //     'name' => 'formHtml',
-            //     'type' => 'wysiwyg',
-            //     'tabs' => 'visual',
-            //     'delay' => 1,
-            //     'media_upload' => 0,
+            //     'label' => __('Button', 'flynt'),
+            //     'name' => 'buttonLink',
+            //     'type' => 'link',
             //     'required' => 0,
+            //     'wrapper' => [
+            //         'width' => 100
+            //     ],
             // ],
             [
                 'label' => __('Options', 'flynt'),
@@ -77,16 +60,7 @@ function getACFLayout()
                 'layout' => 'row',
                 'sub_fields' => [
                     FieldVariables\getColorBackground(),
-                    [
-                        'label' => __('Sticky text?', 'flynt'),
-                        'name' => 'stickyText',
-                        'type' => 'true_false',
-                        'default_value' => 0,
-                        'ui' => 1,
-                        'wrapper' => [
-                            'width' => 100
-                        ],
-                    ],
+                    FieldVariables\getColorText(),
                 ]
             ]
         ]

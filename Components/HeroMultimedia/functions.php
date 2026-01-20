@@ -1,33 +1,14 @@
 <?php
 
-namespace Flynt\Components\HeroImage;
+namespace Flynt\Components\HeroMultimedia;
 
 use Flynt\FieldVariables;
-use Flynt\Utils\Asset;
-use Flynt\Utils\Options;
-use Timber\Timber;
-
-add_action('init', function () {
-    register_nav_menus([
-        'navigation_main' => __('Navigation Main', 'flynt')
-    ]);
-});
-
-add_filter('Flynt/addComponentData?name=HeroImage', function ($data) {
-    $data['menu'] = Timber::get_menu('navigation_main') ?? Timber::get_pages_menu();
-    $data['logo'] = [
-        'src' => get_theme_mod('custom_header_logo') ? get_theme_mod('custom_header_logo') : Asset::requireUrl('assets/images/logo.svg'),
-        'alt' => get_bloginfo('name')
-    ];
-
-    return $data;
-});
 
 function getACFLayout()
 {
     return [
-        'name' => 'HeroImage',
-        'label' => __('Hero (Image)', 'flynt'),
+        'name' => 'HeroMultimedia',
+        'label' => __('Hero (Multimedia)', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Image', 'flynt'),
@@ -61,16 +42,27 @@ function getACFLayout()
                 ],
             ],
             [
-                'label' => __('Height', 'flynt'),
-                'name' => 'height',
-                'type' => 'select',
-                'default_value' => 'h-screen',
-                'choices' => [
-                    'h-screen' => __('Full Screen', 'flynt'),
-                    'h-[75vh]' => __('2/3 Screen', 'flynt'),
-                ],
+                'label' => __('Video File', 'flynt'),
+                'name' => 'videoFile',
+                'type' => 'file',
+                'required' => 0,
+                'instructions' => __('Video-Format: MP4, MOV. Recommended: MP4 for best compatibility.', 'flynt'),
+                'mime_types' => 'mp4, mov',
+                'return_format' => 'array',
                 'wrapper' => [
-                    'width' => 100
+                    'width' => 50
+                ],
+            ],
+            [
+                'label' => __('Video File Mobile', 'flynt'),
+                'name' => 'videoFileMobile',
+                'type' => 'file',
+                'required' => 0,
+                'instructions' => __('Video-Format: MP4, MOV. Recommended: MP4 for best compatibility.', 'flynt'),
+                'mime_types' => 'mp4, mov',
+                'return_format' => 'array',
+                'wrapper' => [
+                    'width' => 50
                 ],
             ],
             [

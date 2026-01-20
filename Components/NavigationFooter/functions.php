@@ -19,41 +19,25 @@ add_filter('Flynt/addComponentData?name=NavigationFooter', function ($data) {
     return $data;
 });
 
+
 Options::addTranslatable('NavigationFooter', [
     [
-        'label' => __('Logo', 'flynt'),
-        'name' => 'logoTab',
+        'label' => __('Media', 'flynt'),
+        'name' => 'mediaTab',
         'type' => 'tab',
         'placement' => 'top',
         'endpoint' => 0
     ],
     [
         'label' => __('Logo', 'flynt'),
+        'instructions' => __('Image-Format: JPG, PNG, SVG', 'flynt'),
         'name' => 'logoFooter',
         'type' => 'image',
-        'preview_size' => 'medium',
-        'instructions' => __('Image-Format: JPG, PNG, SVG.', 'flynt'),
-        'required' => 0,
-        'mime_types' => 'jpg,jpeg,png,svg',
-        'wrapper' =>  [
-            'width' => 100,
-        ]
-    ],
-    [
-        'label' => __('Copyrighs', 'flynt'),
-        'name' => 'copyrightsTab',
-        'type' => 'tab',
-        'placement' => 'top',
-        'endpoint' => 0
-    ],
-    [
-        'label' => __('Copyrights', 'flynt'),
-        'name' => 'copyrightsHtml',
-        'type' => 'wysiwyg',
-        'tabs' => 'visual,text',
-        'toolbar' => 'default',
-        'media_upload' => 0,
-        'delay' => 1
+        'preview_size' => 'full',
+        'mime_types' => 'jpg,jpeg,png,svg,webp',
+        'wrapper' => [
+            'width' => 100
+        ],
     ],
     [
         'label' => __('Content', 'flynt'),
@@ -83,30 +67,20 @@ Options::addTranslatable('NavigationFooter', [
                     'width' => 100
                 ],
             ],
-            // [
-            //     'label' => __('Enable Newsletter Form', 'flynt'),
-            //     'name' => 'enableNewsletter',
-            //     'type' => 'true_false',
-            //     'default_value' => 0,
-            //     'ui' => 1,
-            //     'wrapper' => [
-            //         'width' => 50
-            //     ],
-            // ],
         ]
     ],
     [
-        'label' => __('Newsletter', 'flynt'),
-        'name' => 'newsletterTab',
+        'label' => __('Copyright', 'flynt'),
+        'name' => 'copyrightTab',
         'type' => 'tab',
         'placement' => 'top',
         'endpoint' => 0
     ],
     [
-        'label' => __('Newsletter Link', 'flynt'),
-        'name' => 'newsletterLink',
-        'type' => 'link',
-        'required' => 0,
+        'label' => __('Copyright', 'flynt'),
+        'name' => 'copyrightHtml',
+        'type' => 'text',
+        'default_value' => sprintf(__('© %s, %s | All rights reserved', 'flynt'), date('Y'), get_bloginfo('name')),
         'wrapper' => [
             'width' => 100
         ],

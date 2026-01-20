@@ -6,7 +6,7 @@
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--blue){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
   <div class="boxed">
-    <div class="flex flex-col {{ imagePosition }} gap-lg items-center h-full">
+    <div class="flex flex-col-reverse {{ imagePosition }} gap-lg items-center h-full">
       <div class="w-full lg:w-1/2">
         {% if image %}
           <figure class="figure">
@@ -30,14 +30,15 @@
             <a class="button button--outline button--outlineBig" href="{{panel.buttonLink.url}}" {% if panel.buttonLink.target %} target="{{ panel.buttonLink.target }}" rel="noreferrer noopener"{% endif %}>{{panel.buttonLink.title}}</a>
           </div>
         {% endfor %}
-        <div class="flex flex-row gap-xs mt-xs">
-          {% if buttonLink1 %}
-            <a class="button button--fullBlue" href="{{buttonLink1.url}}" {% if buttonLink1.target %} target="{{ buttonLink1.target }}" rel="noreferrer noopener"{% endif %}>{{buttonLink1.title}}</a>
-          {% endif %}
-          {% if buttonLink2 %}
-            <a class="button button--fullOrange" href="{{buttonLink2.url}}" {% if buttonLink2.target %} target="{{ buttonLink2.target }}" rel="noreferrer noopener"{% endif %}>{{buttonLink2.title}}</a>
-          {% endif %}
-        </div>
+        {% if regularButtons %}
+          <div class="flex flex-row gap-xs mt-xs">
+            {% for button in regularButtons %}
+              {% if button.buttonLink %}
+                <a class="button {{ button.buttonStyle }}" href="{{button.buttonLink.url}}" {% if button.buttonLink.target %} target="{{ button.buttonLink.target }}" rel="noreferrer noopener"{% endif %}>{{button.buttonLink.title}}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>
