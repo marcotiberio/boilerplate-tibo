@@ -1,5 +1,5 @@
 html {
-  @apply bg-beige text-blue;
+  @apply bg-grey text-black;
   font-size: var(--base-font-size-mobile, 16px);
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -21,7 +21,7 @@ html {
 }
 
 ::selection {
-  @apply text-beige bg-blue;
+  @apply text-grey bg-green;
 }
 
 body {

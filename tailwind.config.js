@@ -14,7 +14,7 @@ module.exports = {
     },
     borderRadius: {
       none: '0',
-      DEFAULT: '12px',
+      DEFAULT: '0',
       image: '24px',
       button: '50px',
       full: '9999px'
@@ -25,10 +25,8 @@ module.exports = {
       current: 'currentColor',
       transparent: 'transparent',
       // Project colors
-      blue: '#3d6bff',
-      blueDark: '#1545de',
-      orange: '#fd4e04',
-      beige: '#fef7ca',
+      grey: '#f1f1f1',
+      green: '#00ff48',
     },
     fontFamily: {
       sans: ['Inter', 'Arial', 'sans-serif']
