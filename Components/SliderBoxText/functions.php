@@ -20,16 +20,26 @@ function getACFLayout()
         'label' => 'Carousel: Text',
         'sub_fields' => [
             [
-                'label' => __('General', 'flynt'),
-                'name' => 'generalTab',
+                'label' => __('Title', 'flynt'),
+                'name' => 'titleTab',
                 'type' => 'tab',
                 'placement' => 'top',
                 'endpoint' => 0,
             ],
             [
-                'label' => __('Title', 'flynt'),
-                'name' => 'title',
-                'type' => 'text'
+                'label' => __('Title Text', 'flynt'),
+                'name' => 'blockTitleHtml',
+                'type' => 'wysiwyg',
+                'tabs' => 'visual',
+                'media_upload' => 0,
+                'delay' => 1,
+            ],
+            [
+                'label' => __('Photos', 'flynt'),
+                'name' => 'photosTab',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0,
             ],
             [
                 'label' => __('Boxes', 'flynt'),
@@ -37,12 +47,24 @@ function getACFLayout()
                 'type' => 'repeater',
                 'layout' => 'row',
                 'min' => 1,
-                'button_label' => __('Add Step', 'flynt'),
+                'button_label' => __('Add Item', 'flynt'),
                 'sub_fields' => [
-                    FieldVariables\getColorBackground(),
+                    [
+                        'label' => __('Image', 'flynt'),
+                        'name' => 'image',
+                        'type' => 'image',
+                        'preview_size' => 'medium',
+                        'required' => 0,
+                        'mime_types' => 'jpg,jpeg,png,svg,webp',
+                    ],
                     [
                         'label' => __('Title', 'flynt'),
                         'name' => 'title',
+                        'type' => 'text'
+                    ],
+                    [
+                        'label' => __('Subtitle', 'flynt'),
+                        'name' => 'subtitle',
                         'type' => 'text'
                     ],
                     [
@@ -65,6 +87,7 @@ function getACFLayout()
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => [
+                    FieldVariables\getComponentLabel(),
                     FieldVariables\getColorBackground(),
                     FieldVariables\getColorText(),
                 ]

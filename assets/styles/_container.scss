@@ -5,12 +5,12 @@
 flynt-component {
   display: block;
   position: relative;
-  scroll-margin-block-start: 60px;
-  scroll-margin-top: 60px;
+  scroll-margin-block-start: 0;
+  scroll-margin-top: 0;
 
   @screen desktop {
-    scroll-margin-block-start: 77px;
-    scroll-margin-top: 77px;
+    scroll-margin-block-start: 0;
+    scroll-margin-top: 0;
   }
 
   &:last-child:not(flynt-component[name='NavigationFooter']) {
@@ -26,6 +26,19 @@ flynt-component {
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: auto 1fr auto;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: linear-gradient(to top, #00FF4800, #00FF48CC);
+    pointer-events: none;
+    z-index: 1;
+  }
 
   .admin-bar & {
     padding-block-start: var(--wp-admin--admin-bar--height);
@@ -37,21 +50,19 @@ flynt-component {
   @apply max-w-screen-max;
   @apply mx-auto;
   @apply px-xs;
-  @apply py-sm;
-  @apply md:px-xl;
+  @apply py-xl;
+  @apply md:px-md;
   @apply md:py-xl;
 
   &--small {
-    @apply py-sm;
-    @apply sm:py-sm;
+    @apply py-xs;
+    @apply sm:py-md;
   }
-  
 
-  // &--large {
-  //   @apply py-sm;
-  //   @apply sm:py-lg;
-  //   @apply md:py-xl;
-  // }
+  &--large {
+    @apply py-lg;
+    @apply sm:py-xxl;
+  }
 }
 
 .preContent {

@@ -1,35 +1,37 @@
-<div class="menu list-none w-full gap-sm flex flex-row justify-center items-center">
-  {% for item in items %}
-    {# regular menu item #}
-    {% if not item.children %}
-      <div class="item font-menu flex align-middle items-center hover:underline underline-offset-4 no-underline {{ item.classes|join(' ') }} {{- item.current ? ' underline underline-offset-4' }} {{- item.target == '_blank' ? ' external-link' }} {{- item.object == 'page' ? ' page-item' }} {{- item.object == 'post' ? ' post-item' }}">
-        <a class="link flex align-middle items-center no-underline transition-transform duration-200 ease-in-out" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
-          {{ item.title }}
-        </a>
-      </div>
-    {% endif %}
-    {# menu with submenu item #}
-    {% if item.children %}
-      <div x-data="{ showDropdown: false }" class="item font-menu flex align-middle items-center open-submenu hover:underline {{ item.classes|join(' ') }} {{- item.current ? ' underline underline-offset-4' }} {{- item.target == '_blank' ? ' external-link' }} {{- item.object == 'page' ? ' page-item' }} {{- item.object == 'post' ? ' post-item' }}" >
-        <a 
-          @mouseover="showDropdown = true"
-          @mouseleave="showDropdown = false"
-          @click="showDropdown = !showDropdown" 
-          class="link flex align-middle items-center no-underline transition-transform duration-200 ease-in-out cursor-pointer z-[100]" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+<div class="w-full flex justify-center items-center" x-data="{ scrolled: false }" @scroll.window="scrolled = window.scrollY >= 100" x-init="scrolled = window.scrollY >= 200">
+  <nav class="menu list-none w-fit gap-md flex flex-row justify-center items-center px-lg py-sm rounded-full transition-colors duration-300" :class="scrolled ? 'bg-[#00000080] text-white' : 'bg-black text-white'">
+    {% for item in items %}
+      {# regular menu item #}
+      {% if not item.children %}
+        <div class="item font-menu flex align-middle items-center relative {{ item.classes|join(' ') }} {{- item.current ? ' text-black' }} {{- item.target == '_blank' ? ' external-link' }} {{- item.object == 'page' ? ' page-item' }} {{- item.object == 'post' ? ' post-item' }}">
+          <a class="link flex align-middle items-center no-underline transition-transform duration-200 ease-in-out hover:before:content-[''] hover:before:absolute hover:before:left-[-18px] hover:before:top-[4px] hover:before:bottom-[4px] hover:before:w-[8px] hover:before:h-[8px] hover:before:rounded-full hover:before:bg-green" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
             {{ item.title }}
-        </a>
-        <div 
-          class="menu submenu" x-cloak
-          x-show="showDropdown"
-          @mouseover="showDropdown = true"
-          @mouseleave="showDropdown = false">
-            {% for subitem in item.children %}
-              <div class="item font-menu hover:underline underline-offset-4 {{ subitem.classes|join(' ') }} {{- subitem.current ? ' underline underline-offset-4' }} {{- subitem.target == '_blank' ? ' external-link' }} {{- subitem.object == 'page' ? ' page-item' }} {{- subitem.object == 'post' ? ' post-item' }}">
-                <a class="link flex align-middle items-center no-underline transition-transform duration-200 ease-in-out" href="{{ subitem.link }}">{{ subitem.title }}</a>
-              </div>
-            {% endfor %}
+          </a>
         </div>
-      </div>
-    {% endif %}
-  {% endfor %}
+      {% endif %}
+      {# menu with submenu item #}
+      {% if item.children %}
+        <div x-data="{ showDropdown: false }" class="item font-menu flex align-middle items-center relative open-submenu {{ item.classes|join(' ') }} {{- item.current ? ' underline underline-offset-4' }} {{- item.target == '_blank' ? ' external-link' }} {{- item.object == 'page' ? ' page-item' }} {{- item.object == 'post' ? ' post-item' }}" >
+          <a 
+            @mouseover="showDropdown = true"
+            @mouseleave="showDropdown = false"
+            @click="showDropdown = !showDropdown" 
+            class="link flex align-middle items-center no-underline transition-transform duration-200 ease-in-out hover:before:content-[''] hover:before:absolute hover:before:left-[-18px] hover:before:top-[4px] hover:before:bottom-[4px] hover:before:w-[8px] hover:before:h-[8px] hover:before:rounded-full hover:before:bg-green" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+              {{ item.title }}
+          </a>
+          <div 
+            class="menu submenu" x-cloak
+            x-show="showDropdown"
+            @mouseover="showDropdown = true"
+            @mouseleave="showDropdown = false">
+              {% for subitem in item.children %}
+                <div class="item font-menu hover:underline underline-offset-4 {{ subitem.classes|join(' ') }} {{- subitem.current ? ' underline underline-offset-4' }} {{- subitem.target == '_blank' ? ' external-link' }} {{- subitem.object == 'page' ? ' page-item' }} {{- subitem.object == 'post' ? ' post-item' }}">
+                  <a class="link flex align-middle items-center no-underline transition-transform duration-200 ease-in-out" href="{{ subitem.link }}">{{ subitem.title }}</a>
+                </div>
+              {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </nav>
 </div>

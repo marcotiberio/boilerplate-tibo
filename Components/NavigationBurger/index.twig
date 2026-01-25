@@ -4,7 +4,7 @@
   name="NavigationBurger"
   class="block lg:hidden fixed top-0 left-0 w-screen z-50 flex-row justify-between mx-auto">
   <nav aria-label="{{ labels.ariaLabel|e }}" class="h-auto w-full">
-    <div class="w-full h-auto max-w-screen-max mx-auto !px-xs md:!px-sm !min-h-fit grid grid-cols-2 lg:gap-sm align-middle items-center z-[3001] relative">
+    <div class="w-full h-auto max-w-screen-max mx-auto boxed boxed--small !min-h-fit grid grid-cols-2 lg:gap-sm align-middle items-center z-[3001] relative">
       {% include 'Partials/_logo.twig' with { 'logo': logo, 'site': site } only %}
       {% if menu %}
         <div class="flex justify-end items-center">
@@ -15,7 +15,7 @@
     {% if menu %}
       <div
         data-ref="menu" 
-        class="menu w-full h-fit !pt-[50px] z-40 relative bg-beige">
+        class="menu w-full h-fit !pt-lg z-40 relative">
         <div class="w-full h-full max-w-screen-max mx-auto flex flex-col justify-start items-start gap-xs px-xs py-xs">
           {% for item in menu.items %}
             {# regular menu item #}

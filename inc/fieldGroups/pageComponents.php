@@ -29,7 +29,7 @@ add_action('Flynt/afterRegisterComponents', function () {
     //         //     'type' => 'select',
     //         //     'choices' => [
     //         //         'bg-white' => 'White',
-    //         //         'bg-orange' => 'Orange',
+    //         //         'bg-green' => 'Green',
     //         //     ],
     //         //     'default_value' => 'bg-white',
     //         //     'required' => 0
@@ -70,7 +70,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockBannerShape\getACFLayout(),
                     Components\BlockButtons\getACFLayout(),
                     Components\BlockDivider\getACFLayout(),
-                    Components\BlockImageTest2\getACFLayout(),
+                    Components\BlockImage\getACFLayout(),
                     Components\BlockImageText\getACFLayout(),
                     Components\BlockGalleryMedia\getACFLayout(),
                     Components\BlockWysiwyg\getACFLayout(),
@@ -87,6 +87,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockSliderLogos\getACFLayout(),
                     Components\BlockSpacer\getACFLayout(),
                     Components\SliderBox\getACFLayout(),
+                    Components\SliderBoxText\getACFLayout(),
                 ],
             ],
         ],

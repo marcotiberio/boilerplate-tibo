@@ -22,6 +22,25 @@ add_filter('Flynt/addComponentData?name=NavigationFooter', function ($data) {
 
 Options::addTranslatable('NavigationFooter', [
     [
+        'label' => __('Text', 'flynt'),
+        'name' => 'textTab',
+        'type' => 'tab',
+        'placement' => 'top',
+        'endpoint' => 0
+    ],
+    [
+        'label' => __('Content', 'flynt'),
+        'name' => 'contentHtml',
+        'type' => 'wysiwyg',
+        'tabs' => 'visual',
+        'delay' => 1,
+        'media_upload' => 0,
+        'required' => 0,
+        'wrapper' => [
+            'width' => 100
+        ],
+    ],
+    [
         'label' => __('Media', 'flynt'),
         'name' => 'mediaTab',
         'type' => 'tab',
@@ -40,8 +59,8 @@ Options::addTranslatable('NavigationFooter', [
         ],
     ],
     [
-        'label' => __('Content', 'flynt'),
-        'name' => 'contentTab',
+        'label' => __('Columns', 'flynt'),
+        'name' => 'columnsTab',
         'type' => 'tab',
         'placement' => 'top',
         'endpoint' => 0

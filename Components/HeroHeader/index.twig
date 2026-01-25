@@ -1,18 +1,31 @@
 <flynt-component
   load:on="idle" 
   name="HeroHeader" 
-  class="" 
+  class="h-[100vw] md:h-screen w-screen" 
   style="
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};"
   >
-  <div class="boxed flex flex-col justify-center items-center gap-sm">
-    {% if blockTitle %}
-      <div class="font-h2 text-center">{{ blockTitle }}</div>
+  <div class="boxed boxed--large h-full w-full flex flex-col justify-between items-center gap-sm relative">
+    {% if blockTextTop %}
+      <div class="w-full font-h1 text-left z-10">{{ blockTextTop }}</div>
     {% endif %}
-    {% if contentHtml %}
+    {% if blockTextBottom %}
+      <div class="w-full font-h1 text-right z-10">{{ blockTextBottom }}</div>
+    {% endif %}
+    {% if backgroundImage %}
+      <div class="w-full flex justify-center items-center my-md absolute inset-0 h-full z-0 pointer-events-none max-w-[80vw] mx-auto max-h-full">
+        <img 
+          class="object-cover lazyload aspect-video max-w-screen-lg h-auto"
+          src="{{ backgroundImage.src | resize(32) }}"
+          data-srcset="{{function('wp_get_attachment_image_srcset', backgroundImage.id)}}"
+          data-sizes="auto"
+          alt="{{ backgroundImage.alt|e }}">
+      </div>
+    {% endif %}
+    {# {% if contentHtml %}
       <div class="wysiwyg text-center">{{ contentHtml|e('wp_kses_post') }}</div>
-    {% endif %}
+    {% endif %} #}
     {# {% if buttonLink %}
       <a 
         class="button button--fullBlue" 

@@ -26,7 +26,9 @@ module.exports = {
       transparent: 'transparent',
       // Project colors
       grey: '#f1f1f1',
+      greyDark: '#d9d9d9',
       green: '#00ff48',
+      yellow: '#fff000',
     },
     fontFamily: {
       sans: ['Inter', 'Arial', 'sans-serif']
