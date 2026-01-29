@@ -44,8 +44,8 @@ flynt-component[name='SliderCards'] {
 
   // Custom pagination container (Swiper injects bullets here)
   .slider-pagination {
-    @apply absolute right-0 top-0 z-50 w-full lg:w-fit;
-    @apply lg:translate-x-[calc(200%+60px)] lg:translate-y-[60px];
+    @apply absolute left-0 lg:left-[calc(50%+120px)] top-0 z-50 w-full lg:w-fit;
+    @apply lg:translate-y-[6vw];
     @apply flex flex-col gap-xs lg:justify-start lg:items-start;
     pointer-events: auto !important;
   }
