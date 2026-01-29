@@ -8,15 +8,15 @@
   >
   <div class="boxed boxed--large h-full w-full flex flex-col justify-between items-center gap-sm relative">
     {% if blockTextTop %}
-      <div class="w-full font-h1 text-left z-10">{{ blockTextTop }}</div>
+      <div class="w-full font-h1 text-left z-10 rellax" data-rellax-speed="-3">{{ blockTextTop }}</div>
     {% endif %}
     {% if blockTextBottom %}
-      <div class="w-full font-h1 text-right z-10">{{ blockTextBottom }}</div>
+      <div class="w-full font-h1 text-right z-10 rellax" data-rellax-speed="3">{{ blockTextBottom }}</div>
     {% endif %}
     {% if backgroundImage %}
-      <div class="w-full flex justify-center items-center my-md absolute inset-0 h-full z-0 pointer-events-none max-w-[80vw] mx-auto max-h-full">
+      <div class="rellaxw-full flex justify-center items-center my-md absolute inset-0 h-full z-0 pointer-events-none max-w-[80vw] mx-auto max-h-full">
         <img 
-          class="object-cover lazyload aspect-video max-w-screen-lg h-auto"
+          class="object-cover lazyload aspect-video max-w-screen-lg h-auto rellax" data-rellax-speed="5"
           src="{{ backgroundImage.src | resize(32) }}"
           data-srcset="{{function('wp_get_attachment_image_srcset', backgroundImage.id)}}"
           data-sizes="auto"

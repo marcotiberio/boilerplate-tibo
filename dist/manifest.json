@@ -1,6 +1,6 @@
 {
   "Components/BlockGalleryMedia/script.js": {
-    "file": "assets/script-48bc6e8a.js",
+    "file": "assets/script-ecbf5980.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -8,7 +8,7 @@
     "src": "Components/BlockGalleryMedia/script.js"
   },
   "Components/BlockImage/script.js": {
-    "file": "assets/script-79c0f4d6.js",
+    "file": "assets/script-3f1b63f4.js",
     "imports": [
       "assets/main.js"
     ],
@@ -24,7 +24,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-ecbf5980.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -47,7 +47,7 @@
     "css": [
       "assets/script-b3ce9496.css"
     ],
-    "file": "assets/script-c5434e30.js",
+    "file": "assets/script-fcc643d1.js",
     "imports": [
       "assets/main.js"
     ],
@@ -62,6 +62,14 @@
     ],
     "isDynamicEntry": true,
     "src": "Components/GridPostsArchive/script.js"
+  },
+  "Components/HeroHeader/script.js": {
+    "file": "assets/script-42df4bbb.js",
+    "imports": [
+      "assets/main.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "Components/HeroHeader/script.js"
   },
   "Components/ListComponents/script.js": {
     "file": "assets/script-6fca4744.js",
@@ -204,7 +212,7 @@
     "src": "Components/ZZZ/HeroSliderComposite/script.js"
   },
   "Components/ZZZ/HeroVideoBackground/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-48bc6e8a.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -221,7 +229,7 @@
     "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
-    "file": "assets/script-d820db95.js",
+    "file": "assets/script-57170a6c.js",
     "imports": [
       "assets/main.js"
     ],
@@ -348,6 +356,7 @@
       "_script-9ba1850d.js",
       "Components/GridImages/script.js",
       "Components/GridPostsArchive/script.js",
+      "Components/HeroHeader/script.js",
       "Components/ListComponents/script.js",
       "Components/ListingJournalRelated/script.js",
       "Components/ListingVideosRelated/script.js",
@@ -372,12 +381,12 @@
       "Components/ZZZ/SliderLogos/script.js",
       "Components/ZZZ/SliderQuotes/script.js"
     ],
-    "file": "assets/main-6dde5d2c.js",
+    "file": "assets/main-f40893a7.js",
     "isEntry": true,
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-67ef5616.css",
+    "file": "assets/main-74ef9337.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
@@ -387,7 +396,7 @@
     "src": "assets/print.scss"
   },
   "assets/tinyMce.scss": {
-    "file": "assets/tinyMce-3f4ea789.css",
+    "file": "assets/tinyMce-4615345c.css",
     "isEntry": true,
     "src": "assets/tinyMce.scss"
   },
