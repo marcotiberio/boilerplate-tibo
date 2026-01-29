@@ -1,5 +1,6 @@
 <flynt-component
   load:on="idle" name="BlockServices"
+  id="{{ options.componentLabel|lower|replace({' ': '-'}) }}"
   class="h-screen"
   style="
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};

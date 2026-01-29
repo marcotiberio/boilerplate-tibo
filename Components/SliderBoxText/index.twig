@@ -1,6 +1,7 @@
 <flynt-component
   load:on="idle" name="SliderBoxText"
   class="pb-0 overflow-hidden"
+  id="{{ options.componentLabel|lower|replace({' ': '-'}) }}"
   style="
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};"
