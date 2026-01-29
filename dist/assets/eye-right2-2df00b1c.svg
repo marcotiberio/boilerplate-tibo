@@ -1,0 +1,10 @@
+<svg id="eyeRight2" width="44" height="46" viewBox="0 0 44 46" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible; transform-origin: center;">
+  <defs>
+    <clipPath id="eye-right2-clip">
+      <rect width="44" height="46" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#eye-right2-clip)">
+    <path d="M23.5826 7.04841C13.6063 7.56526 1.64568 13.8533 0.176762 24.2071C-2.08476 40.1511 17.8891 42.3958 29.5067 38.0632C36.6788 35.3894 43.2638 29.5212 43.9362 21.774C44.9517 10.1253 33.648 6.52782 23.5826 7.04841ZM14.5365 30.2489C14.2516 31.8535 12.1975 32.6167 10.6898 32.2248C7.71902 31.4542 7.90313 27.0022 10.9611 26.5749C13.4513 26.2279 14.9493 27.9146 14.5365 30.247V30.2489Z" fill="#111111"/>
+  </g>
+</svg>
