@@ -37,6 +37,22 @@ function getACFLayout()
                 'required' => 0,
             ],
             [
+                'label' => __('Button', 'flynt'),
+                'name' => 'buttonLink',
+                'type' => 'link',
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 100
+                ],
+            ],
+            [
+                'label' => __('Images & Illustrations', 'flynt'),
+                'name' => 'imagesIllustrationsTab',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0,
+            ],
+            [
                 'label' => __('Images', 'flynt'),
                 'name' => 'images',
                 'type' => 'gallery',
@@ -50,8 +66,6 @@ function getACFLayout()
                 'min' => 1,
                 'button_label' => __('Add Illustration', 'flynt'),
                 'sub_fields' => [
-                    // FieldVariables\getColorBackground(),
-                    // FieldVariables\getColorText(),
                     [
                         'label' => __('Illustration', 'flynt'),
                         'name' => 'illustration',
@@ -66,31 +80,6 @@ function getACFLayout()
                     ],
                 ],
             ],
-            [
-                'label' => __('Button', 'flynt'),
-                'name' => 'buttonLink',
-                'type' => 'link',
-                'required' => 0,
-                'wrapper' => [
-                    'width' => 100
-                ],
-            ],
-            // [
-            //     'label' => __('Image', 'flynt'),
-            //     'name' => 'imageTab',
-            //     'type' => 'tab',
-            //     'placement' => 'top',
-            //     'endpoint' => 0,
-            // ],
-            // [
-            //     'label' => __('Background Image', 'flynt'),
-            //     'instructions' => __('Image-Format: JPG, PNG, SVG, WEBP.', 'flynt'),
-            //     'name' => 'backgroundImage',
-            //     'type' => 'image',
-            //     'preview_size' => 'medium',
-            //     'required' => 0,
-            //     'mime_types' => 'jpg,jpeg,png,svg,webp',
-            // ],
             [
                 'label' => __('Options', 'flynt'),
                 'name' => 'optionsTab',
