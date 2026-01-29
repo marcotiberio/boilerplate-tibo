@@ -107,11 +107,9 @@ function getACFLayout()
                         'choices' => [
                             '1' => sprintf('<p>1</p>', __('1', 'flynt')),
                             '2' => sprintf('<p>2</p>', __('2', 'flynt')),
-                            '3' => sprintf('<p>3</p>', __('3', 'flynt')),
-                            '4' => sprintf('<p>4</p>', __('4', 'flynt')),
-                            '5' => sprintf('<p>5</p>', __('5', 'flynt'))
+                            '3' => sprintf('<p>3</p>', __('3', 'flynt'))
                         ],
-                        'default_value' => '4',
+                        'default_value' => '3',
                     ],
                     // [
                     //     'label' => __('Add border top', 'flynt'),

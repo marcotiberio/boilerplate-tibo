@@ -1,0 +1,33 @@
+<flynt-component
+  load:on="idle" name="SliderCards"
+  class="overflow-hidden "
+  style="
+    color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
+    background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
+  <script type="application/json">{{ jsonData|json_encode }}</script>
+  <div class="wrapper w-screen mx-auto boxed boxed--coloured">
+    {% if headlineTitle %}
+      <h2 class="mb-xxl">{{ headlineTitle }}</h2>
+    {% endif %}
+
+    <div class="slider-container relative mt-xl lg:mt-0 pt-[280px] lg:pt-0">
+      <div data-ref="slider" class="slider swiper-container">
+        <div class="swiper-wrapper">
+          {% for row in rows %}
+            <div class="slider-item swiper-slide relative w-full h-auto lg:mr-md flex flex-row justify-center items-center overflow-hidden">
+              {% if row.image %}
+                <div class="lg:w-1/2 h-auto flex justify-end items-center">
+                  <img src="{{ row.image.src }}" alt="{{ row.image.alt }}" class="max-w-[400px] rounded-image aspect-square object-cover">
+                </div>
+                <div class="lg:w-1/2"></div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      
+      {# Custom pagination: bullets with text content (Swiper renderBullet), centered vertically with cards #}
+      <div data-ref="dots" class="slider-pagination swiper-pagination"></div>
+    </div>
+  </div>
+</flynt-component>

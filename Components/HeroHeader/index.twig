@@ -8,18 +8,18 @@
   >
   <div class="boxed flex flex-col justify-center items-center gap-sm">
     {% if blockTitle %}
-      <div class="font-h2 text-center">{{ blockTitle }}</div>
+      <h1 class="font-h1 text-center">{{ blockTitle }}</h1>
     {% endif %}
     {% if contentHtml %}
       <div class="wysiwyg text-center">{{ contentHtml|e('wp_kses_post') }}</div>
     {% endif %}
-    {# {% if buttonLink %}
+    {% if buttonLink %}
       <a 
-        class="button button--fullBlue" 
+        class="button button--fullOrange" 
         href="{{ buttonLink.url }}" 
         {% if buttonLink.target %} target="{{ buttonLink.target }}" rel="noreferrer noopener"{% endif %}>
         {{ buttonLink.title }}
       </a>
-    {% endif %}  #}
+    {% endif %} 
   </div>
 </flynt-component>

@@ -21,7 +21,7 @@
             {# regular menu item #}
             {% if not item.children %}
               <div class="item {{- item.current ? ' current-menu-item underline underline-offset-4' }}">
-                <a class="link font-menu" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+                <a class="link font-nav" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
                   {{ item.title }}
                 </a>
               </div>
@@ -29,13 +29,13 @@
             {# menu with submenu item #}
             {% if item.children %}
               <div class="item open-submenu {{- item.current ? ' current-menu-item underline underline-offset-4' }}" >
-                <a class="link font-menu" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+                <a class="link font-nav" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
                   {{ item.title }}
                 </a>
                 <div class="submenu">
                   {% for subitem in item.children %}
                     <div class="item {{- subitem.current ? ' current-menu-item underline underline-offset-4' }}">
-                      <a class="link !p-0 font-menu" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
+                      <a class="link !p-0 font-nav" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
                     </div>
                   {% endfor %}
                 </div>

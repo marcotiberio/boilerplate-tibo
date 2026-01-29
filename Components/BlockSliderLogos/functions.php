@@ -39,16 +39,16 @@ function getACFLayout()
                 'endpoint' => 0
             ],
             [
-                'label' => __('Text Boxes', 'flynt'),
-                'name' => 'contentBoxes',
+                'label' => __('Logos', 'flynt'),
+                'name' => 'rows',
                 'type' => 'repeater',
                 'layout' => 'block',
                 'min' => 1,
-                'button_label' => __('Add Box', 'flynt'),
+                'button_label' => __('Add Logo', 'flynt'),
                 'sub_fields' => [
                     [
                         'label' => __('Logo/Icon', 'flynt'),
-                        'name' => 'panelLogo',
+                        'name' => 'logo',
                         'type' => 'image',
                         'preview_size' => 'small',
                         'instructions' => __('Accepted Image-Formats: SVG, PNG. Recommended Image-Format: SVG.', 'flynt'),
@@ -60,7 +60,7 @@ function getACFLayout()
                     ],
                     [
                         'label' => __('Link', 'flynt'),
-                        'name' => 'panelLink',
+                        'name' => 'link',
                         'type' => 'link',
                         'return_format' => 'array',
                         'required' => 0,
@@ -84,6 +84,7 @@ function getACFLayout()
                 'layout' => 'row',
                 'sub_fields' => [
                     FieldVariables\getColorBackground(),
+                    FieldVariables\getColorText(),
                     [
                         'label' => __('Enable Autoplay', 'flynt'),
                         'instructions' => __('Enable for infinite loop autoplay.', 'flynt'),

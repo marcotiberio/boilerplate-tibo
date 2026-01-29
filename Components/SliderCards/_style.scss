@@ -1,0 +1,89 @@
+flynt-component[name='SliderCards'] {
+  .slider-container {
+    position: relative;
+  }
+
+  .slider {
+    max-width: 100%;
+    position: relative;
+    overflow: visible;
+
+    .swiper-wrapper {
+      box-sizing: inherit;
+    }
+
+    .swiper-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 12px;
+      box-sizing: border-box;
+      width: fit-content;
+    }
+
+    // Inactive slides (not the active/front card)
+    .swiper-slide:not(.swiper-slide-active) {
+      pointer-events: none;
+    }
+
+    // Cards effect: ensure slides fill the viewport for stacking
+    &.swiper-cards {
+      .swiper-slide {
+        height: auto;
+        backface-visibility: hidden;
+      }
+
+      .swiper-slide:not(.swiper-slide-active) {
+        opacity: 1 !important;
+        box-shadow: none !important;
+        filter: none !important;
+      }
+    }
+  }
+
+  // Custom pagination container (Swiper injects bullets here)
+  .slider-pagination {
+    @apply absolute right-0 top-0 z-50 w-full lg:w-fit;
+    @apply lg:translate-x-[calc(200%+60px)] lg:translate-y-[60px];
+    @apply flex flex-col gap-xs lg:justify-start lg:items-start;
+    pointer-events: auto !important;
+  }
+
+  // Custom bullet = text card (from renderBullet)
+  .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
+    @apply m-0 !important;
+  }
+
+  .slider-pagination-bullet-custom {
+    @apply bg-[#f2e8bb] !important;
+    @apply opacity-100 !important;
+    @apply rounded-image;
+    @apply p-xs;
+    @apply w-full lg:w-[400px] h-auto;
+    @apply cursor-pointer;
+    @apply flex flex-col justify-start items-start;
+    @apply gap-xs;
+    @apply transition-all duration-300 ease-in-out;
+
+    .slider-pagination-bullet-title {
+      @apply font-h3;
+    }
+
+    .slider-pagination-bullet-content {
+      @apply font-body;
+      @apply text-left;
+    }
+
+    &:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    &.slider-pagination-bullet-custom-active {
+      opacity: 1;
+      transform: translateY(-4px);
+    }
+  }
+}

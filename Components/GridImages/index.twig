@@ -6,24 +6,26 @@
     {% if title %}
       <div class="font-h2">{{ title }}</div>
     {% endif %}
+    {% set gridColClasses = {
+      1: 'grid-cols-1 sm:grid-cols-1 lg:grid-cols-1',
+      2: 'grid-cols-2 sm:grid-cols-2 lg:grid-cols-2',
+      3: 'grid-cols-3 sm:grid-cols-3 lg:grid-cols-3',
+    } %}
     <div 
-      class="w-full mx-auto grid gap-xs"
-      data-ref="imageGrid"
-      {{ options.gridColumns ? 'data-grid-columns="' ~ options.gridColumns ~ '"' }}>
+      class="w-full mx-auto grid {{ gridColClasses[options.gridColumns] ?? gridColClasses[1] }}"
+      data-ref="imageGrid">
       {% for item in items %}
-        <div class="flex flex-col">
-          {% if item.image %}
-            <figure class="figure figureImage w-full cursor-pointer" data-ref="imageItem" data-image-index="{{ loop.index0 }}">
-              <img class="lazyload w-full mx-auto h-auto object-cover aspect-4/3"
-                src="{{ item.image.src | resize(32) }}"
-                data-srcset="{{function('wp_get_attachment_image_srcset', item.image.id)}}"
-                data-sizes="auto"
-                data-lightbox-src="{{ item.image.src }}"
-                data-lightbox-srcset="{{function('wp_get_attachment_image_srcset', item.image.id)}}"
-                alt="{{ item.image.alt|e }}">
-            </figure>
-          {% endif %}
-        </div>
+        {% if item.image %}
+          <figure class="figure figureImage w-full cursor-pointer" data-ref="imageItem" data-image-index="{{ loop.index0 }}">
+            <img class="lazyload w-full mx-auto h-auto object-cover aspect-square rounded-image"
+              src="{{ item.image.src | resize(32) }}"
+              data-srcset="{{function('wp_get_attachment_image_srcset', item.image.id)}}"
+              data-sizes="auto"
+              data-lightbox-src="{{ item.image.src }}"
+              data-lightbox-srcset="{{function('wp_get_attachment_image_srcset', item.image.id)}}"
+              alt="{{ item.image.alt|e }}">
+          </figure>
+        {% endif %}
       {% endfor %}
     </div>
   </div>

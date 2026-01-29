@@ -14,7 +14,7 @@
         <div class="flex flex-col w-full">
           {% if column.image %}
             <img 
-              class="figure-image lazyload w-full aspect-8/5 object-cover mb-xs"
+              class="figure-image lazyload w-full max-w-[33%] object-cover mb-xs"
               src="{{ column.image.src }}"
               alt="{{ column.image.alt|e | default('') }}"
               loading="lazy"

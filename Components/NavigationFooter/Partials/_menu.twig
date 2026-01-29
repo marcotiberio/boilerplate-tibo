@@ -3,7 +3,7 @@
     {# regular menu item #}
     {% if not item.children %}
       <div class="item flex hover:text-white {{ item.classes|join(' ') }} {{- item.current ? ' text-white' }}">
-        <a class="link font-menu" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+        <a class="link font-nav" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
           {{ item.title }}
         </a>
       </div>
@@ -11,13 +11,13 @@
     {# menu with submenu item #}
     {% if item.children %}
       <div class="item open-submenu hover:text-white {{ item.classes|join(' ') }} {{- item.current ? ' text-white' }}" >
-        <div class="link font-menu">
+        <div class="link font-nav">
           {{ item.title }}
         </div>
         <div class="submenu flex flex-row gap-xs">
           {% for subitem in item.children %}
             <div class="item hover:text-white {{ subitem.classes|join(' ') }} {{- subitem.current ? ' text-white' }}">
-              <a class="link !p-0 font-menu" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
+              <a class="link !p-0 font-nav" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
             </div>
           {% endfor %}
         </div>

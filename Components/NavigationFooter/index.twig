@@ -23,7 +23,7 @@
   </div>
   {# Menu #}
   <div class="w-full h-full flex flex-col md:flex-row gap-xs md:gap-sm justify-between items-center">
-    <div class="font-menu uppercase">{{ copyrightHtml }}</div>
+    <div class="font-nav uppercase">{{ copyrightHtml }}</div>
     {% if menu %}
       <nav class="flex justify-end items-center" aria-label="{{ labels.ariaLabel }}">
         {% include 'Partials/_menu.twig' with { 'items': menu.get_items, 'level': '0', 'maxLevel': maxLevel } only %}

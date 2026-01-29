@@ -6,20 +6,20 @@
     {% for item in items %}
       {% if not item.children %}
         <li class="item {{- item.current ? ' current-menu-item' }}">
-          <a class="link font-menu" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+          <a class="link font-nav" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
             {{ item.title }}
           </a>
         </li>
       {% endif %}
       {% if item.children %}
         <li class="item open-submenu {{- item.current ? ' current-menu-item' }}" >
-          <a class="link font-menu" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+          <a class="link font-nav" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
             {{ item.title }}
           </a>
           <ul class="submenu">
             {% for subitem in item.children %}
               <li class="item {{- subitem.current ? ' current-menu-item' }}">
-                <a class="link !p-0 font-menu" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
+                <a class="link !p-0 font-nav" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
               </li>
             {% endfor %}
           </ul>

@@ -28,6 +28,7 @@ module.exports = {
       blue: '#3d6bff',
       blueDark: '#1545de',
       orange: '#fd4e04',
+      orangeDark: '#c53b00',
       beige: '#fef7ca',
     },
     fontFamily: {
