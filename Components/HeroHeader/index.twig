@@ -6,9 +6,36 @@
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};"
   >
-  <div class="boxed flex flex-col justify-center items-center gap-sm">
+  <div class="boxed boxed--large flex flex-col justify-center items-center gap-sm">
     {% if blockTitle %}
       <h1 class="font-h1 text-center">{{ blockTitle }}</h1>
+    {% endif %}
+    {% if images is defined and images|length %}
+      <div class="relative w-full h-full flex flex-col justify-center items-center gap-0">
+        <div 
+          class="gallery relative py-sm flex flex-row justify-center items-center gap-0 [&_.galleryImg]:hover:mx-xs">
+          {% for image in images %}
+            <img 
+              src="{{ image.src|default(image.url) }}" 
+              alt="{{ image.alt|default('') }}"
+              class="galleryImg max-w-[200px] max-h-[200px] rounded-image object-cover aspect-square relative z-10"
+              loading="lazy"
+            >
+          {% endfor %}
+          <div class="illustrations absolute top-0 left-0 w-full flex flex-row items-center justify-center z-0">
+          {% for row in rows %}
+            {% if row.illustration %}
+              <img 
+                class="lazyload object-cover w-[225px] h-auto"
+                src="{{ row.illustration.src | resize(32) }}"
+                data-srcset="{{function('wp_get_attachment_image_srcset', row.illustration.id)}}"
+                data-sizes="auto"
+                alt="{{ row.illustration.alt|e | default('Illustration') }}">
+            {% endif %}
+          {% endfor %}
+        </div>
+        </div>
+      </div>
     {% endif %}
     {% if contentHtml %}
       <div class="wysiwyg text-center">{{ contentHtml|e('wp_kses_post') }}</div>

@@ -70,6 +70,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockBannerShape\getACFLayout(),
                     Components\BlockButtons\getACFLayout(),
                     Components\BlockDivider\getACFLayout(),
+                    Components\BlockForm\getACFLayout(),
                     Components\BlockImageTest2\getACFLayout(),
                     Components\BlockImageText\getACFLayout(),
                     Components\BlockSliderLogos\getACFLayout(),

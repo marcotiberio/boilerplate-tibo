@@ -42,16 +42,15 @@ flynt-component {
   @apply md:py-xl;
 
   &--small {
-    @apply py-sm;
+    @apply py-xs;
     @apply sm:py-sm;
   }
   
 
-  // &--large {
-  //   @apply py-sm;
-  //   @apply sm:py-lg;
-  //   @apply md:py-xl;
-  // }
+  &--large {
+    @apply py-md;
+    @apply sm:py-max;
+  }
 }
 
 .preContent {

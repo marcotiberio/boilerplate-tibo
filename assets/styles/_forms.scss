@@ -18,6 +18,12 @@ label {
   font-weight: 500 !important;
 }
 
+.pas-submit {
+  button {
+    background: var(--black) !important;
+  }
+}
+
 #{$input-selectors} {
   appearance: none !important;
   background-color: transparent !important;

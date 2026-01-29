@@ -1,0 +1,31 @@
+<flynt-component 
+  load:on="visible" 
+  name="BlockForm"
+  style="
+    color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--blue){% endif %};">
+  <div 
+    class="boxed w-full">
+    <div 
+      class="
+        flex flex-col md:flex-row gap-sm {% if options.colorBackground %} p-sm rounded {% endif %}
+        {% if textPosition == 'right' %} justify-end w-full ml-auto{% endif %}
+        {% if textPosition == 'left' %} justify-start w-full mr-auto{% endif %}
+        {% if textPosition == 'center' %} justify-center w-full mx-auto{% endif %}
+      "
+      style="background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
+      <div class="w-full md:w-1/2 flex flex-col gap-lg">
+        <div class="wysiwyg w-[90%]">{{ contentHtml|e('wp_kses_post') }}</div>
+        {% if illustration   %}
+        <img class="w-1/2 lazyload object-cover"
+          src="{{ illustration.src | resize(32) }}"
+          data-srcset="{{function('wp_get_attachment_image_srcset', illustration.id)}}"
+          data-sizes="auto"
+          alt="{{ illustration.alt|e }}">
+        {% endif %}
+      </div>
+      <div class="w-full md:w-1/2">
+        <iframe data-w-type="embedded" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://si9m9.mjt.lu/wgt/si9m9/xjv3/form?c=eecd9ea9" width="100%" style="height: 0;"></iframe><script type="text/javascript" src="https://app.mailjet.com/pas-nc-embedded-v1.js"></script>
+      </div>
+    </div>
+  </div>
+</flynt-component>
