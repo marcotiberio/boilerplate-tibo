@@ -1,0 +1,28 @@
+<flynt-component load:on="visible" name="BlockImage" id="{{ options.componentLabel|lower|replace({' ': '-'}) }}">
+  <div class="w-screen h-full relative">
+    <figure class="mx-auto relative overflow-hidden data-[image-size="small"]:max-w-[375px] data-[image-size="medium"]:max-w-[var(--content-max-width)] data-[image-size="large"]:max-w-[var(--content-max-width-large)] data-[image-size="full"]:max-w-full">
+      {% if options.componentLabel %}
+        <div class="boxed boxed--small absolute top-0 left-0 w-full flex justify-between items-center">
+          <div class="font-menu">{{ options.componentLabel }}</div>
+          <div class="font-menu">{{ options.componentLabel }}</div>
+        </div>
+      {% endif %}
+      {% if image %}
+        <img 
+          class="block w-full h-screen md:h-auto lazyload object-cover"
+          src="{{ image.src }}"
+          alt="{{ image.alt|e | default('') }}"
+          loading="lazy"
+          style="opacity: 0; transition: opacity 0.5s ease-in-out;"
+          onload="this.style.opacity='1'"
+        />
+      {% endif %}
+      {% if image.title or image.caption %}
+        <div class="hidden py-[5px]">
+          <figcaption class="font-bodySmall">{{ image.title|e }}</figcaption>
+          <figcaption class="font-bodySmall underline underline-offset-4">{{ image.caption|e }}</figcaption>
+        </div>
+      {% endif %}
+    </figure>
+  </div>
+</flynt-component>

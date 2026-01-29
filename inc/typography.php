@@ -16,9 +16,9 @@ add_action('acf/init', function () {
             'multi_expand' => 1,
         ],
         [
-            'label' => __('Font Source', 'flynt'),
-            'instructions' => __('Choose how to load the font: Google Fonts or upload custom font files.', 'flynt'),
-            'name' => 'fontSource',
+            'label' => __('Primary Font Source', 'flynt'),
+            'instructions' => __('Choose how to load the primary font: Google Fonts or upload custom font files.', 'flynt'),
+            'name' => 'headingFontSource',
             'type' => 'select',
             'choices' => [
                 'google' => 'Google Fonts',
@@ -26,42 +26,54 @@ add_action('acf/init', function () {
             ],
             'default_value' => 'google',
             'wrapper' => [
-                'width' => 100,
+                'width' => 50,
             ],
         ],
         [
-            'label' => __('Google Fonts URL', 'flynt'),
-            'instructions' => __('Paste the Google Fonts link URL here. Example: https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap', 'flynt'),
-            'name' => 'googleFontsUrl',
+            'label' => __('Secondary Font Source', 'flynt'),
+            'instructions' => __('Choose how to load the secondary font: Google Fonts or upload custom font files.', 'flynt'),
+            'name' => 'bodyFontSource',
+            'type' => 'select',
+            'choices' => [
+                'google' => 'Google Fonts',
+                'custom' => 'Custom Upload',
+            ],
+            'default_value' => 'google',
+            'wrapper' => [
+                'width' => 50,
+            ],
+        ],
+        [
+            'label' => __('Primary Google Fonts URL', 'flynt'),
+            'instructions' => __('Paste the Google Fonts link URL for primary font. Example: https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap', 'flynt'),
+            'name' => 'headingGoogleFontsUrl',
             'type' => 'url',
             'placeholder' => 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap',
             'conditional_logic' => [
                 [
                     [
-                        'fieldPath' => 'fontSource',
+                        'fieldPath' => 'headingFontSource',
                         'operator' => '==',
                         'value' => 'google',
                     ],
                 ],
             ],
             'wrapper' => [
-                'width' => 100,
+                'width' => 50,
             ],
         ],
         [
-            'label' => __('Custom Font - Medium (500)', 'flynt'),
-            'instructions' => __('Upload the medium weight font file (woff2 format recommended).', 'flynt'),
-            'name' => 'customFontMedium',
-            'type' => 'file',
-            'return_format' => 'url',
-            'library' => 'all',
-            'mime_types' => 'woff2,woff,ttf,otf',
+            'label' => __('Secondary Google Fonts URL', 'flynt'),
+            'instructions' => __('Paste the Google Fonts link URL for secondary font. Example: https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap', 'flynt'),
+            'name' => 'bodyGoogleFontsUrl',
+            'type' => 'url',
+            'placeholder' => 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap',
             'conditional_logic' => [
                 [
                     [
-                        'fieldPath' => 'fontSource',
+                        'fieldPath' => 'bodyFontSource',
                         'operator' => '==',
-                        'value' => 'custom',
+                        'value' => 'google',
                     ],
                 ],
             ],
@@ -70,9 +82,25 @@ add_action('acf/init', function () {
             ],
         ],
         [
-            'label' => __('Custom Font - Bold (700)', 'flynt'),
-            'instructions' => __('Upload the bold weight font file (woff2 format recommended).', 'flynt'),
-            'name' => 'customFontBold',
+            'label' => __('Primary Font Uploads', 'flynt'),
+            'name' => 'headingFontUploadsAccordion',
+            'type' => 'accordion',
+            'open' => 0,
+            'multi_expand' => 1,
+            'conditional_logic' => [
+                [
+                    [
+                        'fieldPath' => 'headingFontSource',
+                        'operator' => '==',
+                        'value' => 'custom',
+                    ],
+                ],
+            ],
+        ],
+        [
+            'label' => __('Primary Font - Medium (500)', 'flynt'),
+            'instructions' => __('Upload the medium weight font file for primary font (woff2 format recommended).', 'flynt'),
+            'name' => 'headingFontMedium',
             'type' => 'file',
             'return_format' => 'url',
             'library' => 'all',
@@ -80,14 +108,135 @@ add_action('acf/init', function () {
             'conditional_logic' => [
                 [
                     [
-                        'fieldPath' => 'fontSource',
+                        'fieldPath' => 'headingFontSource',
                         'operator' => '==',
                         'value' => 'custom',
                     ],
                 ],
             ],
             'wrapper' => [
-                'width' => 50,
+                'width' => 33,
+            ],
+        ],
+        [
+            'label' => __('Primary Font - Bold (700)', 'flynt'),
+            'instructions' => __('Upload the bold weight font file for primary font (woff2 format recommended).', 'flynt'),
+            'name' => 'headingFontBold',
+            'type' => 'file',
+            'return_format' => 'url',
+            'library' => 'all',
+            'mime_types' => 'woff2,woff,ttf,otf',
+            'conditional_logic' => [
+                [
+                    [
+                        'fieldPath' => 'headingFontSource',
+                        'operator' => '==',
+                        'value' => 'custom',
+                    ],
+                ],
+            ],
+            'wrapper' => [
+                'width' => 33,
+            ],
+        ],
+        [
+            'label' => __('Primary Font - Heavy (900)', 'flynt'),
+            'instructions' => __('Upload the heavy weight font file for primary font (woff2 format recommended).', 'flynt'),
+            'name' => 'headingFontHeavy',
+            'type' => 'file',
+            'return_format' => 'url',
+            'library' => 'all',
+            'mime_types' => 'woff2,woff,ttf,otf',
+            'conditional_logic' => [
+                [
+                    [
+                        'fieldPath' => 'headingFontSource',
+                        'operator' => '==',
+                        'value' => 'custom',
+                    ],
+                ],
+            ],
+            'wrapper' => [
+                'width' => 33,
+            ],
+        ],
+        [
+            'label' => __('Secondary Font Uploads', 'flynt'),
+            'name' => 'bodyFontUploadsAccordion',
+            'type' => 'accordion',
+            'open' => 0,
+            'multi_expand' => 1,
+            'conditional_logic' => [
+                [
+                    [
+                        'fieldPath' => 'bodyFontSource',
+                        'operator' => '==',
+                        'value' => 'custom',
+                    ],
+                ],
+            ],
+        ],
+        [
+            'label' => __('Secondary Font - Medium (500)', 'flynt'),
+            'instructions' => __('Upload the medium weight font file for secondary font (woff2 format recommended).', 'flynt'),
+            'name' => 'bodyFontMedium',
+            'type' => 'file',
+            'return_format' => 'url',
+            'library' => 'all',
+            'mime_types' => 'woff2,woff,ttf,otf',
+            'conditional_logic' => [
+                [
+                    [
+                        'fieldPath' => 'bodyFontSource',
+                        'operator' => '==',
+                        'value' => 'custom',
+                    ],
+                ],
+            ],
+            'wrapper' => [
+                'width' => 33,
+            ],
+        ],
+        [
+            'label' => __('Secondary Font - Bold (700)', 'flynt'),
+            'instructions' => __('Upload the bold weight font file for secondary font (woff2 format recommended).', 'flynt'),
+            'name' => 'bodyFontBold',
+            'type' => 'file',
+            'return_format' => 'url',
+            'library' => 'all',
+            'mime_types' => 'woff2,woff,ttf,otf',
+            'conditional_logic' => [
+                [
+                    [
+                        'fieldPath' => 'bodyFontSource',
+                        'operator' => '==',
+                        'value' => 'custom',
+                    ],
+                ],
+            ],
+            'wrapper' => [
+                'width' => 33,
+            ],
+        ],
+        [
+            'label' => __('Secondary Font - Heavy (900)', 'flynt'),
+            'instructions' => __('Upload the heavy weight font file for secondary font (woff2 format recommended).', 'flynt'),
+            'name' => 'bodyFontHeavy',
+            'type' => 'file',
+            'return_format' => 'url',
+            'library' => 'all',
+            'mime_types' => 'woff2,woff,ttf,otf',
+            'conditional_logic' => [
+                [
+                    [
+                        'fieldPath' => 'bodyFontSource',
+                        'operator' => '==',
+                        'value' => 'custom',
+                    ],
+                ],
+            ],
+            'wrapper' => [
+                'width' => 33,
             ],
         ],
         [
@@ -99,8 +248,8 @@ add_action('acf/init', function () {
         ],
         [
             'label' => __('Primary Font Family', 'flynt'),
-            'instructions' => __('Select the primary font family for body text and headings.', 'flynt'),
-            'name' => 'primaryFontFamily',
+            'instructions' => __('Primary font family for headings and primary text elements.', 'flynt'),
+            'name' => 'headingFontFamily',
             'type' => 'text',
             'default_value' => 'Inter',
             'placeholder' => 'Inter',
@@ -110,8 +259,30 @@ add_action('acf/init', function () {
         ],
         [
             'label' => __('Primary Font Fallback', 'flynt'),
-            'instructions' => __('Fallback fonts (e.g., Arial, sans-serif)', 'flynt'),
-            'name' => 'primaryFontFallback',
+            'instructions' => __('Fallback fonts for primary font (e.g., Arial, sans-serif)', 'flynt'),
+            'name' => 'headingFontFallback',
+            'type' => 'text',
+            'default_value' => 'Arial, sans-serif',
+            'placeholder' => 'Arial, sans-serif',
+            'wrapper' => [
+                'width' => 50,
+            ],
+        ],
+        [
+            'label' => __('Secondary Font Family', 'flynt'),
+            'instructions' => __('Secondary font family for body text and paragraphs.', 'flynt'),
+            'name' => 'bodyFontFamily',
+            'type' => 'text',
+            'default_value' => 'Inter',
+            'placeholder' => 'Inter',
+            'wrapper' => [
+                'width' => 50,
+            ],
+        ],
+        [
+            'label' => __('Secondary Font Fallback', 'flynt'),
+            'instructions' => __('Fallback fonts for secondary font (e.g., Arial, sans-serif)', 'flynt'),
+            'name' => 'bodyFontFallback',
             'type' => 'text',
             'default_value' => 'Arial, sans-serif',
             'placeholder' => 'Arial, sans-serif',
@@ -165,7 +336,7 @@ add_action('acf/init', function () {
             'instructions' => __('Define custom font styles that will be available as classes in the WYSIWYG editor.', 'flynt'),
             'name' => 'customFontStyles',
             'type' => 'repeater',
-            'layout' => 'block',
+            'layout' => 'table',
             'button_label' => __('Add Font Style', 'flynt'),
             'sub_fields' => [
                 [
@@ -175,7 +346,7 @@ add_action('acf/init', function () {
                     'type' => 'text',
                     'required' => 1,
                     'wrapper' => [
-                        'width' => 33,
+                        'width' => 15,
                     ],
                 ],
                 [
@@ -186,7 +357,7 @@ add_action('acf/init', function () {
                     'required' => 1,
                     'placeholder' => 'customTitle',
                     'wrapper' => [
-                        'width' => 33,
+                        'width' => 15,
                     ],
                 ],
                 [
@@ -205,7 +376,21 @@ add_action('acf/init', function () {
                     ],
                     'default_value' => '',
                     'wrapper' => [
-                        'width' => 33,
+                        'width' => 5,
+                    ],
+                ],
+                [
+                    'label' => __('Font Family', 'flynt'),
+                    'instructions' => __('Select which font family to use for this style.', 'flynt'),
+                    'name' => 'fontFamily',
+                    'type' => 'select',
+                    'choices' => [
+                        'heading' => 'Primary',
+                        'body' => 'Secondary',
+                    ],
+                    'default_value' => 'heading',
+                    'wrapper' => [
+                        'width' => 10,
                     ],
                 ],
                 [
@@ -218,7 +403,7 @@ add_action('acf/init', function () {
                     'max' => 8,
                     'step' => 0.125,
                     'wrapper' => [
-                        'width' => 50,
+                        'width' => 5,
                     ],
                 ],
                 [
@@ -228,10 +413,10 @@ add_action('acf/init', function () {
                     'type' => 'number',
                     'default_value' => 1.25,
                     'min' => 0.5,
-                    'max' => 10,
+                    'max' => 12,
                     'step' => 0.125,
                     'wrapper' => [
-                        'width' => 50,
+                        'width' => 5,
                     ],
                 ],
                 [
@@ -244,7 +429,7 @@ add_action('acf/init', function () {
                     'max' => 2,
                     'step' => 0.1,
                     'wrapper' => [
-                        'width' => 50,
+                        'width' => 5,
                     ],
                 ],
                 [
@@ -256,12 +441,30 @@ add_action('acf/init', function () {
                         '300' => '300 (Light)',
                         '400' => '400 (Regular)',
                         '500' => '500 (Medium)',
-                        '600' => '600 (Semi-Bold)',
+                        '600' => '600 (Semibold)',
                         '700' => '700 (Bold)',
+                        '800' => '800 (Extrabold)',
+                        '900' => '900 (Heavy)',
                     ],
                     'default_value' => '400',
                     'wrapper' => [
-                        'width' => 50,
+                        'width' => 15,
+                    ],
+                ],
+                [
+                    'label' => __('Text Transform', 'flynt'),
+                    'instructions' => __('Text transformation for custom fonts.', 'flynt'),
+                    'name' => 'textTransform',
+                    'type' => 'select',
+                    'choices' => [
+                        'none' => 'None',
+                        'capitalize' => 'Capitalize',
+                        'lowercase' => 'lowercase',
+                        'uppercase' => 'UPPERCASE',
+                    ],
+                    'default_value' => 'none',
+                    'wrapper' => [
+                        'width' => 15,
                     ],
                 ],
                 [
@@ -272,7 +475,7 @@ add_action('acf/init', function () {
                     'default_value' => 'Custom',
                     'placeholder' => 'Custom',
                     'wrapper' => [
-                        'width' => 50,
+                        'width' => 15,
                     ],
                 ],
             ],
@@ -302,10 +505,10 @@ add_action('acf/init', function () {
             'sub_fields' => [
                 [
                     'label' => __('Font Family', 'flynt'),
-                    'instructions' => __('Leave empty to use primary font.', 'flynt'),
+                    'instructions' => __('Leave empty to use body font.', 'flynt'),
                     'name' => 'fontFamily',
                     'type' => 'text',
-                    'placeholder' => 'Leave empty to use primary font',
+                    'placeholder' => 'Leave empty to use body font',
                     'wrapper' => [
                         'width' => 20,
                     ],
@@ -345,8 +548,10 @@ add_action('acf/init', function () {
                         '300' => '300 (Light)',
                         '400' => '400 (Regular)',
                         '500' => '500 (Medium)',
-                        '600' => '600 (Semi-Bold)',
+                        '600' => '600 (Semibold)',
                         '700' => '700 (Bold)',
+                        '800' => '800 (Extrabold)',
+                        '900' => '900 (Heavy)',
                     ],
                     'default_value' => '500',
                     'wrapper' => [
@@ -372,6 +577,59 @@ add_action('acf/init', function () {
             ],
         ],
         [
+            'label' => __('Default Button Colors', 'flynt'),
+            'instructions' => __('Configure default colors for all buttons. These apply unless overridden by custom button styles.', 'flynt'),
+            'name' => 'buttonColors',
+            'type' => 'group',
+            'layout' => 'block',
+            'sub_fields' => [
+                [
+                    'label' => __('Background Color', 'flynt'),
+                    'instructions' => __('Default button background color', 'flynt'),
+                    'name' => 'backgroundColor',
+                    'type' => 'color_picker',
+                    'enable_opacity' => 0,
+                    'return_format' => 'string',
+                    'wrapper' => [
+                        'width' => 25,
+                    ],
+                ],
+                [
+                    'label' => __('Text Color', 'flynt'),
+                    'instructions' => __('Default button text color', 'flynt'),
+                    'name' => 'textColor',
+                    'type' => 'color_picker',
+                    'enable_opacity' => 0,
+                    'return_format' => 'string',
+                    'wrapper' => [
+                        'width' => 25,
+                    ],
+                ],
+                [
+                    'label' => __('Hover Background Color', 'flynt'),
+                    'instructions' => __('Default button background color on hover', 'flynt'),
+                    'name' => 'hoverBackgroundColor',
+                    'type' => 'color_picker',
+                    'enable_opacity' => 0,
+                    'return_format' => 'string',
+                    'wrapper' => [
+                        'width' => 25,
+                    ],
+                ],
+                [
+                    'label' => __('Hover Text Color', 'flynt'),
+                    'instructions' => __('Default button text color on hover', 'flynt'),
+                    'name' => 'hoverTextColor',
+                    'type' => 'color_picker',
+                    'enable_opacity' => 0,
+                    'return_format' => 'string',
+                    'wrapper' => [
+                        'width' => 25,
+                    ],
+                ],
+            ],
+        ],
+        [
             'label' => __('Custom Button Style Variations', 'flynt'),
             'instructions' => __('Create custom button style variations with different colors. These styles will be available in the WYSIWYG editor dropdown.', 'flynt'),
             'name' => 'customButtonStylesAccordion',
@@ -384,7 +642,7 @@ add_action('acf/init', function () {
             'instructions' => __('Define custom button styles that will be available as classes in the WYSIWYG editor.', 'flynt'),
             'name' => 'customButtonStyles',
             'type' => 'repeater',
-            'layout' => 'block',
+            'layout' => 'table',
             'button_label' => __('Add Button Style', 'flynt'),
             'sub_fields' => [
                 [
@@ -394,7 +652,7 @@ add_action('acf/init', function () {
                     'type' => 'text',
                     'required' => 1,
                     'wrapper' => [
-                        'width' => 50,
+                        'width' => 20,
                     ],
                 ],
                 [
@@ -405,69 +663,75 @@ add_action('acf/init', function () {
                     'required' => 1,
                     'placeholder' => 'customBlue',
                     'wrapper' => [
-                        'width' => 50,
+                        'width' => 20,
                     ],
                 ],
                 [
                     'label' => __('Background Color', 'flynt'),
-                    'instructions' => __('Button background color (hex, rgb, or CSS variable like var(--blue))', 'flynt'),
+                    'instructions' => __('Button background color', 'flynt'),
                     'name' => 'backgroundColor',
-                    'type' => 'text',
-                    'default_value' => 'var(--blue)',
-                    'placeholder' => 'var(--blue) or #3d6bff',
+                    'type' => 'color_picker',
+                    'default_value' => '#3d6bff',
+                    'enable_opacity' => 0,
+                    'return_format' => 'string',
                     'wrapper' => [
-                        'width' => 33,
+                        'width' => 5,
                     ],
                 ],
                 [
                     'label' => __('Text Color', 'flynt'),
-                    'instructions' => __('Button text color (hex, rgb, or CSS variable)', 'flynt'),
+                    'instructions' => __('Button text color', 'flynt'),
                     'name' => 'textColor',
-                    'type' => 'text',
-                    'default_value' => 'var(--beige)',
-                    'placeholder' => 'var(--beige) or #ffffff',
+                    'type' => 'color_picker',
+                    'default_value' => '#ffffff',
+                    'enable_opacity' => 0,
+                    'return_format' => 'string',
                     'wrapper' => [
-                        'width' => 33,
+                        'width' => 5,
                     ],
                 ],
                 [
                     'label' => __('Border Color', 'flynt'),
-                    'instructions' => __('Button border color (hex, rgb, or CSS variable). Leave empty for no border.', 'flynt'),
+                    'instructions' => __('Button border color. Leave empty for no border.', 'flynt'),
                     'name' => 'borderColor',
-                    'type' => 'text',
-                    'placeholder' => 'var(--blue) or #3d6bff',
+                    'type' => 'color_picker',
+                    'enable_opacity' => 0,
+                    'return_format' => 'string',
                     'wrapper' => [
-                        'width' => 33,
+                        'width' => 5,
                     ],
                 ],
                 [
                     'label' => __('Hover Background Color', 'flynt'),
-                    'instructions' => __('Button background color on hover (hex, rgb, or CSS variable)', 'flynt'),
+                    'instructions' => __('Button background color on hover', 'flynt'),
                     'name' => 'hoverBackgroundColor',
-                    'type' => 'text',
-                    'placeholder' => 'var(--blueDark) or #1545de',
+                    'type' => 'color_picker',
+                    'enable_opacity' => 0,
+                    'return_format' => 'string',
                     'wrapper' => [
-                        'width' => 33,
+                        'width' => 5,
                     ],
                 ],
                 [
                     'label' => __('Hover Text Color', 'flynt'),
-                    'instructions' => __('Button text color on hover (hex, rgb, or CSS variable)', 'flynt'),
+                    'instructions' => __('Button text color on hover', 'flynt'),
                     'name' => 'hoverTextColor',
-                    'type' => 'text',
-                    'placeholder' => 'var(--beige) or #ffffff',
+                    'type' => 'color_picker',
+                    'enable_opacity' => 0,
+                    'return_format' => 'string',
                     'wrapper' => [
-                        'width' => 33,
+                        'width' => 5,
                     ],
                 ],
                 [
                     'label' => __('Hover Border Color', 'flynt'),
-                    'instructions' => __('Button border color on hover (hex, rgb, or CSS variable). Leave empty to use hover background color.', 'flynt'),
+                    'instructions' => __('Button border color on hover. Leave empty to use hover background color.', 'flynt'),
                     'name' => 'hoverBorderColor',
-                    'type' => 'text',
-                    'placeholder' => 'var(--blueDark) or #1545de',
+                    'type' => 'color_picker',
+                    'enable_opacity' => 0,
+                    'return_format' => 'string',
                     'wrapper' => [
-                        'width' => 33,
+                        'width' => 5,
                     ],
                 ],
                 [
@@ -478,7 +742,7 @@ add_action('acf/init', function () {
                     'default_value' => 'Buttons',
                     'placeholder' => 'Buttons',
                     'wrapper' => [
-                        'width' => 50,
+                        'width' => 30,
                     ],
                 ],
             ],
@@ -490,107 +754,233 @@ add_action('acf/init', function () {
 add_action('wp_head', function () {
     $typographyOptions = Options::getGlobal('Typography');
     
-    // Handle font loading (Google Fonts or Custom Upload)
-    $fontSource = !empty($typographyOptions['fontSource']) 
-        ? esc_attr($typographyOptions['fontSource']) 
-        : 'google';
+    // Handle font loading - independent sources for heading and body fonts
+    // Get font sources (with backward compatibility to old global fontSource)
+    $headingFontSource = !empty($typographyOptions['headingFontSource']) 
+        ? esc_attr($typographyOptions['headingFontSource']) 
+        : (!empty($typographyOptions['fontSource']) 
+            ? esc_attr($typographyOptions['fontSource']) 
+            : 'google');
+    $bodyFontSource = !empty($typographyOptions['bodyFontSource']) 
+        ? esc_attr($typographyOptions['bodyFontSource']) 
+        : (!empty($typographyOptions['fontSource']) 
+            ? esc_attr($typographyOptions['fontSource']) 
+            : 'google');
     
-    if ($fontSource === 'google') {
-        // Load Google Fonts
-        $googleFontsUrl = !empty($typographyOptions['googleFontsUrl']) 
-            ? esc_url($typographyOptions['googleFontsUrl']) 
+    // Helper function to get font URL from ACF field (handles different return formats)
+    $getFontUrl = function($fieldValue) {
+        if (empty($fieldValue)) {
+            return '';
+        }
+        if (is_array($fieldValue)) {
+            return !empty($fieldValue['url']) ? esc_url($fieldValue['url']) : '';
+        } elseif (is_numeric($fieldValue)) {
+            return esc_url(wp_get_attachment_url($fieldValue));
+        } else {
+            return esc_url($fieldValue);
+        }
+    };
+    
+    // Helper function to detect font format from URL
+    $getFontFormat = function($url) {
+        $extension = strtolower(pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION));
+        $formatMap = [
+            'woff2' => 'woff2',
+            'woff' => 'woff',
+            'ttf' => 'truetype',
+            'otf' => 'opentype',
+        ];
+        return isset($formatMap[$extension]) ? $formatMap[$extension] : 'woff2';
+    };
+    
+    // Load heading fonts based on source
+    if ($headingFontSource === 'google') {
+        // Load heading Google Fonts
+        $headingGoogleFontsUrl = !empty($typographyOptions['headingGoogleFontsUrl']) 
+            ? esc_url($typographyOptions['headingGoogleFontsUrl']) 
             : '';
         
-        if (!empty($googleFontsUrl)) {
+        // Backward compatibility: if new field is empty, check old field
+        if (empty($headingGoogleFontsUrl)) {
+            $legacyGoogleFontsUrl = !empty($typographyOptions['googleFontsUrl']) 
+                ? esc_url($typographyOptions['googleFontsUrl']) 
+                : '';
+            if (!empty($legacyGoogleFontsUrl)) {
+                $headingGoogleFontsUrl = $legacyGoogleFontsUrl;
+            }
+        }
+        
+        if (!empty($headingGoogleFontsUrl)) {
             echo "<link rel='preconnect' href='https://fonts.googleapis.com'>\n";
             echo "<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>\n";
-            echo "<link id='flynt-google-fonts' href='" . esc_url($googleFontsUrl) . "' rel='stylesheet'>\n";
+            echo "<link id='flynt-heading-google-fonts' href='" . esc_url($headingGoogleFontsUrl) . "' rel='stylesheet'>\n";
         }
-    } elseif ($fontSource === 'custom') {
-        // Load custom fonts via @font-face
-        // Handle different ACF return formats (url, array, or ID)
-        $customFontMedium = '';
-        $customFontBold = '';
+    } elseif ($headingFontSource === 'custom') {
+        // Load heading custom fonts via @font-face
+        $headingFont = !empty($typographyOptions['headingFontFamily']) 
+            ? esc_attr($typographyOptions['headingFontFamily']) 
+            : (!empty($typographyOptions['primaryFontFamily']) 
+                ? esc_attr($typographyOptions['primaryFontFamily']) 
+                : 'Retail');
         
-        // Get Medium font URL
-        if (!empty($typographyOptions['customFontMedium'])) {
-            if (is_array($typographyOptions['customFontMedium'])) {
-                $customFontMedium = !empty($typographyOptions['customFontMedium']['url']) 
-                    ? esc_url($typographyOptions['customFontMedium']['url']) 
-                    : '';
-            } elseif (is_numeric($typographyOptions['customFontMedium'])) {
-                $customFontMedium = esc_url(wp_get_attachment_url($typographyOptions['customFontMedium']));
-            } else {
-                $customFontMedium = esc_url($typographyOptions['customFontMedium']);
-            }
-        }
+        // Get heading font URLs
+        $headingFontMedium = $getFontUrl($typographyOptions['headingFontMedium'] ?? '');
+        $headingFontBold = $getFontUrl($typographyOptions['headingFontBold'] ?? '');
+        $headingFontHeavy = $getFontUrl($typographyOptions['headingFontHeavy'] ?? '');
         
-        // Get Bold font URL
-        if (!empty($typographyOptions['customFontBold'])) {
-            if (is_array($typographyOptions['customFontBold'])) {
-                $customFontBold = !empty($typographyOptions['customFontBold']['url']) 
-                    ? esc_url($typographyOptions['customFontBold']['url']) 
-                    : '';
-            } elseif (is_numeric($typographyOptions['customFontBold'])) {
-                $customFontBold = esc_url(wp_get_attachment_url($typographyOptions['customFontBold']));
-            } else {
-                $customFontBold = esc_url($typographyOptions['customFontBold']);
-            }
-        }
-        
-        $primaryFont = !empty($typographyOptions['primaryFontFamily']) 
-            ? esc_attr($typographyOptions['primaryFontFamily']) 
-            : 'Retail';
-        
-        // Helper function to detect font format from URL
-        $getFontFormat = function($url) {
-            $extension = strtolower(pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION));
-            $formatMap = [
-                'woff2' => 'woff2',
-                'woff' => 'woff',
-                'ttf' => 'truetype',
-                'otf' => 'opentype',
-            ];
-            return isset($formatMap[$extension]) ? $formatMap[$extension] : 'woff2';
-        };
-        
-        if (!empty($customFontMedium) || !empty($customFontBold)) {
-            $fontFaceCss = "<style id='flynt-custom-fonts'>\n";
+        // Generate @font-face declarations for heading fonts
+        if (!empty($headingFontMedium) || !empty($headingFontBold) || !empty($headingFontHeavy)) {
+            $headingFontFaceCss = "<style id='flynt-heading-custom-fonts'>\n";
             
-            if (!empty($customFontMedium)) {
-                $format = $getFontFormat($customFontMedium);
-                $fontFaceCss .= "@font-face {\n";
-                $fontFaceCss .= "  font-display: swap;\n";
-                $fontFaceCss .= "  font-family: '{$primaryFont}';\n";
-                $fontFaceCss .= "  font-style: normal;\n";
-                $fontFaceCss .= "  font-weight: 500;\n";
-                $fontFaceCss .= "  src: url('{$customFontMedium}') format('{$format}');\n";
-                $fontFaceCss .= "}\n\n";
+            if (!empty($headingFontMedium)) {
+                $format = $getFontFormat($headingFontMedium);
+                $headingFontFaceCss .= "@font-face {\n";
+                $headingFontFaceCss .= "  font-display: swap;\n";
+                $headingFontFaceCss .= "  font-family: '{$headingFont}';\n";
+                $headingFontFaceCss .= "  font-style: normal;\n";
+                $headingFontFaceCss .= "  font-weight: 500;\n";
+                $headingFontFaceCss .= "  src: url('{$headingFontMedium}') format('{$format}');\n";
+                $headingFontFaceCss .= "}\n\n";
             }
             
-            if (!empty($customFontBold)) {
-                $format = $getFontFormat($customFontBold);
-                $fontFaceCss .= "@font-face {\n";
-                $fontFaceCss .= "  font-display: swap;\n";
-                $fontFaceCss .= "  font-family: '{$primaryFont}';\n";
-                $fontFaceCss .= "  font-style: normal;\n";
-                $fontFaceCss .= "  font-weight: 700;\n";
-                $fontFaceCss .= "  src: url('{$customFontBold}') format('{$format}');\n";
-                $fontFaceCss .= "}\n";
+            if (!empty($headingFontBold)) {
+                $format = $getFontFormat($headingFontBold);
+                $headingFontFaceCss .= "@font-face {\n";
+                $headingFontFaceCss .= "  font-display: swap;\n";
+                $headingFontFaceCss .= "  font-family: '{$headingFont}';\n";
+                $headingFontFaceCss .= "  font-style: normal;\n";
+                $headingFontFaceCss .= "  font-weight: 700;\n";
+                $headingFontFaceCss .= "  src: url('{$headingFontBold}') format('{$format}');\n";
+                $headingFontFaceCss .= "}\n\n";
             }
             
-            $fontFaceCss .= "</style>\n";
-            echo $fontFaceCss;
+            if (!empty($headingFontHeavy)) {
+                $format = $getFontFormat($headingFontHeavy);
+                $headingFontFaceCss .= "@font-face {\n";
+                $headingFontFaceCss .= "  font-display: swap;\n";
+                $headingFontFaceCss .= "  font-family: '{$headingFont}';\n";
+                $headingFontFaceCss .= "  font-style: normal;\n";
+                $headingFontFaceCss .= "  font-weight: 900;\n";
+                $headingFontFaceCss .= "  src: url('{$headingFontHeavy}') format('{$format}');\n";
+                $headingFontFaceCss .= "}\n";
+            }
+            
+            $headingFontFaceCss .= "</style>\n";
+            echo $headingFontFaceCss;
         }
     }
     
-    // Get values with fallbacks
-    $primaryFont = !empty($typographyOptions['primaryFontFamily']) 
-        ? esc_attr($typographyOptions['primaryFontFamily']) 
-        : 'Inter';
-    $primaryFontFallback = !empty($typographyOptions['primaryFontFallback']) 
-        ? esc_attr($typographyOptions['primaryFontFallback']) 
-        : 'Arial, sans-serif';
+    // Load body fonts based on source
+    if ($bodyFontSource === 'google') {
+        // Load body Google Fonts
+        $bodyGoogleFontsUrl = !empty($typographyOptions['bodyGoogleFontsUrl']) 
+            ? esc_url($typographyOptions['bodyGoogleFontsUrl']) 
+            : '';
+        
+        // Backward compatibility: if new field is empty, check old field
+        if (empty($bodyGoogleFontsUrl)) {
+            $legacyGoogleFontsUrl = !empty($typographyOptions['googleFontsUrl']) 
+                ? esc_url($typographyOptions['googleFontsUrl']) 
+                : '';
+            if (!empty($legacyGoogleFontsUrl)) {
+                $bodyGoogleFontsUrl = $legacyGoogleFontsUrl;
+            }
+        }
+        
+        if (!empty($bodyGoogleFontsUrl)) {
+            // Only output preconnect if not already output for heading fonts
+            if ($headingFontSource !== 'google' || empty($typographyOptions['headingGoogleFontsUrl'])) {
+                echo "<link rel='preconnect' href='https://fonts.googleapis.com'>\n";
+                echo "<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>\n";
+            }
+            // Only load if different from heading font URL
+            $headingGoogleFontsUrl = !empty($typographyOptions['headingGoogleFontsUrl']) 
+                ? esc_url($typographyOptions['headingGoogleFontsUrl']) 
+                : '';
+            if ($bodyGoogleFontsUrl !== $headingGoogleFontsUrl) {
+                echo "<link id='flynt-body-google-fonts' href='" . esc_url($bodyGoogleFontsUrl) . "' rel='stylesheet'>\n";
+            }
+        }
+    } elseif ($bodyFontSource === 'custom') {
+        // Load body custom fonts via @font-face
+        $bodyFont = !empty($typographyOptions['bodyFontFamily']) 
+            ? esc_attr($typographyOptions['bodyFontFamily']) 
+            : (!empty($typographyOptions['primaryFontFamily']) 
+                ? esc_attr($typographyOptions['primaryFontFamily']) 
+                : 'Retail');
+        
+        // Get body font URLs
+        $bodyFontMedium = $getFontUrl($typographyOptions['bodyFontMedium'] ?? '');
+        $bodyFontBold = $getFontUrl($typographyOptions['bodyFontBold'] ?? '');
+        $bodyFontHeavy = $getFontUrl($typographyOptions['bodyFontHeavy'] ?? '');
+        
+        // Generate @font-face declarations for body fonts
+        if (!empty($bodyFontMedium) || !empty($bodyFontBold) || !empty($bodyFontHeavy)) {
+            $bodyFontFaceCss = "<style id='flynt-body-custom-fonts'>\n";
+            
+            if (!empty($bodyFontMedium)) {
+                $format = $getFontFormat($bodyFontMedium);
+                $bodyFontFaceCss .= "@font-face {\n";
+                $bodyFontFaceCss .= "  font-display: swap;\n";
+                $bodyFontFaceCss .= "  font-family: '{$bodyFont}';\n";
+                $bodyFontFaceCss .= "  font-style: normal;\n";
+                $bodyFontFaceCss .= "  font-weight: 500;\n";
+                $bodyFontFaceCss .= "  src: url('{$bodyFontMedium}') format('{$format}');\n";
+                $bodyFontFaceCss .= "}\n\n";
+            }
+            
+            if (!empty($bodyFontBold)) {
+                $format = $getFontFormat($bodyFontBold);
+                $bodyFontFaceCss .= "@font-face {\n";
+                $bodyFontFaceCss .= "  font-display: swap;\n";
+                $bodyFontFaceCss .= "  font-family: '{$bodyFont}';\n";
+                $bodyFontFaceCss .= "  font-style: normal;\n";
+                $bodyFontFaceCss .= "  font-weight: 700;\n";
+                $bodyFontFaceCss .= "  src: url('{$bodyFontBold}') format('{$format}');\n";
+                $bodyFontFaceCss .= "}\n\n";
+            }
+            
+            if (!empty($bodyFontHeavy)) {
+                $format = $getFontFormat($bodyFontHeavy);
+                $bodyFontFaceCss .= "@font-face {\n";
+                $bodyFontFaceCss .= "  font-display: swap;\n";
+                $bodyFontFaceCss .= "  font-family: '{$bodyFont}';\n";
+                $bodyFontFaceCss .= "  font-style: normal;\n";
+                $bodyFontFaceCss .= "  font-weight: 900;\n";
+                $bodyFontFaceCss .= "  src: url('{$bodyFontHeavy}') format('{$format}');\n";
+                $bodyFontFaceCss .= "}\n";
+            }
+            
+            $bodyFontFaceCss .= "</style>\n";
+            echo $bodyFontFaceCss;
+        }
+    }
+    
+    // Get values with fallbacks (backward compatibility with primaryFontFamily)
+    $headingFont = !empty($typographyOptions['headingFontFamily']) 
+        ? esc_attr($typographyOptions['headingFontFamily']) 
+        : (!empty($typographyOptions['primaryFontFamily']) 
+            ? esc_attr($typographyOptions['primaryFontFamily']) 
+            : 'Inter');
+    $headingFontFallback = !empty($typographyOptions['headingFontFallback']) 
+        ? esc_attr($typographyOptions['headingFontFallback']) 
+        : (!empty($typographyOptions['primaryFontFallback']) 
+            ? esc_attr($typographyOptions['primaryFontFallback']) 
+            : 'Arial, sans-serif');
+    
+    $bodyFont = !empty($typographyOptions['bodyFontFamily']) 
+        ? esc_attr($typographyOptions['bodyFontFamily']) 
+        : (!empty($typographyOptions['primaryFontFamily']) 
+            ? esc_attr($typographyOptions['primaryFontFamily']) 
+            : 'Inter');
+    $bodyFontFallback = !empty($typographyOptions['bodyFontFallback']) 
+        ? esc_attr($typographyOptions['bodyFontFallback']) 
+        : (!empty($typographyOptions['primaryFontFallback']) 
+            ? esc_attr($typographyOptions['primaryFontFallback']) 
+            : 'Arial, sans-serif');
+    // Keep primaryFont for backward compatibility
+    $primaryFont = $headingFont;
+    $primaryFontFallback = $headingFontFallback;
     $baseFontSizeMobile = !empty($typographyOptions['baseFontSizeMobile']) 
         ? floatval($typographyOptions['baseFontSizeMobile']) 
         : 14;
@@ -622,7 +1012,7 @@ add_action('wp_head', function () {
         : [];
     $buttonFontFamily = !empty($buttonFontStyle['fontFamily']) 
         ? esc_attr($buttonFontStyle['fontFamily']) 
-        : $primaryFont;
+        : $bodyFont;
     $buttonFontSize = !empty($buttonFontStyle['fontSize']) 
         ? floatval($buttonFontStyle['fontSize']) 
         : 1;
@@ -636,14 +1026,46 @@ add_action('wp_head', function () {
         ? esc_attr($buttonFontStyle['textTransform']) 
         : 'none';
     
+    // Get default button colors
+    $buttonColors = !empty($typographyOptions['buttonColors']) 
+        ? $typographyOptions['buttonColors'] 
+        : [];
+    $buttonBackgroundColor = !empty($buttonColors['backgroundColor']) 
+        ? esc_attr($buttonColors['backgroundColor']) 
+        : '';
+    $buttonTextColor = !empty($buttonColors['textColor']) 
+        ? esc_attr($buttonColors['textColor']) 
+        : '';
+    $buttonHoverBackgroundColor = !empty($buttonColors['hoverBackgroundColor']) 
+        ? esc_attr($buttonColors['hoverBackgroundColor']) 
+        : '';
+    $buttonHoverTextColor = !empty($buttonColors['hoverTextColor']) 
+        ? esc_attr($buttonColors['hoverTextColor']) 
+        : '';
+    
     // Build CSS variables
     $css = ":root {\n";
-    $css .= "  --primary-font-family: '{$primaryFont}', {$primaryFontFallback};\n";
-    $css .= "  --button-font-family: '{$buttonFontFamily}', {$primaryFontFallback};\n";
+    $css .= "  --primary-font-family: '{$headingFont}', {$headingFontFallback};\n";
+    $css .= "  --secondary-font-family: '{$bodyFont}', {$bodyFontFallback};\n";
+    $css .= "  --heading-font-family: '{$headingFont}', {$headingFontFallback};\n"; // Backward compatibility
+    $css .= "  --body-font-family: '{$bodyFont}', {$bodyFontFallback};\n"; // Backward compatibility
+    $css .= "  --button-font-family: '{$buttonFontFamily}', {$bodyFontFallback};\n";
     $css .= "  --button-font-size: {$buttonFontSize}rem;\n";
     $css .= "  --button-line-height: {$buttonLineHeight};\n";
     $css .= "  --button-font-weight: {$buttonFontWeight};\n";
     $css .= "  --button-text-transform: {$buttonTextTransform};\n";
+    if (!empty($buttonBackgroundColor)) {
+        $css .= "  --button-background-color: {$buttonBackgroundColor};\n";
+    }
+    if (!empty($buttonTextColor)) {
+        $css .= "  --button-text-color: {$buttonTextColor};\n";
+    }
+    if (!empty($buttonHoverBackgroundColor)) {
+        $css .= "  --button-hover-background-color: {$buttonHoverBackgroundColor};\n";
+    }
+    if (!empty($buttonHoverTextColor)) {
+        $css .= "  --button-hover-text-color: {$buttonHoverTextColor};\n";
+    }
     $css .= "  --base-font-size-mobile: {$baseFontSizeMobile}px;\n";
     $css .= "  --base-font-size-desktop: {$baseFontSizeDesktop}px;\n";
     $css .= "  --body-size-mobile: {$bodySizeMobile}rem;\n";
@@ -679,6 +1101,11 @@ add_action('wp_head', function () {
                 ? esc_attr($style['headingLevel']) 
                 : '';
             
+            // Get selected font family for this style
+            $selectedFontFamily = !empty($style['fontFamily']) 
+                ? esc_attr($style['fontFamily']) 
+                : 'heading';
+            
             $sizeMobile = !empty($style['sizeMobile']) 
                 ? floatval($style['sizeMobile']) 
                 : 1;
@@ -691,6 +1118,9 @@ add_action('wp_head', function () {
             $fontWeight = !empty($style['fontWeight']) 
                 ? esc_attr($style['fontWeight']) 
                 : '400';
+            $textTransform = !empty($style['textTransform']) 
+                ? esc_attr($style['textTransform']) 
+                : 'none';
             
             // Build selector: include HTML tag if heading level is set
             $selector = '';
@@ -702,11 +1132,20 @@ add_action('wp_head', function () {
                 $selector = ".{$className}";
             }
             
+            // Determine font family based on selection
+            if ($selectedFontFamily === 'body') {
+                $fontFamily = "var(--secondary-font-family, var(--body-font-family, '{$bodyFont}', {$bodyFontFallback}))";
+            } else {
+                // Default to primary font
+                $fontFamily = "var(--primary-font-family, var(--heading-font-family, '{$headingFont}', {$headingFontFallback}))";
+            }
+            
             $customStylesCss .= "{$selector} {\n";
-            $customStylesCss .= "  font-family: var(--primary-font-family, '{$primaryFont}', {$primaryFontFallback});\n";
+            $customStylesCss .= "  font-family: {$fontFamily};\n";
             $customStylesCss .= "  font-size: {$sizeMobile}rem;\n";
             $customStylesCss .= "  line-height: {$lineHeight};\n";
             $customStylesCss .= "  font-weight: {$fontWeight};\n";
+            $customStylesCss .= "  text-transform: {$textTransform};\n";
             $customStylesCss .= "}\n\n";
             
             // Add desktop size if different
@@ -808,20 +1247,74 @@ add_action('wp_head', function () {
 add_filter('tiny_mce_before_init', function ($init) {
     $typographyOptions = \Flynt\Utils\Options::getGlobal('Typography');
     
+    // Get font sources
+    $headingFontSource = !empty($typographyOptions['headingFontSource']) 
+        ? esc_attr($typographyOptions['headingFontSource']) 
+        : (!empty($typographyOptions['fontSource']) 
+            ? esc_attr($typographyOptions['fontSource']) 
+            : 'google');
+    $bodyFontSource = !empty($typographyOptions['bodyFontSource']) 
+        ? esc_attr($typographyOptions['bodyFontSource']) 
+        : (!empty($typographyOptions['fontSource']) 
+            ? esc_attr($typographyOptions['fontSource']) 
+            : 'google');
+    
+    // Helper function to get font URL from ACF field
+    $getFontUrl = function($fieldValue) {
+        if (empty($fieldValue)) {
+            return '';
+        }
+        if (is_array($fieldValue)) {
+            return !empty($fieldValue['url']) ? esc_url($fieldValue['url']) : '';
+        } elseif (is_numeric($fieldValue)) {
+            return esc_url(wp_get_attachment_url($fieldValue));
+        } else {
+            return esc_url($fieldValue);
+        }
+    };
+    
+    // Helper function to detect font format from URL
+    $getFontFormat = function($url) {
+        $extension = strtolower(pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION));
+        $formatMap = [
+            'woff2' => 'woff2',
+            'woff' => 'woff',
+            'ttf' => 'truetype',
+            'otf' => 'opentype',
+        ];
+        return isset($formatMap[$extension]) ? $formatMap[$extension] : 'woff2';
+    };
+    
+    // Get font families with backward compatibility
+    $headingFont = !empty($typographyOptions['headingFontFamily']) 
+        ? esc_attr($typographyOptions['headingFontFamily']) 
+        : (!empty($typographyOptions['primaryFontFamily']) 
+            ? esc_attr($typographyOptions['primaryFontFamily']) 
+            : 'Inter');
+    $headingFontFallback = !empty($typographyOptions['headingFontFallback']) 
+        ? esc_attr($typographyOptions['headingFontFallback']) 
+        : (!empty($typographyOptions['primaryFontFallback']) 
+            ? esc_attr($typographyOptions['primaryFontFallback']) 
+            : 'Arial, sans-serif');
+    
+    $bodyFont = !empty($typographyOptions['bodyFontFamily']) 
+        ? esc_attr($typographyOptions['bodyFontFamily']) 
+        : (!empty($typographyOptions['primaryFontFamily']) 
+            ? esc_attr($typographyOptions['primaryFontFamily']) 
+            : 'Inter');
+    $bodyFontFallback = !empty($typographyOptions['bodyFontFallback']) 
+        ? esc_attr($typographyOptions['bodyFontFallback']) 
+        : (!empty($typographyOptions['primaryFontFallback']) 
+            ? esc_attr($typographyOptions['primaryFontFallback']) 
+            : 'Arial, sans-serif');
+    
     // Get button font style settings
     $buttonFontStyle = !empty($typographyOptions['buttonFontStyle']) 
         ? $typographyOptions['buttonFontStyle'] 
         : [];
-    $primaryFont = !empty($typographyOptions['primaryFontFamily']) 
-        ? esc_attr($typographyOptions['primaryFontFamily']) 
-        : 'Inter';
-    $primaryFontFallback = !empty($typographyOptions['primaryFontFallback']) 
-        ? esc_attr($typographyOptions['primaryFontFallback']) 
-        : 'Arial, sans-serif';
-    
     $buttonFontFamily = !empty($buttonFontStyle['fontFamily']) 
         ? esc_attr($buttonFontStyle['fontFamily']) 
-        : $primaryFont;
+        : $bodyFont;
     $buttonFontSize = !empty($buttonFontStyle['fontSize']) 
         ? floatval($buttonFontStyle['fontSize']) 
         : 1;
@@ -835,21 +1328,195 @@ add_filter('tiny_mce_before_init', function ($init) {
         ? esc_attr($buttonFontStyle['textTransform']) 
         : 'none';
     
-    // Build CSS for TinyMCE editor - button base styles
-    $buttonStyles = ":root {";
-    $buttonStyles .= "--button-font-family: '{$buttonFontFamily}', {$primaryFontFallback};";
-    $buttonStyles .= "--button-font-size: {$buttonFontSize}rem;";
-    $buttonStyles .= "--button-line-height: {$buttonLineHeight};";
-    $buttonStyles .= "--button-font-weight: {$buttonFontWeight};";
-    $buttonStyles .= "--button-text-transform: {$buttonTextTransform};";
-    $buttonStyles .= "}";
+    // Add Google Fonts to TinyMCE content_css if using Google Fonts
+    $contentCss = [];
+    
+    if ($headingFontSource === 'google') {
+        $headingGoogleFontsUrl = !empty($typographyOptions['headingGoogleFontsUrl']) 
+            ? esc_url($typographyOptions['headingGoogleFontsUrl']) 
+            : '';
+        if (empty($headingGoogleFontsUrl)) {
+            $legacyGoogleFontsUrl = !empty($typographyOptions['googleFontsUrl']) 
+                ? esc_url($typographyOptions['googleFontsUrl']) 
+                : '';
+            if (!empty($legacyGoogleFontsUrl)) {
+                $headingGoogleFontsUrl = $legacyGoogleFontsUrl;
+            }
+        }
+        if (!empty($headingGoogleFontsUrl)) {
+            $contentCss[] = $headingGoogleFontsUrl;
+        }
+    }
+    
+    if ($bodyFontSource === 'google') {
+        $bodyGoogleFontsUrl = !empty($typographyOptions['bodyGoogleFontsUrl']) 
+            ? esc_url($typographyOptions['bodyGoogleFontsUrl']) 
+            : '';
+        if (empty($bodyGoogleFontsUrl)) {
+            $legacyGoogleFontsUrl = !empty($typographyOptions['googleFontsUrl']) 
+                ? esc_url($typographyOptions['googleFontsUrl']) 
+                : '';
+            if (!empty($legacyGoogleFontsUrl)) {
+                $bodyGoogleFontsUrl = $legacyGoogleFontsUrl;
+            }
+        }
+        if (!empty($bodyGoogleFontsUrl) && !in_array($bodyGoogleFontsUrl, $contentCss)) {
+            $contentCss[] = $bodyGoogleFontsUrl;
+        }
+    }
+    
+    // Add Google Fonts to content_css if any
+    if (!empty($contentCss)) {
+        if (!empty($init['content_css'])) {
+            $existingCss = is_array($init['content_css']) ? $init['content_css'] : array_filter(array_map('trim', explode(',', $init['content_css'])));
+            $init['content_css'] = array_unique(array_merge($existingCss, $contentCss));
+        } else {
+            $init['content_css'] = $contentCss;
+        }
+        // Convert to comma-separated string if needed (TinyMCE accepts both)
+        if (is_array($init['content_css'])) {
+            $init['content_css'] = implode(',', $init['content_css']);
+        }
+    }
+    
+    // Build font loading CSS for TinyMCE editor
+    $fontLoadingCss = '';
+    
+    // Load primary custom fonts if needed
+    if ($headingFontSource === 'custom') {
+        $headingFontMedium = $getFontUrl($typographyOptions['headingFontMedium'] ?? '');
+        $headingFontBold = $getFontUrl($typographyOptions['headingFontBold'] ?? '');
+        $headingFontHeavy = $getFontUrl($typographyOptions['headingFontHeavy'] ?? '');
+        
+        if (!empty($headingFontMedium)) {
+            $format = $getFontFormat($headingFontMedium);
+            $fontLoadingCss .= "@font-face { font-display: swap; font-family: '{$headingFont}'; font-style: normal; font-weight: 500; src: url('{$headingFontMedium}') format('{$format}'); }";
+        }
+        if (!empty($headingFontBold)) {
+            $format = $getFontFormat($headingFontBold);
+            $fontLoadingCss .= "@font-face { font-display: swap; font-family: '{$headingFont}'; font-style: normal; font-weight: 700; src: url('{$headingFontBold}') format('{$format}'); }";
+        }
+        if (!empty($headingFontHeavy)) {
+            $format = $getFontFormat($headingFontHeavy);
+            $fontLoadingCss .= "@font-face { font-display: swap; font-family: '{$headingFont}'; font-style: normal; font-weight: 900; src: url('{$headingFontHeavy}') format('{$format}'); }";
+        }
+    }
+    
+    // Load secondary custom fonts if needed
+    if ($bodyFontSource === 'custom') {
+        $bodyFontMedium = $getFontUrl($typographyOptions['bodyFontMedium'] ?? '');
+        $bodyFontBold = $getFontUrl($typographyOptions['bodyFontBold'] ?? '');
+        $bodyFontHeavy = $getFontUrl($typographyOptions['bodyFontHeavy'] ?? '');
+        
+        if (!empty($bodyFontMedium)) {
+            $format = $getFontFormat($bodyFontMedium);
+            $fontLoadingCss .= "@font-face { font-display: swap; font-family: '{$bodyFont}'; font-style: normal; font-weight: 500; src: url('{$bodyFontMedium}') format('{$format}'); }";
+        }
+        if (!empty($bodyFontBold)) {
+            $format = $getFontFormat($bodyFontBold);
+            $fontLoadingCss .= "@font-face { font-display: swap; font-family: '{$bodyFont}'; font-style: normal; font-weight: 700; src: url('{$bodyFontBold}') format('{$format}'); }";
+        }
+        if (!empty($bodyFontHeavy)) {
+            $format = $getFontFormat($bodyFontHeavy);
+            $fontLoadingCss .= "@font-face { font-display: swap; font-family: '{$bodyFont}'; font-style: normal; font-weight: 900; src: url('{$bodyFontHeavy}') format('{$format}'); }";
+        }
+    }
+    
+    // Build CSS for TinyMCE editor - use direct font-family values since editor runs in iframe
+    $buttonStyles = $fontLoadingCss;
     $buttonStyles .= ".button {";
-    $buttonStyles .= "font-family: var(--button-font-family, '{$primaryFont}', {$primaryFontFallback});";
-    $buttonStyles .= "font-size: var(--button-font-size, {$buttonFontSize}rem);";
-    $buttonStyles .= "line-height: var(--button-line-height, {$buttonLineHeight});";
-    $buttonStyles .= "font-weight: var(--button-font-weight, {$buttonFontWeight});";
-    $buttonStyles .= "text-transform: var(--button-text-transform, {$buttonTextTransform});";
+    $buttonStyles .= "font-family: '{$buttonFontFamily}', {$bodyFontFallback};";
+    $buttonStyles .= "font-size: {$buttonFontSize}rem;";
+    $buttonStyles .= "line-height: {$buttonLineHeight};";
+    $buttonStyles .= "font-weight: {$buttonFontWeight};";
+    $buttonStyles .= "text-transform: {$buttonTextTransform};";
     $buttonStyles .= "}";
+    // Add heading styles for h1-h6
+    $buttonStyles .= "h1, h2, h3, h4, h5, h6 {";
+    $buttonStyles .= "font-family: '{$headingFont}', {$headingFontFallback};";
+    $buttonStyles .= "}";
+    // Add body styles
+    $buttonStyles .= "body, p {";
+    $buttonStyles .= "font-family: '{$bodyFont}', {$bodyFontFallback};";
+    $buttonStyles .= "}";
+    
+    // Add custom font styles CSS to TinyMCE
+    $customFontStyles = !empty($typographyOptions['customFontStyles']) 
+        ? $typographyOptions['customFontStyles'] 
+        : [];
+    
+    if (!empty($customFontStyles)) {
+        foreach ($customFontStyles as $style) {
+            if (empty($style['className']) || empty($style['styleName'])) {
+                continue;
+            }
+            
+            $className = esc_attr($style['className']);
+            // Ensure class name starts with "font-" if it doesn't already
+            if (strpos($className, 'font-') !== 0) {
+                $className = 'font-' . $className;
+            }
+            
+            $headingLevel = !empty($style['headingLevel']) 
+                ? esc_attr($style['headingLevel']) 
+                : '';
+            
+            // Get selected font family for this style
+            $selectedFontFamily = !empty($style['fontFamily']) 
+                ? esc_attr($style['fontFamily']) 
+                : 'heading';
+            
+            $sizeMobile = !empty($style['sizeMobile']) 
+                ? floatval($style['sizeMobile']) 
+                : 1;
+            $sizeDesktop = !empty($style['sizeDesktop']) 
+                ? floatval($style['sizeDesktop']) 
+                : $sizeMobile;
+            $lineHeight = !empty($style['lineHeight']) 
+                ? floatval($style['lineHeight']) 
+                : 1.2;
+            $fontWeight = !empty($style['fontWeight']) 
+                ? esc_attr($style['fontWeight']) 
+                : '400';
+            $textTransform = !empty($style['textTransform']) 
+                ? esc_attr($style['textTransform']) 
+                : 'none';
+            
+            // Build selector
+            $selector = '';
+            if (!empty($headingLevel)) {
+                $selector = "{$headingLevel}, .{$className}";
+            } else {
+                $selector = ".{$className}";
+            }
+            
+            // Determine font family based on selection
+            $styleFontFamily = ($selectedFontFamily === 'body') 
+                ? "'{$bodyFont}', {$bodyFontFallback}"
+                : "'{$headingFont}', {$headingFontFallback}";
+            
+            $buttonStyles .= "{$selector} {";
+            $buttonStyles .= "font-family: {$styleFontFamily};";
+            $buttonStyles .= "font-size: {$sizeMobile}rem;";
+            $buttonStyles .= "line-height: {$lineHeight};";
+            $buttonStyles .= "font-weight: {$fontWeight};";
+            $buttonStyles .= "text-transform: {$textTransform};";
+            $buttonStyles .= "}";
+            
+            // Add desktop size if different
+            if ($sizeDesktop != $sizeMobile) {
+                $buttonStyles .= "@media (min-width: 1024px) {";
+                if (!empty($headingLevel)) {
+                    $buttonStyles .= "{$headingLevel}, .{$className} {";
+                } else {
+                    $buttonStyles .= ".{$className} {";
+                }
+                $buttonStyles .= "font-size: {$sizeDesktop}rem;";
+                $buttonStyles .= "}";
+                $buttonStyles .= "}";
+            }
+        }
+    }
     
     // Add custom button styles CSS to TinyMCE
     $customButtonStyles = !empty($typographyOptions['customButtonStyles']) 

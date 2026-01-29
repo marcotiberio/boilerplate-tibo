@@ -18,4 +18,13 @@ flynt-component[name='BlockWysiwyg'] {
   [data-text-align='center'] {
     text-align: center;
   }
+
+  .word-shuffle {
+    display: inline-block;
+  }
+  
+  .word-shuffle-separator {
+    display: inline;
+    white-space: pre;
+  }
 }

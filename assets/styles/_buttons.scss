@@ -29,45 +29,6 @@ button {
     pointer-events: none;
   }
 
-  // &--fullBlue {
-  //   @apply text-beige;
-  //   @apply bg-blue;
-  //   @apply border;
-  //   @apply border-blue;
-
-  //   &:hover,
-  //   &:focus {
-  //     @apply text-beige;
-  //     @apply bg-blueDark;
-  //   }
-  // }
-
-  // &--fullOrange {
-  //   @apply text-white;
-  //   @apply bg-orange;
-  //   @apply border;
-  //   @apply border-orange;
-
-  //   &:hover,
-  //   &:focus {
-  //     @apply text-orange;
-  //     @apply bg-transparent;
-  //   }
-  // }
-
-  // &--outline {
-  //   @apply text-black;
-  //   @apply bg-transparent;
-  //   @apply border;
-  //   @apply border-black;
-
-  //   &:hover,
-  //   &:focus {
-  //     color: var(--white) !important;
-  //     @apply bg-black;
-  //   }
-  // }
-
   &--link {
     @apply text-white;
     @apply hover:text-white !important;

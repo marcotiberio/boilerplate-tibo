@@ -1,18 +1,22 @@
 <flynt-component
   load:on="idle" name="SliderBoxText"
   class="pb-0 overflow-hidden"
+  id="{{ options.componentLabel|lower|replace({' ': '-'}) }}"
   style="
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};"
   >
   <script type="application/json">{{ jsonData|json_encode }}</script>
-  <div class="wrapper w-screen mx-auto boxed">
-    <div class="w-full max-w-screen-max mx-auto flex flex-col md:flex-row {% if buttonLink %} justify-between {% else %} justify-start {% endif %} items-center gap-sm md:gap-xxl">
-      {% if title %}
-        <div class="h2 w-full max-w-[450px]">{{ title }}</div>
-      {% endif %}
-      {% if contentHtml %}
-        <div class="wysiwyg [&_*]:mb-0 w-full max-w-[450px]">{{ contentHtml|e('wp_kses_post') }}</div>
+  <div class="wrapper w-screen mx-auto boxed !pb-lg md:!pb-xl flex flex-col md:flex-row justify-start items-start gap-sm md:gap-lg">
+    {% if options.componentLabel %}
+    <div class="boxed boxed--small absolute top-0 left-0 w-full flex justify-between items-center">
+      <div class="font-menu">{{ options.componentLabel }}</div>
+      <div class="font-menu">{{ options.componentLabel }}</div>
+    </div>
+    {% endif %}
+    <div class="w-full md:w-1/3 max-w-screen-max mx-auto flex flex-col md:flex-row {% if buttonLink %} justify-between {% else %} justify-start {% endif %} items-center gap-sm md:gap-xxl">
+      {% if blockTitleHtml %}
+        <div class="wysiwyg [&_*]:mb-0 w-full max-w-[450px]">{{ blockTitleHtml|e('wp_kses_post') }}</div>
       {% endif %}
       {% if buttonLink %}
         <a 
@@ -24,14 +28,70 @@
       {% endif %}
     </div>
 
-    <div data-ref="slider" class="slider swiper-container mt-lg">
-      <div data-ref="dots" class="flex justify-center absolute !bottom-[-10px] lg:!bottom-[-20px] z-[40] slider-pagination swiper-pagination-fraction"></div>
+    <div data-ref="slider" class="slider swiper-container w-full md:w-2/3">
+      <div data-ref="dots" class="flex justify-center absolute !bottom-[-30px] lg:!bottom-[-30px] z-[40] slider-pagination swiper-pagination-fraction"></div>
       <div class="swiper-wrapper flex flex-row">
         {% for box in boxes %}
           <div class="slider-item swiper-slide flex flex-col gap-sm">
-            <div class="font-h3 font-bold">
-              <div>{{ loop.index }}</div>
-              <div>{% if box.title %}{{ box.title }} {% endif %}</div>
+            {% if box.image %}
+              <figure class="w-full bg-greyDark rounded-[16px]">
+                <img 
+                  class="outermost-ring block w-full h-auto lazyload object-cover rounded-full"
+                  src="{{ box.image.src | resize(32) }}"
+                  data-srcset="{{function('wp_get_attachment_image_srcset', box.image.id)}}"
+                  data-sizes="auto"
+                  alt="{{ box.image.alt|e | default('') }}"
+                  loading="lazy"
+                />
+                <img 
+                  class="outer-ring block w-full h-auto lazyload object-cover rounded-full"
+                  src="{{ box.image.src | resize(32) }}"
+                  data-srcset="{{function('wp_get_attachment_image_srcset', box.image.id)}}"
+                  data-sizes="auto"
+                  alt="{{ box.image.alt|e | default('') }}"
+                  loading="lazy"
+                />
+                <img 
+                  class="outer-middle-ring block w-full h-auto lazyload object-cover rounded-full"
+                  src="{{ box.image.src | resize(32) }}"
+                  data-srcset="{{function('wp_get_attachment_image_srcset', box.image.id)}}"
+                  data-sizes="auto"
+                  alt="{{ box.image.alt|e | default('') }}"
+                  loading="lazy"
+                />
+                <img 
+                  class="middle-ring block w-full h-auto lazyload object-cover rounded-full"
+                  src="{{ box.image.src | resize(32) }}"
+                  data-srcset="{{function('wp_get_attachment_image_srcset', box.image.id)}}"
+                  data-sizes="auto"
+                  alt="{{ box.image.alt|e | default('') }}"
+                  loading="lazy"
+                />
+                <img 
+                  class="middle-inner-ring block w-full h-auto lazyload object-cover rounded-full"
+                  src="{{ box.image.src | resize(32) }}"
+                  data-srcset="{{function('wp_get_attachment_image_srcset', box.image.id)}}"
+                  data-sizes="auto"
+                  alt="{{ box.image.alt|e | default('') }}"
+                  loading="lazy"
+                />
+                <img 
+                  class="inner-ring block w-full h-auto lazyload object-cover rounded-full"
+                  src="{{ box.image.src | resize(32) }}"
+                  data-srcset="{{function('wp_get_attachment_image_srcset', box.image.id)}}"
+                  data-sizes="auto"
+                  alt="{{ box.image.alt|e | default('') }}"
+                  loading="lazy"
+                />
+              </figure>
+            {% endif %}
+            <div class="flex flex-col gap-[5px]">
+              {% if box.title %}
+                <div class="font-h3">{{ box.title }}</div>
+              {% endif %}
+              {% if box.subtitle %}
+                <div class="font-h4 italic">{{ box.subtitle }}</div>
+              {% endif %}
             </div>
             {% if box.text %}
               <div class="font-body !mb-0">{{ box.text }}</div>

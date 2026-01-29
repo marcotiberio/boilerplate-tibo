@@ -1,5 +1,7 @@
 .menu {
   @include reset-list;
+  @apply bg-green;
+  @apply text-black;
   @apply w-full;
   @apply flex;
   @apply flex-col;

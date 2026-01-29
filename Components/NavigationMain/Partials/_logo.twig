@@ -1,3 +1,5 @@
-<a class="logo col-start-1 col-end-4 flex flex-row justify-start items-center" href="{{ site.link }}" aria-label="Home">
-  <img class="logo-image lg:w-auto" src="{{ logo.src }}" alt="{{ logo.alt }}">
+<a class="logo col-start-1 col-end-4 flex flex-row justify-start items-center [&_path]:hover:fill-green" href="{{ site.link }}" aria-label="Home">
+  {# <img class="logo-image lg:w-auto" src="{{ logo.src }}" alt="{{ logo.alt }}"> #}
+  {% include 'assets/images/eye-left2.svg' %}
+  {% include 'assets/images/eye-right2.svg' %}
 </a>

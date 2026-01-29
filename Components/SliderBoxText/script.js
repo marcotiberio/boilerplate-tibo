@@ -28,11 +28,11 @@ function initSlider (refs, data) {
     },
     breakpoints: {
       640: {
-        slidesPerView: 3,
+        slidesPerView: 2,
         spaceBetween: 20
       },
       1181: {
-        slidesPerView: 4,
+        slidesPerView: 2,
         spaceBetween: 20
       }
     }

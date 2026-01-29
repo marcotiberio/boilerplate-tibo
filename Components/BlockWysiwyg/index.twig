@@ -1,10 +1,17 @@
 <flynt-component 
   load:on="visible" 
   name="BlockWysiwyg"
+  id="{{ options.componentLabel|lower|replace({' ': '-'}) }}"
   style="
-    color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--blue){% endif %};">
+    color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};">
   <div 
-    class="boxed w-full">
+    class="boxed md:boxed--small w-screen md:min-h-screen flex justify-center items-center">
+    {% if options.componentLabel %}
+    <div class="boxed boxed--small absolute top-0 left-0 w-full flex justify-between items-center">
+      <div class="font-menu">{{ options.componentLabel }}</div>
+      <div class="font-menu">{{ options.componentLabel }}</div>
+    </div>
+    {% endif %}
     <div 
       class="
         wysiwyg flex flex-col {% if options.colorBackground %} p-sm rounded {% endif %}
@@ -14,14 +21,6 @@
       "
       style="background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
       {{ contentHtml|e('wp_kses_post') }}
-      {# {% if buttonLink %}
-        <a 
-          class="button button--outline" 
-          href="{{ buttonLink.url }}" 
-          {% if buttonLink.target %} target="{{ buttonLink.target }}" rel="noreferrer noopener"{% endif %}>
-          {{ buttonLink.title }}
-        </a>
-      {% endif %} #}
     </div>
   </div>
 </flynt-component>

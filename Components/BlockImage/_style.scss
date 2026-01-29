@@ -1,0 +1,11 @@
+flynt-component[name='BlockImage'] {
+  // Styles moved to Tailwind classes in index.twig
+  // Keeping only caption styles that use CSS variables
+  figure[data-image-size='full'] {
+    .caption {
+      margin-inline: auto;
+      max-width: var(--container-max-width);
+      padding-inline: var(--container-padding);
+    }
+  }
+}

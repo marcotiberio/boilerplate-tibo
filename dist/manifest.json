@@ -1,11 +1,19 @@
 {
   "Components/BlockGalleryMedia/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
     "isDynamicEntry": true,
     "src": "Components/BlockGalleryMedia/script.js"
+  },
+  "Components/BlockImage/script.js": {
+    "file": "assets/script-cdc15888.js",
+    "imports": [
+      "assets/main.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "Components/BlockImage/script.js"
   },
   "Components/BlockSliderLogos/script.js": {
     "file": "assets/script-e6269e81.js",
@@ -16,7 +24,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-ecbf5980.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -24,7 +32,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-48bc6e8a.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -39,7 +47,7 @@
     "css": [
       "assets/script-b3ce9496.css"
     ],
-    "file": "assets/script-cafc09ab.js",
+    "file": "assets/script-b12bafd7.js",
     "imports": [
       "assets/main.js"
     ],
@@ -54,6 +62,14 @@
     ],
     "isDynamicEntry": true,
     "src": "Components/GridPostsArchive/script.js"
+  },
+  "Components/HeroHeader/script.js": {
+    "file": "assets/script-cf41e915.js",
+    "imports": [
+      "assets/main.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "Components/HeroHeader/script.js"
   },
   "Components/ListComponents/script.js": {
     "file": "assets/script-6fca4744.js",
@@ -100,8 +116,16 @@
     "isDynamicEntry": true,
     "src": "Components/NavigationFooter/script.js"
   },
+  "Components/NavigationMain/script.js": {
+    "file": "assets/script-346ac37e.js",
+    "imports": [
+      "assets/main.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "Components/NavigationMain/script.js"
+  },
   "Components/SliderBox/script.js": {
-    "file": "assets/script-f8e40592.js",
+    "file": "assets/script-3f90a92a.js",
     "imports": [
       "_swiper-bundle-917ff535.js",
       "_pagination-5175372f.js",
@@ -111,7 +135,7 @@
     "src": "Components/SliderBox/script.js"
   },
   "Components/SliderBoxText/script.js": {
-    "file": "assets/script-c321d7ac.js",
+    "file": "assets/script-93e0802a.js",
     "imports": [
       "_swiper-bundle-917ff535.js",
       "_pagination-5175372f.js",
@@ -196,7 +220,7 @@
     "src": "Components/ZZZ/HeroSliderComposite/script.js"
   },
   "Components/ZZZ/HeroVideoBackground/script.js": {
-    "file": "assets/script-ecbf5980.js",
+    "file": "assets/script-48bc6e8a.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -213,7 +237,7 @@
     "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
-    "file": "assets/script-a7bc417b.js",
+    "file": "assets/script-6c912eb2.js",
     "imports": [
       "assets/main.js"
     ],
@@ -292,7 +316,7 @@
     "file": "assets/swiper-bundle-917ff535.js"
   },
   "assets/admin.js": {
-    "file": "assets/admin-c4afd7fc.js",
+    "file": "assets/admin-7bb71f17.js",
     "isEntry": true,
     "src": "assets/admin.js"
   },
@@ -325,25 +349,48 @@
     "file": "assets/linkedin-e0e59379.svg",
     "src": "assets/icons/linkedin.svg"
   },
-  "assets/images/logo.svg": {
-    "file": "assets/logo-d046abae.svg",
-    "src": "assets/images/logo.svg"
+  "assets/images/eye-left.svg": {
+    "file": "assets/eye-left-1e848a5a.svg",
+    "src": "assets/images/eye-left.svg"
+  },
+  "assets/images/eye-left2.svg": {
+    "file": "assets/eye-left2-2adc75d6.svg",
+    "src": "assets/images/eye-left2.svg"
+  },
+  "assets/images/eye-right.svg": {
+    "file": "assets/eye-right-ad6fc013.svg",
+    "src": "assets/images/eye-right.svg"
+  },
+  "assets/images/eye-right2.svg": {
+    "file": "assets/eye-right2-2df00b1c.svg",
+    "src": "assets/images/eye-right2.svg"
+  },
+  "assets/images/logo-left.svg": {
+    "file": "assets/logo-left-404c543c.svg",
+    "src": "assets/images/logo-left.svg"
+  },
+  "assets/images/logo-right.svg": {
+    "file": "assets/logo-right-e406d583.svg",
+    "src": "assets/images/logo-right.svg"
   },
   "assets/main.js": {
     "dynamicImports": [
       "node_modules/@webreflection/custom-elements-builtin/esm/index.js",
       "Components/BlockGalleryMedia/script.js",
+      "Components/BlockImage/script.js",
       "Components/BlockSliderLogos/script.js",
       "Components/BlockVideoOembed/script.js",
       "Components/BlockVideoText/script.js",
+      "_script-db2e204d.js",
       "Components/GridImages/script.js",
       "Components/GridPostsArchive/script.js",
+      "Components/HeroHeader/script.js",
       "Components/ListComponents/script.js",
       "Components/ListingJournalRelated/script.js",
       "Components/ListingVideosRelated/script.js",
       "Components/NavigationBurger/script.js",
       "Components/NavigationFooter/script.js",
-      "_script-db2e204d.js",
+      "Components/NavigationMain/script.js",
       "Components/SliderBox/script.js",
       "Components/SliderBoxText/script.js",
       "Components/ZZZ/AccordionSystems/script.js",
@@ -362,12 +409,12 @@
       "Components/ZZZ/SliderLogos/script.js",
       "Components/ZZZ/SliderQuotes/script.js"
     ],
-    "file": "assets/main-52f4dba1.js",
+    "file": "assets/main-3f7d8f22.js",
     "isEntry": true,
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-80636217.css",
+    "file": "assets/main-69118629.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
@@ -377,7 +424,7 @@
     "src": "assets/print.scss"
   },
   "assets/tinyMce.scss": {
-    "file": "assets/tinyMce-31d58b11.css",
+    "file": "assets/tinyMce-4615345c.css",
     "isEntry": true,
     "src": "assets/tinyMce.scss"
   },

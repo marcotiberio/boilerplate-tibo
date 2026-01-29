@@ -34,7 +34,7 @@ function getACFLayout()
                 'type' => 'wysiwyg',
                 'tabs' => 'visual,text',
                 'delay' => 1,
-                'media_upload' => 1,
+                'media_upload' => 0,
                 'required' => 1,
             ],
             // [
@@ -59,6 +59,7 @@ function getACFLayout()
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => [
+                    FieldVariables\getComponentLabel(),
                     FieldVariables\getColorBackground(),
                     FieldVariables\getColorText(),
                 ]

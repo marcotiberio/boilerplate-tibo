@@ -1,5 +1,5 @@
 html {
-  @apply bg-beige text-blue;
+  @apply bg-grey text-black;
   font-size: var(--base-font-size-mobile, 16px);
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -21,10 +21,11 @@ html {
 }
 
 ::selection {
-  @apply text-beige bg-blue;
+  @apply text-grey bg-green;
 }
 
-body {
-  @apply text-blue;
-  font-family: var(--primary-font-family, 'Retail', Arial, sans-serif);
+body,
+p {
+  @apply text-black;
+  font-family: var(--primary-font-family, var(--secondary-font-family, 'Inter', Arial, sans-serif));
 }
