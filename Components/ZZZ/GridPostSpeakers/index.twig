@@ -1,12 +1,12 @@
 <flynt-component load:on="visible" name="GridPostSpeakers" class="" style="background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
-  <div class="wrapper max-w-screen-max mx-auto boxed">
+  <div class="wrapper max-w-screen-box mx-auto boxed">
     {% if headlineTitle %}
       <div class="max-w-screen-lg mx-auto font-heroSubtitle text-center" style="color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--white){% endif %};">
         {{ headlineTitle }}
       </div>
     {% endif %}
     <div 
-      class="w-full max-w-screen-max mx-auto mt-md md:mt-xl grid gap-sm"
+      class="w-full max-w-screen-box mx-auto mt-md md:mt-xl grid gap-sm"
       {{ options.gridColumns ? 'data-grid-columns="' ~ options.gridColumns ~ '"' }}>
       {% for post in selectedPosts %}
         <div class="grid-item flex flex-col">

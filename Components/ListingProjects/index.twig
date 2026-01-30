@@ -6,7 +6,7 @@
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.pageBackground %}{{ options.pageBackground }}{% else %}transparent{% endif %};">
 
-  <div class="wrapper max-w-screen-max mx-auto boxed flex flex-col gap-sm" x-data="{ 
+  <div class="wrapper max-w-screen-box mx-auto boxed flex flex-col gap-sm" x-data="{ 
     selectedCategory: '', 
     searchQuery: '', 
     filtersOpen: false,

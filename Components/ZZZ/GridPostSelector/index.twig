@@ -1,5 +1,5 @@
 <flynt-component load:on="visible" name="GridPostSelector" class="">
-  <div class="wrapper max-w-screen-max mx-auto boxed">
+  <div class="wrapper max-w-screen-box mx-auto boxed">
     {% if headlineTitle %}
       <h2 
         class="max-w-screen-lg mx-auto flex justify-center items-center text-center"
@@ -9,7 +9,7 @@
         </h2>
     {% endif %}
     <div 
-      class="w-full max-w-screen-max mx-auto mt-md md:mt-xl grid gap-sm"
+      class="w-full max-w-screen-box mx-auto mt-md md:mt-xl grid gap-sm"
       {{ options.gridColumns ? 'data-grid-columns="' ~ options.gridColumns ~ '"' }}>
       {% for post in selectedPosts %}
         <div class="grid-item flex flex-col">

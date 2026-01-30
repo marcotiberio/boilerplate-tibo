@@ -2,7 +2,7 @@
   data-ref="menu" 
   class="menu w-full h-full z-40 relative" 
   style="background-color: {% if post.pageBackground %}{{ post.pageBackground }}{% else %}var(--white){% endif %}; ">
-  <div class="w-full max-w-screen-max mx-auto flex flex-col justify-center items-center p-sm">
+  <div class="w-full max-w-screen-box mx-auto flex flex-col justify-center items-center p-sm">
     {% for item in items %}
       {% if not item.children %}
         <li class="item {{- item.current ? ' current-menu-item' }}">

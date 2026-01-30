@@ -7,9 +7,9 @@
       color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
       background-color: {% if options.pageBackground %}{{ options.pageBackground }}{% else %}transparent{% endif %};">
     
-    <div class="wrapper max-w-screen-max mx-auto boxed flex flex-col gap-sm" x-data="{ selectedCategories: [], searchQuery: '', filtersOpen: false }">
+    <div class="wrapper max-w-screen-box mx-auto boxed flex flex-col gap-sm" x-data="{ selectedCategories: [], searchQuery: '', filtersOpen: false }">
         
-      <div class="w-full max-w-screen-max mx-auto flex flex-col md:flex-row {% if buttonLink %} justify-between {% else %} justify-start {% endif %} items-start gap-sm md:gap-xxl">
+      <div class="w-full max-w-screen-box mx-auto flex flex-col md:flex-row {% if buttonLink %} justify-between {% else %} justify-start {% endif %} items-start gap-sm md:gap-xxl">
         {% if title %}
           <div class="h2 w-full max-w-[450px]">{{ title }}</div>
         {% endif %}

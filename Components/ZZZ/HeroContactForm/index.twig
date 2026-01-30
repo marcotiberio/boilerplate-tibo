@@ -4,13 +4,13 @@
   class=""
   style="background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}var(--white){% endif %};"
 >
-  <div class="w-full max-w-screen-max mx-auto boxed">
+  <div class="w-full max-w-screen-box mx-auto boxed">
     {% if blockTitle %}
-      <div class="max-w-screen-max w-full mx-auto pb-sm lg:pb-lg flex flex-row justify-between align-bottom items-end content-end">
+      <div class="max-w-screen-box w-full mx-auto pb-sm lg:pb-lg flex flex-row justify-between align-bottom items-end content-end">
         <div class="subtitle font-bold text-black">{{ blockTitle }}</div>
       </div>
     {% endif %}
-    <div class="max-w-screen-max mx-auto">
+    <div class="max-w-screen-box mx-auto">
       {{ contactForm }}
     </div>
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-md sm:flex-row justify-between gap-sm md:gap-lg mt-md sm:mt-xl">

@@ -10,6 +10,7 @@
 namespace Flynt\TinyMce;
 
 use Flynt\Utils\Asset;
+use Flynt\ThemeColors;
 
 // Add tinyMce styles to editor
 add_action('admin_init', function () {
@@ -80,13 +81,11 @@ function getBlockFormats($blockFormats)
 
 function getConfig()
 {
+    // Get colors from theme configuration
+    $colorMap = ThemeColors\getTinyMceColorMap();
+    
     return [
-        'textcolor_map' => [
-            '000000', 'Black',
-            'ffffff', 'White',
-            '3d6bff', 'Blue',
-            'fef7ca', 'Beige',
-        ],
+        'textcolor_map' => $colorMap,
         'blockformats' => [
             'Heading 1' => 'h1',
             'Heading 2' => 'h2',

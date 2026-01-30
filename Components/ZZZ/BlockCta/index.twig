@@ -6,7 +6,7 @@
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};"
   >
-  <div class="w-full max-w-screen-max mx-auto py-md px-sm md:py-xl md:px-lg flex flex-col justify-center align-middle items-center gap-md">
+  <div class="w-full max-w-screen-box mx-auto py-md px-sm md:py-xl md:px-lg flex flex-col justify-center align-middle items-center gap-md">
     {% if contentHtml or buttonLink %}
       <div class="wysiwyg">{{ contentHtml|e('wp_kses_post') }}</div>
       <a class="button button--grey" href="{{buttonLink.url}}">{{buttonLink.title}}</a>

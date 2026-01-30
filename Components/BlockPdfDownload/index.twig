@@ -4,7 +4,7 @@
   style="
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
-  <div class="wrapper max-w-screen-max mx-auto">
+  <div class="wrapper max-w-screen-box mx-auto">
     <div class=" {% if image %}min-h-[350px] md:min-h-[550px]{% endif %} h-auto flex align-start justify-start md:justify-between" {{ imageAlignment ? 'data-image-alignment="' ~ imageAlignment ~ '"' }} {{ imagePosition ? 'data-image-position="' ~ imagePosition ~ '"' }}>
       <div class="w-auto lg:w-1/2 h-auto flex flex-col">
         {% if image %}

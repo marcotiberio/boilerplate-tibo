@@ -1,6 +1,6 @@
 <flynt-component load:on="visible" name="AccordionSystems">
   <script type="application/json">{{ jsonData|json_encode }}</script>
-  <div class="wrapper max-w-screen-max mx-auto boxed grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-sm lg:gap-xl">
+  <div class="wrapper max-w-screen-box mx-auto boxed grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-sm lg:gap-xl">
     {% if preContentHtml or header %}
       <div>
         <h1 class="text-black">{{ header|e}}</h1>

@@ -1,6 +1,6 @@
 {% if items|length > 0 %}
   <flynt-component load:on="visible" name="BlockRelatedBlog" class="">
-    <div class="wrapper max-w-screen-max mx-auto boxed flex flex-col gap-sm" x-data="{ selectedCategories: [] }">
+    <div class="wrapper max-w-screen-box mx-auto boxed flex flex-col gap-sm" x-data="{ selectedCategories: [] }">
       
       {% if headlineTitle %}
         <div class="max-w-screen-lg mx-auto font-heroSubtitle text-center" style="color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};">

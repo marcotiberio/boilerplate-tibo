@@ -1,5 +1,5 @@
 <flynt-component load:on="visible" name="BlockAbout">
-  <div class="wrapper max-w-screen-max mx-auto boxed">
+  <div class="wrapper max-w-screen-box mx-auto boxed">
     <div class="flex flex-col sm:flex-row align-start md:items-start justify-start md:justify-between gap-md lg:gap-xxl" {{ imagePosition ? 'data-image-position="' ~ imagePosition ~ '"' }}>
       <div class="sm:w-1/2">
         <div class="wysiwyg">{{ contentHtml|e('wp_kses_post') }}</div>

@@ -43,7 +43,8 @@ module.exports = {
       sm: '640px',
       md: '780px',
       lg: '1024px',
-      lgplus: '1180px',
+      lgplus: '1200px',
+      box: '1440px',
       xl: '1680px',
       max: '1920px'
     },

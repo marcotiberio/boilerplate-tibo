@@ -1,0 +1,43 @@
+<flynt-component
+  load:on="visible"
+  name="BlockStats"
+  class="blockStats"
+  style="
+    color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--blue){% endif %};
+    background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}var(--beige){% endif %};"
+>
+  <div class="boxed">
+    <div class="blockStats-inner flex flex-row items-stretch gap-sm">
+      {# Left: pin wrapper; stat sticks at 50vh #}
+      <div class="blockStats-pinWrapper w-1/3 md:w-1/2 shrink-0" data-ref="pinWrapper">
+        <div class="blockStats-sticky sticky top-[50vh] -translate-y-1/2 w-full">
+          <div class="blockStats-statWrap flex items-start justify-end gap-sm mb-md lg:mb-0">
+            <span class="blockStats-number text-blue text-[6rem] lg:text-[10rem] font-bold tracking-[-0.03em] leading-none tabular-nums" data-ref="statNumber">
+              {{ stats[0].stat|e }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {# Right: scrollable text blocks #}
+      <div class="blockStats-items w-2/3 md:w-1/2 flex-1 min-w-0 flex flex-col gap-sm lg:gap-xl lg:pr-lg">
+        {% for row in stats %}
+          <div
+            class="blockStats-item flex flex-col justify-center"
+            data-ref="items"
+            data-refs="item"
+            data-stat-index="{{ loop.index0 }}"
+            data-stat="{{ row.stat|e('html_attr') }}"
+          >
+            <h3 class="font-bold text-blue font-h3">{{ row.title|e }}</h3>
+            {% if row.description %}
+              <div class="wysiwyg">
+                {{ row.description|nl2br|e('wp_kses_post') }}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</flynt-component>

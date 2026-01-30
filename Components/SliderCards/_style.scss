@@ -19,7 +19,7 @@ flynt-component[name='SliderCards'] {
       overflow: hidden;
       border-radius: 12px;
       box-sizing: border-box;
-      width: fit-content;
+      width: 100% !important;
     }
 
     // Inactive slides (not the active/front card)

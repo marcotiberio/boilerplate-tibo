@@ -1,6 +1,6 @@
 <flynt-component load:on="visible" name="HeroImageText" class="">
   <div class="wrapper w-screen mx-auto" style="background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}var(--transparent){% endif %};">
-    <div class="w-full h-full max-w-screen-max mx-auto flex items-end justify-between {% if imagePosition == 'right' %} flex-col-reverse sm:flex-row {% else %} flex-col sm:flex-row-reverse {% endif %}">
+    <div class="w-full h-full max-w-screen-box mx-auto flex items-end justify-between {% if imagePosition == 'right' %} flex-col-reverse sm:flex-row {% else %} flex-col sm:flex-row-reverse {% endif %}">
     {% if contentHtml %}
       <div class="w-full sm:w-1/2 h-full px-sm py-sm sm:py-lg flex flex-col justify-between sm:items-center gap-sm">
         <div class="mx-0 sm:mx-auto wysiwyg">{{ contentHtml|e('wp_kses_post') }}</div>

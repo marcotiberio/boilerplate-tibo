@@ -17,7 +17,11 @@
             <div class="slider-item swiper-slide relative w-full h-auto lg:mr-md flex flex-row justify-center items-center overflow-hidden">
               {% if row.image %}
                 <div class="lg:w-1/2 h-auto flex justify-end items-center">
-                  <img src="{{ row.image.src }}" alt="{{ row.image.alt }}" class="max-w-[30vw] rounded-image aspect-square object-cover">
+                  <img class="lazyload max-w-[90vw] lg:max-w-[30vw] rounded-image aspect-square object-cover"
+                    src="{{ row.image.src | resize(32) }}"
+                    data-srcset="{{function('wp_get_attachment_image_srcset', row.image.id)}}"
+                    data-sizes="auto"
+                    alt="{{ row.image.alt|e }}">
                 </div>
                 <div class="lg:w-1/2"></div>
               {% endif %}

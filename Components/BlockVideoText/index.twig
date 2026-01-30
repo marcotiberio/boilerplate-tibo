@@ -4,7 +4,7 @@
   style="
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
-  <div class="wrapper max-w-screen-max mx-auto boxed">
+  <div class="wrapper max-w-screen-box mx-auto boxed">
     <div class="h-auto flex gap-sm align-start justify-start md:justify-between" {{ videoAlignment ? 'data-video-alignment="' ~ videoAlignment ~ '"' }} {{ videoPosition ? 'data-video-position="' ~ videoPosition ~ '"' }}>
       <div class="w-full lg:w-1/2 h-full flex flex-col">
         {% if oembed %}

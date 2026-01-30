@@ -4,7 +4,7 @@
   class=""
   style="
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
-  <div class="wrapper max-w-screen-max mx-auto boxed !py-sm">
+  <div class="wrapper max-w-screen-box mx-auto boxed !py-sm">
     {% if blockTitle or blockSubtitle %}
       <div class="max-w-screen-lg mx-auto flex flex-col gap-md place-content-center items-center">
         <div class="font-heroSubtitle">{{ blockTitle }}</div>
@@ -13,7 +13,7 @@
     {% endif %}
     <div 
       class="
-        w-full max-w-screen-max 
+        w-full max-w-screen-box 
         mx-auto 
         grid gap-xs xs:gap-md"
         {{ options.gridColumns ? 'data-grid-columns="' ~ options.gridColumns ~ '"' }}>

@@ -1,6 +1,6 @@
 {
   "Components/BlockGalleryMedia/script.js": {
-    "file": "assets/script-ecbf5980.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -18,8 +18,17 @@
     "isDynamicEntry": true,
     "src": "Components/BlockSliderLogos/script.js"
   },
+  "Components/BlockStats/script.js": {
+    "file": "assets/script-753c56cd.js",
+    "imports": [
+      "assets/main.js",
+      "_helpers-0bb72b7a.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "Components/BlockStats/script.js"
+  },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-48bc6e8a.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -27,7 +36,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-ecbf5980.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -42,7 +51,7 @@
     "css": [
       "assets/script-b3ce9496.css"
     ],
-    "file": "assets/script-a2a09267.js",
+    "file": "assets/script-8ecf3c99.js",
     "imports": [
       "assets/main.js"
     ],
@@ -67,7 +76,7 @@
     "src": "Components/ListComponents/script.js"
   },
   "Components/ListingJournalRelated/script.js": {
-    "file": "assets/script-8cee4d91.js",
+    "file": "assets/script-437e31c8.js",
     "imports": [
       "_swiper-bundle-9e8e63a0.js",
       "_navigation-42f35616.js",
@@ -78,7 +87,7 @@
     "src": "Components/ListingJournalRelated/script.js"
   },
   "Components/ListingVideosRelated/script.js": {
-    "file": "assets/script-437e31c8.js",
+    "file": "assets/script-8cee4d91.js",
     "imports": [
       "_swiper-bundle-9e8e63a0.js",
       "_navigation-42f35616.js",
@@ -117,7 +126,7 @@
     "src": "Components/SliderBox/script.js"
   },
   "Components/SliderBoxText/script.js": {
-    "file": "assets/script-1a7ed13e.js",
+    "file": "assets/script-fac6ecd6.js",
     "imports": [
       "_swiper-bundle-9e8e63a0.js",
       "_navigation-42f35616.js",
@@ -217,7 +226,7 @@
     "src": "Components/ZZZ/HeroSliderComposite/script.js"
   },
   "Components/ZZZ/HeroVideoBackground/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-48bc6e8a.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -234,7 +243,7 @@
     "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
-    "file": "assets/script-1858d42a.js",
+    "file": "assets/script-2a0ab278.js",
     "imports": [
       "assets/main.js"
     ],
@@ -324,7 +333,7 @@
     "file": "assets/swiper-bundle-9e8e63a0.js"
   },
   "assets/admin.js": {
-    "file": "assets/admin-c4afd7fc.js",
+    "file": "assets/admin-7bb71f17.js",
     "isEntry": true,
     "src": "assets/admin.js"
   },
@@ -340,6 +349,14 @@
   "assets/fonts/Retail-Medium.woff2": {
     "file": "assets/Retail-Medium-4405ad81.woff2",
     "src": "assets/fonts/Retail-Medium.woff2"
+  },
+  "assets/icons/arrow-next.svg": {
+    "file": "assets/arrow-next-0c0892b7.svg",
+    "src": "assets/icons/arrow-next.svg"
+  },
+  "assets/icons/arrow-prev.svg": {
+    "file": "assets/arrow-prev-f17876a2.svg",
+    "src": "assets/icons/arrow-prev.svg"
   },
   "assets/icons/chevron-down.svg": {
     "file": "assets/chevron-down-ec010283.svg",
@@ -366,6 +383,7 @@
       "node_modules/@webreflection/custom-elements-builtin/esm/index.js",
       "Components/BlockGalleryMedia/script.js",
       "Components/BlockSliderLogos/script.js",
+      "Components/BlockStats/script.js",
       "Components/BlockVideoOembed/script.js",
       "Components/BlockVideoText/script.js",
       "Components/GridImages/script.js",
@@ -395,12 +413,12 @@
       "Components/ZZZ/SliderLogos/script.js",
       "Components/ZZZ/SliderQuotes/script.js"
     ],
-    "file": "assets/main-376b71fc.js",
+    "file": "assets/main-78bbd1cf.js",
     "isEntry": true,
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-35b312ef.css",
+    "file": "assets/main-7489ad85.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
@@ -410,7 +428,7 @@
     "src": "assets/print.scss"
   },
   "assets/tinyMce.scss": {
-    "file": "assets/tinyMce-870ce8d9.css",
+    "file": "assets/tinyMce-c4760dba.css",
     "isEntry": true,
     "src": "assets/tinyMce.scss"
   },

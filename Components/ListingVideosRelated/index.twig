@@ -7,7 +7,7 @@
     background-color: {% if options.pageBackground %}{{ options.pageBackground }}{% else %}transparent{% endif %};">
 
   <script type="application/json">{{ jsonData|json_encode }}</script>
-  <div class="wrapper overflow-hidden max-w-screen-max mx-auto boxed !min-h-fit flex flex-col gap-sm fade-in" x-data="{ selectedCategories: [], searchQuery: '', filtersOpen: false }">
+  <div class="wrapper overflow-hidden max-w-screen-box mx-auto boxed !min-h-fit flex flex-col gap-sm fade-in" x-data="{ selectedCategories: [], searchQuery: '', filtersOpen: false }">
 
     <!-- Videos Grid -->
       <div data-ref="slider" class="slider swiper-container pt-xs md:pt-xs md:pb-sm border-t">
