@@ -1,7 +1,7 @@
 <flynt-component
   load:on="idle" 
   name="HeroHeader" 
-  class="" 
+  class="overflow-hidden" 
   style="
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};"
@@ -11,7 +11,7 @@
       <h1 class="font-h1 text-center">{{ blockTitle }}</h1>
     {% endif %}
     {% if images is defined and images|length %}
-      <div class="relative w-full h-full flex flex-col justify-center items-center gap-0 overflow-hidden">
+      <div class="relative w-full h-full flex flex-col justify-center items-center gap-0">
         <div 
           class="gallery relative py-sm flex flex-row justify-center items-center gap-0 [&_.galleryImg]:hover:mx-xs">
           {% for image in images %}
