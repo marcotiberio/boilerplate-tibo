@@ -8,12 +8,14 @@ use Timber\Timber;
 
 add_action('init', function () {
     register_nav_menus([
-        'navigation_main' => __('Navigation Main', 'flynt')
+        'navigation_main' => __('Navigation Main', 'flynt'),
+        'navigation_secondary' => __('Navigation Secondary', 'flynt')
     ]);
 });
 
 add_filter('Flynt/addComponentData?name=NavigationMain', function ($data) {
     $data['menu'] = Timber::get_menu('navigation_main') ?? Timber::get_pages_menu();
+    $data['menuSecondary'] = Timber::get_menu('navigation_secondary');
     $data['logo'] = [
         'src' => get_theme_mod('custom_header_logo') ? get_theme_mod('custom_header_logo') : Asset::requireUrl('assets/images/logo.svg'),
         'alt' => get_bloginfo('name')

@@ -21,7 +21,7 @@ flynt-component[name='ListingVideoFeat'] {
     &:hover {
       .button {
         &--outline {
-          @apply text-white;
+          @apply text-beige;
           @apply bg-black;
         }
       }

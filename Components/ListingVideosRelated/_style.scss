@@ -3,7 +3,7 @@ flynt-component[name='ListingVideosRelated'] {
       &:hover {
         .button {
           &--outline {
-            @apply text-white;
+            @apply text-beige;
             @apply bg-black;
           }
         }

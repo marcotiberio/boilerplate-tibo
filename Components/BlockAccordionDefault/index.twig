@@ -7,16 +7,21 @@
     {% endif %}
     <div class="list-none flex flex-col flex-wrap gap-xs">
       {% for panel in accordionPanels %}
-        <div x-data="{ open: false }" class="bg-orange text-white rounded-[12px]">
+        <div x-data="{ open: false }" class="bg-orange text-beige rounded-[12px]">
           <button @click="open = !open" class="items-center cursor-pointer flex font-extrabold justify-between m-0 p-[20px] relative w-full z-[2]" type="button" aria-expanded="false" aria-controls="content-{{ loop.index }}">
             <div class="">{{ panel.panelTitle|e }}</div>
             <div class="min-w-[40px] flex items-center justify-end">
               {% include 'assets/icons/chevron-down.svg' ignore missing %}
             </div>
           </button>
-          <div x-show="open" class="mx-auto p-[20px] transition-all duration-300 ease-in-out z-[1]" aria-hidden="true" id="content-{{ loop.index }}">
-            <div class="p-0 wysiwyg">
-              {{ panel.panelContent|e('wp_kses_post') }}
+          <div class="grid transition-all duration-300 ease-in-out overflow-hidden" 
+               :class="open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'"
+               aria-hidden="true" 
+               id="content-{{ loop.index }}">
+            <div class="mx-auto p-0 z-[1] min-h-0 w-full">
+              <div class="wysiwyg w-full px-sm pb-sm">
+                {{ panel.panelContent|e('wp_kses_post') }}
+              </div>
             </div>
           </div>
         </div>

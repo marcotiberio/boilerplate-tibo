@@ -5,10 +5,12 @@
   style="
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};"
   >
-  <div class="boxed w-full">
-    {# <div class="block lg:hidden">
-      <h2>{{ headlineTitle|e }}</h2>
-    </div> #}
+  <div class="boxed w-full flex flex-col gap-sm">
+    {% if blockTitle %}
+      <div class="">
+        <h2 class="font-h2">{{ blockTitle|e }}</h2>
+      </div>
+    {% endif %}
     <div class="flex flex-col md:flex-row gap-sm">
       {% for column in columns %}
         <div class="flex flex-col w-full">

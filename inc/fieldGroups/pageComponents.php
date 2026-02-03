@@ -81,6 +81,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\GridImages\getACFLayout(),
                     Components\GridImageText\getACFLayout(),
                     Components\HeroHeader\getACFLayout(),
+                    Components\HeroHeaderBackgroundImage\getACFLayout(),
                     Components\HeroMultimedia\getACFLayout(),
                     Components\ListingVideoFeat\getACFLayout(),
                     Components\ListingVideo\getACFLayout(),

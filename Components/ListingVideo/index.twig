@@ -47,7 +47,7 @@
           <!-- All Category Filter -->
           <div 
             class="font-body !mb-0 cursor-pointer px-xs md:px-sm py-xs transition-colors filter-button relative"
-            :class="selectedCategory === '' ? 'text-black' : 'text-white border-transparent'"
+            :class="selectedCategory === '' ? 'text-black' : 'text-beige border-transparent'"
             @click="
               if (selectedCategory !== '') {
                 selectedCategory = '';
@@ -61,7 +61,7 @@
             {% for category in categories %}
               <div 
                 class="font-body !mb-0 cursor-pointer px-xs md:px-sm py-xs transition-colors filter-button relative"
-                :class="selectedCategory === '{{ category.slug }}' ? 'text-black' : 'text-white border-transparent'"
+                :class="selectedCategory === '{{ category.slug }}' ? 'text-black' : 'text-beige border-transparent'"
                 @click="
                   if (selectedCategory !== '{{ category.slug }}') {
                     selectedCategory = '{{ category.slug }}';
@@ -101,8 +101,8 @@
                   />
                 </figure>
                 {% endif %}
-                <h3 class="w-full !mb-0 font-bodySmall text-white">{{ post.title }}</h3>
-                <a class="button button--link w-full !font-bodySmall !mb-0 text-white relative" href="{{ post.link }}" title="{{ post.title }}" aria-label="Go to post">
+                <h3 class="w-full !mb-0 font-bodySmall text-beige">{{ post.title }}</h3>
+                <a class="button button--link w-full !font-bodySmall !mb-0 text-beige relative" href="{{ post.link }}" title="{{ post.title }}" aria-label="Go to post">
                   <span class="pb-[5px]">Watch Here</span>
                 </a>
               </div>

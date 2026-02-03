@@ -3,7 +3,7 @@ flynt-component[name='ListingBlog'] {
     &:hover {
       .button {
         &--outline {
-          @apply text-white;
+          @apply text-beige;
           @apply bg-black;
         }
       }

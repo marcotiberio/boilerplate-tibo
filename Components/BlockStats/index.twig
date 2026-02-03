@@ -12,7 +12,7 @@
       <div class="blockStats-pinWrapper w-1/3 md:w-1/2 shrink-0" data-ref="pinWrapper">
         <div class="blockStats-sticky sticky top-[50vh] -translate-y-1/2 w-full">
           <div class="blockStats-statWrap flex items-start justify-end gap-sm mb-md lg:mb-0">
-            <span class="blockStats-number text-blue text-[6rem] lg:text-[10rem] font-bold tracking-[-0.03em] leading-none tabular-nums" data-ref="statNumber">
+            <span class="blockStats-number text-[6rem] lg:text-[10rem] font-bold tracking-[-0.03em] leading-none tabular-nums" data-ref="statNumber">
               {{ stats[0].stat|e }}
             </span>
           </div>
@@ -29,7 +29,7 @@
             data-stat-index="{{ loop.index0 }}"
             data-stat="{{ row.stat|e('html_attr') }}"
           >
-            <h3 class="font-bold text-blue font-h3">{{ row.title|e }}</h3>
+            <h3 class="font-bold font-h3">{{ row.title|e }}</h3>
             {% if row.description %}
               <div class="wysiwyg">
                 {{ row.description|nl2br|e('wp_kses_post') }}

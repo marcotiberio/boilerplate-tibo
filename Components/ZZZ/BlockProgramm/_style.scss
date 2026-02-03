@@ -81,12 +81,12 @@
 
         &:hover {
           @apply bg-black;
-          @apply text-white;
+          @apply text-beige;
         }
 
         &[selected='selected'] {
           @apply bg-black;
-          @apply text-white;
+          @apply text-beige;
         }
       }
 

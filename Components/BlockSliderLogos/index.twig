@@ -5,19 +5,18 @@
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
   <script type="application/json">{{ jsonData|json_encode }}</script>
-  <div class="boxed !min-h-auto px-0 w-full fade-in">
+  <div class="boxed !max-w-screen-max !min-h-auto px-0 w-full">
     {% if blockTitle %}
       <h3 class="font-nav text-center">{{ blockTitle }}</h3>
     {% endif %}
 
-    <div 
-      data-ref="slider" class="slider swiper-container mt-lg">
+    <div data-ref="slider" class="slider swiper-container mt-lg w-screen-box mx-auto overflow-hidden">
       <div class="swiper-wrapper flex flex-row">
         {% for row in rows %}
           <div class="slider-item swiper-slide flex items-center justify-center">
             {% if row.logo %}
               <img 
-                class="logo lazyload object-contain block h-[50px] w-auto"
+                class="logo lazyload object-contain block h-[200px] w-auto"
                 src="{{ row.logo.src | resize(32) }}"
                 data-srcset="{{function('wp_get_attachment_image_srcset', row.logo.id)}}"
                 data-sizes="auto"
@@ -25,6 +24,16 @@
             {% endif %}
           </div>
         {% endfor %}
+      </div>
+      <div class="hidden lg:block w-full max-w-screen-max mx-auto button-wrapper absolute left-0 bottom-0 z-50 translate-y-[-80px]">
+        <div class="w-full mx-auto flex align-middle justify-between items-center">
+          <button type="button" data-ref="prev" class="slider-button slider-button--prev hover:scale-110 transition-transform duration-300">
+            {% include 'assets/icons/arrow-prev.svg' ignore missing %}
+          </button>
+          <button type="button" data-ref="next" class="slider-button slider-button--next hover:scale-110 transition-transform duration-300">
+            {% include 'assets/icons/arrow-next.svg' ignore missing %}
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -7,7 +7,10 @@
           {% include 'Partials/_menu.twig' with { 'items': menu.items } only %}
         {% endif %}
         {% if ctaLink %}
-          <div class="flex justify-end items-center">
+          <div class="flex justify-end items-center gap-xs">
+            {% if menuSecondary %}
+              {% include 'Partials/_menuSecondary.twig' with { 'items': menuSecondary.items, 'isSecondary': true } only %}
+            {% endif %}
             <a 
               class="button button--fullOrange" 
               href="{{ ctaLink.url }}" 

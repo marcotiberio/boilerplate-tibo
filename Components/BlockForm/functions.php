@@ -47,6 +47,17 @@ function getACFLayout()
                     'width' => 100,
                 ],
             ],
+            [
+                'label' => __('Embed Code', 'flynt'),
+                'instructions' => __('Paste your embed code here (iframe, script tags, etc.)', 'flynt'),
+                'name' => 'embedCode',
+                'type' => 'textarea',
+                'rows' => 4,
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 100,
+                ],
+            ],
             // [
             //     'label' => __('Button', 'flynt'),
             //     'name' => 'buttonLink',
