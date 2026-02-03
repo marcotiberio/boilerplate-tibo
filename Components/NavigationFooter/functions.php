@@ -86,6 +86,33 @@ Options::addTranslatable('NavigationFooter', [
         ],
     ],
     [
+        'label' => __('Buttons', 'flynt'),
+        'name' => 'buttonsTab',
+        'type' => 'tab',
+        'placement' => 'top',
+        'endpoint' => 0
+    ],
+    [
+        'label' => __('Buttons', 'flynt'),
+        'name' => 'buttons',
+        'type' => 'repeater',
+        'layout' => 'block',
+        'min' => 0,
+        'max' => 4,
+        'button_label' => __('Add Button', 'flynt'),
+        'sub_fields' => [
+            [
+                'label' => __('Button', 'flynt'),
+                'name' => 'buttonLink',
+                'type' => 'link',
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 100
+                ],
+            ],
+        ]
+    ],
+    [
         'label' => __('Labels', 'flynt'),
         'name' => 'labelsTab',
         'type' => 'tab',

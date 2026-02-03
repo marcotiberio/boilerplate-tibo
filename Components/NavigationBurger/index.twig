@@ -16,12 +16,12 @@
       <div
         data-ref="menu" 
         class="menu w-full h-fit !pt-[50px] z-40 relative bg-beige">
-        <div class="w-full h-full max-w-screen-box mx-auto flex flex-col justify-start items-start gap-xs px-xs py-xs">
+        <div class="w-full h-full max-w-screen-box mx-auto flex flex-col justify-center items-center gap-xs px-xs py-xs">
           {% for item in menu.items %}
             {# regular menu item #}
             {% if not item.children %}
               <div class="item {{- item.current ? ' current-menu-item underline underline-offset-4' }}">
-                <a class="link font-nav no-underline" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+                <a class="link font-nav no-underline text-center" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
                   {{ item.title }}
                 </a>
               </div>

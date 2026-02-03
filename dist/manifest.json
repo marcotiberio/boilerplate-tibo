@@ -1,6 +1,6 @@
 {
   "Components/BlockGalleryMedia/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -36,7 +36,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -76,7 +76,7 @@
     "src": "Components/ListComponents/script.js"
   },
   "Components/ListingJournalRelated/script.js": {
-    "file": "assets/script-6a1ccb89.js",
+    "file": "assets/script-865bbfd7.js",
     "imports": [
       "_swiper-bundle-70f174a6.js",
       "_navigation-2c37c78e.js",
@@ -87,7 +87,7 @@
     "src": "Components/ListingJournalRelated/script.js"
   },
   "Components/ListingVideosRelated/script.js": {
-    "file": "assets/script-865bbfd7.js",
+    "file": "assets/script-6a1ccb89.js",
     "imports": [
       "_swiper-bundle-70f174a6.js",
       "_navigation-2c37c78e.js",
@@ -426,7 +426,7 @@
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-f2ff7c2d.css",
+    "file": "assets/main-ee9edefd.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
@@ -436,7 +436,7 @@
     "src": "assets/print.scss"
   },
   "assets/tinyMce.scss": {
-    "file": "assets/tinyMce-4f8964fb.css",
+    "file": "assets/tinyMce-b41ad93e.css",
     "isEntry": true,
     "src": "assets/tinyMce.scss"
   },

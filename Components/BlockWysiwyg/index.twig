@@ -7,21 +7,27 @@
     class="boxed w-full">
     <div 
       class="
-        wysiwyg flex flex-col {% if options.colorBackground %} p-sm rounded {% endif %}
-        {% if textPosition == 'right' %} justify-end w-full ml-auto{% endif %}
-        {% if textPosition == 'left' %} justify-start w-full mr-auto{% endif %}
+        flex flex-col gap-sm {% if options.colorBackground %} p-sm rounded {% endif %}
+        {% if textPosition == 'right' %} justify-end w-full ml-0{% endif %}
+        {% if textPosition == 'left' %} justify-start w-full mr-0{% endif %}
         {% if textPosition == 'center' %} justify-center w-full mx-auto{% endif %}
+        {% if textWidth == 'narrow' %} max-w-prose ml-0 {% elseif textWidth == 'wide' %} max-w-full {% endif %}
       "
       style="background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
-      {{ contentHtml|e('wp_kses_post') }}
-      {# {% if buttonLink %}
+      <div class="wysiwyg">{{ contentHtml|e('wp_kses_post') }}</div>
+      {% if shortcode %}
+        <div class="shortcode-output">
+          {{ function('do_shortcode', shortcode) }}
+        </div>
+      {% endif %}
+      {% if buttonLink %}
         <a 
-          class="button button--outline" 
+          class="button button--{{ buttonStyle|default('fullBlue') }}" 
           href="{{ buttonLink.url }}" 
           {% if buttonLink.target %} target="{{ buttonLink.target }}" rel="noreferrer noopener"{% endif %}>
           {{ buttonLink.title }}
         </a>
-      {% endif %} #}
+      {% endif %}
     </div>
   </div>
 </flynt-component>

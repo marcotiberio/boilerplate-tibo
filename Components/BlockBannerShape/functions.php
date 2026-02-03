@@ -18,6 +18,17 @@ function getACFLayout()
                 'endpoint' => 0,
             ],
             [
+                'label' => __('Content alignment', 'flynt'),
+                'name' => 'contentAlignment',
+                'type' => 'button_group',
+                'choices' => [
+                    'left' => sprintf('<i class=\'dashicons dashicons-align-left\' title=\'%1$s\'></i>', __('Content on the left', 'flynt')),
+                    'center' => sprintf('<i class=\'dashicons dashicons-menu-alt3\' title=\'%1$s\'></i>', __('Content centered', 'flynt')),
+                    'right' => sprintf('<i class=\'dashicons dashicons-align-right\' title=\'%1$s\'></i>', __('Content on the right', 'flynt'))
+                ],
+                'default_value' => 'center',
+            ],
+            [
                 'label' => __('Content', 'flynt'),
                 'name' => 'contentHtml',
                 'type' => 'wysiwyg',
@@ -25,6 +36,29 @@ function getACFLayout()
                 'delay' => 1,
                 'media_upload' => 1,
                 'required' => 1,
+            ],
+            [
+                'label' => __('Button', 'flynt'),
+                'name' => 'buttonLink',
+                'type' => 'link',
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 50,
+                ],
+            ],
+            [
+                'label' => __('Button Style', 'flynt'),
+                'name' => 'buttonStyle',
+                'type' => 'select',
+                'choices' => [
+                    'fullBlue' => __('Full Blue', 'flynt'),
+                    'fullOrange' => __('Full Orange', 'flynt'),
+                ],
+                'default_value' => 'fullBlue',
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 50,
+                ],
             ],
             [
                 'label' => __('Image', 'flynt'),

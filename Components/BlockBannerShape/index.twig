@@ -24,17 +24,16 @@
           alt="{{ backgroundImage.alt|e }}">
       </div>
     {% endif %}
-    <div 
-      class="wysiwyg relative z-10 flex flex-col justify-center w-full mx-auto max-w-sm lg:max-w-md text-center">
-      {{ contentHtml|e('wp_kses_post') }}
-      {# {% if buttonLink %}
+    <div class="relative z-10 w-full h-full flex flex-col justify-center gap-sm mx-auto max-w-sm lg:max-w-md {% if contentAlignment == 'left' %} items-start text-left {% elseif contentAlignment == 'right' %} items-end text-right {% else %} items-center text-center {% endif %}">
+      <div class="wysiwyg">{{ contentHtml|e('wp_kses_post') }}</div>
+      {% if buttonLink %}
         <a 
-          class="button button--outline" 
+          class="button button--{{ buttonStyle|default('fullBlue') }}" 
           href="{{ buttonLink.url }}" 
           {% if buttonLink.target %} target="{{ buttonLink.target }}" rel="noreferrer noopener"{% endif %}>
           {{ buttonLink.title }}
         </a>
-      {% endif %} #}
+      {% endif %}
     </div>
   </div>
 </flynt-component>

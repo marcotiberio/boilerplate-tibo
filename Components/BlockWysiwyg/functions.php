@@ -27,25 +27,62 @@ function getACFLayout()
                     'right' => sprintf('<i class=\'dashicons dashicons-align-right\' title=\'%1$s\'></i>', __('Text on the right (half-width)', 'flynt'))
                 ],
                 'default_value' => 'center',
+                'wrapper' => [
+                    'width' => 50,
+                ],
             ],
+            [
+                'label' => __('Text width', 'flynt'),
+                'name' => 'textWidth',
+                'type' => 'button_group',
+                'choices' => [
+                    'narrow' => __('Narrow', 'flynt'),
+                    'wide' => __('Wide', 'flynt'),
+                ],
+                'default_value' => 'wide',
+                'wrapper' => [
+                    'width' => 50,
+                ],
+            ],
+
             [
                 'label' => __('Content', 'flynt'),
                 'name' => 'contentHtml',
                 'type' => 'wysiwyg',
                 'tabs' => 'visual,text',
                 'delay' => 1,
-                'media_upload' => 1,
+                'media_upload' => 0,
                 'required' => 1,
             ],
-            // [
-            //     'label' => __('Button', 'flynt'),
-            //     'name' => 'buttonLink',
-            //     'type' => 'link',
-            //     'required' => 0,
-            //     'wrapper' => [
-            //         'width' => 100
-            //     ],
-            // ],
+            [
+                'label' => __('Shortcode', 'flynt'),
+                'name' => 'shortcode',
+                'type' => 'text',
+                'required' => 0,
+            ],
+            [
+                'label' => __('Button', 'flynt'),
+                'name' => 'buttonLink',
+                'type' => 'link',
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 50,
+                ],
+            ],
+            [
+                'label' => __('Button Style', 'flynt'),
+                'name' => 'buttonStyle',
+                'type' => 'select',
+                'choices' => [
+                    'fullBlue' => __('Full Blue', 'flynt'),
+                    'fullOrange' => __('Full Orange', 'flynt'),
+                ],
+                'default_value' => 'fullBlue',
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 50,
+                ],
+            ],
             [
                 'label' => __('Options', 'flynt'),
                 'name' => 'optionsTab',

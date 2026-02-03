@@ -2,8 +2,8 @@
   load:on="visible" 
   name="NavigationFooter" 
   class="p-sm md:p-md bg-blue text-beige flex flex-col justify-between items-end gap-sm md:gap-lg rounded-t-image relative z-20">
+  {# Top #}
   <div class="w-full flex flex-col justify-between gap-lg">
-    {# Top #}
     <div class="flex flex-row flex-wrap justify-between items-start gap-sm">
       {% for column in columns %}
         <div class="wysiwyg [&_a]:no-underline hover:[&_a]:underline underline-offset-4">{{ column.contentHtml|e('wp_kses_post') }}</div>
@@ -30,4 +30,17 @@
       </nav>
     {% endif %}
   </div>
+  {# Buttons #}
+  {% if buttons %}
+  <div class="w-screen mx-auto p-sm md:p-[32px] fixed bottom-0 left-0 z-10">
+    <div class="flex flex-row flex-wrap justify-center items-center gap-xs">
+      {% for button in buttons %}
+        <a class="button button--fullBlue relative [&_.icon]:hover:opacity-0 transition-all duration-500" href="{{button.buttonLink.url}}" {% if button.buttonLink.target %} target="{{ button.buttonLink.target }}" rel="noreferrer noopener"{% endif %}>
+          {{button.buttonLink.title}}
+          <div class="icon absolute top-[-2px] right-[-2px] h-[14px] w-[14px] bg-orange rounded-full"></div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
 </flynt-component>
