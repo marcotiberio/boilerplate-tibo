@@ -1,6 +1,6 @@
 {
   "Components/BlockGalleryMedia/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -36,7 +36,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -76,7 +76,7 @@
     "src": "Components/ListComponents/script.js"
   },
   "Components/ListingJournalRelated/script.js": {
-    "file": "assets/script-865bbfd7.js",
+    "file": "assets/script-6a1ccb89.js",
     "imports": [
       "_swiper-bundle-70f174a6.js",
       "_navigation-2c37c78e.js",
@@ -87,7 +87,7 @@
     "src": "Components/ListingJournalRelated/script.js"
   },
   "Components/ListingVideosRelated/script.js": {
-    "file": "assets/script-6a1ccb89.js",
+    "file": "assets/script-865bbfd7.js",
     "imports": [
       "_swiper-bundle-70f174a6.js",
       "_navigation-2c37c78e.js",
@@ -341,12 +341,12 @@
     "file": "assets/swiper-bundle-70f174a6.js"
   },
   "assets/admin.js": {
-    "file": "assets/admin-7bb71f17.js",
+    "file": "assets/admin-0d96b8e7.js",
     "isEntry": true,
     "src": "assets/admin.js"
   },
   "assets/admin.scss": {
-    "file": "assets/admin-e9823c21.css",
+    "file": "assets/admin-bbe1ef2f.css",
     "isEntry": true,
     "src": "assets/admin.scss"
   },

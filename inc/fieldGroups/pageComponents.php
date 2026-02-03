@@ -89,6 +89,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\SliderBox\getACFLayout(),
                     Components\SliderBoxText\getACFLayout(),
                     Components\SliderCards\getACFLayout(),
+                    Components\ReusableComponent\getACFLayout(),
                 ],
             ],
         ],
