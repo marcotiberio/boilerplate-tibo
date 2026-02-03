@@ -1,5 +1,5 @@
 import Swiper from 'swiper'
-import { Navigation, A11y, Autoplay, Pagination } from 'swiper/modules'
+import { Navigation, A11y, Autoplay, Pagination, EffectFade } from 'swiper/modules'
 import 'swiper/swiper-bundle.css'
 import { buildRefs, getJSON } from '@/assets/scripts/helpers.js'
 
@@ -13,7 +13,11 @@ export default function (sliderBoxText) {
 function initSlider (refs, data) {
   const { options } = data
   const config = {
-    modules: [Navigation, A11y, Autoplay, Pagination],
+    modules: [Navigation, A11y, Autoplay, Pagination, EffectFade],
+    effect: 'fade',
+    fadeEffect: {
+      crossFade: true
+    },
     a11y: options.a11y,
     slidesPerView: 1,
     spaceBetween: 0,
