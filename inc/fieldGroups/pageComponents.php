@@ -76,6 +76,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockSliderLogos\getACFLayout(),
                     Components\BlockGalleryMedia\getACFLayout(),
                     Components\BlockStats\getACFLayout(),
+                    Components\BlockSpacer\getACFLayout(),
                     Components\BlockWysiwyg\getACFLayout(),
                     Components\BlockWysiwygColumns\getACFLayout(),
                     Components\GridImages\getACFLayout(),
