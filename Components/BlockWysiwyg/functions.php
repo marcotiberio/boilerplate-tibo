@@ -52,12 +52,18 @@ function getACFLayout()
                 'tabs' => 'visual,text',
                 'delay' => 1,
                 'media_upload' => 0,
-                'required' => 1,
+                'required' => 0,
             ],
             [
                 'label' => __('Shortcode', 'flynt'),
                 'name' => 'shortcode',
                 'type' => 'text',
+                'required' => 0,
+            ],
+            [
+                'label' => __('Embed Code', 'flynt'),
+                'name' => 'embedCode',
+                'type' => 'textarea',
                 'required' => 0,
             ],
             [

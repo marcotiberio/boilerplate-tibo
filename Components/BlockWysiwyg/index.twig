@@ -14,15 +14,20 @@
         {% if textWidth == 'narrow' %} max-w-prose ml-0 {% elseif textWidth == 'wide' %} max-w-full {% endif %}
       "
       style="background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
-      <div class="wysiwyg">{{ contentHtml|e('wp_kses_post') }}</div>
+      <div class="wysiwyg">{{ contentHtml|raw }}</div>
       {% if shortcode %}
-        <div class="shortcode-output">
+        <div class="">
           {{ function('do_shortcode', shortcode) }}
+        </div>
+      {% endif %}
+      {% if embedCode %}
+        <div class="">
+          {{ embedCode|raw }}
         </div>
       {% endif %}
       {% if buttonLink %}
         <a 
-          class="button button--{{ buttonStyle|default('fullBlue') }}" 
+          class="button button--{{ buttonStyle }}" 
           href="{{ buttonLink.url }}" 
           {% if buttonLink.target %} target="{{ buttonLink.target }}" rel="noreferrer noopener"{% endif %}>
           {{ buttonLink.title }}

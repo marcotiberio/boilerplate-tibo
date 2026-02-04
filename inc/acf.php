@@ -21,6 +21,28 @@ add_filter('http_response', function ($response, $args, $url) {
     return $response;
 }, 10, 3);
 
+/**
+ * Allow iframes (e.g. easyVerein embed) in the embedCode field.
+ * ACF textarea fields strip HTML by default; this filter preserves safe embed markup.
+ */
+add_filter('acf/update_value/name=embedCode', function ($value, $postId, $field) {
+    if (empty($value) || !is_string($value)) {
+        return $value;
+    }
+    $allowedHtml = wp_kses_allowed_html('post');
+    $allowedHtml['iframe'] = [
+        'src' => true,
+        'style' => true,
+        'width' => true,
+        'height' => true,
+        'frameborder' => true,
+        'allowfullscreen' => true,
+        'title' => true,
+    ];
+    $allowedHtml['small'] = [];
+    return wp_kses($value, $allowedHtml);
+}, 10, 3);
+
 add_filter('acf/fields/google_map/api', function ($api) {
     $apiKey = Options::getGlobal('Acf', 'googleMapsApiKey');
     if ($apiKey) {
