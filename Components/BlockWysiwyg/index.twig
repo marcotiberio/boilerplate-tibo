@@ -14,7 +14,7 @@
         {% if textWidth == 'narrow' %} max-w-prose ml-0 {% elseif textWidth == 'wide' %} max-w-full {% endif %}
       "
       style="background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
-      <div class="wysiwyg">{{ contentHtml|raw }}</div>
+      <div class="wysiwyg">{{ contentHtml|e('wp_kses_post') }}</div>
       {% if shortcode %}
         <div class="">
           {{ function('do_shortcode', shortcode) }}
