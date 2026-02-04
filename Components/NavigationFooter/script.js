@@ -1,4 +1,5 @@
 import { buildRefs } from '@/assets/scripts/helpers.js'
+import { debounce } from 'lodash-es'
 
 export default (navigationFooter) => {
   const refs = buildRefs(navigationFooter)
@@ -9,10 +10,76 @@ export default (navigationFooter) => {
     marqueeInstance = initMarquee(refs)
   }
   
+  // Initialize scroll reveal functionality
+  const cleanupScroll = initScrollReveal(navigationFooter)
+  
   return () => {
     if (marqueeInstance) {
       marqueeInstance.destroy()
     }
+    cleanupScroll()
+  }
+}
+
+function initScrollReveal(footer) {
+  let isRevealed = false
+  const threshold = 100 // pixels from bottom to trigger reveal
+  
+  // Find buttons container (sibling element after footer)
+  // Look for the next sibling that is a div with fixed positioning
+  let buttonsContainer = footer.nextElementSibling
+  while (buttonsContainer && (!buttonsContainer.classList || !buttonsContainer.classList.contains('fixed'))) {
+    buttonsContainer = buttonsContainer.nextElementSibling
+  }
+  
+  let buttonsHeight = 0
+  
+  const updateButtonsHeight = () => {
+    if (buttonsContainer && buttonsContainer.offsetHeight > 0) {
+      buttonsHeight = buttonsContainer.offsetHeight
+      footer.style.paddingBottom = `${buttonsHeight}px`
+    } else {
+      footer.style.paddingBottom = '0px'
+    }
+  }
+  
+  const checkScrollPosition = () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    const windowHeight = window.innerHeight
+    const documentHeight = document.documentElement.scrollHeight
+    
+    // Check if user has scrolled to the bottom (within threshold)
+    const isAtBottom = scrollTop + windowHeight >= documentHeight - threshold
+    
+    if (isAtBottom && !isRevealed) {
+      footer.classList.add('footer-revealed')
+      isRevealed = true
+    } else if (!isAtBottom && isRevealed) {
+      footer.classList.remove('footer-revealed')
+      isRevealed = false
+    }
+  }
+  
+  // Debounce scroll handler for performance
+  const debouncedCheckScroll = debounce(checkScrollPosition, 10)
+  const debouncedUpdateHeight = debounce(updateButtonsHeight, 100)
+  
+  // Initial setup
+  updateButtonsHeight()
+  checkScrollPosition()
+  
+  // Listen to scroll events
+  window.addEventListener('scroll', debouncedCheckScroll, { passive: true })
+  
+  // Also check on resize in case content height changes
+  window.addEventListener('resize', () => {
+    debouncedCheckScroll()
+    debouncedUpdateHeight()
+  }, { passive: true })
+  
+  return () => {
+    window.removeEventListener('scroll', debouncedCheckScroll)
+    window.removeEventListener('resize', debouncedUpdateHeight)
   }
 }
 

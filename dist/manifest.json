@@ -19,7 +19,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockStats/script.js": {
-    "file": "assets/script-302a9185.js",
+    "file": "assets/script-1d198503.js",
     "imports": [
       "assets/main.js",
       "_helpers-0bb72b7a.js"
@@ -28,7 +28,7 @@
     "src": "Components/BlockStats/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-48bc6e8a.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -36,7 +36,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -51,7 +51,7 @@
     "css": [
       "assets/script-b3ce9496.css"
     ],
-    "file": "assets/script-609c1228.js",
+    "file": "assets/script-af856ac0.js",
     "imports": [
       "assets/main.js"
     ],
@@ -68,15 +68,16 @@
     "src": "Components/GridPostsArchive/script.js"
   },
   "Components/ListComponents/script.js": {
-    "file": "assets/script-6fca4744.js",
+    "file": "assets/script-4226344c.js",
     "imports": [
-      "_helpers-0bb72b7a.js"
+      "_helpers-0bb72b7a.js",
+      "_debounce-cfb0e9ed.js"
     ],
     "isDynamicEntry": true,
     "src": "Components/ListComponents/script.js"
   },
   "Components/ListingJournalRelated/script.js": {
-    "file": "assets/script-6a1ccb89.js",
+    "file": "assets/script-865bbfd7.js",
     "imports": [
       "_swiper-bundle-70f174a6.js",
       "_navigation-2c37c78e.js",
@@ -87,7 +88,7 @@
     "src": "Components/ListingJournalRelated/script.js"
   },
   "Components/ListingVideosRelated/script.js": {
-    "file": "assets/script-865bbfd7.js",
+    "file": "assets/script-6a1ccb89.js",
     "imports": [
       "_swiper-bundle-70f174a6.js",
       "_navigation-2c37c78e.js",
@@ -107,9 +108,10 @@
     "src": "Components/NavigationBurger/script.js"
   },
   "Components/NavigationFooter/script.js": {
-    "file": "assets/script-3d9badd6.js",
+    "file": "assets/script-20635be2.js",
     "imports": [
-      "_helpers-0bb72b7a.js"
+      "_helpers-0bb72b7a.js",
+      "_debounce-cfb0e9ed.js"
     ],
     "isDynamicEntry": true,
     "src": "Components/NavigationFooter/script.js"
@@ -160,7 +162,7 @@
   },
   "Components/ZZZ/BlockCta/Assets/facebook.svg": {
     "file": "assets/facebook-8975c208.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/facebook.svg"
+    "src": "Components/ZZZ/BlockCta/Assets/linkedin.svg"
   },
   "Components/ZZZ/BlockCta/Assets/instagram.svg": {
     "file": "assets/instagram-5bab2c82.svg",
@@ -168,7 +170,7 @@
   },
   "Components/ZZZ/BlockCta/Assets/linkedin.svg": {
     "file": "assets/facebook-8975c208.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/facebook.svg"
+    "src": "Components/ZZZ/BlockCta/Assets/linkedin.svg"
   },
   "Components/ZZZ/BlockCta/Assets/logo.svg": {
     "file": "assets/logo-eeb7436e.svg",
@@ -228,7 +230,7 @@
     "src": "Components/ZZZ/HeroSliderComposite/script.js"
   },
   "Components/ZZZ/HeroVideoBackground/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-48bc6e8a.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -245,7 +247,7 @@
     "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
-    "file": "assets/script-70a0500b.js",
+    "file": "assets/script-f706d3a1.js",
     "imports": [
       "assets/main.js"
     ],
@@ -305,6 +307,9 @@
     ],
     "isDynamicEntry": true,
     "src": "Components/ZZZ/SliderQuotes/script.js"
+  },
+  "_debounce-cfb0e9ed.js": {
+    "file": "assets/debounce-cfb0e9ed.js"
   },
   "_effect-virtual-transition-end-f5383397.js": {
     "file": "assets/effect-virtual-transition-end-f5383397.js",
@@ -421,12 +426,12 @@
       "Components/ZZZ/SliderLogos/script.js",
       "Components/ZZZ/SliderQuotes/script.js"
     ],
-    "file": "assets/main-43fa1a9d.js",
+    "file": "assets/main-a96950e8.js",
     "isEntry": true,
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-53aa69c2.css",
+    "file": "assets/main-4b783c28.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
