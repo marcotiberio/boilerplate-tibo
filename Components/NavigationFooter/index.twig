@@ -1,7 +1,7 @@
 <flynt-component 
   load:on="visible" 
   name="NavigationFooter" 
-  class="p-sm md:p-md bg-blue text-beige flex flex-col justify-between items-end gap-sm md:gap-lg rounded-t-image fixed bottom-0 left-0 w-full z-20 footer-reveal">
+  class="p-sm md:p-md bg-blue text-beige flex flex-col justify-between items-end gap-sm md:gap-lg rounded-t-image w-full h-screen relative z-[9998]">
   {# Top #}
   <div class="w-full flex flex-col justify-between gap-lg">
     <div class="flex flex-row flex-wrap justify-between items-start gap-sm">
@@ -10,37 +10,41 @@
       {% endfor %}
     </div>
   </div>
-  {# Logo #}
-  <div class="w-full flex flex-col justify-end gap-sm ">
-    {% if logoFooter %}
-      <img class="object-contain w-screen"
-        src="{{ logoFooter.src | resize(32) }}"
-        data-srcset="{{function('wp_get_attachment_image_srcset', logoFooter.id)}}"
-        data-sizes="auto"
-        fetchpriority="high"
-        alt="{{ logoFooter.alt|e }}">
-    {% endif %}
+  {# Bottom #}
+  <div class="w-full flex flex-col justify-end gap-sm">
+    {# Logo #}
+    <div class="w-full flex flex-col justify-end gap-sm" data-ref="logoContainer">
+      {% if logoFooter %}
+        <img class="object-contain w-screen logo-stretch" data-ref="logo"
+          src="{{ logoFooter.src | resize(32) }}"
+          data-srcset="{{function('wp_get_attachment_image_srcset', logoFooter.id)}}"
+          data-sizes="auto"
+          fetchpriority="high"
+          alt="{{ logoFooter.alt|e }}">
+      {% endif %}
+    </div>
+    {# Menu #}
+    <div class="w-full flex flex-col md:flex-row gap-xs md:gap-sm justify-between items-center">
+      <div class="font-nav uppercase">{{ copyrightHtml }}</div>
+      {% if menu %}
+        <nav class="flex justify-end items-center" aria-label="{{ labels.ariaLabel }}">
+          {% include 'Partials/_menu.twig' with { 'items': menu.get_items, 'level': '0', 'maxLevel': maxLevel } only %}
+        </nav>
+      {% endif %}
+    </div>
   </div>
-  {# Menu #}
-  <div class="w-full h-full flex flex-col md:flex-row gap-xs md:gap-sm justify-between items-center">
-    <div class="font-nav uppercase">{{ copyrightHtml }}</div>
-    {% if menu %}
-      <nav class="flex justify-end items-center" aria-label="{{ labels.ariaLabel }}">
-        {% include 'Partials/_menu.twig' with { 'items': menu.get_items, 'level': '0', 'maxLevel': maxLevel } only %}
-      </nav>
-    {% endif %}
+  {# Buttons #}
+  {% if buttons %}
+  <div class="w-screen mx-auto p-sm md:p-[32px] fixed bottom-0 left-0 z-[9999]">
+    <div class="flex flex-row flex-wrap justify-center items-center gap-xs">
+      {% for button in buttons %}
+        <a class="button button--fullBlue relative [&_.icon]:hover:opacity-0 transition-all duration-500" href="{{button.buttonLink.url}}" {% if button.buttonLink.target %} target="{{ button.buttonLink.target }}" rel="noreferrer noopener"{% endif %}>
+          {{button.buttonLink.title}}
+          <div class="icon absolute top-[-2px] right-[-2px] h-[14px] w-[14px] bg-orange rounded-full"></div>
+        </a>
+      {% endfor %}
+    </div>
   </div>
+  {% endif %}
 </flynt-component>
-{# Buttons - Always visible and fixed #}
-{% if buttons %}
-<div class="w-screen mx-auto p-sm md:p-[32px] fixed bottom-0 left-0 z-[60]">
-  <div class="flex flex-row flex-wrap justify-center items-center gap-xs">
-    {% for button in buttons %}
-      <a class="button button--fullBlue relative [&_.icon]:hover:opacity-0 transition-all duration-500" href="{{button.buttonLink.url}}" {% if button.buttonLink.target %} target="{{ button.buttonLink.target }}" rel="noreferrer noopener"{% endif %}>
-        {{button.buttonLink.title}}
-        <div class="icon absolute top-[-2px] right-[-2px] h-[14px] w-[14px] bg-orange rounded-full"></div>
-      </a>
-    {% endfor %}
-  </div>
-</div>
-{% endif %}
+

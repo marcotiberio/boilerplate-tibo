@@ -5,143 +5,215 @@ export default (navigationFooter) => {
   const refs = buildRefs(navigationFooter)
   
   // Initialize marquee if it exists
-  let marqueeInstance = null
-  if (refs.marquee) {
-    marqueeInstance = initMarquee(refs)
-  }
+  // let marqueeInstance = null
+  // if (refs.marquee) {
+  //   marqueeInstance = initMarquee(refs)
+  // }
   
-  // Initialize scroll reveal functionality
-  const cleanupScroll = initScrollReveal(navigationFooter)
+  // Initialize logo stretch animation
+  const cleanupLogoStretch = initLogoStretch(navigationFooter, refs)
   
   return () => {
     if (marqueeInstance) {
       marqueeInstance.destroy()
     }
-    cleanupScroll()
+    cleanupLogoStretch()
   }
 }
 
-function initScrollReveal(footer) {
-  let isRevealed = false
-  const threshold = 100 // pixels from bottom to trigger reveal
+function initLogoStretch(footer, refs) {
+  const logo = refs.logo
+  const logoContainer = refs.logoContainer
   
-  // Find buttons container (sibling element after footer)
-  // Look for the next sibling that is a div with fixed positioning
-  let buttonsContainer = footer.nextElementSibling
-  while (buttonsContainer && (!buttonsContainer.classList || !buttonsContainer.classList.contains('fixed'))) {
-    buttonsContainer = buttonsContainer.nextElementSibling
+  if (!logo || !logoContainer) {
+    return () => {} // No cleanup needed if logo doesn't exist
   }
   
-  let buttonsHeight = 0
+  let windowHeight = window.innerHeight
+  let isBouncing = false
+  let scrollStopTimeout = null
   
-  const updateButtonsHeight = () => {
-    if (buttonsContainer && buttonsContainer.offsetHeight > 0) {
-      buttonsHeight = buttonsContainer.offsetHeight
-      footer.style.paddingBottom = `${buttonsHeight}px`
+  const updateDimensions = () => {
+    windowHeight = window.innerHeight
+  }
+  
+  const applyStretch = (progress, animate = false) => {
+    const maxStretch = 1.5 // Maximum stretch multiplier (adjust as needed)
+    const scaleY = 1 + (progress * (maxStretch - 1))
+    
+    if (animate) {
+      // More extreme bounce: longer duration and more pronounced bounce curve
+      logo.style.transition = 'transform 0.5s cubic-bezier(0.68, -1.5, 0.265, 2.2)' // Extreme bounce easing
     } else {
-      footer.style.paddingBottom = '0px'
+      logo.style.transition = 'transform 0.1s ease-out'
     }
+    
+    logo.style.transform = `scaleY(${scaleY})`
+    logo.style.transformOrigin = 'center bottom'
   }
   
-  const checkScrollPosition = () => {
+  const startBounceAnimation = () => {
+    if (isBouncing) return
+    
+    isBouncing = true
+    // Bounce back to original size
+    applyStretch(0, true)
+    
+    // Reset bounce flag after animation completes
+    setTimeout(() => {
+      isBouncing = false
+      logo.style.transition = 'transform 0.1s ease-out'
+    }, 1000) // Match transition duration (1s)
+  }
+  
+  const checkScrollStop = () => {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-    const windowHeight = window.innerHeight
     const documentHeight = document.documentElement.scrollHeight
+    const scrollBottom = scrollTop + windowHeight
     
-    // Check if user has scrolled to the bottom (within threshold)
-    const isAtBottom = scrollTop + windowHeight >= documentHeight - threshold
+    // Check if user has scrolled to the bottom (within a small threshold)
+    const threshold = 5 // pixels tolerance for "at bottom"
+    const distanceFromBottom = documentHeight - scrollBottom
+    const isAtBottom = distanceFromBottom <= threshold
     
-    if (isAtBottom && !isRevealed) {
-      footer.classList.add('footer-revealed')
-      isRevealed = true
-    } else if (!isAtBottom && isRevealed) {
-      footer.classList.remove('footer-revealed')
-      isRevealed = false
+    // If scrolling stopped and we're at bottom, trigger bounce
+    if (isAtBottom && !isBouncing) {
+      startBounceAnimation()
     }
   }
   
-  // Debounce scroll handler for performance
-  const debouncedCheckScroll = debounce(checkScrollPosition, 10)
-  const debouncedUpdateHeight = debounce(updateButtonsHeight, 100)
+  const stretchLogo = () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    const documentHeight = document.documentElement.scrollHeight
+    const scrollBottom = scrollTop + windowHeight
+    
+    // Check if user has scrolled to the bottom (within a small threshold)
+    const threshold = 5 // pixels tolerance for "at bottom"
+    const distanceFromBottom = documentHeight - scrollBottom
+    const isAtBottom = distanceFromBottom <= threshold
+    
+    // Clear existing scroll stop timeout
+    if (scrollStopTimeout) {
+      clearTimeout(scrollStopTimeout)
+      scrollStopTimeout = null
+    }
+    
+    let progress = 0
+    
+    // Only start stretching when we've hit the bottom
+    if (isAtBottom && !isBouncing) {
+      // When at bottom, progress is 1 (fully stretched)
+      progress = 1
+      
+      // Set timeout to detect scroll stop (after 150ms of no scrolling)
+      scrollStopTimeout = setTimeout(() => {
+        checkScrollStop()
+        scrollStopTimeout = null
+      }, 150) // Wait 150ms after scroll stops
+    } else if (!isAtBottom && !isBouncing) {
+      // Not at bottom, reset to original size
+      progress = 0
+    }
+    
+    // Apply stretch only if not bouncing
+    if (!isBouncing) {
+      applyStretch(progress)
+    }
+  }
+  
+  // Throttle scroll handler for smooth performance
+  const throttledStretch = debounce(stretchLogo, 16) // ~60fps
+  
+  // Debounce resize handler
+  const debouncedUpdateDimensions = debounce(() => {
+    updateDimensions()
+    stretchLogo()
+  }, 100)
   
   // Initial setup
-  updateButtonsHeight()
-  checkScrollPosition()
+  updateDimensions()
+  stretchLogo()
   
   // Listen to scroll events
-  window.addEventListener('scroll', debouncedCheckScroll, { passive: true })
+  window.addEventListener('scroll', throttledStretch, { passive: true })
   
-  // Also check on resize in case content height changes
-  window.addEventListener('resize', () => {
-    debouncedCheckScroll()
-    debouncedUpdateHeight()
-  }, { passive: true })
+  // Update dimensions on resize
+  window.addEventListener('resize', debouncedUpdateDimensions, { passive: true })
   
   return () => {
-    window.removeEventListener('scroll', debouncedCheckScroll)
-    window.removeEventListener('resize', debouncedUpdateHeight)
+    if (scrollStopTimeout) {
+      clearTimeout(scrollStopTimeout)
+    }
+    window.removeEventListener('scroll', throttledStretch)
+    window.removeEventListener('resize', debouncedUpdateDimensions)
+    // Reset logo transform
+    if (logo) {
+      logo.style.transform = ''
+      logo.style.transformOrigin = ''
+      logo.style.transition = ''
+    }
   }
 }
 
-function initMarquee(refs) {
-  const marqueeContainer = refs.marquee
-  const marqueeContent = marqueeContainer.querySelector('[data-ref="marqueeContent"]')
+// function initMarquee(refs) {
+//   const marqueeContainer = refs.marquee
+//   const marqueeContent = marqueeContainer.querySelector('[data-ref="marqueeContent"]')
   
-  if (!marqueeContent) return null
+//   if (!marqueeContent) return null
   
-  // Clone the content for seamless loop
-  const clone = marqueeContent.cloneNode(true)
-  marqueeContainer.appendChild(clone)
+//   // Clone the content for seamless loop
+//   const clone = marqueeContent.cloneNode(true)
+//   marqueeContainer.appendChild(clone)
   
-  // Configuration
-  const speed = 50 // pixels per second
-  let animationId = null
-  let position = 0
-  let isPaused = false
+//   // Configuration
+//   const speed = 50 // pixels per second
+//   let animationId = null
+//   let position = 0
+//   let isPaused = false
   
-  // Get the width of the content
-  const contentWidth = marqueeContent.offsetWidth
+//   // Get the width of the content
+//   const contentWidth = marqueeContent.offsetWidth
   
-  // Animation function
-  function animate() {
-    if (!isPaused) {
-      position -= speed / 60 // 60fps
+//   // Animation function
+//   function animate() {
+//     if (!isPaused) {
+//       position -= speed / 60 // 60fps
       
-      // Reset position for seamless loop
-      if (Math.abs(position) >= contentWidth) {
-        position = 0
-      }
+//       // Reset position for seamless loop
+//       if (Math.abs(position) >= contentWidth) {
+//         position = 0
+//       }
       
-      marqueeContent.style.transform = `translateX(${position}px)`
-      clone.style.transform = `translateX(${position + contentWidth}px)`
-    }
+//       marqueeContent.style.transform = `translateX(${position}px)`
+//       clone.style.transform = `translateX(${position + contentWidth}px)`
+//     }
     
-    animationId = requestAnimationFrame(animate)
-  }
+//     animationId = requestAnimationFrame(animate)
+//   }
   
-  // Start animation
-  animate()
+//   // Start animation
+//   animate()
   
-  // Optional: Pause on hover
-  marqueeContainer.addEventListener('mouseenter', () => {
-    isPaused = true
-  })
+//   // Optional: Pause on hover
+//   marqueeContainer.addEventListener('mouseenter', () => {
+//     isPaused = true
+//   })
   
-  marqueeContainer.addEventListener('mouseleave', () => {
-    isPaused = false
-  })
+//   marqueeContainer.addEventListener('mouseleave', () => {
+//     isPaused = false
+//   })
   
-  // Return cleanup function
-  return {
-    destroy: () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId)
-      }
-      marqueeContainer.removeEventListener('mouseenter', () => {})
-      marqueeContainer.removeEventListener('mouseleave', () => {})
-      if (clone && clone.parentNode) {
-        clone.parentNode.removeChild(clone)
-      }
-    }
-  }
-}
+//   // Return cleanup function
+//   return {
+//     destroy: () => {
+//       if (animationId) {
+//         cancelAnimationFrame(animationId)
+//       }
+//       marqueeContainer.removeEventListener('mouseenter', () => {})
+//       marqueeContainer.removeEventListener('mouseleave', () => {})
+//       if (clone && clone.parentNode) {
+//         clone.parentNode.removeChild(clone)
+//       }
+//     }
+//   }
+// }
