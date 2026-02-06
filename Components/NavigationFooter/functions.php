@@ -112,6 +112,19 @@ Options::addTranslatable('NavigationFooter', [
         'endpoint' => 0
     ],
     [
+        'label' => __('Component Label', 'flynt'),
+            'instructions' => sprintf(  
+                'Set a label for the component. This will be shown in the component header and used for anchro scroll.'
+            ),
+            'name' => 'componentLabel',
+            'type' => 'text',
+            'required' => 0,
+            'default_value' => '',
+            'wrapper' => [
+                'width' => 100,
+            ],
+        ],
+    [
         'label' => '',
         'name' => 'labels',
         'type' => 'group',

@@ -1,21 +1,26 @@
 // Marquee item styles with Tailwind classes
-.marquee-item {
-  @apply inline-block px-4 relative z-[1] cursor-pointer;
-  
+.marquee-item--wrapper {
   &:hover {
-    &::before {
-      @apply hidden;
+    .marquee-item {
+      &::before {
+        @apply hidden;
+      }
     }
   }
   
-  &::before {
-    content: '';
-    @apply absolute inset-0 z-[2] pointer-events-none;
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.1);
-    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 5%, rgba(0, 0, 0, 1) 95%, transparent 100%);
+  .marquee-item {
+    @apply inline-block px-4 relative z-[1] cursor-default;
+    
+    &::before {
+      content: '';
+      @apply absolute inset-0 z-[2] pointer-events-none;
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.1);
+      mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 1) 5%, rgba(0, 0, 0, 1) 95%, transparent 100%);
+    }
   }
 }
+
 
 // Left direction animations
 .marquee-direction-left {

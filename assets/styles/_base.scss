@@ -24,8 +24,37 @@ html {
   @apply text-grey bg-green;
 }
 
-body,
+.font-body,
+.font-bodySmall,
+.wysiwyg,
 p {
   @apply text-black;
   font-family: var(--primary-font-family, var(--secondary-font-family, 'Inter', Arial, sans-serif));
+
+  a {
+    @apply text-black;
+    @apply no-underline;
+    text-shadow: 
+      0 0 3px rgba(255, 255, 255, 0.8),
+      0 0 5px rgba(0, 200, 40, 1),
+      0 0 8px rgba(255, 255, 255, 0.6),
+      0 0 10px rgba(0, 200, 40, 1),
+      0 0 15px rgba(0, 200, 40, 0.8),
+      0 0 20px rgba(0, 200, 40, 0.6),
+      0 0 30px rgba(0, 200, 40, 0.4);
+    transition: text-shadow 0.3s ease;
+    
+    &:hover,
+    &:focus {
+      text-shadow: 
+        0 0 5px rgba(255, 255, 255, 1),
+        0 0 8px rgba(0, 200, 40, 1),
+        0 0 12px rgba(255, 255, 255, 0.8),
+        0 0 15px rgba(0, 200, 40, 1),
+        0 0 25px rgba(0, 200, 40, 0.9),
+        0 0 35px rgba(0, 200, 40, 0.7),
+        0 0 50px rgba(0, 200, 40, 0.5),
+        0 0 70px rgba(0, 200, 40, 0.3);
+    }
+  }
 }

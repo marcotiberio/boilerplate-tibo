@@ -1,7 +1,7 @@
 <flynt-component name="BlockMarquee">
   <div class="overflow-hidden w-full relative">
     {% for row in marqueeRows %}
-      <div class="flex gap-8 whitespace-nowrap marquee-speed-{{ row.speed }} marquee-direction-{{ row.direction }}">
+      <div class="marquee-item--wrapper flex gap-8 whitespace-nowrap marquee-speed-{{ row.speed }} marquee-direction-{{ row.direction }}">
         <span class="marquee-item font-h1 !leading-[0.9]">{{ row.text|e }}</span>
         {# Duplicate items for seamless loop #}
         <span class="marquee-item font-h1 !leading-[0.9]">{{ row.text|e }}</span>

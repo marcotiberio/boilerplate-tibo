@@ -51,12 +51,12 @@ flynt-component {
   @apply mx-auto;
   @apply px-xs;
   @apply py-xl;
-  @apply md:px-md;
-  @apply md:py-xl;
+  @apply lg:px-md;
+  @apply lg:py-xl;
 
   &--small {
     @apply py-xs;
-    @apply sm:py-md;
+    @apply lg:py-md;
   }
 
   &--large {

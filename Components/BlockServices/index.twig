@@ -1,11 +1,12 @@
 <flynt-component
   load:on="idle" name="BlockServices"
   id="{{ options.componentLabel|lower|replace({' ': '-'}) }}"
-  class="h-screen"
+  class="min-h-screen"
   style="
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};"
-  x-data="{ selectedIndex: 0 }">
+  x-data="{ selectedIndex: 0 }"
+  x-cloak>
   <div class="boxed w-full h-full !pb-lg md:!pb-xl flex flex-col justify-start items-start gap-sm md:gap-lg">
     {% if options.componentLabel %}
     <div class="boxed boxed--small absolute top-0 left-0 w-full flex justify-between items-center">
@@ -23,40 +24,58 @@
         {% endif %}
         
         <div class="flex flex-col w-full relative z-10">
-        {% for row in rows %}
-          {% if row.title %}
-            <div 
-              class="category font-h3 cursor-pointer" 
-              @mouseenter="selectedIndex = {{ loop.index0 }}"
-              @mouseleave="selectedIndex = 0"
-              :class="{ 'font-bold': selectedIndex === {{ loop.index0 }} }"
-            >{{ row.title }}</div>
-          {% endif %}
-        {% endfor %}
+          {% for row in rows %}
+            {% if row.title %}
+              <div 
+                class="category font-h3 cursor-pointer transition-all duration-300 ease-in-out" 
+                @mouseenter="if (window.innerWidth >= 768) { selectedIndex = {{ loop.index0 }} }"
+                @mouseleave="if (window.innerWidth >= 768) { selectedIndex = 0 }"
+                @click="if (window.innerWidth < 768) { selectedIndex = selectedIndex === {{ loop.index0 }} ? 0 : {{ loop.index0 }} }"
+                :class="{ 'font-bold': selectedIndex === {{ loop.index0 }} }"
+              >{{ row.title }}</div>
+            {% endif %}
+          {% endfor %}
         </div>
 
-        <div class="flex flex-col w-full relative z-10">
         {% for row in rows %}
-          {% if row.subtitleHtml %}
+          {% if row.image %}
             <div 
-              class="subcategory font-h4 italic"
-              x-show="selectedIndex === {{ loop.index0 }}"
-              x-transition
-            >{{ row.subtitleHtml|e('wp_kses_post') }}</div>
+              class="flex md:hidden w-full h-full justify-center items-center z-1 transition-all duration-0 ease-in-out"
+              :class="selectedIndex === {{ loop.index0 }} ? 'opacity-100 flex pointer-events-auto' : 'opacity-0 hidden pointer-events-none'"
+            >
+              <img 
+                class="w-full aspect-4/3 lazyload object-cover"
+                src="{{ row.image.src | resize(32) }}"
+                data-srcset="{{function('wp_get_attachment_image_srcset', row.image.id)}}"
+                data-sizes="auto"
+                alt="{{ row.image.alt|e | default('') }}"
+                loading="lazy"
+              />
+            </div>
           {% endif %}
         {% endfor %}
+
+        <div class="flex flex-col w-full relative z-10">
+          {% for row in rows %}
+            {% if row.subtitleHtml %}
+              <div 
+                class="subcategory font-h4 italic transition-all duration-300 ease-out md:absolute md:top-0 w-full"
+                :class="selectedIndex === {{ loop.index0 }} ? 'opacity-100 flex pointer-events-auto' : 'opacity-0 hidden pointer-events-none'"
+              >{{ row.subtitleHtml|e('wp_kses_post') }}</div>
+            {% endif %}
+          {% endfor %}
         </div>
+
       </div>
 
       {% for row in rows %}
         {% if row.image %}
           <div 
-            class="hidden lg:flex absolute left-0 top-0 w-full h-full justify-center items-center z-1"
-            x-show="selectedIndex === {{ loop.index0 }}"
-            x-transition
+            class="hidden md:flex absolute left-0 top-0 w-full h-full justify-center items-center z-1 transition-all duration-0 ease-in-out"
+            :class="selectedIndex === {{ loop.index0 }} ? 'opacity-100 flex pointer-events-auto' : 'opacity-0 hidden pointer-events-none'"
           >
             <img 
-              class="w-[600px] h-auto aspect-4/3 lazyload object-cover translate-x-[-50%] translate-y-[40%]"
+              class="w-[600px] h-auto aspect-4/3 lazyload object-cover lg:translate-x-[-50%] md:translate-y-[50%] lg:translate-y-[40%]"
               src="{{ row.image.src | resize(32) }}"
               data-srcset="{{function('wp_get_attachment_image_srcset', row.image.id)}}"
               data-sizes="auto"
