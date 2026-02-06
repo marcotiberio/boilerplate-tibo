@@ -33,12 +33,17 @@ function initLogoStretch(footer, refs) {
   let isBouncing = false
   let scrollStopTimeout = null
   
+  // Desktop/mobile detection
+  const desktopMediaQuery = window.matchMedia('(min-width: 1180px)')
+  let maxStretch = desktopMediaQuery.matches ? 1.5 : 3 // Desktop: 2.5, Mobile: 1.5
+  
   const updateDimensions = () => {
     windowHeight = window.innerHeight
+    // Update maxStretch based on current breakpoint
+    maxStretch = desktopMediaQuery.matches ? 1.5 : 3
   }
   
   const applyStretch = (progress, animate = false) => {
-    const maxStretch = 1.5 // Maximum stretch multiplier (adjust as needed)
     const scaleY = 1 + (progress * (maxStretch - 1))
     
     if (animate) {
@@ -140,12 +145,20 @@ function initLogoStretch(footer, refs) {
   // Update dimensions on resize
   window.addEventListener('resize', debouncedUpdateDimensions, { passive: true })
   
+  // Listen to breakpoint changes
+  const handleBreakpointChange = () => {
+    updateDimensions()
+    stretchLogo()
+  }
+  desktopMediaQuery.addEventListener('change', handleBreakpointChange)
+  
   return () => {
     if (scrollStopTimeout) {
       clearTimeout(scrollStopTimeout)
     }
     window.removeEventListener('scroll', throttledStretch)
     window.removeEventListener('resize', debouncedUpdateDimensions)
+    desktopMediaQuery.removeEventListener('change', handleBreakpointChange)
     // Reset logo transform
     if (logo) {
       logo.style.transform = ''
