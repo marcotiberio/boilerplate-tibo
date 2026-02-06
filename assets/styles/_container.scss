@@ -38,8 +38,9 @@ flynt-component {
   @apply mx-auto;
   @apply px-xs;
   @apply py-sm;
-  @apply md:px-max;
-  @apply md:py-lg;
+  @apply sm:px-md;
+  @apply lg:px-max;
+  @apply lg:py-lg;
 
   &--small {
     @apply py-xs;
