@@ -3,7 +3,7 @@
   --line-height: 2px;
   --line-spacing: 5px;
   align-items: center;
-  @apply bg-green;
+  @apply bg-black;
   border-radius: 100%;
   cursor: pointer;
   display: flex;
@@ -27,7 +27,7 @@
   }
 
   &-line {
-    background-color: var(--black);
+    background-color: var(--green);
     border-radius: 2px;
     display: block;
     height: var(--line-height);

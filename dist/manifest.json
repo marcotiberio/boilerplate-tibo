@@ -24,7 +24,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -32,7 +32,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -156,7 +156,7 @@
   },
   "Components/ZZZ/BlockCta/Assets/facebook.svg": {
     "file": "assets/facebook-8975c208.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/linkedin.svg"
+    "src": "Components/ZZZ/BlockCta/Assets/facebook.svg"
   },
   "Components/ZZZ/BlockCta/Assets/instagram.svg": {
     "file": "assets/instagram-5bab2c82.svg",
@@ -164,11 +164,11 @@
   },
   "Components/ZZZ/BlockCta/Assets/linkedin.svg": {
     "file": "assets/facebook-8975c208.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/linkedin.svg"
+    "src": "Components/ZZZ/BlockCta/Assets/facebook.svg"
   },
   "Components/ZZZ/BlockCta/Assets/logo.svg": {
     "file": "assets/logo-eeb7436e.svg",
-    "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
+    "src": "Components/ZZZ/BlockCta/Assets/logo.svg"
   },
   "Components/ZZZ/BlockCta/Assets/twitter.svg": {
     "file": "assets/twitter-bc2ba69f.svg",
@@ -235,7 +235,7 @@
   },
   "Components/ZZZ/NavigationMainLogo/Assets/logo.svg": {
     "file": "assets/logo-eeb7436e.svg",
-    "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
+    "src": "Components/ZZZ/BlockCta/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
     "file": "assets/script-778ff9a2.js",
@@ -415,7 +415,7 @@
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-8bd14fe7.css",
+    "file": "assets/main-ac4637f8.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
