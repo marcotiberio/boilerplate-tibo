@@ -15,8 +15,8 @@
     {% if menu %}
       <div
         data-ref="menu" 
-        class="menu w-full h-fit !pt-[50px] z-40 relative bg-beige">
-        <div class="w-full h-full max-w-screen-box mx-auto flex flex-col justify-center items-center gap-xs px-xs py-xs">
+        class="menu w-full h-fit fixed top-0 overflow-y-hidden p-0 !pt-[50px] m-0 flex flex-col sm:flex-row justify-between items-center sm:items-start bg-beige z-40">
+        <div class="w-full h-full max-w-screen-box mx-auto flex flex-col justify-center items-center gap-sm px-xs py-xs">
           {% for item in menu.items %}
             {# regular menu item #}
             {% if not item.children %}
@@ -28,11 +28,11 @@
             {% endif %}
             {# menu with submenu item #}
             {% if item.children %}
-              <div class="item open-submenu {{- item.current ? ' current-menu-item underline underline-offset-4' }}" >
+              <div class="item open-submenu w-full p-0 flex flex-col justify-between items-center gap-[10px] {{- item.current ? ' current-menu-item underline underline-offset-4' }}" >
                 <a class="link font-nav no-underline" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
                   {{ item.title }}
                 </a>
-                <div class="submenu">
+                <div class="submenu w-full flex flex-row flex-wrap justify-center items-center gap-sm">
                   {% for subitem in item.children %}
                     <div class="item {{- subitem.current ? ' current-menu-item underline underline-offset-4' }}">
                       <a class="link !p-0 font-nav no-underline" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
