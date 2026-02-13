@@ -1,6 +1,6 @@
 {
   "Components/BlockGalleryMedia/script.js": {
-    "file": "assets/script-48bc6e8a.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -8,7 +8,7 @@
     "src": "Components/BlockGalleryMedia/script.js"
   },
   "Components/BlockSliderLogos/script.js": {
-    "file": "assets/script-f8e84b52.js",
+    "file": "assets/script-ce82d7cb.js",
     "imports": [
       "_swiper-bundle-70f174a6.js",
       "_navigation-2c37c78e.js",
@@ -19,7 +19,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockStats/script.js": {
-    "file": "assets/script-5d092369.js",
+    "file": "assets/script-ac151602.js",
     "imports": [
       "assets/main.js",
       "_helpers-0bb72b7a.js"
@@ -28,7 +28,7 @@
     "src": "Components/BlockStats/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -51,7 +51,7 @@
     "css": [
       "assets/script-b3ce9496.css"
     ],
-    "file": "assets/script-95dde88e.js",
+    "file": "assets/script-20145ef7.js",
     "imports": [
       "assets/main.js"
     ],
@@ -230,7 +230,7 @@
     "src": "Components/ZZZ/HeroSliderComposite/script.js"
   },
   "Components/ZZZ/HeroVideoBackground/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-48bc6e8a.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -247,7 +247,7 @@
     "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
-    "file": "assets/script-4221ed3c.js",
+    "file": "assets/script-a9765916.js",
     "imports": [
       "assets/main.js"
     ],
@@ -426,12 +426,12 @@
       "Components/ZZZ/SliderLogos/script.js",
       "Components/ZZZ/SliderQuotes/script.js"
     ],
-    "file": "assets/main-4eb23c36.js",
+    "file": "assets/main-b55008a1.js",
     "isEntry": true,
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-aab635e6.css",
+    "file": "assets/main-dfc78af0.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },

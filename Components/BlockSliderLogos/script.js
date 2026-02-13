@@ -15,8 +15,8 @@ function initSlider (refs, data) {
   const config = {
     modules: [Navigation, A11y, Autoplay, Pagination],
     a11y: options.a11y,
-    slidesPerView: 2,
-    spaceBetween: 0,
+    slidesPerView: 4,
+    spaceBetween: 20,
     navigation: {
       nextEl: refs.next,
       prevEl: refs.prev
@@ -28,7 +28,7 @@ function initSlider (refs, data) {
     },
     breakpoints: {
       640: {
-        slidesPerView: 3,
+        slidesPerView: 4,
         spaceBetween: 0
       },
       1181: {

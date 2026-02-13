@@ -4,7 +4,7 @@
   class="p-sm pb-xxl sm:px-md lg:p-md bg-blue text-beige flex flex-col justify-between items-end gap-sm md:gap-lg rounded-t-image w-full h-screen relative z-[9998]">
   {# Top #}
   <div class="w-full flex flex-col justify-between gap-lg">
-    <div class="flex flex-row flex-wrap justify-between items-start gap-sm">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-xl gap-y-sm lg:gap-sm">
       {% for column in columns %}
         <div class="wysiwyg [&_a]:no-underline hover:[&_a]:underline underline-offset-4">{{ column.contentHtml|e('wp_kses_post') }}</div>
       {% endfor %}
