@@ -23,7 +23,7 @@
     {% if images is defined and images|length %}
       <div class="relative w-full h-full flex flex-col justify-center items-center gap-0">
         <div 
-          class="gallery relative py-sm flex flex-row justify-center items-center gap-0 [&_.galleryImg]:hover:mx-xs">
+          class="gallery relative py-sm flex flex-row justify-center items-center gap-0 [&_.galleryImg]:hover:mx-xs pointer-events-none md:pointer-events-auto">
           {% for image in images %}
             <img 
               src="{{ image.src|default(image.url) }}" 
