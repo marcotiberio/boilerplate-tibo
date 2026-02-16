@@ -18,7 +18,7 @@
             class="slider-item swiper-slide flex items-center justify-center">
             {% if row.logo %}
               <img 
-                class="logo lazyload object-contain block lg:h-[200px] w-auto"
+                class="logo lazyload object-contain block lg:h-[60px] w-auto"
                 src="{{ row.logo.src | resize(32) }}"
                 data-srcset="{{function('wp_get_attachment_image_srcset', row.logo.id)}}"
                 data-sizes="auto"
