@@ -83,6 +83,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\HeroHeader\getACFLayout(),
                     Components\HeroHeaderBackgroundImage\getACFLayout(),
                     Components\HeroMultimedia\getACFLayout(),
+                    Components\ListingNews\getACFLayout(),
                     Components\ListingVideoFeat\getACFLayout(),
                     Components\ListingVideo\getACFLayout(),
                     Components\BlockSpacer\getACFLayout(),

@@ -2,7 +2,8 @@
 
 {% block content %}
   <article class="post mt-pageTop">
-    {{ renderComponent('BlockProjektHeader', { post: post }) }}
+    <header>
+    {{ renderComponent('BlockPostHeader', { post: post }) }}
     </header>
     <section class="post-main">
       {% for component in post.meta('postComponents') %}

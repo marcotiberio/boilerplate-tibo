@@ -1,0 +1,31 @@
+<flynt-component 
+  load:on="visible" name="BlockPostHeader" 
+  class="w-full mx-auto flex flex-col justify-between items-center">
+  <div class="boxed">
+    <div class="flex flex-col h-full relative">
+      <div class="w-full lg:w-full h-full flex flex-col justify-between pb-min">
+        <div class="grid md:grid-cols-2 gap-sm">
+          <div class="w-full flex flex-col justify-start gap-sm h-fit">
+            {% if post.postDate %}
+              <div class="font-bodySmall">{{ post.postDate|date('d.m.Y') }}</div>
+            {% endif %}
+            <div class="font-h2">{{ post.title }}</div>
+            <div class="wysiwyg">{{ post.postContent|e('wp_kses_post') }}</div>
+          </div>
+          <div class="w-full">
+            {% if post.thumbnail %}
+              <img 
+                class="figure-image lazyload object-cover aspect-4/3 rounded-image"
+                src="{{ post.thumbnail.src }}"
+                alt="{{ post.thumbnail.alt|e | default('') }}"
+                loading="lazy"
+                style="opacity: 0; transition: opacity 0.5s ease-in-out;"
+                onload="this.style.opacity='1'"
+              />
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</flynt-component>

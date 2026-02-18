@@ -1,14 +1,14 @@
 <?php
 
-namespace Flynt\Components\ListingJournal;
+namespace Flynt\Components\ListingNews;
 
 use Flynt\FieldVariables;
 use Flynt\Utils\Options;
 use Timber\Timber;
 
-const POST_TYPE = 'journal';
+const POST_TYPE = 'post';
 
-add_filter('Flynt/addComponentData?name=ListingJournal', function ($data) {
+add_filter('Flynt/addComponentData?name=ListingNews', function ($data) {
     $postType = POST_TYPE;
     $data['taxonomies'] = $data['taxonomies'] ?? [];
 
@@ -29,7 +29,7 @@ add_filter('Flynt/addComponentData?name=ListingJournal', function ($data) {
         'post_type'           => $postType,
         'ignore_sticky_posts' => 1,
         'posts_per_page'      => -1,
-        'meta_key'            => 'end_date',
+        'meta_key'            => 'postDate',
         'orderby'             => 'meta_value',
         'order'               => 'DESC',
     ];
@@ -53,8 +53,8 @@ add_filter('Flynt/addComponentData?name=ListingJournal', function ($data) {
 function getACFLayout()
 {
     return [
-        'name' => 'ListingJournal',
-        'label' => 'Listing Journal',
+        'name' => 'ListingNews',
+        'label' => 'News',
         'sub_fields' => [
             [
                 'label' => __('General', 'flynt'),
@@ -64,25 +64,33 @@ function getACFLayout()
                 'endpoint' => 0
             ],
             [
-                'label' => __('Title', 'flynt'),
-                'instructions' => __('Want to add a headline? And a paragraph? Go ahead! Or just leave it empty and nothing will be shown.', 'flynt'),
-                'name' => 'headlineTitle',
-                'type' => 'text',
+                'label' => __('Events', 'flynt'),
+                'name' => 'explanation',
+                'type' => 'message',
+                'message' => 'This module displays a list of news.',
+                'new_lines' => 'wpautop',
+                'esc_html' => 1
             ],
-            [
-                'label' => __('Categories', 'flynt'),
-                'instructions' => __('Select 1 or more categories or leave empty to show from all posts.', 'flynt'),
-                'name' => 'taxonomies',
-                'type' => 'taxonomy',
-                'taxonomy' => 'category',
-                'field_type' => 'multi_select',
-                'allow_null' => 1,
-                'multiple' => 1,
-                'add_term' => 0,
-                'save_terms' => 0,
-                'load_terms' => 0,
-                'return_format' => 'object'
-            ],
+            // [
+            //     'label' => __('Title', 'flynt'),
+            //     'instructions' => __('Want to add a headline? And a paragraph? Go ahead! Or just leave it empty and nothing will be shown.', 'flynt'),
+            //     'name' => 'headlineTitle',
+            //     'type' => 'text',
+            // ],
+            // [
+            //     'label' => __('Categories', 'flynt'),
+            //     'instructions' => __('Select 1 or more categories or leave empty to show from all posts.', 'flynt'),
+            //     'name' => 'taxonomies',
+            //     'type' => 'taxonomy',
+            //     'taxonomy' => 'category',
+            //     'field_type' => 'multi_select',
+            //     'allow_null' => 1,
+            //     'multiple' => 1,
+            //     'add_term' => 0,
+            //     'save_terms' => 0,
+            //     'load_terms' => 0,
+            //     'return_format' => 'object'
+            // ],
             [
                 'label' => __('Options', 'flynt'),
                 'name' => 'optionsTab',

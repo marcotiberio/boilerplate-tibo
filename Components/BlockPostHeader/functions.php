@@ -1,10 +1,10 @@
 <?php
 
-namespace Flynt\Components\BlockProjektHeader;
+namespace Flynt\Components\BlockPostHeader;
 
 use Flynt\Utils\Options;
 
-add_filter('Flynt/addComponentData?name=BlockProjektHeader', function ($data) {
+add_filter('Flynt/addComponentData?name=BlockPostHeader', function ($data) {
     $data['dateFormat'] = get_option('date_format');
     return $data;
 });
