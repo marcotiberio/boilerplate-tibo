@@ -12,11 +12,10 @@
       3: 'grid-cols-3 sm:grid-cols-3 lg:grid-cols-3',
     } %}
     <div 
-      class="w-full mx-auto grid {{ gridColClasses[options.gridColumns] ?? gridColClasses[1] }}"
-      data-ref="imageGrid">
+      class="w-full mx-auto grid {{ gridColClasses[options.gridColumns] ?? gridColClasses[1] }}">
       {% for item in items %}
         {% if item.image %}
-          <figure class="figure figureImage w-full cursor-pointer" data-ref="imageItem" data-image-index="{{ loop.index0 }}">
+          <figure class="figure figureImage w-full">
             <img class="lazyload w-full mx-auto h-auto object-cover aspect-square rounded-image"
               src="{{ item.image.src | resize(32) }}"
               data-srcset="{{function('wp_get_attachment_image_srcset', item.image.id)}}"

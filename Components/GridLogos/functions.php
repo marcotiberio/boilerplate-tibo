@@ -1,6 +1,6 @@
 <?php
 
-namespace Flynt\Components\GridImageText;
+namespace Flynt\Components\GridLogos;
 
 use Flynt\FieldVariables;
 use Flynt\Options;
@@ -8,8 +8,8 @@ use Flynt\Options;
 function getACFLayout()
 {
     return [
-        'name' => 'GridImageText',
-        'label' => __('Grid: Image Text', 'flynt'),
+        'name' => 'GridLogos',
+        'label' => __('Grid: Logos', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('General', 'flynt'),
@@ -21,7 +21,7 @@ function getACFLayout()
             [
                 'label' => __('Title', 'flynt'),
                 'instructions' => __('Want to add a headline? Go ahead! Or just leave it empty and nothing will be shown.', 'flynt'),
-                'name' => 'headlineTitle',
+                'name' => 'blockTitle',
                 'type' => 'text',
             ],
             // [
@@ -123,8 +123,9 @@ function getACFLayout()
                 'label' => '',
                 'name' => 'options',
                 'type' => 'group',
-                'layout' => 'row',
                 'sub_fields' => [
+                    FieldVariables\getColorBackground(),
+                    FieldVariables\getColorText(),
                     [
                         'label' => __('Grid Columns', 'flynt'),
                         'name' => 'gridColumns',

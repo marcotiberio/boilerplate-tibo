@@ -8,13 +8,13 @@ fieldset {
 }
 
 legend {
-  color: var(--color-text);
+  @apply text-white;
   font-weight: 700;
   padding: 0;
 }
 
 label {
-  color: var(--color-text-muted);
+  @apply  text-white !important;
   font-weight: 500 !important;
 }
 
@@ -26,20 +26,24 @@ label {
 
 #{$input-selectors} {
   appearance: none !important;
-  background-color: transparent !important;
-  border-bottom: 1px solid var(--black) !important;
-  border-radius: 0 !important;
-  caret-color: var(--color-text) !important;
-  color: var(--color-text) !important;
-  margin-bottom: 15px;
-  max-width: 100%;
+  @apply bg-white text-black;
+  @apply mb-sm !important;
+  @apply border-0 !important;
+  border-radius: 12px !important;
+  max-width: 100% !important;
   outline: none !important;
-  padding: 0;
-  transition: border-color 0.3s ease-in-out;
-  width: 100%;
+  @apply px-xs !important;
+  transition: border-color 0.3s ease-in-out !important;
+  width: 100% !important;
 
   &::placeholder {
-    color: var(--color-border-secondary);
+    @apply text-black;
+    opacity: 0.8 !important;
+  }
+
+  &:focus,
+  &:active {
+    outline: none !important;
   }
 
   &:disabled {
@@ -106,38 +110,33 @@ textarea {
   }
 }
 
-input:where([type='submit']) {
+.wpforms-submit {
   @include reset-link;
   appearance: none;
-  font-family: 'FKGroteskNeue', Arial, sans-serif;
-  font-size: 1rem;
-  line-height: 1;
+  font-family: 'Retail', Arial, sans-serif !important;
+  font-size: 1rem !important;
+  line-height: 1 !important;
+  font-weight: 800 !important;
   border-radius: 0 !important;
-  @apply py-[10px];
-  @apply px-[10px];
-  @apply text-black;
-  @apply uppercase;
-  @apply bg-transparent;
-  @apply justify-center;
-  @apply border;
-  @apply border-black;
-  @apply whitespace-nowrap;
-  @apply w-full;
-  @apply flex;
-  @apply justify-center;
-  @apply items-center;
-  @apply cursor-pointer;
-  @apply relative;
-  @apply text-center;
-  @apply no-underline;
-
-  &:hover,
-  &:focus {
-    color: var(--white) !important;
-    @apply bg-black;
-  }
+  @apply bg-blue hover:bg-blueDark text-white !important;
+  @apply w-fit !important;
+  @apply px-sm !important;
+  @apply py-xs !important;
+  @apply rounded-button !important;
+  @apply flex !important;
+  @apply justify-center !important;
+  @apply items-center !important;
+  @apply cursor-pointer !important;
+  @apply relative !important;
+  @apply text-center !important;
+  @apply no-underline !important;
+  @apply whitespace-nowrap !important;
 }
 
 .wpcf7 form .wpcf7-response-output {
   margin: 0 !important;
+}
+
+.wpforms-field {
+  @apply p-0 !important;
 }

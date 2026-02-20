@@ -23,6 +23,11 @@
           alt="{{ illustration.alt|e }}">
         {% endif %}
       </div>
+      {% if shortcode %}
+        <div class="w-full md:w-1/2">
+          {{ function('do_shortcode', shortcode) }}
+        </div>
+      {% endif %}
       {% if embedCode %}
         <div class="w-full md:w-1/2">
           {{ embedCode|raw }}

@@ -48,6 +48,16 @@ function getACFLayout()
                 ],
             ],
             [
+                'label' => __('Shortcode', 'flynt'),
+                'instructions' => __('Paste your shortcode here (e.g. [wpforms id="1587"])', 'flynt'),
+                'name' => 'shortcode',
+                'type' => 'text',
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 50,
+                ],
+            ],
+            [
                 'label' => __('Embed Code', 'flynt'),
                 'instructions' => __('Paste your embed code here (iframe, script tags, etc.)', 'flynt'),
                 'name' => 'embedCode',
@@ -55,7 +65,7 @@ function getACFLayout()
                 'rows' => 4,
                 'required' => 0,
                 'wrapper' => [
-                    'width' => 100,
+                    'width' => 50,
                 ],
             ],
             // [

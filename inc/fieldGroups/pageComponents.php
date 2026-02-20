@@ -79,7 +79,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockWysiwyg\getACFLayout(),
                     Components\BlockWysiwygColumns\getACFLayout(),
                     Components\GridImages\getACFLayout(),
-                    Components\GridImageText\getACFLayout(),
+                    Components\GridLogos\getACFLayout(),
                     Components\HeroHeader\getACFLayout(),
                     Components\HeroHeaderBackgroundImage\getACFLayout(),
                     Components\HeroMultimedia\getACFLayout(),
