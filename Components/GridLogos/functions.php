@@ -61,7 +61,7 @@ function getACFLayout()
                         'preview_size' => 'medium',
                         'mime_types' => 'jpg,jpeg,png,svg,webp',
                         'wrapper' => [
-                            'width' => 50
+                            'width' => 100
                         ],
                     ],
                     // [
@@ -74,23 +74,23 @@ function getACFLayout()
                     //         'width' => 50
                     //     ],
                     // ],
-                    [
-                        'label' => __('Title', 'flynt'),
-                        'name' => 'imageBoxTitle',
-                        'type' => 'text',
-                        'wrapper' => [
-                            'width' => 50
-                        ],
-                    ],
-                    [
-                        'label' => __('Link', 'flynt'),
-                        'name' => 'imageLink',
-                        'type' => 'link',
-                        'return_format' => 'array',
-                        'wrapper' => [
-                            'width' => 50
-                        ],
-                    ],
+                    // [
+                    //     'label' => __('Title', 'flynt'),
+                    //     'name' => 'imageBoxTitle',
+                    //     'type' => 'text',
+                    //     'wrapper' => [
+                    //         'width' => 50
+                    //     ],
+                    // ],
+                    // [
+                    //     'label' => __('Link', 'flynt'),
+                    //     'name' => 'imageLink',
+                    //     'type' => 'link',
+                    //     'return_format' => 'array',
+                    //     'wrapper' => [
+                    //         'width' => 50
+                    //     ],
+                    // ],
                     // [
                     //     'label' => __('Title', 'flynt'),
                     //     'name' => 'title',
@@ -99,17 +99,17 @@ function getACFLayout()
                     //         'width' => 50
                     //     ],
                     // ],
-                    [
-                        'label' => __('Content', 'flynt'),
-                        'name' => 'contentHtml',
-                        'type' => 'wysiwyg',
-                        'tabs' => 'visual',
-                        'media_upload' => 0,
-                        'delay' => 1,
-                        'wrapper' => [
-                            'width' => 100
-                        ],
-                    ],
+                    // [
+                    //     'label' => __('Content', 'flynt'),
+                    //     'name' => 'contentHtml',
+                    //     'type' => 'wysiwyg',
+                    //     'tabs' => 'visual',
+                    //     'media_upload' => 0,
+                    //     'delay' => 1,
+                    //     'wrapper' => [
+                    //         'width' => 100
+                    //     ],
+                    // ],
                 ]
             ],
             [
