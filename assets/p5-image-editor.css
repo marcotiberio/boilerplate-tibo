@@ -1,0 +1,144 @@
+/* P5.js Image Editor - Admin Styles */
+
+#p5-image-editor-wrap {
+  margin: 0;
+}
+
+/* Source area */
+#p5-editor-source .p5-current-thumb {
+  margin-bottom: 12px;
+}
+
+#p5-editor-source .p5-current-thumb img {
+  border: 1px solid #ddd;
+  margin-top: 6px;
+}
+
+.p5-editor-upload-area {
+  text-align: center;
+  padding: 12px 0;
+}
+
+/* Canvas wrapper */
+#p5-editor-canvas-wrap {
+  background: #f0f0f1;
+  border: 1px solid #c3c4c7;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+/* Toolbar */
+#p5-editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #c3c4c7;
+}
+
+.p5-toolbar-group {
+  display: flex;
+  gap: 2px;
+  padding-right: 8px;
+  border-right: 1px solid #ddd;
+}
+
+.p5-toolbar-group:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.p5-tool-btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 4px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.p5-tool-btn.active {
+  background: #2271b1 !important;
+  color: #fff !important;
+  border-color: #2271b1 !important;
+}
+
+.p5-tool-btn.active .dashicons {
+  color: #fff;
+}
+
+.p5-tool-btn .dashicons {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+}
+
+/* Tool options panel */
+#p5-tool-options {
+  background: #fff;
+  border: 1px solid #c3c4c7;
+  border-radius: 3px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+}
+
+.p5-options-panel label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.p5-options-panel input[type="text"] {
+  width: 100%;
+}
+
+.p5-options-panel input[type="range"] {
+  width: 100%;
+  margin-top: 2px;
+}
+
+.p5-options-panel input[type="color"] {
+  vertical-align: middle;
+  height: 28px;
+  width: 50px;
+  padding: 1px;
+  cursor: pointer;
+}
+
+.p5-options-panel .description {
+  font-style: italic;
+  color: #646970;
+  margin: 0 0 8px;
+}
+
+/* Canvas container */
+#p5-canvas-container {
+  background: #ccc;
+  text-align: center;
+  margin-bottom: 10px;
+  overflow: hidden;
+  border-radius: 2px;
+  line-height: 0;
+}
+
+#p5-canvas-container canvas {
+  max-width: 100%;
+  height: auto;
+  cursor: crosshair;
+}
+
+/* Actions bar */
+#p5-editor-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#p5-save-status {
+  font-size: 12px;
+  color: #00a32a;
+  font-weight: 500;
+}
