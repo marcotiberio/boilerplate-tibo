@@ -1,613 +1,447 @@
-/* global p5, p5EditorData, jQuery */
+/* global p5, p5MaskData, jQuery */
 ;(function ($) {
   'use strict'
 
-  // State
-  let editorSketch = null
-  let originalImage = null
-  let currentTool = null
+  var sketch = null
+
+  // ---------- Mask generation (shared logic) ----------
 
   /**
-   * Open the WP media library to pick an image.
+   * Generate a mask p5.Graphics for a given preset and params.
+   * Returns a p5.Graphics of size w × h with white = opaque, black = transparent.
+   * After calling .mask(), p5 uses the *alpha* channel, so we draw in grayscale
+   * where white (255) = fully visible, black (0) = fully transparent.
    */
-  function openMediaLibrary () {
-    const frame = wp.media({
-      title: 'Select Image to Edit',
-      button: { text: 'Edit This Image' },
-      multiple: false,
-      library: { type: 'image' }
-    })
+  function generateMask (p, w, h, preset, params) {
+    var gfx = p.createGraphics(w, h)
+    gfx.pixelDensity(1)
+    gfx.loadPixels()
 
-    frame.on('select', function () {
-      const attachment = frame.state().get('selection').first().toJSON()
-      const url = attachment.url
-      startEditor(url)
-    })
+    var inv = params.invert === true || params.invert === 'true' || params.invert === '1'
+    var i, x, y, d, alpha
 
-    frame.open()
+    for (y = 0; y < h; y++) {
+      for (x = 0; x < w; x++) {
+        i = (y * w + x) * 4
+        alpha = computeAlpha(x, y, w, h, preset, params)
+        if (inv) alpha = 255 - alpha
+        gfx.pixels[i] = alpha
+        gfx.pixels[i + 1] = alpha
+        gfx.pixels[i + 2] = alpha
+        gfx.pixels[i + 3] = 255
+      }
+    }
+
+    gfx.updatePixels()
+    return gfx
   }
 
   /**
-   * Start the p5.js editor with the given image URL.
+   * Compute the alpha value (0–255) for a single pixel.
    */
-  function startEditor (imageUrl) {
-    $('#p5-editor-source').hide()
-    $('#p5-editor-canvas-wrap').show()
+  function computeAlpha (x, y, w, h, preset, params) {
+    switch (preset) {
+      case 'radial':
+        return alphaRadial(x, y, w, h, params)
+      case 'linear':
+        return alphaLinear(x, y, w, h, params)
+      case 'diagonal':
+        return alphaDiagonal(x, y, w, h, params)
+      case 'corner':
+        return alphaCorner(x, y, w, h, params)
+      case 'split':
+        return alphaSplit(x, y, w, h, params)
+      default:
+        return 255
+    }
+  }
 
-    // Destroy previous sketch if any
-    if (editorSketch) {
-      editorSketch.remove()
-      editorSketch = null
+  function alphaRadial (x, y, w, h, params) {
+    var cx = (parseFloat(params.centerX) || 50) / 100 * w
+    var cy = (parseFloat(params.centerY) || 50) / 100 * h
+    var maxDim = Math.max(w, h)
+    var r = (parseFloat(params.radius) || 50) / 100 * maxDim
+    var softness = (parseFloat(params.softness) || 40) / 100
+
+    var d = Math.sqrt((x - cx) * (x - cx) + (y - cy) * (y - cy))
+    var innerR = r * (1 - softness)
+
+    if (d <= innerR) return 255
+    if (d >= r) return 0
+    return Math.round(255 * (1 - (d - innerR) / (r - innerR)))
+  }
+
+  function alphaLinear (x, y, w, h, params) {
+    var angle = (parseFloat(params.angle) || 180) * Math.PI / 180
+    var position = (parseFloat(params.position) || 50) / 100
+    var spread = (parseFloat(params.spread) || 50) / 100
+
+    // Project point onto angle direction
+    var dirX = Math.cos(angle)
+    var dirY = Math.sin(angle)
+    var maxProj = dirX * w + dirY * h
+    var proj = (dirX * x + dirY * y)
+    var norm = maxProj !== 0 ? proj / Math.abs(maxProj) : 0
+
+    // Remap so position is the center of the gradient
+    var gradStart = position - spread / 2
+    var gradEnd = position + spread / 2
+
+    if (norm <= gradStart) return 255
+    if (norm >= gradEnd) return 0
+    return Math.round(255 * (1 - (norm - gradStart) / (gradEnd - gradStart)))
+  }
+
+  function alphaDiagonal (x, y, w, h, params) {
+    var dir = params.direction || 'tl-br'
+    var spread = (parseFloat(params.spread) || 50) / 100
+
+    var nx = x / w
+    var ny = y / h
+    var d
+
+    switch (dir) {
+      case 'tl-br': d = (nx + ny) / 2; break
+      case 'tr-bl': d = ((1 - nx) + ny) / 2; break
+      case 'bl-tr': d = (nx + (1 - ny)) / 2; break
+      case 'br-tl': d = ((1 - nx) + (1 - ny)) / 2; break
+      default: d = (nx + ny) / 2
     }
 
-    const containerEl = document.getElementById('p5-canvas-container')
-    containerEl.innerHTML = ''
+    var gradStart = 0.5 - spread / 2
+    var gradEnd = 0.5 + spread / 2
 
-    editorSketch = new p5(function (p) {
-      // Editor state
-      const MAX_WIDTH = 500
-      let img = null
-      let displayImg = null
-      let historyStack = []
-      let scale = 1
-      let tool = null
+    if (d <= gradStart) return 255
+    if (d >= gradEnd) return 0
+    return Math.round(255 * (1 - (d - gradStart) / (gradEnd - gradStart)))
+  }
 
-      // Drawing state
-      let isDrawing = false
-      let drawColor = '#ff0000'
-      let drawSize = 5
-      let drawPaths = []
-      let currentPath = []
+  function alphaCorner (x, y, w, h, params) {
+    var corner = params.corner || 'tl'
+    var maxDim = Math.max(w, h)
+    var r = (parseFloat(params.radius) || 50) / 100 * maxDim * 1.5
+    var softness = (parseFloat(params.softness) || 40) / 100
 
-      // Crop state
-      let cropStart = null
-      let cropEnd = null
-      let isCropping = false
+    var cx, cy
+    switch (corner) {
+      case 'tl': cx = 0; cy = 0; break
+      case 'tr': cx = w; cy = 0; break
+      case 'bl': cx = 0; cy = h; break
+      case 'br': cx = w; cy = h; break
+      default: cx = 0; cy = 0
+    }
 
-      // Text state
-      let textPlaced = false
+    var d = Math.sqrt((x - cx) * (x - cx) + (y - cy) * (y - cy))
+    var innerR = r * (1 - softness)
+
+    if (d <= innerR) return 255
+    if (d >= r) return 0
+    return Math.round(255 * (1 - (d - innerR) / (r - innerR)))
+  }
+
+  function alphaSplit (x, y, w, h, params) {
+    var orientation = params.orientation || 'horizontal'
+    var position = (parseFloat(params.position) || 50) / 100
+    var spread = (parseFloat(params.spread) || 30) / 100
+    var side = params.side || 'first'
+
+    var norm = orientation === 'horizontal' ? y / h : x / w
+    var gradStart = position - spread / 2
+    var gradEnd = position + spread / 2
+
+    var alpha
+    if (side === 'first') {
+      // First half fades out
+      if (norm <= gradStart) alpha = 0
+      else if (norm >= gradEnd) alpha = 255
+      else alpha = Math.round(255 * ((norm - gradStart) / (gradEnd - gradStart)))
+    } else {
+      // Second half fades out
+      if (norm <= gradStart) alpha = 255
+      else if (norm >= gradEnd) alpha = 0
+      else alpha = Math.round(255 * (1 - (norm - gradStart) / (gradEnd - gradStart)))
+    }
+    return alpha
+  }
+
+  // ---------- Collect current params from the UI ----------
+
+  function collectParams () {
+    var preset = $('.p5-preset-btn.active').data('preset') || 'radial'
+    var params = { preset: preset }
+
+    // Collect params from the visible group
+    $('.p5-param-group[data-for="' + preset + '"] .p5-param').each(function () {
+      var key = $(this).data('param')
+      var val = $(this).is('select') ? $(this).val() : $(this).val()
+      params[key] = val
+    })
+
+    // Global params
+    params.invert = $('#p5-mask-invert').is(':checked')
+
+    return params
+  }
+
+  // ---------- p5 sketch ----------
+
+  function startSketch (imageUrl) {
+    if (sketch) {
+      sketch.remove()
+      sketch = null
+    }
+
+    var container = document.getElementById('p5-mask-canvas-container')
+    container.innerHTML = ''
+
+    sketch = new p5(function (p) {
+      var MAX_WIDTH = 460
+      var img = null
+      var scale = 1
 
       p.preload = function () {
         img = p.loadImage(imageUrl)
       }
 
       p.setup = function () {
-        const w = Math.min(img.width, MAX_WIDTH)
+        var w = Math.min(img.width, MAX_WIDTH)
         scale = w / img.width
-        const h = Math.round(img.height * scale)
+        var h = Math.round(img.height * scale)
 
         p.createCanvas(w, h)
         p.pixelDensity(1)
-
-        // Work on a copy
-        displayImg = img.get()
-        pushHistory()
-        renderImage()
+        p.noLoop()
+        renderMasked()
       }
 
-      p.draw = function () {
-        // Only redraw when needed (on interaction)
-      }
+      p.draw = function () {}
 
-      // --- History ---
-      function pushHistory () {
-        // Store a copy of the current displayImg
-        const copy = displayImg.get()
-        historyStack.push(copy)
-        // Keep max 30 history items
-        if (historyStack.length > 30) {
-          historyStack.shift()
-        }
-      }
+      function renderMasked () {
+        var params = collectParams()
+        var w = img.width
+        var h = img.height
 
-      function undo () {
-        if (historyStack.length > 1) {
-          historyStack.pop()
-          displayImg = historyStack[historyStack.length - 1].get()
-          rebuildCanvas()
-          renderImage()
-        }
-      }
+        // Generate the mask at full resolution
+        var maskGfx = generateMask(p, w, h, params.preset, params)
 
-      function resetImage () {
-        displayImg = img.get()
-        historyStack = []
-        pushHistory()
-        rebuildCanvas()
-        renderImage()
-        drawPaths = []
-      }
+        // Clone image and apply mask
+        var masked = img.get()
+        masked.mask(maskGfx.get())
+        maskGfx.remove()
 
-      // --- Rendering ---
-      function renderImage () {
+        // Draw checkerboard then masked image
         p.background(200)
-        p.image(displayImg, 0, 0, p.width, p.height)
-
-        // Draw current paths
-        drawPaths.forEach(function (path) {
-          drawPath(path)
-        })
-
-        // Draw active crop selection
-        if (tool === 'crop' && cropStart && cropEnd) {
-          p.noFill()
-          p.stroke(0, 120, 255)
-          p.strokeWeight(2)
-          p.rect(
-            cropStart.x, cropStart.y,
-            cropEnd.x - cropStart.x, cropEnd.y - cropStart.y
-          )
-          // Dim outside area
-          p.fill(0, 0, 0, 80)
-          p.noStroke()
-          // Top
-          p.rect(0, 0, p.width, cropStart.y)
-          // Bottom
-          p.rect(0, cropEnd.y, p.width, p.height - cropEnd.y)
-          // Left
-          p.rect(0, cropStart.y, cropStart.x, cropEnd.y - cropStart.y)
-          // Right
-          p.rect(cropEnd.x, cropStart.y, p.width - cropEnd.x, cropEnd.y - cropStart.y)
-        }
+        drawCheckerboard(p)
+        p.image(masked, 0, 0, p.width, p.height)
       }
 
-      function drawPath (path) {
-        if (path.points.length < 2) return
-        p.stroke(path.color)
-        p.strokeWeight(path.size)
-        p.noFill()
-        p.beginShape()
-        path.points.forEach(function (pt) {
-          p.curveVertex(pt.x, pt.y)
-        })
-        p.endShape()
-      }
-
-      function rebuildCanvas () {
-        const w = Math.min(displayImg.width, MAX_WIDTH)
-        const newScale = w / displayImg.width
-        const h = Math.round(displayImg.height * newScale)
-        scale = newScale
-        p.resizeCanvas(w, h)
-      }
-
-      // --- Mouse interactions ---
-      p.mousePressed = function () {
-        if (!isInsideCanvas()) return
-
-        if (tool === 'draw') {
-          isDrawing = true
-          currentPath = []
-          currentPath.push({ x: p.mouseX, y: p.mouseY })
-        } else if (tool === 'crop') {
-          isCropping = true
-          cropStart = { x: p.mouseX, y: p.mouseY }
-          cropEnd = null
-        } else if (tool === 'text') {
-          placeText(p.mouseX, p.mouseY)
-        }
-      }
-
-      p.mouseDragged = function () {
-        if (!isInsideCanvas()) return
-
-        if (tool === 'draw' && isDrawing) {
-          currentPath.push({ x: p.mouseX, y: p.mouseY })
-          renderImage()
-          // Draw active stroke
-          if (currentPath.length > 1) {
-            p.stroke(drawColor)
-            p.strokeWeight(drawSize)
-            p.noFill()
-            p.beginShape()
-            currentPath.forEach(function (pt) {
-              p.curveVertex(pt.x, pt.y)
-            })
-            p.endShape()
+      function drawCheckerboard (p) {
+        var size = 10
+        for (var y = 0; y < p.height; y += size) {
+          for (var x = 0; x < p.width; x += size) {
+            var isLight = ((x / size + y / size) % 2) < 1
+            p.noStroke()
+            p.fill(isLight ? 220 : 190)
+            p.rect(x, y, size, size)
           }
-        } else if (tool === 'crop' && isCropping) {
-          cropEnd = { x: p.mouseX, y: p.mouseY }
-          renderImage()
         }
       }
 
-      p.mouseReleased = function () {
-        if (tool === 'draw' && isDrawing) {
-          isDrawing = false
-          if (currentPath.length > 1) {
-            drawPaths.push({
-              points: currentPath.slice(),
-              color: drawColor,
-              size: drawSize
-            })
-          }
-          currentPath = []
-          renderImage()
-        } else if (tool === 'crop' && isCropping) {
-          isCropping = false
-        }
-      }
-
-      function isInsideCanvas () {
-        return p.mouseX >= 0 && p.mouseX <= p.width &&
-               p.mouseY >= 0 && p.mouseY <= p.height
-      }
-
-      // --- Tool implementations ---
-      function rotate90 () {
-        flattenDrawings()
-        const rotated = p.createGraphics(displayImg.height, displayImg.width)
-        rotated.push()
-        rotated.translate(rotated.width, 0)
-        rotated.rotate(p.HALF_PI)
-        rotated.image(displayImg, 0, 0)
-        rotated.pop()
-        displayImg = rotated.get()
-        rotated.remove()
-        pushHistory()
-        rebuildCanvas()
-        renderImage()
-      }
-
-      function flipHorizontal () {
-        flattenDrawings()
-        const flipped = p.createGraphics(displayImg.width, displayImg.height)
-        flipped.push()
-        flipped.translate(flipped.width, 0)
-        flipped.scale(-1, 1)
-        flipped.image(displayImg, 0, 0)
-        flipped.pop()
-        displayImg = flipped.get()
-        flipped.remove()
-        pushHistory()
-        renderImage()
-      }
-
-      function flipVertical () {
-        flattenDrawings()
-        const flipped = p.createGraphics(displayImg.width, displayImg.height)
-        flipped.push()
-        flipped.translate(0, flipped.height)
-        flipped.scale(1, -1)
-        flipped.image(displayImg, 0, 0)
-        flipped.pop()
-        displayImg = flipped.get()
-        flipped.remove()
-        pushHistory()
-        renderImage()
-      }
-
-      function applyCrop () {
-        if (!cropStart || !cropEnd) return
-
-        flattenDrawings()
-
-        // Normalize coordinates
-        const x1 = Math.min(cropStart.x, cropEnd.x)
-        const y1 = Math.min(cropStart.y, cropEnd.y)
-        const x2 = Math.max(cropStart.x, cropEnd.x)
-        const y2 = Math.max(cropStart.y, cropEnd.y)
-
-        // Convert from display coords to image coords
-        const ix = Math.round(x1 / scale)
-        const iy = Math.round(y1 / scale)
-        const iw = Math.round((x2 - x1) / scale)
-        const ih = Math.round((y2 - y1) / scale)
-
-        if (iw < 10 || ih < 10) return
-
-        displayImg = displayImg.get(ix, iy, iw, ih)
-        cropStart = null
-        cropEnd = null
-        pushHistory()
-        rebuildCanvas()
-        renderImage()
-      }
-
-      function applyBrightness (amount) {
-        flattenDrawings()
-        displayImg.loadPixels()
-        for (let i = 0; i < displayImg.pixels.length; i += 4) {
-          displayImg.pixels[i] = p.constrain(displayImg.pixels[i] + amount, 0, 255)
-          displayImg.pixels[i + 1] = p.constrain(displayImg.pixels[i + 1] + amount, 0, 255)
-          displayImg.pixels[i + 2] = p.constrain(displayImg.pixels[i + 2] + amount, 0, 255)
-        }
-        displayImg.updatePixels()
-        pushHistory()
-        renderImage()
-      }
-
-      function applyGrayscale () {
-        flattenDrawings()
-        displayImg.loadPixels()
-        for (let i = 0; i < displayImg.pixels.length; i += 4) {
-          const avg = (displayImg.pixels[i] + displayImg.pixels[i + 1] + displayImg.pixels[i + 2]) / 3
-          displayImg.pixels[i] = avg
-          displayImg.pixels[i + 1] = avg
-          displayImg.pixels[i + 2] = avg
-        }
-        displayImg.updatePixels()
-        pushHistory()
-        renderImage()
-      }
-
-      function applyBlur () {
-        flattenDrawings()
-        displayImg.filter(p.BLUR, 3)
-        pushHistory()
-        renderImage()
-      }
-
-      function placeText (x, y) {
-        const textVal = $('#p5-text-input').val()
-        if (!textVal) return
-
-        flattenDrawings()
-
-        const textColor = $('#p5-text-color').val()
-        const textSize = parseInt($('#p5-text-size').val(), 10)
-
-        // Draw text onto the image at full resolution
-        const gfx = p.createGraphics(displayImg.width, displayImg.height)
-        gfx.image(displayImg, 0, 0)
-        gfx.fill(textColor)
-        gfx.noStroke()
-        gfx.textSize(Math.round(textSize / scale))
-        gfx.textAlign(p.LEFT, p.TOP)
-        gfx.text(textVal, Math.round(x / scale), Math.round(y / scale))
-
-        displayImg = gfx.get()
-        gfx.remove()
-        pushHistory()
-        renderImage()
-
-        textPlaced = true
-      }
-
-      /**
-       * Flatten any drawn paths onto the displayImg so transforms apply to them.
-       */
-      function flattenDrawings () {
-        if (drawPaths.length === 0) return
-
-        const gfx = p.createGraphics(displayImg.width, displayImg.height)
-        gfx.image(displayImg, 0, 0)
-
-        drawPaths.forEach(function (path) {
-          if (path.points.length < 2) return
-          gfx.stroke(path.color)
-          gfx.strokeWeight(path.size / scale)
-          gfx.noFill()
-          gfx.beginShape()
-          path.points.forEach(function (pt) {
-            gfx.curveVertex(pt.x / scale, pt.y / scale)
-          })
-          gfx.endShape()
-        })
-
-        displayImg = gfx.get()
-        gfx.remove()
-        drawPaths = []
-      }
-
-      /**
-       * Export the final image as a data URL at full resolution.
-       */
-      function exportImage () {
-        flattenDrawings()
-        // Create a full-res canvas to export
-        const gfx = p.createGraphics(displayImg.width, displayImg.height)
-        gfx.image(displayImg, 0, 0)
-        const canvas = gfx.elt || gfx.canvas
-        const dataUrl = canvas.toDataURL('image/png')
-        gfx.remove()
-        return dataUrl
-      }
-
-      // --- Expose methods to outer scope ---
-      p._editor = {
-        setTool: function (t) {
-          tool = t
-          cropStart = null
-          cropEnd = null
-          renderImage()
+      // Expose update + export
+      p._mask = {
+        update: function () {
+          renderMasked()
         },
-        rotate90: rotate90,
-        flipHorizontal: flipHorizontal,
-        flipVertical: flipVertical,
-        applyCrop: applyCrop,
-        applyBrightness: applyBrightness,
-        applyGrayscale: applyGrayscale,
-        applyBlur: applyBlur,
-        undo: undo,
-        reset: resetImage,
-        exportImage: exportImage,
-        setDrawColor: function (c) { drawColor = c },
-        setDrawSize: function (s) { drawSize = s }
+        exportImage: function () {
+          var params = collectParams()
+          var w = img.width
+          var h = img.height
+
+          var maskGfx = generateMask(p, w, h, params.preset, params)
+          var masked = img.get()
+          masked.mask(maskGfx.get())
+          maskGfx.remove()
+
+          // Render at full resolution
+          var gfx = p.createGraphics(w, h)
+          gfx.pixelDensity(1)
+          gfx.image(masked, 0, 0)
+          var canvas = gfx.elt || gfx.canvas
+          var dataUrl = canvas.toDataURL('image/png')
+          gfx.remove()
+          return dataUrl
+        }
       }
-    }, containerEl)
+    }, container)
   }
 
-  /**
-   * Close the editor.
-   */
-  function closeEditor () {
-    if (editorSketch) {
-      editorSketch.remove()
-      editorSketch = null
+  function updatePreview () {
+    if (sketch && sketch._mask) {
+      sketch._mask.update()
     }
-    $('#p5-editor-canvas-wrap').hide()
-    $('#p5-editor-source').show()
-    currentTool = null
-    hideAllOptions()
   }
 
-  /**
-   * Save the edited image as featured image via AJAX.
-   */
-  function saveAsFeatured () {
-    if (!editorSketch || !editorSketch._editor) return
+  // ---------- UI bindings ----------
 
-    const $status = $('#p5-save-status')
-    const $btn = $('#p5-save-featured')
+  // Open editor
+  $(document).on('click', '#p5-open-mask-editor', function (e) {
+    e.preventDefault()
+    var wrap = $('#p5-mask-editor-wrap')
+    var thumbUrl = wrap.data('thumb-url')
+    if (!thumbUrl) return
 
-    $status.text('Saving...')
+    // Restore saved params if any
+    var saved = wrap.data('saved-mask')
+    if (saved && typeof saved === 'string') {
+      try { saved = JSON.parse(saved) } catch (e) { saved = null }
+    }
+    if (saved && saved.preset) {
+      restoreParams(saved)
+    }
+
+    $('#p5-mask-source').hide()
+    $('#p5-mask-editor').show()
+    startSketch(thumbUrl)
+  })
+
+  // Close editor
+  $(document).on('click', '#p5-mask-close', function (e) {
+    e.preventDefault()
+    if (sketch) { sketch.remove(); sketch = null }
+    $('#p5-mask-editor').hide()
+    $('#p5-mask-source').show()
+    $('#p5-mask-status').text('')
+  })
+
+  // Preset selection
+  $(document).on('click', '.p5-preset-btn', function (e) {
+    e.preventDefault()
+    var preset = $(this).data('preset')
+    $('.p5-preset-btn').removeClass('active')
+    $(this).addClass('active')
+    // Show/hide param groups
+    $('.p5-param-group').hide()
+    $('.p5-param-group[data-for="' + preset + '"]').show()
+    updatePreview()
+  })
+
+  // Parameter changes
+  $(document).on('input change', '.p5-param', function () {
+    updatePreview()
+  })
+
+  // Bake & save as featured image
+  $(document).on('click', '#p5-mask-save-bake', function (e) {
+    e.preventDefault()
+    if (!sketch || !sketch._mask) return
+
+    var $btn = $(this)
+    var $status = $('#p5-mask-status')
     $btn.prop('disabled', true)
+    $status.text('Baking...')
 
-    const dataUrl = editorSketch._editor.exportImage()
+    var dataUrl = sketch._mask.exportImage()
 
     $.ajax({
-      url: p5EditorData.ajaxUrl,
+      url: p5MaskData.ajaxUrl,
       type: 'POST',
       data: {
-        action: 'p5_save_edited_image',
-        nonce: p5EditorData.nonce,
-        post_id: p5EditorData.postId,
+        action: 'p5_bake_masked_image',
+        nonce: p5MaskData.nonce,
+        post_id: p5MaskData.postId,
         image_data: dataUrl
       },
-      success: function (response) {
-        if (response.success) {
-          $status.text(response.data.message)
-          // Update the thumbnail preview in the meta box
-          const thumbHtml = '<p class="p5-current-thumb"><strong>Current featured image:</strong><br>' +
-            '<img src="' + response.data.imageUrl + '" alt="" style="max-width:100%;height:auto;"></p>'
-          $('#p5-editor-source .p5-current-thumb').remove()
-          $('#p5-editor-source').prepend(thumbHtml)
-
-          // Also update the WP native featured image box if present
+      success: function (res) {
+        if (res.success) {
+          $status.text(res.data.message)
+          // Update thumbnail preview
+          var thumbHtml = '<p class="p5-current-thumb"><strong>Featured image:</strong><br>' +
+            '<img src="' + res.data.imageUrl + '" alt="" style="max-width:100%;height:auto;"></p>'
+          $('#p5-mask-source .p5-current-thumb').remove()
+          $('#p5-mask-source').prepend(thumbHtml)
+          // Update WP featured image box
           if (window.wp && wp.media && wp.media.featuredImage) {
-            wp.media.featuredImage.set(response.data.attachmentId)
+            wp.media.featuredImage.set(res.data.attachmentId)
           }
         } else {
-          $status.text('Error: ' + (response.data.message || 'Unknown error'))
+          $status.text('Error: ' + (res.data.message || 'Unknown error'))
         }
       },
-      error: function () {
-        $status.text('Network error. Please try again.')
+      error: function () { $status.text('Network error.') },
+      complete: function () { $btn.prop('disabled', false) }
+    })
+  })
+
+  // Save mask params for frontend rendering
+  $(document).on('click', '#p5-mask-save-live', function (e) {
+    e.preventDefault()
+    var $btn = $(this)
+    var $status = $('#p5-mask-status')
+    $btn.prop('disabled', true)
+    $status.text('Saving...')
+
+    var params = collectParams()
+
+    $.ajax({
+      url: p5MaskData.ajaxUrl,
+      type: 'POST',
+      data: {
+        action: 'p5_save_mask_params',
+        nonce: p5MaskData.nonce,
+        post_id: p5MaskData.postId,
+        mask_params: JSON.stringify(params)
       },
-      complete: function () {
-        $btn.prop('disabled', false)
+      success: function (res) {
+        $status.text(res.success ? res.data.message : 'Error: ' + (res.data.message || 'Unknown'))
+      },
+      error: function () { $status.text('Network error.') },
+      complete: function () { $btn.prop('disabled', false) }
+    })
+  })
+
+  // Remove mask
+  $(document).on('click', '#p5-mask-remove', function (e) {
+    e.preventDefault()
+    var $status = $('#p5-mask-status')
+    $status.text('Removing...')
+
+    $.ajax({
+      url: p5MaskData.ajaxUrl,
+      type: 'POST',
+      data: {
+        action: 'p5_remove_mask',
+        nonce: p5MaskData.nonce,
+        post_id: p5MaskData.postId
+      },
+      success: function (res) {
+        $status.text(res.success ? res.data.message : 'Error')
+        // Reset the saved data attribute
+        $('#p5-mask-editor-wrap').data('saved-mask', '')
+      },
+      error: function () { $status.text('Network error.') }
+    })
+  })
+
+  // Restore saved params to the UI controls
+  function restoreParams (params) {
+    if (!params || !params.preset) return
+
+    // Activate preset
+    $('.p5-preset-btn').removeClass('active')
+    $('.p5-preset-btn[data-preset="' + params.preset + '"]').addClass('active')
+    $('.p5-param-group').hide()
+    $('.p5-param-group[data-for="' + params.preset + '"]').show()
+
+    // Set values
+    Object.keys(params).forEach(function (key) {
+      if (key === 'preset') return
+      if (key === 'invert') {
+        $('#p5-mask-invert').prop('checked',
+          params.invert === true || params.invert === 'true' || params.invert === '1')
+        return
       }
+      var $el = $('.p5-param-group[data-for="' + params.preset + '"] .p5-param[data-param="' + key + '"]')
+      if ($el.length) $el.val(params[key])
     })
   }
-
-  // --- UI helpers ---
-  function setActiveTool (toolName) {
-    currentTool = toolName
-    $('.p5-tool-btn').removeClass('active')
-    $('.p5-tool-btn[data-tool="' + toolName + '"]').addClass('active')
-
-    hideAllOptions()
-
-    // Show tool-specific options
-    const $panel = $('.p5-options-panel[data-for="' + toolName + '"]')
-    if ($panel.length) {
-      $('#p5-tool-options').show()
-      $panel.show()
-    }
-
-    if (editorSketch && editorSketch._editor) {
-      editorSketch._editor.setTool(toolName)
-    }
-  }
-
-  function hideAllOptions () {
-    $('#p5-tool-options').hide()
-    $('.p5-options-panel').hide()
-  }
-
-  // --- Event bindings ---
-  $(document).on('click', '#p5-select-image', function (e) {
-    e.preventDefault()
-    openMediaLibrary()
-  })
-
-  $(document).on('click', '.p5-tool-btn', function (e) {
-    e.preventDefault()
-    const tool = $(this).data('tool')
-
-    // Instant actions
-    if (tool === 'rotate' && editorSketch && editorSketch._editor) {
-      editorSketch._editor.rotate90()
-      return
-    }
-    if (tool === 'flip-h' && editorSketch && editorSketch._editor) {
-      editorSketch._editor.flipHorizontal()
-      return
-    }
-    if (tool === 'flip-v' && editorSketch && editorSketch._editor) {
-      editorSketch._editor.flipVertical()
-      return
-    }
-    if (tool === 'grayscale' && editorSketch && editorSketch._editor) {
-      editorSketch._editor.applyGrayscale()
-      return
-    }
-    if (tool === 'blur' && editorSketch && editorSketch._editor) {
-      editorSketch._editor.applyBlur()
-      return
-    }
-    if (tool === 'undo' && editorSketch && editorSketch._editor) {
-      editorSketch._editor.undo()
-      return
-    }
-    if (tool === 'reset' && editorSketch && editorSketch._editor) {
-      editorSketch._editor.reset()
-      return
-    }
-
-    // Toggle tools
-    setActiveTool(tool)
-  })
-
-  $(document).on('click', '#p5-apply-crop', function (e) {
-    e.preventDefault()
-    if (editorSketch && editorSketch._editor) {
-      editorSketch._editor.applyCrop()
-      hideAllOptions()
-      currentTool = null
-      $('.p5-tool-btn').removeClass('active')
-    }
-  })
-
-  $(document).on('click', '#p5-cancel-crop', function (e) {
-    e.preventDefault()
-    if (editorSketch && editorSketch._editor) {
-      editorSketch._editor.setTool(null)
-    }
-    hideAllOptions()
-    currentTool = null
-    $('.p5-tool-btn').removeClass('active')
-  })
-
-  $(document).on('click', '#p5-apply-brightness', function (e) {
-    e.preventDefault()
-    if (editorSketch && editorSketch._editor) {
-      const val = parseInt($('#p5-brightness-value').val(), 10)
-      editorSketch._editor.applyBrightness(val)
-      $('#p5-brightness-value').val(0)
-    }
-  })
-
-  $(document).on('change input', '#p5-draw-color', function () {
-    if (editorSketch && editorSketch._editor) {
-      editorSketch._editor.setDrawColor($(this).val())
-    }
-  })
-
-  $(document).on('change input', '#p5-draw-size', function () {
-    if (editorSketch && editorSketch._editor) {
-      editorSketch._editor.setDrawSize(parseInt($(this).val(), 10))
-    }
-  })
-
-  $(document).on('click', '#p5-save-featured', function (e) {
-    e.preventDefault()
-    saveAsFeatured()
-  })
-
-  $(document).on('click', '#p5-close-editor', function (e) {
-    e.preventDefault()
-    closeEditor()
-  })
 })(jQuery)

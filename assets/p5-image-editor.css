@@ -1,10 +1,8 @@
-/* P5.js Image Editor - Admin Styles
- * Styled to match the p5.js editor aesthetic:
+/* P5.js Alpha Mask Editor – Admin Styles
  * Dark background (#1b1b1b / #252525), pink accent (#ed225d), monospace type
  */
 
-/* --- Variables --- */
-#p5-image-editor-wrap {
+#p5-mask-editor-wrap {
   --p5-bg: #1b1b1b;
   --p5-bg-light: #252525;
   --p5-bg-lighter: #333333;
@@ -20,20 +18,20 @@
   font-family: var(--p5-font);
 }
 
-/* --- Source area (before editor opens) --- */
-#p5-editor-source {
+/* --- Source area --- */
+#p5-mask-source {
   background: var(--p5-bg);
   border-radius: 6px;
   padding: 14px;
 }
 
-#p5-editor-source .p5-current-thumb {
-  margin-bottom: 12px;
+#p5-mask-source .p5-current-thumb {
+  margin: 0 0 12px;
   color: var(--p5-text);
   font-size: 11px;
 }
 
-#p5-editor-source .p5-current-thumb strong {
+#p5-mask-source .p5-current-thumb strong {
   color: var(--p5-text);
   font-weight: 600;
   text-transform: uppercase;
@@ -41,18 +39,24 @@
   letter-spacing: 0.5px;
 }
 
-#p5-editor-source .p5-current-thumb img {
+#p5-mask-source .p5-current-thumb img {
   border: 2px solid var(--p5-border);
   border-radius: 4px;
   margin-top: 6px;
 }
 
-.p5-editor-upload-area {
-  text-align: center;
-  padding: 16px 0;
+#p5-mask-source .p5-no-thumb {
+  color: var(--p5-text-muted);
+  font-size: 11px;
+  margin: 0;
 }
 
-#p5-select-image {
+.p5-mask-actions-start {
+  text-align: center;
+  padding: 8px 0 0;
+}
+
+#p5-open-mask-editor {
   background: var(--p5-pink) !important;
   color: #fff !important;
   border: none !important;
@@ -67,85 +71,75 @@
   transition: background 0.15s;
 }
 
-#p5-select-image:hover {
+#p5-open-mask-editor:hover {
   background: var(--p5-pink-hover) !important;
 }
 
-/* --- Canvas wrapper (editor open) --- */
-#p5-editor-canvas-wrap {
+/* --- Editor area --- */
+#p5-mask-editor {
   background: var(--p5-bg);
   border: 2px solid var(--p5-border);
   border-radius: 6px;
   padding: 10px;
 }
 
-/* --- Toolbar --- */
-#p5-editor-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3px;
+/* --- Preset selector --- */
+#p5-mask-presets {
   margin-bottom: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--p5-border);
 }
 
-.p5-toolbar-group {
+.p5-preset-buttons {
   display: flex;
-  gap: 2px;
-  padding-right: 8px;
-  border-right: 1px solid var(--p5-border);
+  gap: 3px;
+  flex-wrap: wrap;
 }
 
-.p5-toolbar-group:last-child {
-  border-right: none;
-  padding-right: 0;
-}
-
-.p5-tool-btn {
-  min-width: 34px;
-  height: 34px;
-  padding: 4px !important;
+.p5-preset-btn {
+  flex: 1 1 0;
+  min-width: 0;
   display: flex !important;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 2px;
+  padding: 6px 4px !important;
   background: var(--p5-bg-lighter) !important;
   color: var(--p5-text) !important;
   border: 1px solid var(--p5-border) !important;
   border-radius: 3px !important;
   cursor: pointer;
   transition: all 0.12s;
+  font-family: var(--p5-font) !important;
 }
 
-.p5-tool-btn:hover {
+.p5-preset-btn:hover {
   background: var(--p5-bg-light) !important;
   border-color: var(--p5-pink) !important;
   color: #fff !important;
 }
 
-.p5-tool-btn.active {
+.p5-preset-btn.active {
   background: var(--p5-pink) !important;
   color: #fff !important;
   border-color: var(--p5-pink) !important;
 }
 
-.p5-tool-btn.active .dashicons {
-  color: #fff;
+.p5-preset-btn .dashicons {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
 }
 
-.p5-tool-btn .dashicons {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-  line-height: 18px;
-  color: var(--p5-text);
+.p5-preset-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  line-height: 1;
 }
 
-.p5-tool-btn:hover .dashicons {
-  color: #fff;
-}
-
-/* --- Tool options panel --- */
-#p5-tool-options {
+/* --- Parameters --- */
+#p5-mask-params {
   background: var(--p5-bg-light);
   border: 1px solid var(--p5-border);
   border-radius: 4px;
@@ -153,78 +147,55 @@
   margin-bottom: 10px;
 }
 
-.p5-options-panel label {
+.p5-label {
   display: block;
   margin-bottom: 6px;
-  font-size: 11px;
+  font-size: 10px;
   color: var(--p5-text-muted);
   font-family: var(--p5-font);
   text-transform: uppercase;
   letter-spacing: 0.3px;
 }
 
-.p5-options-panel input[type="text"] {
+.p5-label-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--p5-border);
+}
+
+.p5-label-inline input[type="checkbox"] {
+  accent-color: var(--p5-pink);
+}
+
+#p5-mask-params input[type="range"] {
+  width: 100%;
+  margin-top: 3px;
+  accent-color: var(--p5-pink);
+}
+
+#p5-mask-params select {
   width: 100%;
   background: var(--p5-bg) !important;
   border: 1px solid var(--p5-border) !important;
   border-radius: 3px !important;
   color: var(--p5-text) !important;
   font-family: var(--p5-font) !important;
-  font-size: 12px !important;
-  padding: 5px 8px !important;
+  font-size: 11px !important;
+  padding: 4px 6px !important;
+  margin-top: 3px;
 }
 
-.p5-options-panel input[type="text"]:focus {
+#p5-mask-params select:focus {
   border-color: var(--p5-pink) !important;
   box-shadow: 0 0 0 1px var(--p5-pink) !important;
   outline: none !important;
 }
 
-.p5-options-panel input[type="range"] {
-  width: 100%;
-  margin-top: 4px;
-  accent-color: var(--p5-pink);
-}
-
-.p5-options-panel input[type="color"] {
-  vertical-align: middle;
-  height: 28px;
-  width: 40px;
-  padding: 0;
-  border: 2px solid var(--p5-border);
-  border-radius: 3px;
-  cursor: pointer;
-  background: transparent;
-}
-
-.p5-options-panel .description {
-  font-style: normal;
-  color: var(--p5-text-muted);
-  margin: 0 0 8px;
-  font-size: 11px;
-}
-
-.p5-options-panel .button-small {
-  background: var(--p5-bg-lighter) !important;
-  color: var(--p5-text) !important;
-  border: 1px solid var(--p5-border) !important;
-  border-radius: 3px !important;
-  font-family: var(--p5-font) !important;
-  font-size: 11px !important;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  cursor: pointer;
-  transition: all 0.12s;
-}
-
-.p5-options-panel .button-small:hover {
-  background: var(--p5-pink) !important;
-  border-color: var(--p5-pink) !important;
-  color: #fff !important;
-}
-
 /* --- Canvas container --- */
-#p5-canvas-container {
+#p5-mask-canvas-container {
   background: #000;
   text-align: center;
   margin-bottom: 10px;
@@ -235,103 +206,105 @@
   position: relative;
 }
 
-#p5-canvas-container canvas {
+#p5-mask-canvas-container canvas {
   max-width: 100%;
   height: auto;
-  cursor: crosshair;
-}
-
-/* Checkerboard transparency pattern behind canvas */
-#p5-canvas-container::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(45deg, #1a1a1a 25%, transparent 25%),
-    linear-gradient(-45deg, #1a1a1a 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #1a1a1a 75%),
-    linear-gradient(-45deg, transparent 75%, #1a1a1a 75%);
-  background-size: 16px 16px;
-  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
-  opacity: 0.3;
-  pointer-events: none;
-  z-index: 0;
-}
-
-#p5-canvas-container canvas {
   position: relative;
   z-index: 1;
 }
 
 /* --- Actions bar --- */
-#p5-editor-actions {
+#p5-mask-actions {
   display: flex;
-  gap: 6px;
+  gap: 5px;
   align-items: center;
   flex-wrap: wrap;
   padding-top: 10px;
   border-top: 1px solid var(--p5-border);
 }
 
-#p5-save-featured {
+#p5-mask-save-bake {
   background: var(--p5-pink) !important;
   color: #fff !important;
   border: none !important;
   border-radius: 4px !important;
   font-family: var(--p5-font) !important;
-  font-size: 11px !important;
+  font-size: 10px !important;
   font-weight: 600 !important;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  padding: 7px 14px !important;
+  padding: 7px 10px !important;
   cursor: pointer;
   transition: background 0.15s;
 }
 
-#p5-save-featured:hover {
+#p5-mask-save-bake:hover {
   background: var(--p5-pink-hover) !important;
 }
 
-#p5-close-editor {
+#p5-mask-save-live {
+  background: var(--p5-blue) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  font-family: var(--p5-font) !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 7px 10px !important;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+#p5-mask-save-live:hover {
+  opacity: 0.85;
+}
+
+#p5-mask-remove,
+#p5-mask-close {
   background: var(--p5-bg-lighter) !important;
   color: var(--p5-text) !important;
   border: 1px solid var(--p5-border) !important;
   border-radius: 4px !important;
   font-family: var(--p5-font) !important;
-  font-size: 11px !important;
+  font-size: 10px !important;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  padding: 6px 14px !important;
+  padding: 6px 10px !important;
   cursor: pointer;
   transition: all 0.12s;
 }
 
-#p5-close-editor:hover {
+#p5-mask-remove:hover,
+#p5-mask-close:hover {
   border-color: var(--p5-text-muted) !important;
   color: #fff !important;
 }
 
-#p5-save-status {
-  font-size: 11px;
+#p5-mask-status {
+  font-size: 10px;
   color: var(--p5-green);
   font-weight: 600;
   font-family: var(--p5-font);
+  width: 100%;
+  margin-top: 4px;
 }
 
-/* --- WP meta box overrides to match p5 theme --- */
-#p5_image_editor .inside {
+/* --- WP meta box overrides --- */
+#p5_alpha_mask_editor .inside {
   padding: 0 !important;
   margin: 0 !important;
 }
 
-#p5_image_editor .postbox-header,
-#p5_image_editor .hndle {
+#p5_alpha_mask_editor .postbox-header,
+#p5_alpha_mask_editor .hndle {
   background: var(--p5-bg) !important;
   border-bottom: 2px solid var(--p5-pink) !important;
   color: var(--p5-text) !important;
 }
 
-#p5_image_editor .hndle span {
+#p5_alpha_mask_editor .hndle span {
   color: var(--p5-pink) !important;
   font-family: var(--p5-font) !important;
   font-size: 12px !important;
@@ -339,6 +312,6 @@
   letter-spacing: 0.8px;
 }
 
-#p5_image_editor .handlediv .toggle-indicator::before {
+#p5_alpha_mask_editor .handlediv .toggle-indicator::before {
   color: var(--p5-text-muted) !important;
 }
