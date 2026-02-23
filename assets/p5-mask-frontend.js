@@ -167,10 +167,10 @@
               var i = (y * w + x) * 4
               var a = computeAlpha(x, y, w, h, params.preset, params)
               if (inv) a = 255 - a
-              maskGfx.pixels[i] = a
-              maskGfx.pixels[i + 1] = a
-              maskGfx.pixels[i + 2] = a
-              maskGfx.pixels[i + 3] = 255
+              maskGfx.pixels[i] = 255
+              maskGfx.pixels[i + 1] = 255
+              maskGfx.pixels[i + 2] = 255
+              maskGfx.pixels[i + 3] = a
             }
           }
           maskGfx.updatePixels()

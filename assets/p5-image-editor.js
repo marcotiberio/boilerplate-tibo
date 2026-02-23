@@ -25,10 +25,10 @@
         i = (y * w + x) * 4
         alpha = computeAlpha(x, y, w, h, preset, params)
         if (inv) alpha = 255 - alpha
-        gfx.pixels[i] = alpha
-        gfx.pixels[i + 1] = alpha
-        gfx.pixels[i + 2] = alpha
-        gfx.pixels[i + 3] = 255
+        gfx.pixels[i] = 255
+        gfx.pixels[i + 1] = 255
+        gfx.pixels[i + 2] = 255
+        gfx.pixels[i + 3] = alpha
       }
     }
 
