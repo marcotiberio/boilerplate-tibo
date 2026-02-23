@@ -1,47 +1,99 @@
-/* P5.js Image Editor - Admin Styles */
+/* P5.js Image Editor - Admin Styles
+ * Styled to match the p5.js editor aesthetic:
+ * Dark background (#1b1b1b / #252525), pink accent (#ed225d), monospace type
+ */
 
+/* --- Variables --- */
 #p5-image-editor-wrap {
+  --p5-bg: #1b1b1b;
+  --p5-bg-light: #252525;
+  --p5-bg-lighter: #333333;
+  --p5-border: #3e3e3e;
+  --p5-text: #d9d9d9;
+  --p5-text-muted: #999;
+  --p5-pink: #ed225d;
+  --p5-pink-hover: #ff3370;
+  --p5-green: #2bc76d;
+  --p5-blue: #00a8e8;
+  --p5-font: "Source Code Pro", "Inconsolata", "Monaco", "Consolas", monospace;
   margin: 0;
+  font-family: var(--p5-font);
 }
 
-/* Source area */
+/* --- Source area (before editor opens) --- */
+#p5-editor-source {
+  background: var(--p5-bg);
+  border-radius: 6px;
+  padding: 14px;
+}
+
 #p5-editor-source .p5-current-thumb {
   margin-bottom: 12px;
+  color: var(--p5-text);
+  font-size: 11px;
+}
+
+#p5-editor-source .p5-current-thumb strong {
+  color: var(--p5-text);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.5px;
 }
 
 #p5-editor-source .p5-current-thumb img {
-  border: 1px solid #ddd;
+  border: 2px solid var(--p5-border);
+  border-radius: 4px;
   margin-top: 6px;
 }
 
 .p5-editor-upload-area {
   text-align: center;
-  padding: 12px 0;
+  padding: 16px 0;
 }
 
-/* Canvas wrapper */
+#p5-select-image {
+  background: var(--p5-pink) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 8px 16px !important;
+  font-family: var(--p5-font) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+#p5-select-image:hover {
+  background: var(--p5-pink-hover) !important;
+}
+
+/* --- Canvas wrapper (editor open) --- */
 #p5-editor-canvas-wrap {
-  background: #f0f0f1;
-  border: 1px solid #c3c4c7;
-  border-radius: 4px;
+  background: var(--p5-bg);
+  border: 2px solid var(--p5-border);
+  border-radius: 6px;
   padding: 10px;
 }
 
-/* Toolbar */
+/* --- Toolbar --- */
 #p5-editor-toolbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 3px;
   margin-bottom: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #c3c4c7;
+  border-bottom: 1px solid var(--p5-border);
 }
 
 .p5-toolbar-group {
   display: flex;
   gap: 2px;
   padding-right: 8px;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid var(--p5-border);
 }
 
 .p5-toolbar-group:last-child {
@@ -50,18 +102,30 @@
 }
 
 .p5-tool-btn {
-  min-width: 36px;
-  height: 36px;
+  min-width: 34px;
+  height: 34px;
   padding: 4px !important;
   display: flex !important;
   align-items: center;
   justify-content: center;
+  background: var(--p5-bg-lighter) !important;
+  color: var(--p5-text) !important;
+  border: 1px solid var(--p5-border) !important;
+  border-radius: 3px !important;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+.p5-tool-btn:hover {
+  background: var(--p5-bg-light) !important;
+  border-color: var(--p5-pink) !important;
+  color: #fff !important;
 }
 
 .p5-tool-btn.active {
-  background: #2271b1 !important;
+  background: var(--p5-pink) !important;
   color: #fff !important;
-  border-color: #2271b1 !important;
+  border-color: var(--p5-pink) !important;
 }
 
 .p5-tool-btn.active .dashicons {
@@ -73,54 +137,102 @@
   width: 18px;
   height: 18px;
   line-height: 18px;
+  color: var(--p5-text);
 }
 
-/* Tool options panel */
+.p5-tool-btn:hover .dashicons {
+  color: #fff;
+}
+
+/* --- Tool options panel --- */
 #p5-tool-options {
-  background: #fff;
-  border: 1px solid #c3c4c7;
-  border-radius: 3px;
-  padding: 8px 10px;
+  background: var(--p5-bg-light);
+  border: 1px solid var(--p5-border);
+  border-radius: 4px;
+  padding: 10px 12px;
   margin-bottom: 10px;
 }
 
 .p5-options-panel label {
   display: block;
   margin-bottom: 6px;
-  font-size: 12px;
+  font-size: 11px;
+  color: var(--p5-text-muted);
+  font-family: var(--p5-font);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
 .p5-options-panel input[type="text"] {
   width: 100%;
+  background: var(--p5-bg) !important;
+  border: 1px solid var(--p5-border) !important;
+  border-radius: 3px !important;
+  color: var(--p5-text) !important;
+  font-family: var(--p5-font) !important;
+  font-size: 12px !important;
+  padding: 5px 8px !important;
+}
+
+.p5-options-panel input[type="text"]:focus {
+  border-color: var(--p5-pink) !important;
+  box-shadow: 0 0 0 1px var(--p5-pink) !important;
+  outline: none !important;
 }
 
 .p5-options-panel input[type="range"] {
   width: 100%;
-  margin-top: 2px;
+  margin-top: 4px;
+  accent-color: var(--p5-pink);
 }
 
 .p5-options-panel input[type="color"] {
   vertical-align: middle;
   height: 28px;
-  width: 50px;
-  padding: 1px;
+  width: 40px;
+  padding: 0;
+  border: 2px solid var(--p5-border);
+  border-radius: 3px;
   cursor: pointer;
+  background: transparent;
 }
 
 .p5-options-panel .description {
-  font-style: italic;
-  color: #646970;
+  font-style: normal;
+  color: var(--p5-text-muted);
   margin: 0 0 8px;
+  font-size: 11px;
 }
 
-/* Canvas container */
+.p5-options-panel .button-small {
+  background: var(--p5-bg-lighter) !important;
+  color: var(--p5-text) !important;
+  border: 1px solid var(--p5-border) !important;
+  border-radius: 3px !important;
+  font-family: var(--p5-font) !important;
+  font-size: 11px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+.p5-options-panel .button-small:hover {
+  background: var(--p5-pink) !important;
+  border-color: var(--p5-pink) !important;
+  color: #fff !important;
+}
+
+/* --- Canvas container --- */
 #p5-canvas-container {
-  background: #ccc;
+  background: #000;
   text-align: center;
   margin-bottom: 10px;
   overflow: hidden;
-  border-radius: 2px;
+  border-radius: 4px;
+  border: 1px solid var(--p5-border);
   line-height: 0;
+  position: relative;
 }
 
 #p5-canvas-container canvas {
@@ -129,16 +241,104 @@
   cursor: crosshair;
 }
 
-/* Actions bar */
+/* Checkerboard transparency pattern behind canvas */
+#p5-canvas-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(45deg, #1a1a1a 25%, transparent 25%),
+    linear-gradient(-45deg, #1a1a1a 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #1a1a1a 75%),
+    linear-gradient(-45deg, transparent 75%, #1a1a1a 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#p5-canvas-container canvas {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Actions bar --- */
 #p5-editor-actions {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
   flex-wrap: wrap;
+  padding-top: 10px;
+  border-top: 1px solid var(--p5-border);
+}
+
+#p5-save-featured {
+  background: var(--p5-pink) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  font-family: var(--p5-font) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 7px 14px !important;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+#p5-save-featured:hover {
+  background: var(--p5-pink-hover) !important;
+}
+
+#p5-close-editor {
+  background: var(--p5-bg-lighter) !important;
+  color: var(--p5-text) !important;
+  border: 1px solid var(--p5-border) !important;
+  border-radius: 4px !important;
+  font-family: var(--p5-font) !important;
+  font-size: 11px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 6px 14px !important;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+#p5-close-editor:hover {
+  border-color: var(--p5-text-muted) !important;
+  color: #fff !important;
 }
 
 #p5-save-status {
-  font-size: 12px;
-  color: #00a32a;
-  font-weight: 500;
+  font-size: 11px;
+  color: var(--p5-green);
+  font-weight: 600;
+  font-family: var(--p5-font);
+}
+
+/* --- WP meta box overrides to match p5 theme --- */
+#p5_image_editor .inside {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+#p5_image_editor .postbox-header,
+#p5_image_editor .hndle {
+  background: var(--p5-bg) !important;
+  border-bottom: 2px solid var(--p5-pink) !important;
+  color: var(--p5-text) !important;
+}
+
+#p5_image_editor .hndle span {
+  color: var(--p5-pink) !important;
+  font-family: var(--p5-font) !important;
+  font-size: 12px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+#p5_image_editor .handlediv .toggle-indicator::before {
+  color: var(--p5-text-muted) !important;
 }
