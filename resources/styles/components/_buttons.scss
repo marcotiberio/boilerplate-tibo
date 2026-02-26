@@ -1,0 +1,55 @@
+// Button base
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  text-decoration: none;
+  white-space: nowrap;
+
+  // Variants (matching Flynt)
+  &--fullBlue {
+    background-color: var(--blue);
+    color: var(--white);
+    border-color: var(--blue);
+
+    &:hover {
+      background-color: var(--blueDark);
+      border-color: var(--blueDark);
+    }
+  }
+
+  &--fullRed,
+  &--fullOrange {
+    background-color: var(--orange);
+    color: var(--white);
+    border-color: var(--orange);
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  &--outline {
+    background-color: transparent;
+    color: currentColor;
+    border-color: currentColor;
+
+    &:hover {
+      background-color: var(--blue);
+      color: var(--white);
+      border-color: var(--blue);
+    }
+  }
+
+  &--outlineBig {
+    padding: 16px 32px;
+    font-size: 1rem;
+  }
+}

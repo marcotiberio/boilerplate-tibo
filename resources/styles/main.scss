@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// ==========================================================================
+// Variables (ported from Flynt)
+// ==========================================================================
+:root {
+  --blue: #3d6bff;
+  --blueDark: #1545de;
+  --orange: #fd4e04;
+  --beige: #fef7ca;
+  --black: #000000;
+  --white: #ffffff;
+  --transparent: transparent;
+
+  --font-sans: 'Inter', Arial, sans-serif;
+}
+
+// ==========================================================================
+// Base
+// ==========================================================================
+@import 'base/reset';
+@import 'base/typography';
+@import 'base/utilities';
+
+// ==========================================================================
+// Components (shared UI components)
+// ==========================================================================
+@import 'components/buttons';
+@import 'components/boxed';
+@import 'components/wysiwyg';
+@import 'components/figures';
+
+// ==========================================================================
+// Block styles
+// ==========================================================================
+@import 'blocks/hero-image';
+@import 'blocks/image-text';
+@import 'blocks/banner-cta';
+@import 'blocks/gallery-media';
+@import 'blocks/grid-images';
+@import 'blocks/grid-image-text';
+@import 'blocks/slider-logos';
+@import 'blocks/slider-box';
+@import 'blocks/video-oembed';
+@import 'blocks/spacer';
+@import 'blocks/divider';
+
+// ==========================================================================
+// Layout
+// ==========================================================================
+@import 'components/header';
+@import 'components/footer';

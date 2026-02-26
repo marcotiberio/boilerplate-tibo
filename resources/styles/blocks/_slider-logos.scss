@@ -1,0 +1,33 @@
+.block-slider-logos {
+  .marquee-container {
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    &::before {
+      left: 0;
+      background: linear-gradient(to right, var(--marquee-fade-color, #fff), transparent);
+    }
+
+    &::after {
+      right: 0;
+      background: linear-gradient(to left, var(--marquee-fade-color, #fff), transparent);
+    }
+  }
+
+  .marquee-content {
+    animation: marquee var(--marquee-duration, 20s) linear infinite;
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
