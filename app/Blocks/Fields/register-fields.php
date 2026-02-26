@@ -6,7 +6,7 @@ use App\Blocks\Fields\FieldVariables;
 
 /**
  * Register ACF field groups for all blocks.
- * Each field group targets its corresponding ACF block.
+ * Every field and sub_field must have a unique 'key'.
  */
 add_action('acf/init', function () {
     if (! function_exists('acf_add_local_field_group')) {
@@ -23,12 +23,14 @@ add_action('acf/init', function () {
         'title' => 'Block: Hero Image',
         'fields' => [
             [
+                'key' => 'field_hero_general_tab',
                 'label' => __('Image', 'sage'),
                 'name' => 'generalTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_hero_image',
                 'label' => __('Image Desktop', 'sage'),
                 'instructions' => __('Image-Format: JPG, PNG, SVG, WEBP.', 'sage'),
                 'name' => 'image',
@@ -38,6 +40,7 @@ add_action('acf/init', function () {
                 'wrapper' => ['width' => 50],
             ],
             [
+                'key' => 'field_hero_image_mobile',
                 'label' => __('Image Mobile', 'sage'),
                 'instructions' => __('Image-Format: JPG, PNG, SVG, WEBP.', 'sage'),
                 'name' => 'imageMobile',
@@ -47,6 +50,7 @@ add_action('acf/init', function () {
                 'wrapper' => ['width' => 50],
             ],
             [
+                'key' => 'field_hero_height',
                 'label' => __('Height', 'sage'),
                 'name' => 'height',
                 'type' => 'select',
@@ -57,12 +61,14 @@ add_action('acf/init', function () {
                 ],
             ],
             [
+                'key' => 'field_hero_content_tab',
                 'label' => __('Content', 'sage'),
                 'name' => 'contentTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_hero_title_html',
                 'label' => __('Title', 'sage'),
                 'name' => 'titleHtml',
                 'type' => 'wysiwyg',
@@ -72,6 +78,7 @@ add_action('acf/init', function () {
                 'delay' => 1,
             ],
             [
+                'key' => 'field_hero_button_link',
                 'label' => __('Button', 'sage'),
                 'name' => 'buttonLink',
                 'type' => 'link',
@@ -93,12 +100,14 @@ add_action('acf/init', function () {
         'title' => 'Block: Image + Text',
         'fields' => [
             [
+                'key' => 'field_imgtext_image_tab',
                 'label' => __('Image', 'sage'),
                 'name' => 'imageTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_imgtext_image_position',
                 'label' => __('Image Position', 'sage'),
                 'name' => 'imagePosition',
                 'type' => 'button_group',
@@ -106,10 +115,11 @@ add_action('acf/init', function () {
                     'lg:flex-row' => '<i class="dashicons dashicons-align-left"></i>',
                     'lg:flex-row-reverse' => '<i class="dashicons dashicons-align-right"></i>',
                 ],
-                'default' => 'lg:flex-row-reverse',
+                'default_value' => 'lg:flex-row-reverse',
                 'wrapper' => ['width' => 50],
             ],
             [
+                'key' => 'field_imgtext_image',
                 'label' => __('Image', 'sage'),
                 'instructions' => __('Image-Format: JPG, PNG, SVG.', 'sage'),
                 'name' => 'image',
@@ -118,12 +128,14 @@ add_action('acf/init', function () {
                 'mime_types' => 'jpg,jpeg,png,svg,webp',
             ],
             [
+                'key' => 'field_imgtext_content_tab',
                 'label' => __('Content', 'sage'),
                 'name' => 'contentTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_imgtext_content_html',
                 'label' => __('Content', 'sage'),
                 'name' => 'contentHtml',
                 'type' => 'wysiwyg',
@@ -131,12 +143,14 @@ add_action('acf/init', function () {
                 'media_upload' => 0,
             ],
             [
+                'key' => 'field_imgtext_buttons_tab',
                 'label' => __('Regular Buttons', 'sage'),
                 'name' => 'regularButtonsTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_imgtext_button_link1',
                 'label' => __('Button 1', 'sage'),
                 'name' => 'buttonLink1',
                 'type' => 'link',
@@ -144,6 +158,7 @@ add_action('acf/init', function () {
                 'wrapper' => ['width' => 50],
             ],
             [
+                'key' => 'field_imgtext_button_link2',
                 'label' => __('Button 2', 'sage'),
                 'name' => 'buttonLink2',
                 'type' => 'link',
@@ -151,12 +166,14 @@ add_action('acf/init', function () {
                 'wrapper' => ['width' => 50],
             ],
             [
+                'key' => 'field_imgtext_anchor_tab',
                 'label' => __('Anchor Scroll Buttons', 'sage'),
                 'name' => 'anchorScrollButtonsTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_imgtext_repeater_buttons',
                 'label' => __('Anchor Scroll Buttons', 'sage'),
                 'name' => 'repeaterButtons',
                 'type' => 'repeater',
@@ -164,6 +181,7 @@ add_action('acf/init', function () {
                 'button_label' => __('Add Button', 'sage'),
                 'sub_fields' => [
                     [
+                        'key' => 'field_imgtext_repeater_button_link',
                         'label' => __('Button', 'sage'),
                         'name' => 'buttonLink',
                         'type' => 'link',
@@ -171,15 +189,16 @@ add_action('acf/init', function () {
                     ],
                 ],
             ],
-            FieldVariables::optionsTab(),
+            FieldVariables::optionsTab('imgtext'),
             [
+                'key' => 'field_imgtext_options',
                 'label' => '',
                 'name' => 'options',
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => [
-                    FieldVariables::colorBackground(),
-                    FieldVariables::colorText(),
+                    FieldVariables::colorBackground('imgtext'),
+                    FieldVariables::colorText('imgtext'),
                 ],
             ],
         ],
@@ -198,12 +217,14 @@ add_action('acf/init', function () {
         'title' => 'Block: Text Editor',
         'fields' => [
             [
+                'key' => 'field_wys_general_tab',
                 'label' => __('General', 'sage'),
                 'name' => 'generalTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_wys_text_position',
                 'label' => __('Text Position', 'sage'),
                 'name' => 'textPosition',
                 'type' => 'button_group',
@@ -216,6 +237,7 @@ add_action('acf/init', function () {
                 'default_value' => 'center_narrow',
             ],
             [
+                'key' => 'field_wys_content_html',
                 'label' => __('Content', 'sage'),
                 'name' => 'contentHtml',
                 'type' => 'wysiwyg',
@@ -225,20 +247,23 @@ add_action('acf/init', function () {
                 'required' => 1,
             ],
             [
+                'key' => 'field_wys_button_link',
                 'label' => __('Button', 'sage'),
                 'name' => 'buttonLink',
                 'type' => 'link',
                 'required' => 0,
             ],
-            FieldVariables::optionsTab(),
+            FieldVariables::optionsTab('wys'),
             [
+                'key' => 'field_wys_options',
                 'label' => '',
                 'name' => 'options',
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => [
-                    FieldVariables::colorBackground(),
+                    FieldVariables::colorBackground('wys'),
                     [
+                        'key' => 'field_wys_sticky_text',
                         'label' => __('Sticky text?', 'sage'),
                         'name' => 'stickyText',
                         'type' => 'true_false',
@@ -263,17 +288,20 @@ add_action('acf/init', function () {
         'title' => 'Block: Banner CTA',
         'fields' => [
             [
+                'key' => 'field_bcta_content_tab',
                 'label' => __('Content', 'sage'),
                 'name' => 'contentTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_bcta_title',
                 'label' => __('Title', 'sage'),
                 'name' => 'title',
                 'type' => 'text',
             ],
             [
+                'key' => 'field_bcta_content_html',
                 'label' => __('Content', 'sage'),
                 'name' => 'contentHtml',
                 'type' => 'wysiwyg',
@@ -282,26 +310,29 @@ add_action('acf/init', function () {
                 'media_upload' => 0,
             ],
             [
+                'key' => 'field_bcta_button_link',
                 'label' => __('Button', 'sage'),
                 'name' => 'buttonLink',
                 'type' => 'link',
                 'required' => 0,
             ],
             [
+                'key' => 'field_bcta_image_tab',
                 'label' => __('Image', 'sage'),
                 'name' => 'imageTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_bcta_background_image',
                 'label' => __('Background Image', 'sage'),
                 'name' => 'backgroundImage',
                 'type' => 'image',
                 'preview_size' => 'medium',
                 'mime_types' => 'jpg,jpeg,png,svg,webp',
             ],
-            FieldVariables::optionsTab(),
-            FieldVariables::optionsGroup(),
+            FieldVariables::optionsTab('bcta'),
+            FieldVariables::optionsGroup('bcta'),
         ],
         'location' => [
             [['param' => 'block', 'operator' => '==', 'value' => 'acf/banner-cta']],
@@ -330,53 +361,57 @@ add_action('acf/init', function () {
         'lg:items-end' => 'Bottom',
     ];
 
-    $grid_position_fields = [
-        [
-            'label' => __('Starts in column:', 'sage'),
-            'name' => 'colStart',
-            'type' => 'button_group',
-            'choices' => $grid_col_choices,
-            'wrapper' => ['width' => 33],
-        ],
-        [
-            'label' => __('Ends in column:', 'sage'),
-            'name' => 'colEnd',
-            'type' => 'button_group',
-            'choices' => $grid_col_end_choices,
-            'wrapper' => ['width' => 33],
-        ],
-        [
-            'label' => __('Align Vertically', 'sage'),
-            'name' => 'alignY',
-            'type' => 'button_group',
-            'choices' => $align_y_choices,
-            'default_value' => 'lg:items-start',
-            'wrapper' => ['width' => 33],
-        ],
-    ];
-
     acf_add_local_field_group([
         'key' => 'group_block_gallery_media',
         'title' => 'Block: Gallery Media',
         'fields' => [
             [
+                'key' => 'field_gm_general_tab',
                 'label' => __('General', 'sage'),
                 'name' => 'generalTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_gm_media_items',
                 'label' => __('Media Items', 'sage'),
                 'name' => 'mediaItems',
                 'type' => 'flexible_content',
                 'button_label' => __('Add Gallery Item', 'sage'),
                 'layouts' => [
                     [
+                        'key' => 'field_gm_layout_image',
                         'name' => 'image',
                         'label' => __('Image', 'sage'),
                         'display' => 'block',
-                        'sub_fields' => array_merge($grid_position_fields, [
+                        'sub_fields' => [
                             [
+                                'key' => 'field_gm_img_col_start',
+                                'label' => __('Starts in column:', 'sage'),
+                                'name' => 'colStart',
+                                'type' => 'button_group',
+                                'choices' => $grid_col_choices,
+                                'wrapper' => ['width' => 33],
+                            ],
+                            [
+                                'key' => 'field_gm_img_col_end',
+                                'label' => __('Ends in column:', 'sage'),
+                                'name' => 'colEnd',
+                                'type' => 'button_group',
+                                'choices' => $grid_col_end_choices,
+                                'wrapper' => ['width' => 33],
+                            ],
+                            [
+                                'key' => 'field_gm_img_align_y',
+                                'label' => __('Align Vertically', 'sage'),
+                                'name' => 'alignY',
+                                'type' => 'button_group',
+                                'choices' => $align_y_choices,
+                                'default_value' => 'lg:items-start',
+                                'wrapper' => ['width' => 33],
+                            ],
+                            [
+                                'key' => 'field_gm_img_image',
                                 'label' => __('Image', 'sage'),
                                 'name' => 'image',
                                 'type' => 'image',
@@ -384,14 +419,41 @@ add_action('acf/init', function () {
                                 'required' => 1,
                                 'mime_types' => 'jpg,jpeg,png',
                             ],
-                        ]),
+                        ],
                     ],
                     [
+                        'key' => 'field_gm_layout_video',
                         'name' => 'video_upload',
                         'label' => __('Video Upload', 'sage'),
                         'display' => 'block',
-                        'sub_fields' => array_merge($grid_position_fields, [
+                        'sub_fields' => [
                             [
+                                'key' => 'field_gm_vid_col_start',
+                                'label' => __('Starts in column:', 'sage'),
+                                'name' => 'colStart',
+                                'type' => 'button_group',
+                                'choices' => $grid_col_choices,
+                                'wrapper' => ['width' => 33],
+                            ],
+                            [
+                                'key' => 'field_gm_vid_col_end',
+                                'label' => __('Ends in column:', 'sage'),
+                                'name' => 'colEnd',
+                                'type' => 'button_group',
+                                'choices' => $grid_col_end_choices,
+                                'wrapper' => ['width' => 33],
+                            ],
+                            [
+                                'key' => 'field_gm_vid_align_y',
+                                'label' => __('Align Vertically', 'sage'),
+                                'name' => 'alignY',
+                                'type' => 'button_group',
+                                'choices' => $align_y_choices,
+                                'default_value' => 'lg:items-start',
+                                'wrapper' => ['width' => 33],
+                            ],
+                            [
+                                'key' => 'field_gm_vid_file',
                                 'label' => __('Video File', 'sage'),
                                 'name' => 'video',
                                 'type' => 'file',
@@ -399,31 +461,59 @@ add_action('acf/init', function () {
                                 'mime_types' => 'mp4, mov',
                                 'return_format' => 'array',
                             ],
-                        ]),
+                        ],
                     ],
                     [
+                        'key' => 'field_gm_layout_oembed',
                         'name' => 'oembed',
                         'label' => __('Video Embed', 'sage'),
                         'display' => 'block',
-                        'sub_fields' => array_merge($grid_position_fields, [
+                        'sub_fields' => [
                             [
+                                'key' => 'field_gm_oe_col_start',
+                                'label' => __('Starts in column:', 'sage'),
+                                'name' => 'colStart',
+                                'type' => 'button_group',
+                                'choices' => $grid_col_choices,
+                                'wrapper' => ['width' => 33],
+                            ],
+                            [
+                                'key' => 'field_gm_oe_col_end',
+                                'label' => __('Ends in column:', 'sage'),
+                                'name' => 'colEnd',
+                                'type' => 'button_group',
+                                'choices' => $grid_col_end_choices,
+                                'wrapper' => ['width' => 33],
+                            ],
+                            [
+                                'key' => 'field_gm_oe_align_y',
+                                'label' => __('Align Vertically', 'sage'),
+                                'name' => 'alignY',
+                                'type' => 'button_group',
+                                'choices' => $align_y_choices,
+                                'default_value' => 'lg:items-start',
+                                'wrapper' => ['width' => 33],
+                            ],
+                            [
+                                'key' => 'field_gm_oe_landscape',
                                 'label' => __('Video Embed ID - Landscape', 'sage'),
                                 'name' => 'videoIDLandscape',
                                 'type' => 'text',
                                 'wrapper' => ['width' => 50],
                             ],
                             [
+                                'key' => 'field_gm_oe_portrait',
                                 'label' => __('Video Embed ID - Portrait', 'sage'),
                                 'name' => 'videoIDPortrait',
                                 'type' => 'text',
                                 'wrapper' => ['width' => 50],
                             ],
-                        ]),
+                        ],
                     ],
                 ],
             ],
-            FieldVariables::optionsTab(),
-            FieldVariables::optionsGroup(),
+            FieldVariables::optionsTab('gm'),
+            FieldVariables::optionsGroup('gm'),
         ],
         'location' => [
             [['param' => 'block', 'operator' => '==', 'value' => 'acf/gallery-media']],
@@ -440,23 +530,27 @@ add_action('acf/init', function () {
         'title' => 'Block: Grid Images',
         'fields' => [
             [
+                'key' => 'field_gi_general_tab',
                 'label' => __('General', 'sage'),
                 'name' => 'generalTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_gi_title',
                 'label' => __('Title', 'sage'),
                 'name' => 'title',
                 'type' => 'text',
             ],
             [
+                'key' => 'field_gi_images_tab',
                 'label' => __('Images', 'sage'),
                 'name' => 'imageGalleryTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_gi_items',
                 'label' => __('Images', 'sage'),
                 'name' => 'items',
                 'type' => 'repeater',
@@ -464,6 +558,7 @@ add_action('acf/init', function () {
                 'button_label' => __('Add Item', 'sage'),
                 'sub_fields' => [
                     [
+                        'key' => 'field_gi_items_image',
                         'label' => __('Image', 'sage'),
                         'name' => 'image',
                         'type' => 'image',
@@ -473,14 +568,16 @@ add_action('acf/init', function () {
                     ],
                 ],
             ],
-            FieldVariables::optionsTab(),
+            FieldVariables::optionsTab('gi'),
             [
+                'key' => 'field_gi_options',
                 'label' => '',
                 'name' => 'options',
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => [
                     [
+                        'key' => 'field_gi_grid_columns',
                         'label' => __('Grid Columns', 'sage'),
                         'name' => 'gridColumns',
                         'type' => 'button_group',
@@ -505,23 +602,27 @@ add_action('acf/init', function () {
         'title' => 'Block: Grid Image Text',
         'fields' => [
             [
+                'key' => 'field_git_general_tab',
                 'label' => __('General', 'sage'),
                 'name' => 'generalTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_git_headline_title',
                 'label' => __('Title', 'sage'),
                 'name' => 'headlineTitle',
                 'type' => 'text',
             ],
             [
+                'key' => 'field_git_items_tab',
                 'label' => __('Items', 'sage'),
                 'name' => 'itemsTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_git_items',
                 'label' => __('Items', 'sage'),
                 'name' => 'items',
                 'type' => 'repeater',
@@ -529,6 +630,7 @@ add_action('acf/init', function () {
                 'button_label' => __('Add Item', 'sage'),
                 'sub_fields' => [
                     [
+                        'key' => 'field_git_items_image',
                         'label' => __('Image', 'sage'),
                         'name' => 'image',
                         'type' => 'image',
@@ -537,12 +639,14 @@ add_action('acf/init', function () {
                         'wrapper' => ['width' => 50],
                     ],
                     [
+                        'key' => 'field_git_items_title',
                         'label' => __('Title', 'sage'),
                         'name' => 'imageBoxTitle',
                         'type' => 'text',
                         'wrapper' => ['width' => 50],
                     ],
                     [
+                        'key' => 'field_git_items_link',
                         'label' => __('Link', 'sage'),
                         'name' => 'imageLink',
                         'type' => 'link',
@@ -550,6 +654,7 @@ add_action('acf/init', function () {
                         'wrapper' => ['width' => 50],
                     ],
                     [
+                        'key' => 'field_git_items_content',
                         'label' => __('Content', 'sage'),
                         'name' => 'contentHtml',
                         'type' => 'wysiwyg',
@@ -559,14 +664,16 @@ add_action('acf/init', function () {
                     ],
                 ],
             ],
-            FieldVariables::optionsTab(),
+            FieldVariables::optionsTab('git'),
             [
+                'key' => 'field_git_options',
                 'label' => '',
                 'name' => 'options',
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => [
                     [
+                        'key' => 'field_git_grid_columns',
                         'label' => __('Grid Columns', 'sage'),
                         'name' => 'gridColumns',
                         'type' => 'button_group',
@@ -576,6 +683,7 @@ add_action('acf/init', function () {
                 ],
             ],
             [
+                'key' => 'field_git_read_more',
                 'label' => __('Read More Label', 'sage'),
                 'name' => 'readMoreLabel',
                 'type' => 'text',
@@ -596,23 +704,27 @@ add_action('acf/init', function () {
         'title' => 'Block: Carousel Logos',
         'fields' => [
             [
+                'key' => 'field_sl_general_tab',
                 'label' => __('General', 'sage'),
                 'name' => 'generalTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_sl_block_title',
                 'label' => __('Title', 'sage'),
                 'name' => 'blockTitle',
                 'type' => 'text',
             ],
             [
+                'key' => 'field_sl_logos_tab',
                 'label' => __('Logos', 'sage'),
                 'name' => 'logoSelectionTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_sl_content_boxes',
                 'label' => __('Logos', 'sage'),
                 'name' => 'contentBoxes',
                 'type' => 'repeater',
@@ -621,6 +733,7 @@ add_action('acf/init', function () {
                 'button_label' => __('Add Logo', 'sage'),
                 'sub_fields' => [
                     [
+                        'key' => 'field_sl_panel_logo',
                         'label' => __('Logo/Icon', 'sage'),
                         'name' => 'panelLogo',
                         'type' => 'image',
@@ -629,6 +742,7 @@ add_action('acf/init', function () {
                         'wrapper' => ['width' => 50],
                     ],
                     [
+                        'key' => 'field_sl_panel_link',
                         'label' => __('Link', 'sage'),
                         'name' => 'panelLink',
                         'type' => 'link',
@@ -637,24 +751,26 @@ add_action('acf/init', function () {
                     ],
                 ],
             ],
-            FieldVariables::optionsTab(),
+            FieldVariables::optionsTab('sl'),
             [
+                'key' => 'field_sl_options',
                 'label' => '',
                 'name' => 'options',
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => array_merge(
-                    [FieldVariables::colorBackground()],
-                    FieldVariables::autoplayFields(),
+                    [FieldVariables::colorBackground('sl')],
+                    FieldVariables::autoplayFields('sl'),
                     [
                         [
+                            'key' => 'field_sl_autoplay_delay',
                             'label' => __('Autoplay Delay (ms)', 'sage'),
                             'name' => 'autoplayDelay',
                             'type' => 'number',
                             'min' => 0,
                             'default_value' => 0,
                             'conditional_logic' => [
-                                [['fieldPath' => 'autoplay', 'operator' => '==', 'value' => 1]],
+                                [['field' => 'field_sl_autoplay', 'operator' => '==', 'value' => 1]],
                             ],
                         ],
                     ]
@@ -676,17 +792,20 @@ add_action('acf/init', function () {
         'title' => 'Block: Carousel Boxes',
         'fields' => [
             [
+                'key' => 'field_sb_general_tab',
                 'label' => __('General', 'sage'),
                 'name' => 'generalTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_sb_headline_title',
                 'label' => __('Title', 'sage'),
                 'name' => 'headlineTitle',
                 'type' => 'text',
             ],
             [
+                'key' => 'field_sb_boxes',
                 'label' => __('Boxes', 'sage'),
                 'name' => 'boxes',
                 'type' => 'repeater',
@@ -695,6 +814,7 @@ add_action('acf/init', function () {
                 'button_label' => __('Add Box', 'sage'),
                 'sub_fields' => [
                     [
+                        'key' => 'field_sb_box_content',
                         'label' => __('Content', 'sage'),
                         'name' => 'contentHtml',
                         'type' => 'wysiwyg',
@@ -704,15 +824,16 @@ add_action('acf/init', function () {
                     ],
                 ],
             ],
-            FieldVariables::optionsTab(),
+            FieldVariables::optionsTab('sb'),
             [
+                'key' => 'field_sb_options',
                 'label' => '',
                 'name' => 'options',
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => array_merge(
-                    [FieldVariables::colorBackground(), FieldVariables::colorText()],
-                    FieldVariables::autoplayFields()
+                    [FieldVariables::colorBackground('sb'), FieldVariables::colorText('sb')],
+                    FieldVariables::autoplayFields('sb')
                 ),
             ],
         ],
@@ -731,19 +852,21 @@ add_action('acf/init', function () {
         'title' => 'Block: Video Embed',
         'fields' => [
             [
+                'key' => 'field_vo_general_tab',
                 'label' => __('General', 'sage'),
                 'name' => 'generalTab',
                 'type' => 'tab',
                 'placement' => 'top',
             ],
             [
+                'key' => 'field_vo_oembed',
                 'label' => __('Video', 'sage'),
                 'name' => 'oembed',
                 'type' => 'oembed',
                 'required' => 1,
             ],
-            FieldVariables::optionsTab(),
-            FieldVariables::optionsGroup(),
+            FieldVariables::optionsTab('vo'),
+            FieldVariables::optionsGroup('vo'),
         ],
         'location' => [
             [['param' => 'block', 'operator' => '==', 'value' => 'acf/video-oembed']],
@@ -760,12 +883,14 @@ add_action('acf/init', function () {
         'title' => 'Block: Spacer',
         'fields' => [
             [
+                'key' => 'field_sp_options',
                 'label' => '',
                 'name' => 'options',
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => [
                     [
+                        'key' => 'field_sp_percentage_distance',
                         'label' => __('Vertical Space', 'sage'),
                         'instructions' => __('Distance between sections.', 'sage'),
                         'name' => 'percentageDistance',
@@ -790,7 +915,7 @@ add_action('acf/init', function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Divider (no fields needed, just a visual block)
+    | Divider
     |--------------------------------------------------------------------------
     */
     acf_add_local_field_group([
@@ -798,6 +923,7 @@ add_action('acf/init', function () {
         'title' => 'Block: Divider',
         'fields' => [
             [
+                'key' => 'field_div_info',
                 'label' => __('Divider', 'sage'),
                 'name' => 'info',
                 'type' => 'message',

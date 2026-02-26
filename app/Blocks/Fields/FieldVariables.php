@@ -5,12 +5,15 @@ namespace App\Blocks\Fields;
 /**
  * Shared ACF field definitions used across multiple blocks.
  * Equivalent to Flynt's FieldVariables.
+ *
+ * Each method accepts a $prefix to generate unique keys per block.
  */
 class FieldVariables
 {
-    public static function colorBackground(): array
+    public static function colorBackground(string $prefix = ''): array
     {
         return [
+            'key' => "field_{$prefix}_color_background",
             'label' => __('Color Background', 'sage'),
             'name' => 'colorBackground',
             'type' => 'color_picker',
@@ -20,9 +23,10 @@ class FieldVariables
         ];
     }
 
-    public static function colorText(): array
+    public static function colorText(string $prefix = ''): array
     {
         return [
+            'key' => "field_{$prefix}_color_text",
             'label' => __('Color Text', 'sage'),
             'instructions' => 'Overrides text editor color',
             'name' => 'colorText',
@@ -34,14 +38,15 @@ class FieldVariables
         ];
     }
 
-    public static function optionsGroup(array $extra_fields = []): array
+    public static function optionsGroup(string $prefix = '', array $extra_fields = []): array
     {
         $sub_fields = array_merge([
-            self::colorBackground(),
-            self::colorText(),
+            self::colorBackground($prefix),
+            self::colorText($prefix),
         ], $extra_fields);
 
         return [
+            'key' => "field_{$prefix}_options",
             'label' => '',
             'name' => 'options',
             'type' => 'group',
@@ -50,9 +55,10 @@ class FieldVariables
         ];
     }
 
-    public static function optionsTab(): array
+    public static function optionsTab(string $prefix = ''): array
     {
         return [
+            'key' => "field_{$prefix}_options_tab",
             'label' => __('Options', 'sage'),
             'name' => 'optionsTab',
             'type' => 'tab',
@@ -61,10 +67,11 @@ class FieldVariables
         ];
     }
 
-    public static function autoplayFields(): array
+    public static function autoplayFields(string $prefix = ''): array
     {
         return [
             [
+                'key' => "field_{$prefix}_autoplay",
                 'label' => __('Enable Autoplay', 'sage'),
                 'name' => 'autoplay',
                 'type' => 'true_false',
@@ -72,6 +79,7 @@ class FieldVariables
                 'ui' => 1,
             ],
             [
+                'key' => "field_{$prefix}_autoplay_speed",
                 'label' => __('Autoplay Speed (ms)', 'sage'),
                 'name' => 'autoplaySpeed',
                 'type' => 'number',
@@ -82,7 +90,7 @@ class FieldVariables
                 'conditional_logic' => [
                     [
                         [
-                            'fieldPath' => 'autoplay',
+                            'field' => "field_{$prefix}_autoplay",
                             'operator' => '==',
                             'value' => 1,
                         ],
