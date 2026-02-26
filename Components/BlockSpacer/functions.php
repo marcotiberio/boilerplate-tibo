@@ -8,7 +8,7 @@ function getACFLayout(): array
 {
     return [
         'name' => 'blockSpacer',
-        'label' => __('Block: Spacer', 'flynt'),
+        'label' => __('Spacer', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Options', 'flynt'),
@@ -30,10 +30,14 @@ function getACFLayout(): array
                         'type' => 'select',
                         'choices' => [
                             '0' => 'None',
-                            '30px' => 'X-Small',
-                            '5vw' => 'Small',
-                            '8vw' => 'Medium',
-                            '10vw' => 'Large',
+                            '12px' => 'X-Small (12px)',
+                            '24px' => 'Small (24px)',
+                            '46px' => 'Medium (46px)',
+                            '60px' => 'Large (60px)',
+                            '-12px' => 'X-Small (negative -12px)',
+                            '-24px' => 'Small (negative -24px)',
+                            '-46px' => 'Medium (negative -46px)',
+                            '-60px' => 'Large (negative -60px)',
                         ],
                         'default_value' => 0,
                         'return_format' => 'value',
