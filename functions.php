@@ -37,7 +37,7 @@ if (! function_exists('\Roots\bootloader')) {
     );
 }
 
-\Roots\bootloader();
+\Roots\bootloader()->boot();
 
 /*
 |--------------------------------------------------------------------------
