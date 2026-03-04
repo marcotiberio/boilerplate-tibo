@@ -35,7 +35,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'label' => __('Content', 'flynt'),
                 'name' => 'postContent',
                 'type' => 'wysiwyg',
-                'tabs' => 'visual',
+                'tabs' => 'visual,text',
                 'media_upload' => 0,
                 'delay' => 1,
                 'wrapper' => [
@@ -53,52 +53,33 @@ add_action('Flynt/afterRegisterComponents', function () {
             ],
         ],
     ]);
-    // ACFComposer::registerFieldGroup([
-    //     'name' => 'postMedia',
-    //     'title' => 'Featured Media',
-    //     'style' => '',
-    //     'menu_order' => 1,
-    //     'position' => 'side',
-    //     'fields' => [
-            
-    //     ],
-    //     'location' => [
-    //         [
-    //             [
-    //                 'param' => 'post_type',
-    //                 'operator' => '==',
-    //                 'value' => 'post',
-    //             ],
-    //         ],
-    //     ],
-    // ]);
-    // ACFComposer::registerFieldGroup([
-    //     'name' => 'postComponents',
-    //     'title' => __('Post Components', 'flynt'),
-    //     'style' => 'seamless',
-    //     'fields' => [
-    //         [
-    //             'name' => 'postComponents',
-    //             'label' => __('Post Components', 'flynt'),
-    //             'type' => 'flexible_content',
-    //             'button_label' => __('Add Component', 'flynt'),
-    //             'layouts' => [
-    //                 Components\BlockAnchor\getACFLayout(),
-    //                 Components\BlockImageTest2\getACFLayout(),
-    //                 Components\BlockGalleryMedia\getACFLayout(),
-    //                 Components\BlockSpacer\getACFLayout(),
-    //                 Components\BlockWysiwyg\getACFLayout(),
-    //             ],
-    //         ],
-    //     ],
-    //     'location' => [
-    //         [
-    //             [
-    //                 'param' => 'post_type',
-    //                 'operator' => '==',
-    //                 'value' => 'post',
-    //             ],
-    //         ],
-    //     ],
-    // ]);
+    ACFComposer::registerFieldGroup([
+        'name' => 'postComponents',
+        'title' => __('Post Components', 'flynt'),
+        'style' => 'seamless',
+        'fields' => [
+            [
+                'name' => 'postComponents',
+                'label' => __('Post Components', 'flynt'),
+                'type' => 'flexible_content',
+                'button_label' => __('Add Component', 'flynt'),
+                'layouts' => [
+                    Components\BlockAnchor\getACFLayout(),
+                    Components\BlockImageTest2\getACFLayout(),
+                    Components\BlockGalleryMedia\getACFLayout(),
+                    Components\BlockSpacer\getACFLayout(),
+                    Components\BlockWysiwyg\getACFLayout(),
+                ],
+            ],
+        ],
+        'location' => [
+            [
+                [
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'post',
+                ],
+            ],
+        ],
+    ]);
 });

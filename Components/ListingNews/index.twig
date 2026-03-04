@@ -61,7 +61,7 @@
       </div> #}
 
       <!-- Posts Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-sm">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-sm overflow-hidden">
         {% for post in posts %}
           {# {% set journalCategoryTerms = post.terms('journal-category') %}
           {% set allTerms = journalCategoryTerms %}
@@ -74,23 +74,25 @@
           {% set postCategorySlugs = allTerms|map(term => hardcodedCategories[term.name]|default(term.name|lower|replace({' ' : '-'}))) %} #}
 
           <div 
-            class="post w-full py-sm [&_img]:hover:shadow-[0px_0px_20px_0px_#3d6bff] hover:cursor-pointer transition-all duration-300 ease-in-out" 
+            class="post w-full py-sm hover:cursor-pointer transition-all duration-100 ease-in-out" 
             x-show="(selectedCategory === '' || ['{{ postCategorySlugs|join("','") }}'].includes(selectedCategory)) && 
                      (searchQuery === '' || '{{ post.title|lower }}'.includes(searchQuery.toLowerCase()))"
             :class="isTransitioning ? 'opacity-0' : 'opacity-100'"
           >
             <a class="no-underline" href="{{ post.link }}" title="{{ post.title }}" aria-label="Go to post">
-              <div class="w-full flex flex-col gap-xs items-start">
+              <div class="w-full flex flex-col gap-xs items-start transition-all duration-100 ease-in-out">
                 {% if post.thumbnail %}
-                  <img 
-                    class="lazyload aspect-4/3 object-cover rounded-image transition-all duration-300 ease-in-out"
-                    src="{{ post.thumbnail.src }}"
-                    alt="{{ post.thumbnail.alt|e | default('') }}"
-                    loading="lazy"
-                    style="opacity: 0; transition: opacity 0.5s ease-in-out;"
-                    onload="this.style.opacity='1'"
-                    aria-label="Go to post"
-                  />
+                  <div class="overflow-hidden rounded-image transition-all duration-100 ease-in-out">
+                    <img
+                      class="lazyload aspect-4/3 object-cover rounded-image hover:scale-105 transition-all duration-100 ease-in-out"
+                      src="{{ post.thumbnail.src }}"
+                      alt="{{ post.thumbnail.alt|e | default('') }}"
+                      loading="lazy"
+                      style="opacity: 0; transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;"
+                      onload="this.style.opacity='1'"
+                      aria-label="Go to post"
+                    />
+                  </div>
                 {% endif %}
                 <div class="font-bodySmall !mb-0 col-start-4 col-end-5 flex flex-row gap-xs items-center">
                   <span class="font-bodySmall !mb-0">{{ post.postDate|date('d.m.Y') }}</span>

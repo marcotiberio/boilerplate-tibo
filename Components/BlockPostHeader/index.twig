@@ -10,7 +10,7 @@
               <div class="font-bodySmall">{{ post.postDate|date('d.m.Y') }}</div>
             {% endif %}
             <div class="font-h2">{{ post.title }}</div>
-            <div class="wysiwyg">{{ post.postContent|e('wp_kses_post') }}</div>
+            <div class="wysiwyg">{{ post.postContent|wpautop }}</div>
           </div>
           <div class="w-full">
             {% if post.thumbnail %}
