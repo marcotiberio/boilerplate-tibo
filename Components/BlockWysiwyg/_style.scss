@@ -11,23 +11,20 @@ flynt-component[name='BlockWysiwyg'] {
     }
   }
 
-  .stickyText {
-    @apply sticky;
-    @apply top-[91px];
-    @apply self-start;
-    // Create new stacking context
-    // The [class*="sticky"] rule in _custom.scss should handle this,
-    // but we're being explicit here
-    transform: translateZ(0);
-    will-change: transform;
-    z-index: 1;
-  }
-
   [data-text-align='left'] {
     text-align: start;
   }
 
   [data-text-align='center'] {
     text-align: center;
+  }
+
+  .word-shuffle {
+    display: inline-block;
+  }
+  
+  .word-shuffle-separator {
+    display: inline;
+    white-space: pre;
   }
 }

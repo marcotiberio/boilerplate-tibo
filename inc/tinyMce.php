@@ -10,6 +10,7 @@
 namespace Flynt\TinyMce;
 
 use Flynt\Utils\Asset;
+use Flynt\ThemeColors;
 
 // Add tinyMce styles to editor
 add_action('admin_init', function () {
@@ -80,13 +81,11 @@ function getBlockFormats($blockFormats)
 
 function getConfig()
 {
+    // Get colors from theme configuration
+    $colorMap = ThemeColors\getTinyMceColorMap();
+    
     return [
-        'textcolor_map' => [
-            '000000', 'Black',
-            'ffffff', 'White',
-            '3d6bff', 'Blue',
-            'fef7ca', 'Beige',
-        ],
+        'textcolor_map' => $colorMap,
         'blockformats' => [
             'Heading 1' => 'h1',
             'Heading 2' => 'h2',
@@ -96,53 +95,8 @@ function getConfig()
             'Small Text' => 'samp',
         ],
         'styleformats' => [
-            // [
-            //     'title' => 'Headings',
-            //     'icon' => '',
-            //     'items' => [
-            //         [
-            //             'title' => 'Title',
-            //             'classes' => 'font-heroTitle',
-            //             'selector' => '*'
-            //         ],
-            //         [
-            //             'title' => 'Subtitle',
-            //             'classes' => 'font-heroSubtitle',
-            //             'selector' => '*'
-            //         ],
-            //         [
-            //             'title' => 'Heading 3',
-            //             'classes' => 'h3',
-            //             'selector' => '*'
-            //         ],
-            //         [
-            //             'title' => 'Heading 4',
-            //             'classes' => 'h4',
-            //             'selector' => '*'
-            //         ],
-            //     ]
-            // ],
-            [
-                'title' => 'Text',
-                'icon' => '',
-                'items' => [
-                    [
-                        'title' => 'Regular',
-                        'classes' => 'font-body',
-                        'selector' => '*'
-                    ],
-                    [
-                        'title' => 'Small',
-                        'classes' => 'font-bodySmall',
-                        'selector' => '*'
-                    ],
-                    [
-                        'title' => 'X-Small',
-                        'classes' => 'font-bodyXSmall',
-                        'selector' => '*'
-                    ],
-                ]
-            ],
+            // Font styles are now managed dynamically via Custom Font Styles in Typography options
+            // Only non-font style formats (like buttons) are defined here
             [
                 'title' => 'Buttons/Links',
                 'icon' => '',

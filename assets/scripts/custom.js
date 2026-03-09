@@ -39,3 +39,53 @@ ScrollTrigger.batch('.move-up', {
   start: '1vh bottom',
   end: 'top top',
 })
+
+// Navigation menu with active section detection
+window.navigationMenu = function () {
+  return {
+    scrolled: false,
+    activeSection: '',
+    init() {
+      this.scrolled = window.scrollY >= 200
+      this.updateActiveSection()
+      
+      // Store reference for child scopes
+      window.navigationMenuInstance = this
+      
+      window.addEventListener('scroll', () => {
+        this.scrolled = window.scrollY >= 100
+        this.updateActiveSection()
+      })
+    },
+    updateActiveSection() {
+      const sections = document.querySelectorAll('section[id], div[id], [id]')
+      const scrollPosition = window.scrollY + 150 // Offset for better detection
+      
+      let current = ''
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop
+        const sectionHeight = section.offsetHeight
+        const sectionId = section.getAttribute('id')
+        
+        if (sectionId && scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          current = sectionId
+        }
+      })
+      
+      // If no section found, check if we're at the top
+      if (!current && window.scrollY < 100) {
+        const firstSection = document.querySelector('section[id], div[id], [id]')
+        if (firstSection) {
+          current = firstSection.getAttribute('id') || ''
+        }
+      }
+      
+      this.activeSection = current
+    },
+    isActive(href) {
+      if (!href || !href.startsWith('#')) return false
+      const sectionId = href.substring(1)
+      return this.activeSection === sectionId
+    }
+  }
+}

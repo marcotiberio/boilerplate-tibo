@@ -1,0 +1,62 @@
+<flynt-component
+  load:on="visible" name="HeroMultimedia"
+  class="w-full lgplus:w-screen mx-auto relative overflow-hidden">
+  {% if image %}
+    <img 
+      data-ref="backgroundImageDesktop"
+      class="hidden lgplus:block figure-image w-full h-full max-h-[calc(100vh_-_66px)] object-cover rounded-image"
+      src="{{ image.src }}"
+      alt="{{ image.alt|e | default('') }}"
+      loading="eager"
+    />
+  {% endif %}
+  {% if imageMobile %}
+    <img 
+      data-ref="backgroundImageMobile"
+      class="block lgplus:hidden figure-image w-full h-full max-h-[calc(100vh_-_55px)] object-cover rounded-image"
+      src="{{ imageMobile.src }}"
+      alt="{{ imageMobile.alt|e | default('') }}"
+      loading="eager"
+    />
+  {% endif %}
+  {% if videoFile %}
+    <div class="hidden lgplus:block w-full h-full max-h-[calc(100vh_-_66px)]">
+      <video 
+        class="w-full h-full" 
+        autoplay 
+        muted 
+        loop 
+        playsinline
+        preload="auto"
+        data-video-url="{{ videoFile.url }}">
+        <source src="{{ videoFile.url }}" type="{{ videoFile.mime_type }}">
+        {{ __('Your browser does not support the video tag.', 'flynt') }}
+      </video>
+    </div>
+  {% endif %}
+  {% if videoFileMobile %}
+    <div class="block lgplus:hidden w-full h-full max-h-[calc(100vh_-_55px)]">
+      <video 
+        class="w-full h-full" 
+        autoplay 
+        muted 
+        loop 
+        playsinline
+        preload="auto"
+        data-video-url="{{ videoFileMobile.url }}">
+        <source src="{{ videoFileMobile.url }}" type="{{ videoFileMobile.mime_type }}">
+        {{ __('Your browser does not support the video tag.', 'flynt') }}
+      </video>
+    </div>
+  {% endif %}
+  <div class="absolute inset-0 z-10 pointer-events-none"></div>
+    <div class="boxed px-xs py-sm md:p-sm flex flex-col gap-sm">
+      <div class="wysiwyg">{{ titleHtml|e('wp_kses_post') }}</div>
+      {# {% if buttonLink %}
+        <a class="button button--fullRed" href="{{ buttonLink.url }}" target="{{ buttonLink.target }}" rel="noreferrer noopener">
+          {{ buttonLink.title }}
+        </a>
+      {% endif %} #}
+    </div>
+  </div>
+</flynt-component>

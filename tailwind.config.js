@@ -14,9 +14,8 @@ module.exports = {
     },
     borderRadius: {
       none: '0',
-      DEFAULT: '24px',
+      DEFAULT: '0',
       image: '24px',
-      container: '24px',
       button: '50px',
       full: '9999px'
     },
@@ -26,10 +25,10 @@ module.exports = {
       current: 'currentColor',
       transparent: 'transparent',
       // Project colors
-      blue: '#3d6bff',
-      blueDark: '#1545de',
-      orange: '#fd4e04',
-      beige: '#fef7ca',
+      grey: '#f1f1f1',
+      greyDark: '#d9d9d9',
+      green: '#00ff48',
+      yellow: '#fff000',
     },
     fontFamily: {
       sans: ['Inter', 'Arial', 'sans-serif']
@@ -68,21 +67,19 @@ module.exports = {
         4: '4px'
       },
       spacing: {
-        min: '5px',
-        xs: '15px',
-        sm: '30px',
-        md: '50px',
-        lg: '75px',
-        xl: '100px',
-        xxl: '120px',
-        max: '160px',
-        // Spacing variables from _variables.scss
-        xSmall: '10px',
-        small: '20px',
-        medium: '35px',
-        large: '50px',
-        xLarge: '75px',
-        xxLarge: '125px'
+        // Spacing values using CSS variables from spacings.php
+        min: 'var(--spacing-min, 6px)',
+        xs: 'var(--spacing-xs, 12px)',
+        sm: 'var(--spacing-sm, 24px)',
+        md: 'var(--spacing-md, 46px)',
+        lg: 'var(--spacing-lg, 60px)',
+        xl: 'var(--spacing-xl, 80px)',
+        xxl: 'var(--spacing-xxl, 100px)',
+        max: 'var(--spacing-max, 120px)',
+        // Spacing variables from _variables.scss (using CSS variables)
+        xSmall: 'var(--spacing-xs, 10px)',
+        small: 'var(--spacing-sm, 20px)',
+        large: 'var(--spacing-lg, 50px)'
       } 
     },
     safelist: [

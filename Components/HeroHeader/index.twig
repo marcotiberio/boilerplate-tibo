@@ -1,0 +1,38 @@
+<flynt-component
+  load:on="idle" 
+  name="HeroHeader" 
+  class="h-[100vw] lg:h-screen w-screen" 
+  style="
+    color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
+    background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};"
+  >
+  <div class="boxed boxed--large h-full w-full flex flex-col justify-between items-center gap-sm relative">
+    {% if blockTextTop %}
+      <div class="w-full font-h1 text-left z-10 rellax" data-rellax-speed="-3">{{ blockTextTop }}</div>
+    {% endif %}
+    {% if blockTextBottom %}
+      <div class="w-full font-h1 text-right z-10 rellax" data-rellax-speed="3">{{ blockTextBottom }}</div>
+    {% endif %}
+    {% if backgroundImage %}
+      <div class="rellaxw-full flex justify-center items-center my-md absolute inset-0 h-full z-0 pointer-events-none max-w-[80vw] mx-auto max-h-full">
+        <img 
+          class="object-cover lazyload aspect-video max-w-screen-lg h-auto rellax" data-rellax-speed="5"
+          src="{{ backgroundImage.src | resize(32) }}"
+          data-srcset="{{function('wp_get_attachment_image_srcset', backgroundImage.id)}}"
+          data-sizes="auto"
+          alt="{{ backgroundImage.alt|e }}">
+      </div>
+    {% endif %}
+    {# {% if contentHtml %}
+      <div class="wysiwyg text-center">{{ contentHtml|e('wp_kses_post') }}</div>
+    {% endif %} #}
+    {# {% if buttonLink %}
+      <a 
+        class="button button--fullBlue" 
+        href="{{ buttonLink.url }}" 
+        {% if buttonLink.target %} target="{{ buttonLink.target }}" rel="noreferrer noopener"{% endif %}>
+        {{ buttonLink.title }}
+      </a>
+    {% endif %}  #}
+  </div>
+</flynt-component>

@@ -25,8 +25,9 @@ html {
 }
 
 .mce-content-body {
-  @apply bg-beige text-blue;
+  @apply bg-grey text-black;
   @apply m-xs;
+  @apply outline-none;
 }
 
 // h1,

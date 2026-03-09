@@ -56,7 +56,7 @@ function getColorBackground()
         //     'type' => 'select',
         //     'choices' => [
         //         'bg-transparent' => 'Transparent',
-        //         'bg-orange' => 'Orange',
+        //         'bg-green' => 'Green',
         //     ],
         //     'default_value' => 'transparent',
         //     'required' => 0
@@ -73,7 +73,7 @@ function getColorText()
         ),
         'name' => 'colorText',
         'type' => 'color_picker',
-        'default_value' => '#0066FF',
+        'default_value' => '#000',
         'wrapper' => [
             'width' => 100,
         ],
@@ -145,6 +145,23 @@ function getFirstComponent()
         ],
         'return_format' => 'value',
         'default_value' => '0',
+        'wrapper' => [
+            'width' => 100,
+        ],
+    ];
+}
+
+function getComponentLabel()
+{
+    return [
+        'label' => __('Component Label', 'flynt'),
+        'instructions' => sprintf(  
+            'Set a label for the component. This will be shown in the component header and used for anchro scroll.'
+        ),
+        'name' => 'componentLabel',
+        'type' => 'text',
+        'required' => 0,
+        'default_value' => '',
         'wrapper' => [
             'width' => 100,
         ],
