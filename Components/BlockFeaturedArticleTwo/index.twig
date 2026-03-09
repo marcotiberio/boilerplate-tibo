@@ -4,7 +4,7 @@
   {% if posts|length %}
     <div class="boxed grid grid-cols-1 md:grid-cols-2 divide-y-2 md:divide-x-2 md:divide-y-0 divide-black">
       {% for post in posts %}
-        <a href="{{ post.link }}" class="block">
+        <a href="{{ post.link }}" class="no-underline">
           <div class="max-w-screen-tablet mx-auto bg-white px-0 py-sm lg:py-sm lg:px-md flex flex-col gap-sm justify-center items-start">
             <h2 class="font-h1">„{{ post.title }}"</h2>
             {% if post.postIntro %}
@@ -20,8 +20,10 @@
               {% if post.date %}
                 <div class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ post.date('d.m.Y') }}</div>
               {% endif %}
-              {% if post.postAuthor %}
-                <div class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ post.postAuthor }}</div>
+              {% if post.meta('postAuthor') %}
+                {% for author in Post(post.meta('postAuthor')) %}
+                  <span class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ author.title }}</span>
+                {% endfor %}
               {% endif %}
             </div>
           </div>

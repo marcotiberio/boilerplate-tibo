@@ -37,7 +37,12 @@ add_action('Flynt/afterRegisterComponents', function () {
             [
                 'label' => __('Author', 'flynt'),
                 'name' => 'postAuthor',
-                'type' => 'text',
+                'type' => 'relationship',
+                'post_type' => ['author'],
+                'filters' => ['search'],
+                'return_format' => 'object',
+                'min' => 0,
+                'max' => 0,
                 'wrapper' => [
                     'width' => 50,
                 ]
@@ -131,7 +136,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'button_label' => __('Add Component', 'flynt'),
                 'layouts' => [
                     Components\BlockAnchor\getACFLayout(),
-                    Components\BlockImageTest2\getACFLayout(),
+                    Components\BlockImage\getACFLayout(),
                     Components\BlockGalleryMedia\getACFLayout(),
                     Components\BlockSpacer\getACFLayout(),
                     Components\BlockWysiwyg\getACFLayout(),

@@ -4,7 +4,7 @@
       {# regular menu item #}
       {% if not item.children %}
         <li class="item {{- item.current ? ' current-menu-item' }}">
-          <a class="link font-h3 hover:underline hover:underline-offset-[5px]" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+          <a class="link font-h3 no-underline hover:underline-offset-[5px]" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
             {{ item.title }}
           </a>
         </li>
@@ -17,7 +17,7 @@
           </div>
           <ul class="submenu flex flex-row gap-xs">
             {% for subitem in item.children %}
-              <li class="item hover:underline hover:underline-offset-[5px] {{- subitem.current ? ' current-menu-item' }}">
+              <li class="item no-underline hover:underline-offset-[5px] {{- subitem.current ? ' current-menu-item' }}">
                 <a class="link !p-0 font-h3" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
               </li>
             {% endfor %}

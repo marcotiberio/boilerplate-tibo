@@ -39,6 +39,10 @@ body {
   flynt-component[name='BlockWysiwyg'] {
     .boxed {
       @apply px-0 !important;
+      
+      &--inner {
+        @apply p-0 !important;
+      }
     }
   }
 }

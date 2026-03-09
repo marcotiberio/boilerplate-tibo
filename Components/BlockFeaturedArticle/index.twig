@@ -32,8 +32,10 @@
             {% if post.date %}
               <div class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ post.date('d.m.Y') }}</div>
             {% endif %}
-            {% if post.postAuthor %}
-              <div class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ post.postAuthor }}</div>
+            {% if post.meta('postAuthor') %}
+              {% for author in Post(post.meta('postAuthor')) %}
+                <span class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ author.title }}</span>
+              {% endfor %}
             {% endif %}
           </div>
         </div>

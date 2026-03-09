@@ -67,7 +67,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockAnchor\getACFLayout(),
                     Components\BlockBannerCta\getACFLayout(),
                     Components\BlockDivider\getACFLayout(),
-                    Components\BlockImageTest2\getACFLayout(),
+                    Components\BlockImage\getACFLayout(),
                     Components\BlockImageText\getACFLayout(),
                     Components\BlockGalleryMedia\getACFLayout(),
                     Components\BlockWysiwyg\getACFLayout(),

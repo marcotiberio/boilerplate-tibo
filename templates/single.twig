@@ -10,7 +10,7 @@
           <div class="w-full md:sticky md:top-0 md:h-screen relative">
             {% set halftone_svg = post.meta('halftone_svg') %}
             {% if halftone_svg %}
-              <div class="halftone-image relative h-screen overflow-hidden [&_svg]:absolute [&_svg]:inset-0 [&_svg]:w-full [&_svg]:h-full">{{ halftone_svg|raw }}</div>
+              <div class="halftone-image relative h-[100vw] md:h-screen overflow-hidden [&_svg]:absolute [&_svg]:inset-0 [&_svg]:w-full [&_svg]:h-full">{{ halftone_svg|raw }}</div>
             {% elseif post.thumbnail %}
               <img class="w-full h-full igure-image lazyload object-cover"
                 src="{{ post.thumbnail.src }}"
@@ -19,9 +19,39 @@
                 style="opacity: 0; transition: opacity 0.5s ease-in-out;"
                 onload="this.style.opacity='1'">
             {% endif %}
-            <a href="javascript:history.back()" class="w-[calc(100%-48px)] flex items-center justify-center text-center p-min absolute bg-white top-sm left-sm z-10">
+            <a href="javascript:history.back()" class="no-underline w-[calc(100%-48px)] flex items-center justify-center text-center p-min absolute bg-white top-sm left-sm z-10">
+              {# TODO: Label #}
               <span class="before:content-['←'] before:mr-min">Zurück</span>
             </a>
+            {% if post.meta('postAuthor') %}
+              <div class="w-[calc(100%-48px)] md:w-fit absolute bottom-sm left-sm right-sm z-10 flex flex-row gap-xs">
+                {% for author in Post(post.meta('postAuthor')) %}
+                  <div class="flex flex-row items-center gap-xs bg-white p-sm">
+                    {% if author.thumbnail %}
+                      <img class="w-[70px] h-[70px] rounded-full object-cover"
+                        src="{{ author.thumbnail.src('thumbnail') }}"
+                        alt="{{ author.thumbnail.alt|e | default('') }}">
+                    {% endif %}
+                    <div class="flex flex-col gap-min">
+                      <div class="flex flex-row gap-min">
+                        <span class="font-bodySmall font-sans font-bold !mb-0">Ein Artikel von</span>
+                        <span class="font-bodySmall font-sans font-bold !mb-0">{{ author.title }}</span>
+                      </div>
+                      {% set socials = author.meta('authorSocials') %}
+                      {% if socials %}
+                        <div class="flex flex-row gap-xs">
+                          {% for social in socials %}
+                            <a href="{{ social.platform == 'email' ? 'mailto:' ~ social.url : social.url }}" target="_blank" rel="noopener" class="block w-[30px] h-[30px] bg-grei p-min [&_svg]:w-full [&_svg]:h-full [&_svg]:fill-current">
+                              {% include 'assets/icons/' ~ social.platform ~ '.svg' ignore missing %}
+                            </a>
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
           </div>
           {# Right #}
           <div class="w-full lg:w-full h-full flex flex-col justify-between p-sm">
@@ -42,8 +72,10 @@
                 {% if post.date %}
                   <div class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ post.date('d.m.Y') }}</div>
                 {% endif %}
-                {% if post.postAuthor %}
-                  <div class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ post.postAuthor }}</div>
+                {% if post.meta('postAuthor') %}
+                  {% for author in Post(post.meta('postAuthor')) %}
+                    <div class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ author.title }}</div>
+                  {% endfor %}
                 {% endif %}
               </div>
               <div class="flex flex-col">

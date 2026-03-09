@@ -1,13 +1,13 @@
 <?php
 
-namespace Flynt\Components\BlockImageTest2;
+namespace Flynt\Components\BlockImage;
 
 use Flynt\FieldVariables;
 
 function getACFLayout()
 {
     return [
-        'name' => 'BlockImageTest2',
+        'name' => 'BlockImage',
         'label' => __('Block: Image', 'flynt'),
         'sub_fields' => [
             [

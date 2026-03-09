@@ -23,7 +23,7 @@
       {# Articles Grid #}
       <div class="grid grid-cols-1 desktop:grid-cols-3 gap-sm">
         {% for article in articles %}
-          <a href="{{ article.post.link }}" class="group flex flex-col gap-xs" title="{{ article.post.title }}">
+          <a href="{{ article.post.link }}" class="group flex flex-col gap-xs no-underline" title="{{ article.post.title }}">
 
             {# Halftone or Featured Image #}
             <div class="relative w-full aspect-4/3 overflow-hidden">
@@ -52,8 +52,10 @@
                 {% if article.post.date %}
                   <span class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ article.post.date('d.m.Y') }}</span>
                 {% endif %}
-                {% if article.post.postAuthor %}
-                  <span class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ article.post.postAuthor }}</span>
+                {% if post.meta('postAuthor') %}
+                  {% for author in Post(post.meta('postAuthor')) %}
+                    <span class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ author.title }}</span>
+                  {% endfor %}
                 {% endif %}
               </div>
             </div>
