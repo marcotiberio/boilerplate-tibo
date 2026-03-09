@@ -29,6 +29,14 @@ body {
   }
 }
 
+// Scopes
+
+.single {
+  header {
+    @apply hidden;
+  }
+}
+
 // Cookie banner
 
 #cookie-notice {

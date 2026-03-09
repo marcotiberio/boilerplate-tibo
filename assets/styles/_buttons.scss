@@ -28,29 +28,31 @@ button {
     pointer-events: none;
   }
 
-  &--fullBlue {
-    @apply text-beige;
-    @apply bg-blue;
+  &--primary {
+    @apply text-white;
+    @apply bg-black;
     @apply border;
-    @apply border-blue;
+    @apply border-black;
 
     &:hover,
     &:focus {
-      @apply text-beige;
-      @apply bg-blueDark;
+      @apply text-white;
+      @apply bg-grey-700;
+      @apply border-grey-700;
     }
   }
 
-  &--fullOrange {
+  &--secondary {
     @apply text-white;
-    @apply bg-orange;
+    @apply bg-grey-600;
     @apply border;
-    @apply border-orange;
+    @apply border-grey-600;
 
     &:hover,
     &:focus {
-      @apply text-orange;
-      @apply bg-transparent;
+      @apply text-white;
+      @apply bg-grey-800;
+      @apply border-grey-800;
     }
   }
 
@@ -68,16 +70,13 @@ button {
   }
 
   &--link {
-    @apply text-white;
-    @apply hover:text-white !important;
-    @apply focus:text-white !important;
+    @apply text-black;
     @apply bg-transparent;
     @apply underline !important;
     @apply underline-offset-4 !important;
     @apply hover:no-underline !important;
     @apply focus:no-underline !important;
     @apply p-0;
-    @apply capitalize;
 
     &::after {
       content: none !important;
@@ -87,33 +86,31 @@ button {
 
 .wpcf7-submit {
   @include reset-link;
-  align-items: center;
   appearance: none;
-  background-color: transparent;
-  background-image: url('data:image/svg+xml,%3Csvg width="186" height="48" viewBox="0 0 186 48" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M0.5 0.5H177.453L185.5 9.19584V47.5H0.5V0.5Z" stroke="black"/%3E%3C/svg%3E');
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-bottom: 1px solid var(--black);
-  border-radius: 0;
-  color: var(--black);
-  cursor: pointer;
-  display: flex;
-  display: inline-block;
-  font: inherit;
-  font-family: 'Inter', Arial, sans-serif;
-  font-size: 1.125rem;
-  justify-content: center;
-  letter-spacing: 0;
+  font-family: inherit;
+  font-size: 1rem;
   line-height: 1;
-  min-width: 150px;
-  position: relative;
-  text-align: center;
-  text-transform: uppercase;
-  width: fit-content;
+  @apply py-xs;
+  @apply px-sm;
+  @apply text-white;
+  @apply bg-black;
+  @apply justify-center;
+  @apply border;
+  @apply border-black;
+  @apply rounded-button;
+  @apply whitespace-nowrap;
+  @apply w-full;
+  @apply flex;
+  @apply justify-center;
+  @apply items-center;
+  @apply cursor-pointer;
+  @apply relative;
+  @apply text-center;
+  @apply no-underline;
 
   &:hover,
   &:focus {
-    background-image: url('data:image/svg+xml,%3Csvg width="186" height="48" viewBox="0 0 186 48" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M0.5 0.5H177.453L185.5 9.19584V47.5H0.5V0.5Z" fill="black" stroke="black"/%3E%3C/svg%3E');
-    color: var(--white);
+    @apply bg-grey-700;
+    @apply border-grey-700;
   }
 }

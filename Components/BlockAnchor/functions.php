@@ -41,6 +41,9 @@ function getACFLayout()
 add_filter('acf/load_field/name=anchorLink', function ($field) {
     global $post;
     $post = Timber::get_Post($post);
+    if (!$post) {
+        return $field;
+    }
     $context = Timber::context();
     $context['post'] = $post;
     $context['href'] = $post->link;

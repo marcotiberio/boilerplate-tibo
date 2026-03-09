@@ -4,7 +4,7 @@
   {% if image %}
     <img 
       data-ref="backgroundImageDesktop"
-      class="hidden lgplus:block figure-image w-full h-full max-h-[calc(100vh_-_66px)] object-cover rounded-image"
+      class="hidden lgplus:block figure-image w-full h-full max-h-screen object-cover rounded-image"
       src="{{ image.src }}"
       alt="{{ image.alt|e | default('') }}"
       loading="eager"
@@ -13,7 +13,7 @@
   {% if imageMobile %}
     <img 
       data-ref="backgroundImageMobile"
-      class="block lgplus:hidden figure-image w-full h-full max-h-[calc(100vh_-_55px)] object-cover rounded-image"
+      class="block lgplus:hidden figure-image w-full h-full max-h-screen object-cover rounded-image"
       src="{{ imageMobile.src }}"
       alt="{{ imageMobile.alt|e | default('') }}"
       loading="eager"
