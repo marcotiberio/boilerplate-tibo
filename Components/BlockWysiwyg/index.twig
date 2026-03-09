@@ -3,7 +3,7 @@
   name="BlockWysiwyg"
   style="background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
   <div 
-    class="boxed w-full fade-in">
+    class="boxed {% if textPosition == 'center_full' %}!px-0{% endif %} w-full">
     <div 
       class="
         {% if options.stickyText %}stickyText{% endif %}

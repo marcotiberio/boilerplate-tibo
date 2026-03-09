@@ -17,22 +17,29 @@
         {% endif %}
       </div>
       <div class="w-full lg:w-full h-full flex flex-col justify-between p-sm">
-        <div class="flex flex-col gap-xs">
+        <div class="flex flex-col gap-sm">
           <div class="w-full">
-            <div class="wysiwyg">{{ post.postIntro }}</div>
-              {% set postCategories = post.terms('category') %}
-              <div class="">
-              {% if post.postServices %}
-                <div class="font-bodySmall !mb-0">{{ post.postServices }}</div>
-              {% else %}
-                  {% for term in postCategories %}
-                    <span class="font-bodySmall !mb-0">{{ term }}{% if not loop.last %},{% endif %}</span>
-                  {% endfor %}
-              {% endif %}
-            </div>
+            <h3 class="font-h3">{{ post.postCustomText }}</h3>
           </div>
           <div class="w-full">
             <h2 class="font-h1">„{{ post.title }}”</h2>
+          </div>
+          <div class="w-full flex flex-row gap-sm items-center justify-start mt-lg">
+            <div class="">
+              {% set postCategories = post.terms('category') %}
+              {% for term in postCategories %}
+                <span class="font-bodySmall !mb-0">{{ term }}{% if not loop.last %},{% endif %}</span>
+              {% endfor %}
+            </div>
+            {% if post.date %}
+              <div class="font-bodySmall !mb-0">{{ post.date('d.m.Y') }}</div>
+            {% endif %}
+            {% if post.postAuthor %}
+              <div class="font-bodySmall !mb-0">{{ post.postAuthor }}</div>
+            {% endif %}
+          </div>
+          <div class="text-center flex justify-center items-center border-t border-b p-sm">
+            {{ post.postIntro }}
           </div>
         </div>
       </div>

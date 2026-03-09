@@ -3,19 +3,14 @@
 // ── Register meta box on all public post types that support thumbnails ────────
 
 add_action('add_meta_boxes', function () {
-    $post_types = get_post_types(['public' => true], 'names');
-    foreach ($post_types as $pt) {
-        if (post_type_supports($pt, 'thumbnail')) {
-            add_meta_box(
-                'halftone_featured_image',
-                'Halftone Featured Image Generator',
-                'halftone_meta_box_render',
-                $pt,
-                'normal',
-                'high'
-            );
-        }
-    }
+    add_meta_box(
+        'halftone_featured_image',
+        'Halftone Featured Image Generator',
+        'halftone_meta_box_render',
+        'post',
+        'normal',
+        'high'
+    );
 });
 
 // ── Enqueue p5.js from CDN only on post edit screens ─────────────────────────

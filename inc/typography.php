@@ -663,7 +663,22 @@ add_action('acf/init', function () {
                     'required' => 1,
                     'placeholder' => 'customBlue',
                     'wrapper' => [
-                        'width' => 20,
+                        'width' => 15,
+                    ],
+                ],
+                [
+                    'label' => __('Font Family', 'flynt'),
+                    'instructions' => __('Select which font family to use for this button style.', 'flynt'),
+                    'name' => 'fontFamily',
+                    'type' => 'select',
+                    'choices' => [
+                        '' => 'Default (Button Font)',
+                        'heading' => 'Primary',
+                        'body' => 'Secondary',
+                    ],
+                    'default_value' => '',
+                    'wrapper' => [
+                        'width' => 10,
                     ],
                 ],
                 [
@@ -1201,12 +1216,22 @@ add_action('wp_head', function () {
             $hoverTextColor = !empty($style['hoverTextColor']) 
                 ? esc_attr($style['hoverTextColor']) 
                 : '';
-            $hoverBorderColor = !empty($style['hoverBorderColor']) 
-                ? esc_attr($style['hoverBorderColor']) 
+            $hoverBorderColor = !empty($style['hoverBorderColor'])
+                ? esc_attr($style['hoverBorderColor'])
                 : '';
-            
+
+            // Determine font family override
+            $selectedFontFamily = !empty($style['fontFamily'])
+                ? esc_attr($style['fontFamily'])
+                : '';
+
             // Base button styles
             $customButtonCss .= ".button.{$className} {\n";
+            if ($selectedFontFamily === 'heading') {
+                $customButtonCss .= "  font-family: var(--primary-font-family);\n";
+            } elseif ($selectedFontFamily === 'body') {
+                $customButtonCss .= "  font-family: var(--secondary-font-family);\n";
+            }
             if ($backgroundColor !== 'transparent') {
                 $customButtonCss .= "  background-color: {$backgroundColor};\n";
             } else {
@@ -1217,7 +1242,7 @@ add_action('wp_head', function () {
                 $customButtonCss .= "  border-color: {$borderColor};\n";
             }
             $customButtonCss .= "}\n\n";
-            
+
             // Hover styles
             if (!empty($hoverBackgroundColor) || !empty($hoverTextColor) || !empty($hoverBorderColor)) {
                 $customButtonCss .= ".button.{$className}:hover,\n";
@@ -1549,12 +1574,22 @@ add_filter('tiny_mce_before_init', function ($init) {
             $hoverTextColor = !empty($style['hoverTextColor']) 
                 ? esc_attr($style['hoverTextColor']) 
                 : '';
-            $hoverBorderColor = !empty($style['hoverBorderColor']) 
-                ? esc_attr($style['hoverBorderColor']) 
+            $hoverBorderColor = !empty($style['hoverBorderColor'])
+                ? esc_attr($style['hoverBorderColor'])
                 : '';
-            
+
+            // Determine font family override
+            $selectedFontFamily = !empty($style['fontFamily'])
+                ? esc_attr($style['fontFamily'])
+                : '';
+
             // Base button styles
             $buttonStyles .= ".button.{$className} {";
+            if ($selectedFontFamily === 'heading') {
+                $buttonStyles .= "font-family: '{$headingFont}', {$headingFontFallback};";
+            } elseif ($selectedFontFamily === 'body') {
+                $buttonStyles .= "font-family: '{$bodyFont}', {$bodyFontFallback};";
+            }
             if ($backgroundColor !== 'transparent') {
                 $buttonStyles .= "background-color: {$backgroundColor};";
             } else {
