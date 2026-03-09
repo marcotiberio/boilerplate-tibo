@@ -103,7 +103,7 @@ textarea {
 input:where([type='submit']) {
   @include reset-link;
   appearance: none;
-  font-family: 'FKGroteskNeue', Arial, sans-serif;
+  font-family: inherit;
   font-size: 1rem;
   line-height: 1;
   border-radius: 0 !important;

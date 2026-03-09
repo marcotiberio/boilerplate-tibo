@@ -3,7 +3,7 @@
         'name' => 'flyntwp/flynt',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '98097941f270f4c02779d3e0940d18c1d3084559',
+        'reference' => '2f74eb3cfd642fbfde73ea8a95acbbd5cf6edeeb',
         'type' => 'wordpress-theme',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'flyntwp/flynt' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '98097941f270f4c02779d3e0940d18c1d3084559',
+            'reference' => '2f74eb3cfd642fbfde73ea8a95acbbd5cf6edeeb',
             'type' => 'wordpress-theme',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -81,8 +81,13 @@
           >
             <a href="{{ post.link }}" title="{{ post.title }}" aria-label="Go to post">
               <div class="w-full flex flex-col lg:grid grid-cols-12 gap-xs items-start">
-                {% if post.thumbnail %}
-                  <img 
+                {% set halftone_svg = post.meta('halftone_svg') %}
+                {% if halftone_svg %}
+                  <div class="halftone-image relative grid col-start-1 col-end-4 aspect-8/5 overflow-hidden [&_svg]:absolute [&_svg]:inset-0 [&_svg]:w-full [&_svg]:h-full">
+                    {{ halftone_svg|raw }}
+                  </div>
+                {% elseif post.thumbnail %}
+                  <img
                     class="lazyload transition grid duration-200 ease-in-out col-start-1 col-end-4 aspect-8/5 object-cover"
                     src="{{ post.thumbnail.src }}"
                     alt="{{ post.thumbnail.alt|e | default('') }}"

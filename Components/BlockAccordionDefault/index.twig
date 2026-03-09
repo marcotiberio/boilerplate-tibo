@@ -7,7 +7,7 @@
     {% endif %}
     <div class="list-none flex flex-col flex-wrap gap-xs">
       {% for panel in accordionPanels %}
-        <div x-data="{ open: false }" class="bg-orange text-white rounded-[12px]">
+        <div x-data="{ open: false }" class="bg-grey-100 text-black rounded-[12px]">
           <button @click="open = !open" class="items-center cursor-pointer flex font-extrabold justify-between m-0 p-[20px] relative w-full z-[2]" type="button" aria-expanded="false" aria-controls="content-{{ loop.index }}">
             <div class="">{{ panel.panelTitle|e }}</div>
             <div class="min-w-[40px] flex items-center justify-end">

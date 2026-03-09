@@ -2,21 +2,20 @@
     /* Colors (Primitives) */
     --white: #fff;
     --black: #000000;
-  
+
     /* Colors (Tokens) */
     --brandColor: var(--black);
-    --accentColor: var(--black);
+    --accentColor: var(--grey-500);
 
     --textColor: var(--black);
     --linkColor: var(--black);
-  
-    --bgColor: var(--black);
-  
-    --hoverColor: var(--black);
-    --activeColor: var(--black);
-  
-    --errorColor: var(--black);
-    --successColor: var(--black);
-    --dangerColor: var(--black);
+
+    --bgColor: var(--white);
+
+    --hoverColor: var(--grey-700);
+    --activeColor: var(--grey-800);
+
+    --errorColor: #dc2626;
+    --successColor: #16a34a;
+    --dangerColor: #dc2626;
   }
-  
