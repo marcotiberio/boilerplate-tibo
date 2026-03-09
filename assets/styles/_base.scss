@@ -1,5 +1,18 @@
 html {
   @apply bg-white text-black;
+
+  &.dark {
+    filter: invert(1) hue-rotate(180deg);
+
+    img:not([src$=".svg"]),
+    video,
+    picture,
+    canvas,
+    iframe,
+    .halftone-image {
+      filter: invert(1) hue-rotate(180deg);
+    }
+  }
   font-size: var(--base-font-size-mobile, 16px);
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;

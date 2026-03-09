@@ -1,9 +1,9 @@
 <flynt-component 
   load:on="visible" 
-  name="BlockWysiwyg"
-  style="background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
+  name="BlockWysiwyg">
   <div 
-    class="boxed {% if textPosition == 'center_full' %}!px-0{% endif %} w-full">
+    class="boxed w-full"
+    style="background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
     <div 
       class="
         {% if options.stickyText %}stickyText{% endif %}

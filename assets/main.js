@@ -21,9 +21,27 @@ window.customElements.define(
   FlyntComponent
 )
 
+Alpine.data('themeSwitcher', () => ({
+  isDark: localStorage.getItem('theme') === 'dark',
+
+  init () {
+    this.applyTheme()
+  },
+
+  setTheme (theme) {
+    this.isDark = theme === 'dark'
+    localStorage.setItem('theme', theme)
+    this.applyTheme()
+  },
+
+  applyTheme () {
+    document.documentElement.classList.toggle('dark', this.isDark)
+  }
+}))
+
 window.Alpine = Alpine
-Alpine.start()
 Alpine.plugin(intersect)
+Alpine.start()
 
 gsap.registerPlugin(ScrollTrigger)
 
