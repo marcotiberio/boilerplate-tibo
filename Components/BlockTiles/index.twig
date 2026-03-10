@@ -1,0 +1,22 @@
+<flynt-component
+  load:on="visible"
+  name="BlockTiles">
+  <div class="boxed flex flex-col gap-sm">
+    {% if blockTitle %}
+      <h2 class="font-h1Serif !mb-0">{{ blockTitle|e }}</h2>
+    {% endif %}
+    <div class="tiles flex flex-wrap gap-sm
+      {% if options.columns == '2' %}tiles--2{% endif %}
+      {% if options.columns == '3' %}tiles--3{% endif %}
+      {% if options.columns == '4' %}tiles--4{% endif %}
+    ">
+      {% for tile in tiles %}
+        <div
+          class="tile wysiwyg p-sm"
+          style="background-color: {% if tile.colorBackground %}{{ tile.colorBackground }}{% else %}transparent{% endif %};">
+          {{ tile.contentHtml|e('wp_kses_post') }}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</flynt-component>

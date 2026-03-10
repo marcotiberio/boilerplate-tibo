@@ -84,6 +84,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockSliderLogos\getACFLayout(),
                     Components\BlockSpacer\getACFLayout(),
                     Components\ListingArticles\getACFLayout(),
+                    Components\BlockTiles\getACFLayout(),
                     Components\SliderBox\getACFLayout(),
                 ],
             ],
