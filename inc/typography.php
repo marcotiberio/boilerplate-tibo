@@ -9,13 +9,6 @@ add_action('acf/init', function () {
     Options::addGlobal('Typography', [
         // Tab: Font Setup
         [
-            'label' => __('Font Loading', 'flynt'),
-            'name' => 'fontLoadingAccordion',
-            'type' => 'accordion',
-            'open' => 1,
-            'multi_expand' => 1,
-        ],
-        [
             'label' => __('Primary Font Source', 'flynt'),
             'instructions' => __('Choose how to load the primary font: Google Fonts or upload custom font files.', 'flynt'),
             'name' => 'headingFontSource',
@@ -106,7 +99,7 @@ add_action('acf/init', function () {
                     'required' => 1,
                     'placeholder' => 'Regular',
                     'wrapper' => [
-                        'width' => 20,
+                        'width' => 25,
                     ],
                 ],
                 [
@@ -118,7 +111,7 @@ add_action('acf/init', function () {
                     'mime_types' => 'woff2,woff,ttf,otf',
                     'required' => 1,
                     'wrapper' => [
-                        'width' => 30,
+                        'width' => 25,
                     ],
                 ],
                 [
@@ -138,7 +131,7 @@ add_action('acf/init', function () {
                     ],
                     'default_value' => '400',
                     'wrapper' => [
-                        'width' => 15,
+                        'width' => 25,
                     ],
                 ],
                 [
@@ -156,13 +149,12 @@ add_action('acf/init', function () {
                 ],
                 [
                     'label' => __('Preload', 'flynt'),
-                    'instructions' => __('Preload this variant for faster initial render.', 'flynt'),
                     'name' => 'preload',
                     'type' => 'true_false',
                     'default_value' => 0,
                     'ui' => 1,
                     'wrapper' => [
-                        'width' => 20,
+                        'width' => 10,
                     ],
                 ],
             ],
@@ -192,7 +184,7 @@ add_action('acf/init', function () {
                     'required' => 1,
                     'placeholder' => 'Regular',
                     'wrapper' => [
-                        'width' => 20,
+                        'width' => 25,
                     ],
                 ],
                 [
@@ -204,7 +196,7 @@ add_action('acf/init', function () {
                     'mime_types' => 'woff2,woff,ttf,otf',
                     'required' => 1,
                     'wrapper' => [
-                        'width' => 30,
+                        'width' => 25,
                     ],
                 ],
                 [
@@ -224,7 +216,7 @@ add_action('acf/init', function () {
                     ],
                     'default_value' => '400',
                     'wrapper' => [
-                        'width' => 15,
+                        'width' => 25,
                     ],
                 ],
                 [
@@ -242,23 +234,15 @@ add_action('acf/init', function () {
                 ],
                 [
                     'label' => __('Preload', 'flynt'),
-                    'instructions' => __('Preload this variant for faster initial render.', 'flynt'),
                     'name' => 'preload',
                     'type' => 'true_false',
                     'default_value' => 0,
                     'ui' => 1,
                     'wrapper' => [
-                        'width' => 20,
+                        'width' => 10,
                     ],
                 ],
             ],
-        ],
-        [
-            'label' => __('Font Configuration', 'flynt'),
-            'name' => 'fontConfigAccordion',
-            'type' => 'accordion',
-            'open' => 0,
-            'multi_expand' => 1,
         ],
         [
             'label' => __('Primary Font Family', 'flynt'),
@@ -337,13 +321,6 @@ add_action('acf/init', function () {
             'type' => 'tab',
             'placement' => 'top',
             'endpoint' => 0,
-        ],
-        [
-            'label' => __('Custom Typography', 'flynt'),
-            'name' => 'customTypographyAccordion',
-            'type' => 'accordion',
-            'open' => 1,
-            'multi_expand' => 1,
         ],
         [
             'label' => __('Custom Font Styles', 'flynt'),
@@ -473,22 +450,10 @@ add_action('acf/init', function () {
                 ],
             ],
         ],
-        // Tab: Button Styles
-        [
-            'label' => __('Button Styles', 'flynt'),
-            'name' => 'buttonStylesTab',
-            'type' => 'tab',
-            'placement' => 'top',
-            'endpoint' => 0,
-        ],
-        [
-            'label' => __('Default Button Typography', 'flynt'),
-            'instructions' => __('Configure the default font settings for all buttons. These settings apply to all buttons unless overridden by custom button styles.', 'flynt'),
-            'name' => 'buttonTypographyAccordion',
-            'type' => 'accordion',
-            'open' => 1,
-            'multi_expand' => 1,
-        ],
+    ], 'Typography');
+
+    // Button Styles — separate options group
+    Options::addGlobal('Buttons', [
         [
             'label' => __('Button Font Style', 'flynt'),
             'instructions' => __('Configure font settings for all buttons.', 'flynt'),
@@ -623,14 +588,6 @@ add_action('acf/init', function () {
             ],
         ],
         [
-            'label' => __('Custom Button Style Variations', 'flynt'),
-            'instructions' => __('Create custom button style variations with different colors. These styles will be available in the WYSIWYG editor dropdown.', 'flynt'),
-            'name' => 'customButtonStylesAccordion',
-            'type' => 'accordion',
-            'open' => 0,
-            'multi_expand' => 1,
-        ],
-        [
             'label' => __('Custom Button Styles', 'flynt'),
             'instructions' => __('Define custom button styles that will be available as classes in the WYSIWYG editor.', 'flynt'),
             'name' => 'customButtonStyles',
@@ -661,7 +618,6 @@ add_action('acf/init', function () {
                 ],
                 [
                     'label' => __('Font Family', 'flynt'),
-                    'instructions' => __('Select which font family to use for this button style.', 'flynt'),
                     'name' => 'fontFamily',
                     'type' => 'select',
                     'choices' => [
@@ -675,8 +631,28 @@ add_action('acf/init', function () {
                     ],
                 ],
                 [
-                    'label' => __('Background Color', 'flynt'),
-                    'instructions' => __('Button background color', 'flynt'),
+                    'label' => __('Underline', 'flynt'),
+                    'name' => 'textUnderline',
+                    'type' => 'true_false',
+                    'default_value' => 0,
+                    'ui' => 1,
+                    'wrapper' => [
+                        'width' => 5,
+                    ],
+                ],
+                [
+                    'label' => __('Arrow →', 'flynt'),
+                    'name' => 'showArrow',
+                    'type' => 'true_false',
+                    'default_value' => 0,
+                    'ui' => 1,
+                    'wrapper' => [
+                        'width' => 5,
+                    ],
+                ],
+                [
+                    'label' => __('BG Color', 'flynt'),
+                    'instructions' => __('Leave empty for transparent.', 'flynt'),
                     'name' => 'backgroundColor',
                     'type' => 'color_picker',
                     'default_value' => '#3d6bff',
@@ -688,7 +664,6 @@ add_action('acf/init', function () {
                 ],
                 [
                     'label' => __('Text Color', 'flynt'),
-                    'instructions' => __('Button text color', 'flynt'),
                     'name' => 'textColor',
                     'type' => 'color_picker',
                     'default_value' => '#ffffff',
@@ -700,7 +675,7 @@ add_action('acf/init', function () {
                 ],
                 [
                     'label' => __('Border Color', 'flynt'),
-                    'instructions' => __('Button border color. Leave empty for no border.', 'flynt'),
+                    'instructions' => __('Leave empty for no border.', 'flynt'),
                     'name' => 'borderColor',
                     'type' => 'color_picker',
                     'enable_opacity' => 0,
@@ -710,8 +685,7 @@ add_action('acf/init', function () {
                     ],
                 ],
                 [
-                    'label' => __('Hover Background Color', 'flynt'),
-                    'instructions' => __('Button background color on hover', 'flynt'),
+                    'label' => __('Hover BG', 'flynt'),
                     'name' => 'hoverBackgroundColor',
                     'type' => 'color_picker',
                     'enable_opacity' => 0,
@@ -721,8 +695,7 @@ add_action('acf/init', function () {
                     ],
                 ],
                 [
-                    'label' => __('Hover Text Color', 'flynt'),
-                    'instructions' => __('Button text color on hover', 'flynt'),
+                    'label' => __('Hover Text', 'flynt'),
                     'name' => 'hoverTextColor',
                     'type' => 'color_picker',
                     'enable_opacity' => 0,
@@ -732,8 +705,7 @@ add_action('acf/init', function () {
                     ],
                 ],
                 [
-                    'label' => __('Hover Border Color', 'flynt'),
-                    'instructions' => __('Button border color on hover. Leave empty to use hover background color.', 'flynt'),
+                    'label' => __('Hover Border', 'flynt'),
                     'name' => 'hoverBorderColor',
                     'type' => 'color_picker',
                     'enable_opacity' => 0,
@@ -755,7 +727,7 @@ add_action('acf/init', function () {
                 ],
             ],
         ],
-    ], 'Typography');
+    ], 'Buttons');
 });
 
 // Dynamically populate fontVariant select with uploaded font variants
@@ -1108,41 +1080,45 @@ add_action('wp_head', function () {
     $bodyFontWeight = !empty($typographyOptions['bodyFontWeight']) 
         ? esc_attr($typographyOptions['bodyFontWeight']) 
         : '500';
-    // Get button font style settings from group field
-    $buttonFontStyle = !empty($typographyOptions['buttonFontStyle']) 
-        ? $typographyOptions['buttonFontStyle'] 
+    // Get button options from separate Buttons scope (with fallback to Typography for backward compat)
+    $buttonOptions = Options::getGlobal('Buttons');
+    if (empty($buttonOptions)) {
+        $buttonOptions = $typographyOptions;
+    }
+    $buttonFontStyle = !empty($buttonOptions['buttonFontStyle'])
+        ? $buttonOptions['buttonFontStyle']
         : [];
-    $buttonFontFamily = !empty($buttonFontStyle['fontFamily']) 
-        ? esc_attr($buttonFontStyle['fontFamily']) 
+    $buttonFontFamily = !empty($buttonFontStyle['fontFamily'])
+        ? esc_attr($buttonFontStyle['fontFamily'])
         : $bodyFont;
-    $buttonFontSize = !empty($buttonFontStyle['fontSize']) 
-        ? floatval($buttonFontStyle['fontSize']) 
+    $buttonFontSize = !empty($buttonFontStyle['fontSize'])
+        ? floatval($buttonFontStyle['fontSize'])
         : 1;
-    $buttonLineHeight = !empty($buttonFontStyle['lineHeight']) 
-        ? floatval($buttonFontStyle['lineHeight']) 
+    $buttonLineHeight = !empty($buttonFontStyle['lineHeight'])
+        ? floatval($buttonFontStyle['lineHeight'])
         : 1.2;
-    $buttonFontWeight = !empty($buttonFontStyle['fontWeight']) 
-        ? esc_attr($buttonFontStyle['fontWeight']) 
+    $buttonFontWeight = !empty($buttonFontStyle['fontWeight'])
+        ? esc_attr($buttonFontStyle['fontWeight'])
         : '500';
-    $buttonTextTransform = !empty($buttonFontStyle['textTransform']) 
-        ? esc_attr($buttonFontStyle['textTransform']) 
+    $buttonTextTransform = !empty($buttonFontStyle['textTransform'])
+        ? esc_attr($buttonFontStyle['textTransform'])
         : 'none';
-    
+
     // Get default button colors
-    $buttonColors = !empty($typographyOptions['buttonColors']) 
-        ? $typographyOptions['buttonColors'] 
+    $buttonColors = !empty($buttonOptions['buttonColors'])
+        ? $buttonOptions['buttonColors']
         : [];
-    $buttonBackgroundColor = !empty($buttonColors['backgroundColor']) 
-        ? esc_attr($buttonColors['backgroundColor']) 
+    $buttonBackgroundColor = !empty($buttonColors['backgroundColor'])
+        ? esc_attr($buttonColors['backgroundColor'])
         : '';
-    $buttonTextColor = !empty($buttonColors['textColor']) 
-        ? esc_attr($buttonColors['textColor']) 
+    $buttonTextColor = !empty($buttonColors['textColor'])
+        ? esc_attr($buttonColors['textColor'])
         : '';
-    $buttonHoverBackgroundColor = !empty($buttonColors['hoverBackgroundColor']) 
-        ? esc_attr($buttonColors['hoverBackgroundColor']) 
+    $buttonHoverBackgroundColor = !empty($buttonColors['hoverBackgroundColor'])
+        ? esc_attr($buttonColors['hoverBackgroundColor'])
         : '';
-    $buttonHoverTextColor = !empty($buttonColors['hoverTextColor']) 
-        ? esc_attr($buttonColors['hoverTextColor']) 
+    $buttonHoverTextColor = !empty($buttonColors['hoverTextColor'])
+        ? esc_attr($buttonColors['hoverTextColor'])
         : '';
     
     // Build CSS variables
@@ -1277,8 +1253,8 @@ add_action('wp_head', function () {
     }
     
     // Generate CSS for custom button styles
-    $customButtonStyles = !empty($typographyOptions['customButtonStyles']) 
-        ? $typographyOptions['customButtonStyles'] 
+    $customButtonStyles = !empty($buttonOptions['customButtonStyles'])
+        ? $buttonOptions['customButtonStyles']
         : [];
     
     if (!empty($customButtonStyles)) {
@@ -1319,6 +1295,8 @@ add_action('wp_head', function () {
                 ? esc_attr($style['fontFamily'])
                 : '';
 
+            $textUnderline = !empty($style['textUnderline']);
+
             // Base button styles
             $customButtonCss .= ".button.{$className} {\n";
             if ($selectedFontFamily === 'heading') {
@@ -1326,16 +1304,23 @@ add_action('wp_head', function () {
             } elseif ($selectedFontFamily === 'body') {
                 $customButtonCss .= "  font-family: var(--secondary-font-family);\n";
             }
-            if ($backgroundColor !== 'transparent') {
-                $customButtonCss .= "  background-color: {$backgroundColor};\n";
-            } else {
-                $customButtonCss .= "  background-color: transparent;\n";
+            if ($textUnderline) {
+                $customButtonCss .= "  text-decoration: none; border-bottom: 1px solid currentColor;\n";
             }
+            $customButtonCss .= "  background-color: {$backgroundColor};\n";
             $customButtonCss .= "  color: {$textColor};\n";
             if (!empty($borderColor)) {
                 $customButtonCss .= "  border-color: {$borderColor};\n";
             }
             $customButtonCss .= "}\n\n";
+
+            // Arrow ::after
+            if (!empty($style['showArrow'])) {
+                $customButtonCss .= ".button.{$className}::after {\n";
+                $customButtonCss .= "  content: '\\2192';\n";
+                $customButtonCss .= "  margin-left: 0.5em;\n";
+                $customButtonCss .= "}\n\n";
+            }
 
             // Hover styles
             if (!empty($hoverBackgroundColor) || !empty($hoverTextColor) || !empty($hoverBorderColor)) {
@@ -1427,24 +1412,28 @@ add_filter('tiny_mce_before_init', function ($init) {
             ? esc_attr($typographyOptions['primaryFontFallback']) 
             : 'Arial, sans-serif');
     
-    // Get button font style settings
-    $buttonFontStyle = !empty($typographyOptions['buttonFontStyle']) 
-        ? $typographyOptions['buttonFontStyle'] 
+    // Get button font style settings from Buttons scope (with fallback)
+    $buttonOptions = \Flynt\Utils\Options::getGlobal('Buttons');
+    if (empty($buttonOptions)) {
+        $buttonOptions = $typographyOptions;
+    }
+    $buttonFontStyle = !empty($buttonOptions['buttonFontStyle'])
+        ? $buttonOptions['buttonFontStyle']
         : [];
-    $buttonFontFamily = !empty($buttonFontStyle['fontFamily']) 
-        ? esc_attr($buttonFontStyle['fontFamily']) 
+    $buttonFontFamily = !empty($buttonFontStyle['fontFamily'])
+        ? esc_attr($buttonFontStyle['fontFamily'])
         : $bodyFont;
-    $buttonFontSize = !empty($buttonFontStyle['fontSize']) 
-        ? floatval($buttonFontStyle['fontSize']) 
+    $buttonFontSize = !empty($buttonFontStyle['fontSize'])
+        ? floatval($buttonFontStyle['fontSize'])
         : 1;
-    $buttonLineHeight = !empty($buttonFontStyle['lineHeight']) 
-        ? floatval($buttonFontStyle['lineHeight']) 
+    $buttonLineHeight = !empty($buttonFontStyle['lineHeight'])
+        ? floatval($buttonFontStyle['lineHeight'])
         : 1.2;
-    $buttonFontWeight = !empty($buttonFontStyle['fontWeight']) 
-        ? esc_attr($buttonFontStyle['fontWeight']) 
+    $buttonFontWeight = !empty($buttonFontStyle['fontWeight'])
+        ? esc_attr($buttonFontStyle['fontWeight'])
         : '500';
-    $buttonTextTransform = !empty($buttonFontStyle['textTransform']) 
-        ? esc_attr($buttonFontStyle['textTransform']) 
+    $buttonTextTransform = !empty($buttonFontStyle['textTransform'])
+        ? esc_attr($buttonFontStyle['textTransform'])
         : 'none';
     
     // Add Google Fonts to TinyMCE content_css if using Google Fonts
@@ -1663,8 +1652,8 @@ add_filter('tiny_mce_before_init', function ($init) {
     }
     
     // Add custom button styles CSS to TinyMCE
-    $customButtonStyles = !empty($typographyOptions['customButtonStyles']) 
-        ? $typographyOptions['customButtonStyles'] 
+    $customButtonStyles = !empty($buttonOptions['customButtonStyles'])
+        ? $buttonOptions['customButtonStyles'] 
         : [];
     
     if (!empty($customButtonStyles)) {
@@ -1702,6 +1691,8 @@ add_filter('tiny_mce_before_init', function ($init) {
                 ? esc_attr($style['fontFamily'])
                 : '';
 
+            $textUnderline = !empty($style['textUnderline']);
+
             // Base button styles
             $buttonStyles .= ".button.{$className} {";
             if ($selectedFontFamily === 'heading') {
@@ -1709,17 +1700,24 @@ add_filter('tiny_mce_before_init', function ($init) {
             } elseif ($selectedFontFamily === 'body') {
                 $buttonStyles .= "font-family: '{$bodyFont}', {$bodyFontFallback};";
             }
-            if ($backgroundColor !== 'transparent') {
-                $buttonStyles .= "background-color: {$backgroundColor};";
-            } else {
-                $buttonStyles .= "background-color: transparent;";
+            if ($textUnderline) {
+                $buttonStyles .= "text-decoration: underline;";
             }
+            $buttonStyles .= "background-color: {$backgroundColor};";
             $buttonStyles .= "color: {$textColor};";
             if (!empty($borderColor)) {
                 $buttonStyles .= "border-color: {$borderColor};";
             }
             $buttonStyles .= "}";
-            
+
+            // Arrow ::after
+            if (!empty($style['showArrow'])) {
+                $buttonStyles .= ".button.{$className}::after {";
+                $buttonStyles .= "content: '\\2192';";
+                $buttonStyles .= "margin-left: 0.5em;";
+                $buttonStyles .= "}";
+            }
+
             // Hover styles
             if (!empty($hoverBackgroundColor) || !empty($hoverTextColor) || !empty($hoverBorderColor)) {
                 $buttonStyles .= ".button.{$className}:hover,";
@@ -1753,11 +1751,15 @@ add_filter('tiny_mce_before_init', function ($init) {
 // Add custom font and button styles to TinyMCE style formats
 add_filter('tiny_mce_before_init', function ($init) {
     $typographyOptions = \Flynt\Utils\Options::getGlobal('Typography');
-    $customFontStyles = !empty($typographyOptions['customFontStyles']) 
-        ? $typographyOptions['customFontStyles'] 
+    $buttonOptions = \Flynt\Utils\Options::getGlobal('Buttons');
+    if (empty($buttonOptions)) {
+        $buttonOptions = $typographyOptions;
+    }
+    $customFontStyles = !empty($typographyOptions['customFontStyles'])
+        ? $typographyOptions['customFontStyles']
         : [];
-    $customButtonStyles = !empty($typographyOptions['customButtonStyles']) 
-        ? $typographyOptions['customButtonStyles'] 
+    $customButtonStyles = !empty($buttonOptions['customButtonStyles'])
+        ? $buttonOptions['customButtonStyles']
         : [];
     
     // Get existing style formats or initialize empty array

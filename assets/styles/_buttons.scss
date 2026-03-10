@@ -10,9 +10,8 @@ button {
   line-height: var(--button-line-height, 1.2);
   font-weight: var(--button-font-weight, 500);
   @apply w-fit;
-  @apply px-sm;
-  @apply py-xs;
-  @apply rounded-button;
+  @apply px-xs;
+  @apply py-[7px];
   @apply flex;
   @apply justify-center;
   @apply items-center;
@@ -28,60 +27,58 @@ button {
     pointer-events: none;
   }
 
-  &--primary {
-    @apply text-white;
-    @apply bg-black;
-    @apply border;
-    @apply border-black;
-
-    &:hover,
-    &:focus {
-      @apply text-white;
-      @apply bg-grey-700;
-      @apply border-grey-700;
-    }
-  }
-
-  &--secondary {
-    @apply text-white;
-    @apply bg-grey-600;
-    @apply border;
-    @apply border-grey-600;
-
-    &:hover,
-    &:focus {
-      @apply text-white;
-      @apply bg-grey-800;
-      @apply border-grey-800;
-    }
-  }
-
-  &--outline {
-    @apply text-black;
-    @apply bg-transparent;
-    @apply border;
-    @apply border-black;
-
-    &:hover,
-    &:focus {
-      color: var(--white) !important;
-      @apply bg-black;
-    }
-  }
-
   &--link {
-    @apply text-black;
-    @apply bg-transparent;
-    @apply underline !important;
     @apply underline-offset-4 !important;
     @apply hover:no-underline !important;
     @apply focus:no-underline !important;
-    @apply p-0;
+    @apply p-0 !important;
 
     &::after {
-      content: none !important;
+      content: '→';
+      @apply translate-x-2
     }
   }
+
+  // &--primary {
+  //   @apply text-white;
+  //   @apply bg-black;
+  //   @apply border;
+  //   @apply border-black;
+
+  //   &:hover,
+  //   &:focus {
+  //     @apply text-white;
+  //     @apply bg-grey-700;
+  //     @apply border-grey-700;
+  //   }
+  // }
+
+  // &--secondary {
+  //   @apply text-white;
+  //   @apply bg-grey-600;
+  //   @apply border;
+  //   @apply border-grey-600;
+
+  //   &:hover,
+  //   &:focus {
+  //     @apply text-white;
+  //     @apply bg-grey-800;
+  //     @apply border-grey-800;
+  //   }
+  // }
+
+  // &--outline {
+  //   @apply text-black;
+  //   @apply bg-transparent;
+  //   @apply border;
+  //   @apply border-black;
+
+  //   &:hover,
+  //   &:focus {
+  //     color: var(--white) !important;
+  //     @apply bg-black;
+  //   }
+  // }
 }
 
 .wpcf7-submit {

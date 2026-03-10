@@ -122,43 +122,43 @@ function getConfig()
             //         ],
             //     ]
             // ],
-            [
-                'title' => 'Text',
-                'icon' => '',
-                'items' => [
-                    [
-                        'title' => 'Regular',
-                        'classes' => 'font-body',
-                        'selector' => '*'
-                    ],
-                    [
-                        'title' => 'Small',
-                        'classes' => 'font-bodySmall',
-                        'selector' => '*'
-                    ],
-                    [
-                        'title' => 'X-Small',
-                        'classes' => 'font-bodyXSmall',
-                        'selector' => '*'
-                    ],
-                ]
-            ],
-            [
-                'title' => 'Buttons/Links',
-                'icon' => '',
-                'items' => [
-                    [
-                        'title' => 'Button Full Blue',
-                        'classes' => 'button button--fullBlue',
-                        'selector' => 'a'
-                    ],
-                    [
-                        'title' => 'Button Full Orange',
-                        'classes' => 'button button--fullOrange',
-                        'selector' => 'a'
-                    ]
-                ]
-            ],
+            // [
+            //     'title' => 'Text',
+            //     'icon' => '',
+            //     'items' => [
+            //         [
+            //             'title' => 'Regular',
+            //             'classes' => 'font-body',
+            //             'selector' => '*'
+            //         ],
+            //         [
+            //             'title' => 'Small',
+            //             'classes' => 'font-bodySmall',
+            //             'selector' => '*'
+            //         ],
+            //         [
+            //             'title' => 'X-Small',
+            //             'classes' => 'font-bodyXSmall',
+            //             'selector' => '*'
+            //         ],
+            //     ]
+            // ],
+            // [
+            //     'title' => 'Buttons/Links',
+            //     'icon' => '',
+            //     'items' => [
+            //         [
+            //             'title' => 'Button Full Blue',
+            //             'classes' => 'button button--fullBlue',
+            //             'selector' => 'a'
+            //         ],
+            //         [
+            //             'title' => 'Button Full Orange',
+            //             'classes' => 'button button--fullOrange',
+            //             'selector' => 'a'
+            //         ]
+            //     ]
+            // ],
         ],
         'toolbars' => [
             'default' => [
