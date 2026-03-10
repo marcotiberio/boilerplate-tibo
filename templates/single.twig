@@ -19,7 +19,11 @@
                 style="opacity: 0; transition: opacity 0.5s ease-in-out;"
                 onload="this.style.opacity='1'">
             {% endif %}
-            <a href="javascript:history.back()" class="no-underline w-[calc(100%-48px)] flex items-center justify-center text-center p-min absolute bg-white top-sm left-sm z-10">
+            <a
+              x-data
+              x-bind:href="document.referrer && new URL(document.referrer).hostname === window.location.hostname ? 'javascript:history.back()' : '{{ site.url }}'"
+              class="no-underline w-[calc(100%-48px)] flex items-center justify-center text-center p-min absolute bg-white top-sm left-sm z-10"
+            >
               {# TODO: Label #}
               <span class="before:content-['←'] before:mr-min">Zurück</span>
             </a>
@@ -34,6 +38,7 @@
                     {% endif %}
                     <div class="flex flex-col gap-min">
                       <div class="flex flex-row gap-min">
+                        {# TODO: Label #}
                         <span class="font-bodySmall font-sans font-bold !mb-0">Ein Artikel von</span>
                         <span class="font-bodySmall font-sans font-bold !mb-0">{{ author.title }}</span>
                       </div>
