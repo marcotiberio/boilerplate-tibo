@@ -2,6 +2,7 @@
 
 use ACFComposer\ACFComposer;
 use Flynt\Components;
+use function Flynt\FieldVariables\getColorBackground;
 
 add_action('Flynt/afterRegisterComponents', function () {
     ACFComposer::registerFieldGroup([
@@ -47,6 +48,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     'width' => 50,
                 ]
             ],
+            array_merge(getColorBackground(), ['default_value' => '#f1f1f1']),
             [
                 'label' => __('Media', 'flynt'),
                 'name' => 'mediaTab',

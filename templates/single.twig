@@ -57,7 +57,7 @@
           <div class="w-full lg:w-full h-full flex flex-col justify-between p-sm">
             <div class="flex flex-col gap-sm">
               <div class="w-full">
-                <h3 class="font-h3 italic">{{ post.postCustomText }}</h3>
+                <h3 class="font-h3">{{ post.postCustomText }}</h3>
               </div>
               <div class="w-full">
                 <h2 class="font-h1">„{{ post.title }}”</h2>
@@ -66,15 +66,15 @@
                 <div class="">
                   {% set postCategories = post.terms('category') %}
                   {% for term in postCategories %}
-                    <span class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ term }}{% if not loop.last %},{% endif %}</span>
+                    <span class="button !mb-0" style="background-color: {{ post.meta('colorBackground')|default('#f1f1f1') }}">{{ term }}{% if not loop.last %},{% endif %}</span>
                   {% endfor %}
                 </div>
                 {% if post.date %}
-                  <div class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ post.date('d.m.Y') }}</div>
+                  <div class="button button--grey pointer-events-none !mb-0">{{ post.date('d.m.Y') }}</div>
                 {% endif %}
                 {% if post.meta('postAuthor') %}
                   {% for author in Post(post.meta('postAuthor')) %}
-                    <div class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ author.title }}</div>
+                    <div class="button button--grey pointer-events-none !mb-0">{{ author.title }}</div>
                   {% endfor %}
                 {% endif %}
               </div>
