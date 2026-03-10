@@ -2,25 +2,20 @@
   <div class="boxed !min-h-fit flex flex-row justify-between items-end">
     <div class="w-full flex flex-col gap-sm sm:gap-lg border-t border-black">
       {# Row 1 #}
-      <div class="w-full flex flex-col lg:flex-row gap-sm sm:gap-lg">
-        {# Col 1 #}
+      <div class="w-full mt-md">
         {% if logoFooter %}
-          <img class="lazyload h-full w-[180px]"
+          <img class="lazyload h-auto w-full"
             src="{{ logoFooter.src }}"
             data-srcset="{{function('wp_get_attachment_image_srcset', logoFooter.id)}}"
             data-sizes="auto">
         {% endif %}
-        {# Col 2 #}
-        <div class="w-full flex flex-col justify-start wysiwyg">
-          {{ copyrightsHtml|e('wp_kses_post') }}
-        </div>
       </div>
       {# Row 2 #}
-      <div class="flex flex-row gap-y-sm md:gap-x-xs md:gap-y-0 align-start justify-start md:justify-between">
+      {# <div class="flex flex-row gap-y-sm md:gap-x-xs md:gap-y-0 align-start justify-start md:justify-between">
         {% for column in columns %}
           <div class="column flex flex-col w-1/2 sm:w-1/3 md:w-1/4">
             <div class="wysiwyg">{{ column.contentHtml|e('wp_kses_post') }}</div>
-            {# {% if column.enableNewsletter %}
+            {% if column.enableNewsletter %}
               <div id="mc_embed_shell">
                 <div id="mc_embed_signup">
                   <form action="https://studio.us2.list-manage.com/subscribe/post?u=53b361306408427d9ffbc9980&amp;id=cf376efd5e&amp;f_id=00bce7e3f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_self" novalidate="">
@@ -45,17 +40,32 @@
                   </form>
                 </div>
               </div>
-            {% endif %} #}
+            {% endif %}
           </div>
         {% endfor %}
-      </div>
-      {# {% if menu %}
-      <div class="w-full lg:w-2/5 flex flex-col gap-sm sm:gap-lg justify-between mb-[1.2rem]">
+      </div> #}
+      {% if menu %}
+      <div class="w-full">
         <nav class="navigation w-full flex justify-start lg:justify-center items-end" aria-label="{{ labels.ariaLabel }}">
           {% include 'Partials/_menu.twig' with { 'items': menu.get_items, 'level': '0', 'maxLevel': maxLevel } only %}
         </nav>
       </div>
-      {% endif %} #}
+      {% endif %}
+      <div class="w-full grid grid-cols-1 md:grid-cols-2 justify-start items-center gap-sm">
+        <div x-data="themeSwitcher" class="flex items-center gap-xs">
+          <button
+            @click="setTheme('light')"
+            class="font-body bg-grei text-black py-min px-xs transition-opacity duration-300"
+          >{{ labels.themeLight }}</button>
+          <button
+            @click="setTheme('dark')"
+            class="font-body bg-black text-white py-min px-xs transition-opacity duration-300"
+          >{{ labels.themeDark }}</button>
+        </div>
+        <div class="flex flex-row justify-end items-center">
+          <div class="wysiwyg">{{ copyrightsHtml|e('wp_kses_post') }}</div>
+        </div>
+      </div>
       {# Col 5 #}
       {# <div class="w-full lg:w-1/5 flex flex-col gap-sm sm:gap-lg justify-start sm:justify-end items-start sm:items-end mb-[1.2rem]">
         {% if newsletterLink %}

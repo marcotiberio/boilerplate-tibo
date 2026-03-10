@@ -14,7 +14,7 @@ function getACFLayout()
                 'label' => __('Divider', 'flynt'),
                 'name' => '',
                 'type' => 'message',
-                'message' => 'Add this component to display an horizontal black border',
+                'message' => 'Add this component to display an horizontal black line as a divider between sections.',
                 'new_lines' => 'wpautop',
                 'esc_html' => 1,
                 'wrapper' =>  [

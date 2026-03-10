@@ -7,9 +7,9 @@ module.exports = {
   ],
   theme: {
     borderWidth: {
-      DEFAULT: '1px',
+      DEFAULT: '2px',
       0: '0',
-      2: '2px',
+      1: '1px',
       3: '3px'
     },
     borderRadius: {
@@ -25,6 +25,7 @@ module.exports = {
       current: 'currentColor',
       transparent: 'transparent',
       // Project colors
+      grei: '#f1f1f1',
       grey: {
         100: '#f5f5f5',
         200: '#e5e5e5',

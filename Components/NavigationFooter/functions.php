@@ -124,13 +124,33 @@ Options::addTranslatable('NavigationFooter', [
         'type' => 'group',
         'sub_fields' => [
             [
+                'label' => __('Light Theme', 'flynt'),
+                'name' => 'themeLight',
+                'type' => 'text',
+                'default_value' => __('Dunkel', 'flynt'),
+                'required' => 1,
+                'wrapper' => [
+                    'width' => '50',
+                ],
+            ],
+            [
+                'label' => __('Dark Theme', 'flynt'),
+                'name' => 'themeDark',
+                'type' => 'text',
+                'default_value' => __('Hell', 'flynt'),
+                'required' => 1,
+                'wrapper' => [
+                    'width' => '50',
+                ],
+            ],
+            [
                 'label' => __('Aria Label', 'flynt'),
                 'name' => 'ariaLabel',
                 'type' => 'text',
                 'default_value' => __('Footer', 'flynt'),
                 'required' => 1,
                 'wrapper' => [
-                    'width' => '50',
+                    'width' => '100',
                 ],
             ],
         ],

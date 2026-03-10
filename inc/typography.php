@@ -82,11 +82,12 @@ add_action('acf/init', function () {
             ],
         ],
         [
-            'label' => __('Primary Font Uploads', 'flynt'),
-            'name' => 'headingFontUploadsAccordion',
-            'type' => 'accordion',
-            'open' => 0,
-            'multi_expand' => 1,
+            'label' => __('Primary Font Variants', 'flynt'),
+            'instructions' => __('Upload font files for each weight/style variant of the primary font (woff2 format recommended).', 'flynt'),
+            'name' => 'headingFontVariants',
+            'type' => 'repeater',
+            'layout' => 'table',
+            'button_label' => __('Add Font Variant', 'flynt'),
             'conditional_logic' => [
                 [
                     [
@@ -96,94 +97,83 @@ add_action('acf/init', function () {
                     ],
                 ],
             ],
-        ],
-        [
-            'label' => __('Primary Font - Medium (500)', 'flynt'),
-            'instructions' => __('Upload the medium weight font file for primary font (woff2 format recommended).', 'flynt'),
-            'name' => 'headingFontMedium',
-            'type' => 'file',
-            'return_format' => 'url',
-            'library' => 'all',
-            'mime_types' => 'woff2,woff,ttf,otf',
-            'conditional_logic' => [
+            'sub_fields' => [
                 [
-                    [
-                        'fieldPath' => 'headingFontSource',
-                        'operator' => '==',
-                        'value' => 'custom',
+                    'label' => __('Label', 'flynt'),
+                    'instructions' => __('Name for this variant (e.g., "Regular", "Bold Italic").', 'flynt'),
+                    'name' => 'variantLabel',
+                    'type' => 'text',
+                    'required' => 1,
+                    'placeholder' => 'Regular',
+                    'wrapper' => [
+                        'width' => 20,
                     ],
                 ],
-            ],
-            'wrapper' => [
-                'width' => 33,
-            ],
-        ],
-        [
-            'label' => __('Primary Font - Bold (700)', 'flynt'),
-            'instructions' => __('Upload the bold weight font file for primary font (woff2 format recommended).', 'flynt'),
-            'name' => 'headingFontBold',
-            'type' => 'file',
-            'return_format' => 'url',
-            'library' => 'all',
-            'mime_types' => 'woff2,woff,ttf,otf',
-            'conditional_logic' => [
                 [
-                    [
-                        'fieldPath' => 'headingFontSource',
-                        'operator' => '==',
-                        'value' => 'custom',
+                    'label' => __('Font File', 'flynt'),
+                    'name' => 'fontFile',
+                    'type' => 'file',
+                    'return_format' => 'url',
+                    'library' => 'all',
+                    'mime_types' => 'woff2,woff,ttf,otf',
+                    'required' => 1,
+                    'wrapper' => [
+                        'width' => 30,
                     ],
                 ],
-            ],
-            'wrapper' => [
-                'width' => 33,
-            ],
-        ],
-        [
-            'label' => __('Primary Font - Heavy (900)', 'flynt'),
-            'instructions' => __('Upload the heavy weight font file for primary font (woff2 format recommended).', 'flynt'),
-            'name' => 'headingFontHeavy',
-            'type' => 'file',
-            'return_format' => 'url',
-            'library' => 'all',
-            'mime_types' => 'woff2,woff,ttf,otf',
-            'conditional_logic' => [
                 [
-                    [
-                        'fieldPath' => 'headingFontSource',
-                        'operator' => '==',
-                        'value' => 'custom',
+                    'label' => __('Weight', 'flynt'),
+                    'name' => 'fontWeight',
+                    'type' => 'select',
+                    'choices' => [
+                        '100' => '100 (Thin)',
+                        '200' => '200 (Extra Light)',
+                        '300' => '300 (Light)',
+                        '400' => '400 (Regular)',
+                        '500' => '500 (Medium)',
+                        '600' => '600 (Semibold)',
+                        '700' => '700 (Bold)',
+                        '800' => '800 (Extrabold)',
+                        '900' => '900 (Heavy)',
+                    ],
+                    'default_value' => '400',
+                    'wrapper' => [
+                        'width' => 15,
                     ],
                 ],
-            ],
-            'wrapper' => [
-                'width' => 33,
-            ],
-        ],
-        [
-            'label' => __('Secondary Font Uploads', 'flynt'),
-            'name' => 'bodyFontUploadsAccordion',
-            'type' => 'accordion',
-            'open' => 0,
-            'multi_expand' => 1,
-            'conditional_logic' => [
                 [
-                    [
-                        'fieldPath' => 'bodyFontSource',
-                        'operator' => '==',
-                        'value' => 'custom',
+                    'label' => __('Style', 'flynt'),
+                    'name' => 'fontStyle',
+                    'type' => 'select',
+                    'choices' => [
+                        'normal' => 'Normal',
+                        'italic' => 'Italic',
+                    ],
+                    'default_value' => 'normal',
+                    'wrapper' => [
+                        'width' => 15,
+                    ],
+                ],
+                [
+                    'label' => __('Preload', 'flynt'),
+                    'instructions' => __('Preload this variant for faster initial render.', 'flynt'),
+                    'name' => 'preload',
+                    'type' => 'true_false',
+                    'default_value' => 0,
+                    'ui' => 1,
+                    'wrapper' => [
+                        'width' => 20,
                     ],
                 ],
             ],
         ],
         [
-            'label' => __('Secondary Font - Medium (500)', 'flynt'),
-            'instructions' => __('Upload the medium weight font file for secondary font (woff2 format recommended).', 'flynt'),
-            'name' => 'bodyFontMedium',
-            'type' => 'file',
-            'return_format' => 'url',
-            'library' => 'all',
-            'mime_types' => 'woff2,woff,ttf,otf',
+            'label' => __('Secondary Font Variants', 'flynt'),
+            'instructions' => __('Upload font files for each weight/style variant of the secondary font (woff2 format recommended).', 'flynt'),
+            'name' => 'bodyFontVariants',
+            'type' => 'repeater',
+            'layout' => 'table',
+            'button_label' => __('Add Font Variant', 'flynt'),
             'conditional_logic' => [
                 [
                     [
@@ -193,50 +183,74 @@ add_action('acf/init', function () {
                     ],
                 ],
             ],
-            'wrapper' => [
-                'width' => 33,
-            ],
-        ],
-        [
-            'label' => __('Secondary Font - Bold (700)', 'flynt'),
-            'instructions' => __('Upload the bold weight font file for secondary font (woff2 format recommended).', 'flynt'),
-            'name' => 'bodyFontBold',
-            'type' => 'file',
-            'return_format' => 'url',
-            'library' => 'all',
-            'mime_types' => 'woff2,woff,ttf,otf',
-            'conditional_logic' => [
+            'sub_fields' => [
                 [
-                    [
-                        'fieldPath' => 'bodyFontSource',
-                        'operator' => '==',
-                        'value' => 'custom',
+                    'label' => __('Label', 'flynt'),
+                    'instructions' => __('Name for this variant (e.g., "Regular", "Bold Italic").', 'flynt'),
+                    'name' => 'variantLabel',
+                    'type' => 'text',
+                    'required' => 1,
+                    'placeholder' => 'Regular',
+                    'wrapper' => [
+                        'width' => 20,
                     ],
                 ],
-            ],
-            'wrapper' => [
-                'width' => 33,
-            ],
-        ],
-        [
-            'label' => __('Secondary Font - Heavy (900)', 'flynt'),
-            'instructions' => __('Upload the heavy weight font file for secondary font (woff2 format recommended).', 'flynt'),
-            'name' => 'bodyFontHeavy',
-            'type' => 'file',
-            'return_format' => 'url',
-            'library' => 'all',
-            'mime_types' => 'woff2,woff,ttf,otf',
-            'conditional_logic' => [
                 [
-                    [
-                        'fieldPath' => 'bodyFontSource',
-                        'operator' => '==',
-                        'value' => 'custom',
+                    'label' => __('Font File', 'flynt'),
+                    'name' => 'fontFile',
+                    'type' => 'file',
+                    'return_format' => 'url',
+                    'library' => 'all',
+                    'mime_types' => 'woff2,woff,ttf,otf',
+                    'required' => 1,
+                    'wrapper' => [
+                        'width' => 30,
                     ],
                 ],
-            ],
-            'wrapper' => [
-                'width' => 33,
+                [
+                    'label' => __('Weight', 'flynt'),
+                    'name' => 'fontWeight',
+                    'type' => 'select',
+                    'choices' => [
+                        '100' => '100 (Thin)',
+                        '200' => '200 (Extra Light)',
+                        '300' => '300 (Light)',
+                        '400' => '400 (Regular)',
+                        '500' => '500 (Medium)',
+                        '600' => '600 (Semibold)',
+                        '700' => '700 (Bold)',
+                        '800' => '800 (Extrabold)',
+                        '900' => '900 (Heavy)',
+                    ],
+                    'default_value' => '400',
+                    'wrapper' => [
+                        'width' => 15,
+                    ],
+                ],
+                [
+                    'label' => __('Style', 'flynt'),
+                    'name' => 'fontStyle',
+                    'type' => 'select',
+                    'choices' => [
+                        'normal' => 'Normal',
+                        'italic' => 'Italic',
+                    ],
+                    'default_value' => 'normal',
+                    'wrapper' => [
+                        'width' => 15,
+                    ],
+                ],
+                [
+                    'label' => __('Preload', 'flynt'),
+                    'instructions' => __('Preload this variant for faster initial render.', 'flynt'),
+                    'name' => 'preload',
+                    'type' => 'true_false',
+                    'default_value' => 0,
+                    'ui' => 1,
+                    'wrapper' => [
+                        'width' => 20,
+                    ],
+                ],
             ],
         ],
         [
@@ -380,15 +394,26 @@ add_action('acf/init', function () {
                     ],
                 ],
                 [
-                    'label' => __('Font Family', 'flynt'),
-                    'instructions' => __('Select which font family to use for this style.', 'flynt'),
-                    'name' => 'fontFamily',
+                    'label' => __('Font Variant', 'flynt'),
+                    'instructions' => __('Select an uploaded font variant. Choices are populated from Primary/Secondary Font Variants above.', 'flynt'),
+                    'name' => 'fontVariant',
                     'type' => 'select',
-                    'choices' => [
-                        'heading' => 'Primary',
-                        'body' => 'Secondary',
+                    'choices' => [],
+                    'allow_null' => 1,
+                    'placeholder' => __('Select a font variant', 'flynt'),
+                    'wrapper' => [
+                        'width' => 20,
                     ],
-                    'default_value' => 'heading',
+                ],
+                [
+                    'label' => __('Font Size (Desktop)', 'flynt'),
+                    'instructions' => __('Font size in rem for desktop devices.', 'flynt'),
+                    'name' => 'sizeDesktop',
+                    'type' => 'number',
+                    'default_value' => 1.25,
+                    'min' => 0.5,
+                    'max' => 12,
+                    'step' => 0.125,
                     'wrapper' => [
                         'width' => 10,
                     ],
@@ -403,20 +428,7 @@ add_action('acf/init', function () {
                     'max' => 8,
                     'step' => 0.125,
                     'wrapper' => [
-                        'width' => 5,
-                    ],
-                ],
-                [
-                    'label' => __('Font Size (Desktop)', 'flynt'),
-                    'instructions' => __('Font size in rem for desktop devices.', 'flynt'),
-                    'name' => 'sizeDesktop',
-                    'type' => 'number',
-                    'default_value' => 1.25,
-                    'min' => 0.5,
-                    'max' => 12,
-                    'step' => 0.125,
-                    'wrapper' => [
-                        'width' => 5,
+                        'width' => 10,
                     ],
                 ],
                 [
@@ -429,26 +441,7 @@ add_action('acf/init', function () {
                     'max' => 2,
                     'step' => 0.1,
                     'wrapper' => [
-                        'width' => 5,
-                    ],
-                ],
-                [
-                    'label' => __('Font Weight', 'flynt'),
-                    'instructions' => __('Font weight (e.g., 400, 500, 700).', 'flynt'),
-                    'name' => 'fontWeight',
-                    'type' => 'select',
-                    'choices' => [
-                        '300' => '300 (Light)',
-                        '400' => '400 (Regular)',
-                        '500' => '500 (Medium)',
-                        '600' => '600 (Semibold)',
-                        '700' => '700 (Bold)',
-                        '800' => '800 (Extrabold)',
-                        '900' => '900 (Heavy)',
-                    ],
-                    'default_value' => '400',
-                    'wrapper' => [
-                        'width' => 15,
+                        'width' => 10,
                     ],
                 ],
                 [
@@ -663,7 +656,22 @@ add_action('acf/init', function () {
                     'required' => 1,
                     'placeholder' => 'customBlue',
                     'wrapper' => [
-                        'width' => 20,
+                        'width' => 15,
+                    ],
+                ],
+                [
+                    'label' => __('Font Family', 'flynt'),
+                    'instructions' => __('Select which font family to use for this button style.', 'flynt'),
+                    'name' => 'fontFamily',
+                    'type' => 'select',
+                    'choices' => [
+                        '' => 'Default (Button Font)',
+                        'heading' => 'Primary',
+                        'body' => 'Secondary',
+                    ],
+                    'default_value' => '',
+                    'wrapper' => [
+                        'width' => 10,
                     ],
                 ],
                 [
@@ -750,6 +758,76 @@ add_action('acf/init', function () {
     ], 'Typography');
 });
 
+// Dynamically populate fontVariant select with uploaded font variants
+add_filter('acf/load_field/name=fontVariant', function ($field) {
+    // Prevent infinite recursion: loading this field triggers Options::getGlobal
+    // which loads all Typography fields, including this one again
+    static $loading = false;
+    if ($loading) {
+        return $field;
+    }
+    $loading = true;
+
+    $typographyOptions = Options::getGlobal('Typography');
+    $choices = [];
+
+    // Get font family names
+    $headingFontName = !empty($typographyOptions['headingFontFamily'])
+        ? $typographyOptions['headingFontFamily']
+        : (!empty($typographyOptions['primaryFontFamily'])
+            ? $typographyOptions['primaryFontFamily']
+            : 'Primary');
+    $bodyFontName = !empty($typographyOptions['bodyFontFamily'])
+        ? $typographyOptions['bodyFontFamily']
+        : 'Secondary';
+
+    // Add heading font variants
+    $headingVariants = !empty($typographyOptions['headingFontVariants'])
+        ? $typographyOptions['headingFontVariants']
+        : [];
+    foreach ($headingVariants as $variant) {
+        if (empty($variant['fontFile'])) {
+            continue;
+        }
+        $weight = $variant['fontWeight'] ?? '400';
+        $style = $variant['fontStyle'] ?? 'normal';
+        $label = !empty($variant['variantLabel'])
+            ? $variant['variantLabel']
+            : "{$weight} {$style}";
+        $value = "heading|{$weight}|{$style}";
+        $choices[$value] = "{$headingFontName} — {$label}";
+    }
+
+    // Add body font variants
+    $bodyVariants = !empty($typographyOptions['bodyFontVariants'])
+        ? $typographyOptions['bodyFontVariants']
+        : [];
+    foreach ($bodyVariants as $variant) {
+        if (empty($variant['fontFile'])) {
+            continue;
+        }
+        $weight = $variant['fontWeight'] ?? '400';
+        $style = $variant['fontStyle'] ?? 'normal';
+        $label = !empty($variant['variantLabel'])
+            ? $variant['variantLabel']
+            : "{$weight} {$style}";
+        $value = "body|{$weight}|{$style}";
+        $choices[$value] = "{$bodyFontName} — {$label}";
+    }
+
+    // If no custom variants, offer Google Fonts fallback choices
+    if (empty($choices)) {
+        $choices['heading|400|normal'] = "{$headingFontName} — Regular";
+        $choices['heading|700|normal'] = "{$headingFontName} — Bold";
+        $choices['body|400|normal'] = "{$bodyFontName} — Regular";
+        $choices['body|700|normal'] = "{$bodyFontName} — Bold";
+    }
+
+    $field['choices'] = $choices;
+    $loading = false;
+    return $field;
+});
+
 // Output dynamic CSS variables based on ACF options
 add_action('wp_head', function () {
     $typographyOptions = Options::getGlobal('Typography');
@@ -817,54 +895,66 @@ add_action('wp_head', function () {
         }
     } elseif ($headingFontSource === 'custom') {
         // Load heading custom fonts via @font-face
-        $headingFont = !empty($typographyOptions['headingFontFamily']) 
-            ? esc_attr($typographyOptions['headingFontFamily']) 
-            : (!empty($typographyOptions['primaryFontFamily']) 
-                ? esc_attr($typographyOptions['primaryFontFamily']) 
+        $headingFont = !empty($typographyOptions['headingFontFamily'])
+            ? esc_attr($typographyOptions['headingFontFamily'])
+            : (!empty($typographyOptions['primaryFontFamily'])
+                ? esc_attr($typographyOptions['primaryFontFamily'])
                 : 'Retail');
-        
-        // Get heading font URLs
-        $headingFontMedium = $getFontUrl($typographyOptions['headingFontMedium'] ?? '');
-        $headingFontBold = $getFontUrl($typographyOptions['headingFontBold'] ?? '');
-        $headingFontHeavy = $getFontUrl($typographyOptions['headingFontHeavy'] ?? '');
-        
-        // Generate @font-face declarations for heading fonts
-        if (!empty($headingFontMedium) || !empty($headingFontBold) || !empty($headingFontHeavy)) {
+
+        // Build variants array from repeater or fall back to legacy fields
+        $headingVariants = !empty($typographyOptions['headingFontVariants'])
+            ? $typographyOptions['headingFontVariants']
+            : [];
+
+        // Backward compatibility: if repeater is empty, read legacy fields
+        if (empty($headingVariants)) {
+            $legacyWeights = [
+                ['field' => 'headingFontMedium', 'weight' => '500'],
+                ['field' => 'headingFontBold', 'weight' => '700'],
+                ['field' => 'headingFontHeavy', 'weight' => '900'],
+            ];
+            foreach ($legacyWeights as $lw) {
+                $url = $getFontUrl($typographyOptions[$lw['field']] ?? '');
+                if (!empty($url)) {
+                    $headingVariants[] = [
+                        'fontFile' => $url,
+                        'fontWeight' => $lw['weight'],
+                        'fontStyle' => 'normal',
+                        'preload' => false,
+                    ];
+                }
+            }
+        }
+
+        if (!empty($headingVariants)) {
+            // Output preload hints first
+            foreach ($headingVariants as $variant) {
+                $fileUrl = $getFontUrl($variant['fontFile'] ?? '');
+                if (!empty($fileUrl) && !empty($variant['preload'])) {
+                    $format = $getFontFormat($fileUrl);
+                    echo "<link rel='preload' href='{$fileUrl}' as='font' type='font/{$format}' crossorigin>\n";
+                }
+            }
+
+            // Output @font-face declarations
             $headingFontFaceCss = "<style id='flynt-heading-custom-fonts'>\n";
-            
-            if (!empty($headingFontMedium)) {
-                $format = $getFontFormat($headingFontMedium);
+            foreach ($headingVariants as $variant) {
+                $fileUrl = $getFontUrl($variant['fontFile'] ?? '');
+                if (empty($fileUrl)) {
+                    continue;
+                }
+                $format = $getFontFormat($fileUrl);
+                $weight = esc_attr($variant['fontWeight'] ?? '400');
+                $style = esc_attr($variant['fontStyle'] ?? 'normal');
+
                 $headingFontFaceCss .= "@font-face {\n";
                 $headingFontFaceCss .= "  font-display: swap;\n";
                 $headingFontFaceCss .= "  font-family: '{$headingFont}';\n";
-                $headingFontFaceCss .= "  font-style: normal;\n";
-                $headingFontFaceCss .= "  font-weight: 500;\n";
-                $headingFontFaceCss .= "  src: url('{$headingFontMedium}') format('{$format}');\n";
+                $headingFontFaceCss .= "  font-style: {$style};\n";
+                $headingFontFaceCss .= "  font-weight: {$weight};\n";
+                $headingFontFaceCss .= "  src: url('{$fileUrl}') format('{$format}');\n";
                 $headingFontFaceCss .= "}\n\n";
             }
-            
-            if (!empty($headingFontBold)) {
-                $format = $getFontFormat($headingFontBold);
-                $headingFontFaceCss .= "@font-face {\n";
-                $headingFontFaceCss .= "  font-display: swap;\n";
-                $headingFontFaceCss .= "  font-family: '{$headingFont}';\n";
-                $headingFontFaceCss .= "  font-style: normal;\n";
-                $headingFontFaceCss .= "  font-weight: 700;\n";
-                $headingFontFaceCss .= "  src: url('{$headingFontBold}') format('{$format}');\n";
-                $headingFontFaceCss .= "}\n\n";
-            }
-            
-            if (!empty($headingFontHeavy)) {
-                $format = $getFontFormat($headingFontHeavy);
-                $headingFontFaceCss .= "@font-face {\n";
-                $headingFontFaceCss .= "  font-display: swap;\n";
-                $headingFontFaceCss .= "  font-family: '{$headingFont}';\n";
-                $headingFontFaceCss .= "  font-style: normal;\n";
-                $headingFontFaceCss .= "  font-weight: 900;\n";
-                $headingFontFaceCss .= "  src: url('{$headingFontHeavy}') format('{$format}');\n";
-                $headingFontFaceCss .= "}\n";
-            }
-            
             $headingFontFaceCss .= "</style>\n";
             echo $headingFontFaceCss;
         }
@@ -903,54 +993,66 @@ add_action('wp_head', function () {
         }
     } elseif ($bodyFontSource === 'custom') {
         // Load body custom fonts via @font-face
-        $bodyFont = !empty($typographyOptions['bodyFontFamily']) 
-            ? esc_attr($typographyOptions['bodyFontFamily']) 
-            : (!empty($typographyOptions['primaryFontFamily']) 
-                ? esc_attr($typographyOptions['primaryFontFamily']) 
+        $bodyFont = !empty($typographyOptions['bodyFontFamily'])
+            ? esc_attr($typographyOptions['bodyFontFamily'])
+            : (!empty($typographyOptions['primaryFontFamily'])
+                ? esc_attr($typographyOptions['primaryFontFamily'])
                 : 'Retail');
-        
-        // Get body font URLs
-        $bodyFontMedium = $getFontUrl($typographyOptions['bodyFontMedium'] ?? '');
-        $bodyFontBold = $getFontUrl($typographyOptions['bodyFontBold'] ?? '');
-        $bodyFontHeavy = $getFontUrl($typographyOptions['bodyFontHeavy'] ?? '');
-        
-        // Generate @font-face declarations for body fonts
-        if (!empty($bodyFontMedium) || !empty($bodyFontBold) || !empty($bodyFontHeavy)) {
+
+        // Build variants array from repeater or fall back to legacy fields
+        $bodyVariants = !empty($typographyOptions['bodyFontVariants'])
+            ? $typographyOptions['bodyFontVariants']
+            : [];
+
+        // Backward compatibility: if repeater is empty, read legacy fields
+        if (empty($bodyVariants)) {
+            $legacyWeights = [
+                ['field' => 'bodyFontMedium', 'weight' => '500'],
+                ['field' => 'bodyFontBold', 'weight' => '700'],
+                ['field' => 'bodyFontHeavy', 'weight' => '900'],
+            ];
+            foreach ($legacyWeights as $lw) {
+                $url = $getFontUrl($typographyOptions[$lw['field']] ?? '');
+                if (!empty($url)) {
+                    $bodyVariants[] = [
+                        'fontFile' => $url,
+                        'fontWeight' => $lw['weight'],
+                        'fontStyle' => 'normal',
+                        'preload' => false,
+                    ];
+                }
+            }
+        }
+
+        if (!empty($bodyVariants)) {
+            // Output preload hints first
+            foreach ($bodyVariants as $variant) {
+                $fileUrl = $getFontUrl($variant['fontFile'] ?? '');
+                if (!empty($fileUrl) && !empty($variant['preload'])) {
+                    $format = $getFontFormat($fileUrl);
+                    echo "<link rel='preload' href='{$fileUrl}' as='font' type='font/{$format}' crossorigin>\n";
+                }
+            }
+
+            // Output @font-face declarations
             $bodyFontFaceCss = "<style id='flynt-body-custom-fonts'>\n";
-            
-            if (!empty($bodyFontMedium)) {
-                $format = $getFontFormat($bodyFontMedium);
+            foreach ($bodyVariants as $variant) {
+                $fileUrl = $getFontUrl($variant['fontFile'] ?? '');
+                if (empty($fileUrl)) {
+                    continue;
+                }
+                $format = $getFontFormat($fileUrl);
+                $weight = esc_attr($variant['fontWeight'] ?? '400');
+                $style = esc_attr($variant['fontStyle'] ?? 'normal');
+
                 $bodyFontFaceCss .= "@font-face {\n";
                 $bodyFontFaceCss .= "  font-display: swap;\n";
                 $bodyFontFaceCss .= "  font-family: '{$bodyFont}';\n";
-                $bodyFontFaceCss .= "  font-style: normal;\n";
-                $bodyFontFaceCss .= "  font-weight: 500;\n";
-                $bodyFontFaceCss .= "  src: url('{$bodyFontMedium}') format('{$format}');\n";
+                $bodyFontFaceCss .= "  font-style: {$style};\n";
+                $bodyFontFaceCss .= "  font-weight: {$weight};\n";
+                $bodyFontFaceCss .= "  src: url('{$fileUrl}') format('{$format}');\n";
                 $bodyFontFaceCss .= "}\n\n";
             }
-            
-            if (!empty($bodyFontBold)) {
-                $format = $getFontFormat($bodyFontBold);
-                $bodyFontFaceCss .= "@font-face {\n";
-                $bodyFontFaceCss .= "  font-display: swap;\n";
-                $bodyFontFaceCss .= "  font-family: '{$bodyFont}';\n";
-                $bodyFontFaceCss .= "  font-style: normal;\n";
-                $bodyFontFaceCss .= "  font-weight: 700;\n";
-                $bodyFontFaceCss .= "  src: url('{$bodyFontBold}') format('{$format}');\n";
-                $bodyFontFaceCss .= "}\n\n";
-            }
-            
-            if (!empty($bodyFontHeavy)) {
-                $format = $getFontFormat($bodyFontHeavy);
-                $bodyFontFaceCss .= "@font-face {\n";
-                $bodyFontFaceCss .= "  font-display: swap;\n";
-                $bodyFontFaceCss .= "  font-family: '{$bodyFont}';\n";
-                $bodyFontFaceCss .= "  font-style: normal;\n";
-                $bodyFontFaceCss .= "  font-weight: 900;\n";
-                $bodyFontFaceCss .= "  src: url('{$bodyFontHeavy}') format('{$format}');\n";
-                $bodyFontFaceCss .= "}\n";
-            }
-            
             $bodyFontFaceCss .= "</style>\n";
             echo $bodyFontFaceCss;
         }
@@ -1097,54 +1199,61 @@ add_action('wp_head', function () {
                 $className = 'font-' . $className;
             }
             
-            $headingLevel = !empty($style['headingLevel']) 
-                ? esc_attr($style['headingLevel']) 
+            $headingLevel = !empty($style['headingLevel'])
+                ? esc_attr($style['headingLevel'])
                 : '';
-            
-            // Get selected font family for this style
-            $selectedFontFamily = !empty($style['fontFamily']) 
-                ? esc_attr($style['fontFamily']) 
-                : 'heading';
-            
-            $sizeMobile = !empty($style['sizeMobile']) 
-                ? floatval($style['sizeMobile']) 
+
+            // Parse fontVariant (format: "heading|700|normal") with fallback to legacy fields
+            $selectedFontFamily = 'heading';
+            $fontWeight = '400';
+            $fontStyle = 'normal';
+            if (!empty($style['fontVariant'])) {
+                $parts = explode('|', $style['fontVariant']);
+                $selectedFontFamily = $parts[0] ?? 'heading';
+                $fontWeight = $parts[1] ?? '400';
+                $fontStyle = $parts[2] ?? 'normal';
+            } elseif (!empty($style['fontFamily']) || !empty($style['fontWeight'])) {
+                // Backward compatibility with old separate fields
+                $selectedFontFamily = !empty($style['fontFamily']) ? esc_attr($style['fontFamily']) : 'heading';
+                $fontWeight = !empty($style['fontWeight']) ? esc_attr($style['fontWeight']) : '400';
+            }
+
+            $sizeMobile = !empty($style['sizeMobile'])
+                ? floatval($style['sizeMobile'])
                 : 1;
-            $sizeDesktop = !empty($style['sizeDesktop']) 
-                ? floatval($style['sizeDesktop']) 
+            $sizeDesktop = !empty($style['sizeDesktop'])
+                ? floatval($style['sizeDesktop'])
                 : $sizeMobile;
-            $lineHeight = !empty($style['lineHeight']) 
-                ? floatval($style['lineHeight']) 
+            $lineHeight = !empty($style['lineHeight'])
+                ? floatval($style['lineHeight'])
                 : 1.2;
-            $fontWeight = !empty($style['fontWeight']) 
-                ? esc_attr($style['fontWeight']) 
-                : '400';
-            $textTransform = !empty($style['textTransform']) 
-                ? esc_attr($style['textTransform']) 
+            $textTransform = !empty($style['textTransform'])
+                ? esc_attr($style['textTransform'])
                 : 'none';
-            
+
             // Build selector: include HTML tag if heading level is set
             $selector = '';
             if (!empty($headingLevel)) {
-                // Target both the HTML tag and the class for better compatibility
                 $selector = "{$headingLevel}, .{$className}";
             } else {
-                // Just target the class
                 $selector = ".{$className}";
             }
-            
+
             // Determine font family based on selection
             if ($selectedFontFamily === 'body') {
                 $fontFamily = "var(--secondary-font-family, var(--body-font-family, '{$bodyFont}', {$bodyFontFallback}))";
             } else {
-                // Default to primary font
                 $fontFamily = "var(--primary-font-family, var(--heading-font-family, '{$headingFont}', {$headingFontFallback}))";
             }
-            
+
             $customStylesCss .= "{$selector} {\n";
             $customStylesCss .= "  font-family: {$fontFamily};\n";
             $customStylesCss .= "  font-size: {$sizeMobile}rem;\n";
             $customStylesCss .= "  line-height: {$lineHeight};\n";
             $customStylesCss .= "  font-weight: {$fontWeight};\n";
+            if ($fontStyle === 'italic') {
+                $customStylesCss .= "  font-style: italic;\n";
+            }
             $customStylesCss .= "  text-transform: {$textTransform};\n";
             $customStylesCss .= "}\n\n";
             
@@ -1201,12 +1310,22 @@ add_action('wp_head', function () {
             $hoverTextColor = !empty($style['hoverTextColor']) 
                 ? esc_attr($style['hoverTextColor']) 
                 : '';
-            $hoverBorderColor = !empty($style['hoverBorderColor']) 
-                ? esc_attr($style['hoverBorderColor']) 
+            $hoverBorderColor = !empty($style['hoverBorderColor'])
+                ? esc_attr($style['hoverBorderColor'])
                 : '';
-            
+
+            // Determine font family override
+            $selectedFontFamily = !empty($style['fontFamily'])
+                ? esc_attr($style['fontFamily'])
+                : '';
+
             // Base button styles
             $customButtonCss .= ".button.{$className} {\n";
+            if ($selectedFontFamily === 'heading') {
+                $customButtonCss .= "  font-family: var(--primary-font-family);\n";
+            } elseif ($selectedFontFamily === 'body') {
+                $customButtonCss .= "  font-family: var(--secondary-font-family);\n";
+            }
             if ($backgroundColor !== 'transparent') {
                 $customButtonCss .= "  background-color: {$backgroundColor};\n";
             } else {
@@ -1217,7 +1336,7 @@ add_action('wp_head', function () {
                 $customButtonCss .= "  border-color: {$borderColor};\n";
             }
             $customButtonCss .= "}\n\n";
-            
+
             // Hover styles
             if (!empty($hoverBackgroundColor) || !empty($hoverTextColor) || !empty($hoverBorderColor)) {
                 $customButtonCss .= ".button.{$className}:hover,\n";
@@ -1381,44 +1500,60 @@ add_filter('tiny_mce_before_init', function ($init) {
     
     // Build font loading CSS for TinyMCE editor
     $fontLoadingCss = '';
-    
+
+    // Helper to build variants with legacy fallback (reused for both fonts)
+    $buildVariants = function ($typographyOptions, $repeaterKey, $legacyFields) use ($getFontUrl) {
+        $variants = !empty($typographyOptions[$repeaterKey])
+            ? $typographyOptions[$repeaterKey]
+            : [];
+        if (empty($variants)) {
+            foreach ($legacyFields as $lf) {
+                $url = $getFontUrl($typographyOptions[$lf['field']] ?? '');
+                if (!empty($url)) {
+                    $variants[] = [
+                        'fontFile' => $url,
+                        'fontWeight' => $lf['weight'],
+                        'fontStyle' => 'normal',
+                    ];
+                }
+            }
+        }
+        return $variants;
+    };
+
     // Load primary custom fonts if needed
     if ($headingFontSource === 'custom') {
-        $headingFontMedium = $getFontUrl($typographyOptions['headingFontMedium'] ?? '');
-        $headingFontBold = $getFontUrl($typographyOptions['headingFontBold'] ?? '');
-        $headingFontHeavy = $getFontUrl($typographyOptions['headingFontHeavy'] ?? '');
-        
-        if (!empty($headingFontMedium)) {
-            $format = $getFontFormat($headingFontMedium);
-            $fontLoadingCss .= "@font-face { font-display: swap; font-family: '{$headingFont}'; font-style: normal; font-weight: 500; src: url('{$headingFontMedium}') format('{$format}'); }";
-        }
-        if (!empty($headingFontBold)) {
-            $format = $getFontFormat($headingFontBold);
-            $fontLoadingCss .= "@font-face { font-display: swap; font-family: '{$headingFont}'; font-style: normal; font-weight: 700; src: url('{$headingFontBold}') format('{$format}'); }";
-        }
-        if (!empty($headingFontHeavy)) {
-            $format = $getFontFormat($headingFontHeavy);
-            $fontLoadingCss .= "@font-face { font-display: swap; font-family: '{$headingFont}'; font-style: normal; font-weight: 900; src: url('{$headingFontHeavy}') format('{$format}'); }";
+        $headingVariants = $buildVariants($typographyOptions, 'headingFontVariants', [
+            ['field' => 'headingFontMedium', 'weight' => '500'],
+            ['field' => 'headingFontBold', 'weight' => '700'],
+            ['field' => 'headingFontHeavy', 'weight' => '900'],
+        ]);
+        foreach ($headingVariants as $variant) {
+            $fileUrl = $getFontUrl($variant['fontFile'] ?? '');
+            if (!empty($fileUrl)) {
+                $format = $getFontFormat($fileUrl);
+                $weight = esc_attr($variant['fontWeight'] ?? '400');
+                $style = esc_attr($variant['fontStyle'] ?? 'normal');
+                $fontLoadingCss .= "@font-face { font-display: swap; font-family: '{$headingFont}'; font-style: {$style}; font-weight: {$weight}; src: url('{$fileUrl}') format('{$format}'); }";
+            }
         }
     }
-    
+
     // Load secondary custom fonts if needed
     if ($bodyFontSource === 'custom') {
-        $bodyFontMedium = $getFontUrl($typographyOptions['bodyFontMedium'] ?? '');
-        $bodyFontBold = $getFontUrl($typographyOptions['bodyFontBold'] ?? '');
-        $bodyFontHeavy = $getFontUrl($typographyOptions['bodyFontHeavy'] ?? '');
-        
-        if (!empty($bodyFontMedium)) {
-            $format = $getFontFormat($bodyFontMedium);
-            $fontLoadingCss .= "@font-face { font-display: swap; font-family: '{$bodyFont}'; font-style: normal; font-weight: 500; src: url('{$bodyFontMedium}') format('{$format}'); }";
-        }
-        if (!empty($bodyFontBold)) {
-            $format = $getFontFormat($bodyFontBold);
-            $fontLoadingCss .= "@font-face { font-display: swap; font-family: '{$bodyFont}'; font-style: normal; font-weight: 700; src: url('{$bodyFontBold}') format('{$format}'); }";
-        }
-        if (!empty($bodyFontHeavy)) {
-            $format = $getFontFormat($bodyFontHeavy);
-            $fontLoadingCss .= "@font-face { font-display: swap; font-family: '{$bodyFont}'; font-style: normal; font-weight: 900; src: url('{$bodyFontHeavy}') format('{$format}'); }";
+        $bodyVariants = $buildVariants($typographyOptions, 'bodyFontVariants', [
+            ['field' => 'bodyFontMedium', 'weight' => '500'],
+            ['field' => 'bodyFontBold', 'weight' => '700'],
+            ['field' => 'bodyFontHeavy', 'weight' => '900'],
+        ]);
+        foreach ($bodyVariants as $variant) {
+            $fileUrl = $getFontUrl($variant['fontFile'] ?? '');
+            if (!empty($fileUrl)) {
+                $format = $getFontFormat($fileUrl);
+                $weight = esc_attr($variant['fontWeight'] ?? '400');
+                $style = esc_attr($variant['fontStyle'] ?? 'normal');
+                $fontLoadingCss .= "@font-face { font-display: swap; font-family: '{$bodyFont}'; font-style: {$style}; font-weight: {$weight}; src: url('{$fileUrl}') format('{$format}'); }";
+            }
         }
     }
     
@@ -1457,31 +1592,37 @@ add_filter('tiny_mce_before_init', function ($init) {
                 $className = 'font-' . $className;
             }
             
-            $headingLevel = !empty($style['headingLevel']) 
-                ? esc_attr($style['headingLevel']) 
+            $headingLevel = !empty($style['headingLevel'])
+                ? esc_attr($style['headingLevel'])
                 : '';
-            
-            // Get selected font family for this style
-            $selectedFontFamily = !empty($style['fontFamily']) 
-                ? esc_attr($style['fontFamily']) 
-                : 'heading';
-            
-            $sizeMobile = !empty($style['sizeMobile']) 
-                ? floatval($style['sizeMobile']) 
+
+            // Parse fontVariant with fallback to legacy fields
+            $selectedFontFamily = 'heading';
+            $fontWeight = '400';
+            $fontStyle = 'normal';
+            if (!empty($style['fontVariant'])) {
+                $parts = explode('|', $style['fontVariant']);
+                $selectedFontFamily = $parts[0] ?? 'heading';
+                $fontWeight = $parts[1] ?? '400';
+                $fontStyle = $parts[2] ?? 'normal';
+            } elseif (!empty($style['fontFamily']) || !empty($style['fontWeight'])) {
+                $selectedFontFamily = !empty($style['fontFamily']) ? esc_attr($style['fontFamily']) : 'heading';
+                $fontWeight = !empty($style['fontWeight']) ? esc_attr($style['fontWeight']) : '400';
+            }
+
+            $sizeMobile = !empty($style['sizeMobile'])
+                ? floatval($style['sizeMobile'])
                 : 1;
-            $sizeDesktop = !empty($style['sizeDesktop']) 
-                ? floatval($style['sizeDesktop']) 
+            $sizeDesktop = !empty($style['sizeDesktop'])
+                ? floatval($style['sizeDesktop'])
                 : $sizeMobile;
-            $lineHeight = !empty($style['lineHeight']) 
-                ? floatval($style['lineHeight']) 
+            $lineHeight = !empty($style['lineHeight'])
+                ? floatval($style['lineHeight'])
                 : 1.2;
-            $fontWeight = !empty($style['fontWeight']) 
-                ? esc_attr($style['fontWeight']) 
-                : '400';
-            $textTransform = !empty($style['textTransform']) 
-                ? esc_attr($style['textTransform']) 
+            $textTransform = !empty($style['textTransform'])
+                ? esc_attr($style['textTransform'])
                 : 'none';
-            
+
             // Build selector
             $selector = '';
             if (!empty($headingLevel)) {
@@ -1489,17 +1630,20 @@ add_filter('tiny_mce_before_init', function ($init) {
             } else {
                 $selector = ".{$className}";
             }
-            
+
             // Determine font family based on selection
-            $styleFontFamily = ($selectedFontFamily === 'body') 
+            $styleFontFamily = ($selectedFontFamily === 'body')
                 ? "'{$bodyFont}', {$bodyFontFallback}"
                 : "'{$headingFont}', {$headingFontFallback}";
-            
+
             $buttonStyles .= "{$selector} {";
             $buttonStyles .= "font-family: {$styleFontFamily};";
             $buttonStyles .= "font-size: {$sizeMobile}rem;";
             $buttonStyles .= "line-height: {$lineHeight};";
             $buttonStyles .= "font-weight: {$fontWeight};";
+            if ($fontStyle === 'italic') {
+                $buttonStyles .= "font-style: italic;";
+            }
             $buttonStyles .= "text-transform: {$textTransform};";
             $buttonStyles .= "}";
             
@@ -1549,12 +1693,22 @@ add_filter('tiny_mce_before_init', function ($init) {
             $hoverTextColor = !empty($style['hoverTextColor']) 
                 ? esc_attr($style['hoverTextColor']) 
                 : '';
-            $hoverBorderColor = !empty($style['hoverBorderColor']) 
-                ? esc_attr($style['hoverBorderColor']) 
+            $hoverBorderColor = !empty($style['hoverBorderColor'])
+                ? esc_attr($style['hoverBorderColor'])
                 : '';
-            
+
+            // Determine font family override
+            $selectedFontFamily = !empty($style['fontFamily'])
+                ? esc_attr($style['fontFamily'])
+                : '';
+
             // Base button styles
             $buttonStyles .= ".button.{$className} {";
+            if ($selectedFontFamily === 'heading') {
+                $buttonStyles .= "font-family: '{$headingFont}', {$headingFontFallback};";
+            } elseif ($selectedFontFamily === 'body') {
+                $buttonStyles .= "font-family: '{$bodyFont}', {$bodyFontFallback};";
+            }
             if ($backgroundColor !== 'transparent') {
                 $buttonStyles .= "background-color: {$backgroundColor};";
             } else {

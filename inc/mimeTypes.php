@@ -8,5 +8,6 @@ namespace Flynt\MimeTypes;
 
 add_filter('upload_mimes', function ($mimes) {
     $mimes['svg'] = 'image/svg+xml';
+    $mimes['woff2'] = 'font/woff2';
     return $mimes;
 });

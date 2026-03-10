@@ -1,5 +1,5 @@
-<flynt-component load:on="visible" name="BlockImageTest2">
-  <div class="w-screen h-full boxed fade-in">
+<flynt-component load:on="visible" name="BlockImage">
+  <div class="w-screen h-full boxed !px-0">
     <figure class="figure">
       {% if image %}
         <img 
@@ -12,9 +12,9 @@
         />
       {% endif %}
       {% if image.title or image.caption %}
-        <div class="hidden py-[5px]">
-          <figcaption class="font-bodySmall">{{ image.title|e }}</figcaption>
-          <figcaption class="font-bodySmall underline underline-offset-4">{{ image.caption|e }}</figcaption>
+        <div class="mt-[5px]">
+          {# <figcaption class="font-bodySmall">{{ image.title|e }}</figcaption> #}
+          <figcaption class="font-bodySmall">{{ image.caption|e }}</figcaption>
         </div>
       {% endif %}
     </figure>
