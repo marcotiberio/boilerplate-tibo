@@ -2,7 +2,7 @@
   load:on="visible" 
   name="GridImageText"
   style="background-color:{% if options.colorBackground %}{{ options.colorBackground }}{% else %}var(--transparent){% endif %};">
-  <div class="wrapper boxed !pt-0 max-w-screen-max mx-auto">
+  <div class="wrapper boxed !pt-0 max-w-screen-max mx-auto {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
     {% if headlineTitle %}
       <div class="max-w-screen-max mx-auto py-md md:py-xl flex justify-center items-center text-center font-smallTitle {% if options.addBorderTop %}border-t{% endif %}">
         {{ headlineTitle }}

@@ -1,30 +1,47 @@
 <?php
 
-namespace Flynt\Components\BlockImage;
+namespace Flynt\Components\ListingLatestArticles;
 
-use Flynt\FieldVariables;
+use Timber\Timber;
+
+add_filter('Flynt/addComponentData?name=ListingLatestArticles', function ($data) {
+    $numberOfPosts = !empty($data['numberOfPosts']) ? intval($data['numberOfPosts']) : 2;
+
+    $args = [
+        'post_type' => 'post',
+        'posts_per_page' => $numberOfPosts,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'post_status' => 'publish',
+    ];
+
+    $data['posts'] = Timber::get_posts($args);
+
+    return $data;
+});
 
 function getACFLayout()
 {
     return [
-        'name' => 'BlockImage',
-        'label' => __('Block: Image', 'flynt'),
+        'name' => 'ListingLatestArticles',
+        'label' => __('Listing: Latest Articles', 'flynt'),
         'sub_fields' => [
             [
-                'label' => __('Image', 'flynt'),
+                'label' => __('Content', 'flynt'),
                 'name' => 'generalTab',
                 'type' => 'tab',
                 'placement' => 'top',
                 'endpoint' => 0,
             ],
             [
-                'label' => __('Image', 'flynt'),
-                'instructions' => __('Image-Format: JPG, PNG, SVG.', 'flynt'),
-                'name' => 'image',
-                'type' => 'image',
-                'preview_size' => 'medium',
-                'required' => 1,
-                'mime_types' => 'jpg,jpeg,png,svg,webp'
+                'label' => __('Number of Posts', 'flynt'),
+                'instructions' => __('How many latest posts to display.', 'flynt'),
+                'name' => 'numberOfPosts',
+                'type' => 'number',
+                'default_value' => 2,
+                'min' => 1,
+                'max' => 12,
+                'required' => 0,
             ],
             [
                 'label' => __('Options', 'flynt'),
@@ -50,6 +67,6 @@ function getACFLayout()
                     ],
                 ]
             ]
-        ]
+        ],
     ];
 }

@@ -1,0 +1,28 @@
+flynt-component[name='BlockBoxes'] {
+  .box {
+    width: calc(50% - var(--spacing-sm) / 2);
+    flex-grow: 1;
+  }
+
+  .boxes--2 .box {
+    @media (min-width: theme('screens.md')) {
+      width: calc(50% - var(--spacing-sm) / 2);
+    }
+  }
+
+  .boxes--3 .box {
+    @media (min-width: theme('screens.md')) {
+      width: calc(33.333% - var(--spacing-sm) * 2 / 3);
+    }
+  }
+
+  .boxes--4 .box {
+    @media (min-width: theme('screens.md')) {
+      width: calc(50% - var(--spacing-sm) / 2);
+    }
+
+    @media (min-width: theme('screens.lg')) {
+      width: calc(25% - var(--spacing-sm) * 3 / 4);
+    }
+  }
+}

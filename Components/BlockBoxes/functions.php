@@ -1,14 +1,14 @@
 <?php
 
-namespace Flynt\Components\BlockTiles;
+namespace Flynt\Components\BlockBoxes;
 
 use Flynt\FieldVariables;
 
 function getACFLayout()
 {
     return [
-        'name' => 'blockTiles',
-        'label' => __('Block: Tiles', 'flynt'),
+        'name' => 'blockBoxes',
+        'label' => __('Block: Boxes', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('General', 'flynt'),
@@ -24,33 +24,33 @@ function getACFLayout()
                 'required' => 0,
             ],
             [
-                'label' => __('Tiles', 'flynt'),
-                'name' => 'tiles',
+                'label' => __('Boxes', 'flynt'),
+                'name' => 'boxes',
                 'type' => 'repeater',
                 'layout' => 'table',
                 'min' => 1,
                 'max' => 12,
-                'button_label' => __('Add Tile', 'flynt'),
+                'button_label' => __('Add Box', 'flynt'),
                 'sub_fields' => [
                     [
-                        'label' => __('Content', 'flynt'),
-                        'name' => 'contentHtml',
-                        'type' => 'wysiwyg',
-                        'tabs' => 'visual',
-                        'delay' => 1,
-                        'media_upload' => 0,
+                        'label' => __('Image', 'flynt'),
+                        'instructions' => __('Image-Format: JPG, PNG, SVG.', 'flynt'),
+                        'name' => 'image',
+                        'type' => 'image',
+                        'preview_size' => 'medium',
                         'required' => 1,
+                        'mime_types' => 'jpg,jpeg,png,svg',
                         'wrapper' => [
-                            'width' => 70
+                            'width' => 40
                         ],
                     ],
                     [
-                        'label' => __('Button', 'flynt'),
-                        'name' => 'buttonLink',
-                        'type' => 'link',
+                        'label' => __('Title', 'flynt'),
+                        'name' => 'title',
+                        'type' => 'text',
                         'required' => 0,
                         'wrapper' => [
-                            'width' => 20
+                            'width' => 60
                         ],
                     ],
                     FieldVariables\getColorBackground(),

@@ -1,8 +1,8 @@
 <flynt-component 
   load:on="visible" 
   name="BlockWysiwyg">
-  <div 
-    class="boxed">
+  <div
+    class="boxed {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
     <div 
       class="boxed--inner px-sm py-sm
         {% if options.stickyText %}stickyText{% endif %}

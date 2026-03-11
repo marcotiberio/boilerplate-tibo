@@ -1,13 +1,13 @@
 <?php
 
-namespace Flynt\Components\ListingArticles;
+namespace Flynt\Components\ListingAuthors;
 
 use Timber\Timber;
 
-add_filter('Flynt/addComponentData?name=ListingArticles', function ($data) {
+add_filter('Flynt/addComponentData?name=ListingAuthors', function ($data) {
     $queryArgs = [
         'post_status'         => 'publish',
-        'post_type'           => 'post',
+        'post_type'           => 'author',
         'ignore_sticky_posts' => 1,
         'posts_per_page'      => -1,
         'orderby'             => 'date',
@@ -16,12 +16,20 @@ add_filter('Flynt/addComponentData?name=ListingArticles', function ($data) {
 
     $posts = Timber::get_posts($queryArgs);
 
-    $data['articles'] = [];
+    $themeUri = trailingslashit(get_template_directory_uri());
+
+    $data['authors'] = [];
     foreach ($posts as $post) {
-        $data['articles'][] = [
+        $socials = get_field('authorSocials', $post->ID) ?: [];
+        $socials = array_map(function ($item) use ($themeUri) {
+            $item['iconUrl'] = $themeUri . 'assets/icons/' . $item['platform'] . '.svg';
+            return $item;
+        }, $socials);
+
+        $data['authors'][] = [
             'post'        => $post,
             'postImage'   => $post->thumbnail(),
-            'halftoneSvg' => get_post_meta($post->ID, 'halftone_svg', true),
+            'socials'     => $socials,
         ];
     }
 
@@ -31,8 +39,8 @@ add_filter('Flynt/addComponentData?name=ListingArticles', function ($data) {
 function getACFLayout()
 {
     return [
-        'name' => 'ListingArticles',
-        'label' => __('Listing: Articles', 'flynt'),
+        'name' => 'ListingAuthors',
+        'label' => __('Listing: Authors', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Content', 'flynt'),

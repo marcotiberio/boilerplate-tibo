@@ -5,7 +5,7 @@
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
   <script type="application/json">{{ jsonData|json_encode }}</script>
-  <div class="wrapper w-screen mx-auto boxed boxed--coloured">
+  <div class="wrapper w-screen mx-auto boxed boxed--coloured {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
     {% if headlineTitle %}
       <h2 class="mb-xxl">{{ headlineTitle }}</h2>
     {% endif %}

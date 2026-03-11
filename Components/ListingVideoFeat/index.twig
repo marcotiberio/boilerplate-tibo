@@ -7,7 +7,7 @@
       color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
       background-color: {% if options.pageBackground %}{{ options.pageBackground }}{% else %}transparent{% endif %};">
     
-    <div class="wrapper flex flex-col gap-sm fade-in overflow-hidden" x-data="{ selectedCategories: [], searchQuery: '', filtersOpen: false }">
+    <div class="wrapper flex flex-col gap-sm fade-in overflow-hidden {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}" x-data="{ selectedCategories: [], searchQuery: '', filtersOpen: false }">
 
       <div class="">
         <h2>{{ headlineTitle|e }}</h2>

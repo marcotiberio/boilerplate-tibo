@@ -4,6 +4,7 @@ use ACFComposer\ACFComposer;
 use Flynt\Components;
 use function Flynt\FieldVariables\getColorBackground;
 
+
 add_action('Flynt/afterRegisterComponents', function () {
     ACFComposer::registerFieldGroup([
         'name' => 'postMeta',

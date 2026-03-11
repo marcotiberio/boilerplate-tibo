@@ -87,6 +87,15 @@ function getACFLayout()
                             'width' => 100
                         ],
                     ],
+                    [
+                        'label' => __('Top Border', 'flynt'),
+                        'name' => 'topBorder',
+                        'type' => 'true_false',
+                        'default_value' => 0,
+                        'ui' => 1,
+                        'ui_on_text' => __('Yes', 'flynt'),
+                        'ui_off_text' => __('No', 'flynt'),
+                    ],
                 ]
             ]
         ]

@@ -2,7 +2,7 @@
   load:on="visible" name="BlockFeaturedArticle"
   class="w-full lgplus:w-screen {{ height|default('h-screen') }} mx-auto relative overflow-hidden">
   {% if post %}
-    <a href="{{ post.link }}" class="block w-full h-full">
+    <div class="block w-full h-full {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
       {% if halftoneSvg %}
         <div class="halftone-image absolute inset-0 w-full h-full overflow-hidden [&_svg]:absolute [&_svg]:inset-0 [&_svg]:w-full [&_svg]:h-full">
           {{ halftoneSvg|raw }}
@@ -16,7 +16,7 @@
         />
       {% endif %}
       {# Info Box #}
-      <div class="w-full absolute bottom-0">
+      <a href="{{ post.link }}" class="w-full absolute bottom-0 no-underline">
         <div class="max-w-screen-tablet mx-auto bg-white p-md flex flex-col gap-sm justify-center items-center text-center">
           <h1 class="font-h1">„{{ post.title }}”</h1>
           {% if post.postIntro %}
@@ -39,7 +39,7 @@
             {% endif %}
           </div>
         </div>
-      </div>
-    </a>
+      </a>
+    </div>
   {% endif %}
 </flynt-component>

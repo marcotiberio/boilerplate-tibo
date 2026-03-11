@@ -7,7 +7,7 @@
       color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
       background-color: {% if options.pageBackground %}{{ options.pageBackground }}{% else %}transparent{% endif %};">
     
-    <div class="wrapper max-w-screen-max mx-auto flex flex-col fade-in overflow-hidden" x-data="{ 
+    <div class="wrapper max-w-screen-max mx-auto flex flex-col fade-in overflow-hidden {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}" x-data="{ 
       selectedCategory: '', 
       searchQuery: '', 
       filtersOpen: false,

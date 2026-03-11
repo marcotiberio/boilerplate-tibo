@@ -8,7 +8,7 @@ function getACFLayout(): array
 {
     return [
         'name' => 'blockSpacer',
-        'label' => __('Spacer', 'flynt'),
+        'label' => __('Block: Spacer', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Options', 'flynt'),
@@ -41,6 +41,15 @@ function getACFLayout(): array
                         ],
                         'default_value' => 0,
                         'return_format' => 'value',
+                    ],
+                    [
+                        'label' => __('Top Border', 'flynt'),
+                        'name' => 'topBorder',
+                        'type' => 'true_false',
+                        'default_value' => 0,
+                        'ui' => 1,
+                        'ui_on_text' => __('Yes', 'flynt'),
+                        'ui_off_text' => __('No', 'flynt'),
                     ],
                     // [
                     //     'label' => __('Vertical space', 'flynt'),

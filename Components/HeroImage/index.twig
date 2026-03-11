@@ -1,6 +1,6 @@
 <flynt-component
   load:on="visible" name="HeroImage"
-  class="w-full lgplus:w-screen {{ height|default('h-screen') }} mx-auto relative overflow-hidden">
+  class="w-full lgplus:w-screen {{ height|default('h-screen') }} mx-auto relative overflow-hidden {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
   {% if image %}
     <img 
       data-ref="backgroundImageDesktop"

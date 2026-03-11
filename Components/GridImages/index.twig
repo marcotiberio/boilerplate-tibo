@@ -2,7 +2,7 @@
   load:on="visible" 
   name="GridImages"
   style="background-color:{% if options.colorBackground %}{{ options.colorBackground }}{% else %}var(--transparent){% endif %};">
-  <div class="boxed max-w-screen-max mx-auto flex flex-col gap-sm">
+  <div class="boxed max-w-screen-max mx-auto flex flex-col gap-sm {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
     {% if title %}
       <div class="font-h2">{{ title }}</div>
     {% endif %}

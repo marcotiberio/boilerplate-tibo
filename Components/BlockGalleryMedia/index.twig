@@ -1,5 +1,5 @@
 <flynt-component load:on="visible" name="BlockGalleryMedia" class="boxed !py-[7.5px]" id="galleryMedia">
-  <div class="grid grid-cols-3 lg:grid-cols-12 gap-xs align-start justify-start lg:justify-between fade-in">
+  <div class="grid grid-cols-3 lg:grid-cols-12 gap-xs align-start justify-start lg:justify-between fade-in {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
     {% for item in mediaItems %}
       <div class="media-item w-full column flex {{ item.colStart }} {{ item.colEnd }}" id="media-item-{{ loop.index }}">
         {% if item.acf_fc_layout == 'image' %}

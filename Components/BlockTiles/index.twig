@@ -1,7 +1,7 @@
 <flynt-component
   load:on="visible"
   name="BlockTiles">
-  <div class="boxed flex flex-col gap-sm">
+  <div class="boxed flex flex-col gap-sm {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
     {% if blockTitle %}
       <h2 class="font-h1Serif !mb-0">{{ blockTitle|e }}</h2>
     {% endif %}
@@ -12,9 +12,17 @@
     ">
       {% for tile in tiles %}
         <div
-          class="tile wysiwyg p-sm"
+          class="tile p-sm"
           style="background-color: {% if tile.colorBackground %}{{ tile.colorBackground }}{% else %}transparent{% endif %};">
-          {{ tile.contentHtml|e('wp_kses_post') }}
+          <div class="wysiwyg">{{ tile.contentHtml|e('wp_kses_post') }}</div>
+          {% if tile.buttonLink %}
+            <a 
+              class="button button--link !font-body mt-sm" 
+              href="{{ tile.buttonLink.url }}" 
+              {% if tile.buttonLink.target %} target="{{ tile.buttonLink.target }}" rel="noreferrer noopener"{% endif %}>
+              {{ tile.buttonLink.title }}
+            </a>
+          {% endif %}
         </div>
       {% endfor %}
     </div>

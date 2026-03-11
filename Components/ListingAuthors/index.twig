@@ -1,5 +1,5 @@
-{% if articles|length > 0 %}
-  <flynt-component load:on="visible" name="ListingArticles" class="w-full">
+{% if authors|length > 0 %}
+  <flynt-component load:on="visible" name="ListingAuthors" class="w-full">
     <div class="boxed flex flex-col gap-sm {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
 
       {# Header: Title + See All #}
@@ -21,47 +21,49 @@
         </div>
       {% endif %}
 
-      {# Articles Grid #}
-      <div class="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-sm">
-        {% for article in articles %}
-          <a href="{{ article.post.link }}" class="group flex flex-col gap-xs no-underline" title="{{ article.post.title }}">
+      {# Authors Grid #}
+      <div class="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-4 gap-sm">
+        {% for author in authors %}
+          <div class="group flex flex-col gap-xs no-underline">
 
             {# Halftone or Featured Image #}
-            <div class="relative w-full aspect-4/3 overflow-hidden">
-              {% if article.halftoneSvg %}
-                <div class="halftone-image absolute inset-0 w-full h-full overflow-hidden [&_svg]:absolute [&_svg]:inset-0 [&_svg]:w-full [&_svg]:h-full">
-                  {{ article.halftoneSvg|raw }}
-                </div>
-              {% elseif article.postImage %}
+            <div class="relative w-full aspect-3/4 overflow-hidden">
+              {% if author.postImage %}
                 <img
                   class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  src="{{ article.postImage.src }}"
-                  alt="{{ article.postImage.alt|e | default('') }}"
+                  src="{{ author.postImage.src }}"
+                  alt="{{ author.postImage.alt|e | default('') }}"
                   loading="lazy"
                 />
               {% endif %}
             </div>
 
             {# Info Box #}
-            <div class="flex flex-col gap-xs">
-              <h3 class="!mb-0 font-h3">{{ article.post.title }}</h3>
-              <div class="flex flex-row gap-xs items-center flex-wrap">
-                {% set postCategories = article.post.terms('category') %}
-                {% for term in postCategories %}
-                  <span class="button !mb-0" style="background-color: {{ article.post.meta('colorBackground')|default('#f1f1f1') }}">{{ term }}{% if not loop.last %},{% endif %}</span>
+            <div class="flex flex-col gap-min items-start justify-start">
+              <a href="{{ author.post.link }}" class="!mb-0 font-h3 no-underline" title="{{ author.post.title }}">{{ author.post.title }}</a>
+              <div class="flex flex-col gap-xs items-start justify-start flex-wrap">
+                {% set authorCategories = author.post.terms('position-category') %}
+                {% for term in authorCategories %}
+                  <span class="!mb-0">{{ term }}{% if not loop.last %},{% endif %}</span>
                 {% endfor %}
-                {% if article.post.date %}
-                  <span class="button button--grey pointer-events-none !mb-0">{{ article.post.date('d.m.Y') }}</span>
-                {% endif %}
-                {% if article.post.meta('postAuthor') %}
-                  {% for author in Post(article.post.meta('postAuthor')) %}
+                {% if author.post.meta('postAuthor') %}
+                  {% for author in Post(author.post.meta('postAuthor')) %}
                     <span class="button button--grey pointer-events-none !mb-0">{{ author.title }}</span>
                   {% endfor %}
+                {% endif %}
+                {% if author.socials|length > 0 %}
+                  <div class="flex flex-row gap-xs items-center">
+                    {% for social in author.socials %}
+                      <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ social.platform }}" class="flex justify-center items-center w-[30px] h-[30px] bg-grei p-min [&_svg]:w-full [&_svg]:h-full [&_svg]:fill-current hover:opacity-70 transition-opacity">
+                        <img src="{{ social.iconUrl }}" alt="{{ social.platform }}" class="w-[20px] h-[20px]" loading="lazy" />
+                      </a>
+                    {% endfor %}
+                  </div>
                 {% endif %}
               </div>
             </div>
 
-          </a>
+          </di>
         {% endfor %}
       </div>
 

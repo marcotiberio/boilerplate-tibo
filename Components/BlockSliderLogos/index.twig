@@ -3,7 +3,7 @@
   class="overflow-hidden"
   style="background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
   <script type="application/json">{{ jsonData|json_encode }}</script>
-  <div class="boxed !min-h-auto px-0 w-full fade-in">
+  <div class="boxed !min-h-auto px-0 w-full fade-in {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
     {% if blockTitle %}
       <h3 class="mb-xxl">{{ blockTitle }}</h3>
     {% endif %}

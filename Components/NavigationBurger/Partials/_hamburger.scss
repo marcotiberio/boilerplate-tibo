@@ -2,7 +2,7 @@
   --line-width: 18px;
   --line-height: 2px;
   align-items: center;
-  @apply bg-black;
+  @apply bg-transparent;
   border-radius: 100%;
   cursor: pointer;
   display: flex;
@@ -22,7 +22,7 @@
   }
 
   &-line {
-    background-color: var(--white);
+    background-color: var(--black);
     border-radius: 2px;
     display: block;
     height: var(--line-height);
@@ -35,7 +35,7 @@
 
     &::before,
     &::after {
-      background-color: var(--white);
+      background-color: var(--black);
       border-radius: 2px;
       content: '';
       display: block;

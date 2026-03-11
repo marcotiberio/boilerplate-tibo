@@ -2,9 +2,10 @@
   load:on="idle"
   {# client:media="(max-width: 1023px)" #}
   name="NavigationBurger"
-  class="block lg:hidden fixed top-0 left-0 w-screen z-50 flex-row justify-between mx-auto">
+  class="block lg:hidden fixed top-0 left-0 w-screen z-50 flex-row justify-between mx-auto bg-white">
   <nav aria-label="{{ labels.ariaLabel|e }}" class="h-auto w-full">
-    <div class="w-full h-auto max-w-screen-max mx-auto !px-xs md:!px-sm !min-h-fit grid grid-cols-2 lg:gap-sm align-middle items-center z-[3001] relative">
+    <div class="w-full h-auto max-w-screen-max mx-auto !px-xs md:!px-sm !min-h-fit grid grid-cols-[1fr_auto_1fr] align-middle items-center z-[3001] relative">
+      <div></div>
       {% include 'Partials/_logo.twig' with { 'logo': logo, 'site': site } only %}
       {% if menu %}
         <div class="flex justify-end items-center">
@@ -15,13 +16,13 @@
     {% if menu %}
       <div
         data-ref="menu" 
-        class="menu w-full h-fit !pt-[50px] z-40 relative bg-white">
-        <div class="w-full h-full max-w-screen-max mx-auto flex flex-col justify-start items-start gap-xs px-xs py-xs">
+        class="menu w-full h-screen !pt-[50px] z-40 relative bg-white">
+        <div class="w-full h-full max-w-screen-max mx-auto flex flex-col justify-center items-center gap-sm px-xs py-xs">
           {% for item in menu.items %}
             {# regular menu item #}
             {% if not item.children %}
               <div class="item {{- item.current ? ' current-menu-item underline underline-offset-4' }}">
-                <a class="link font-menu" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+                <a class="link font-h1Serif no-underline" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
                   {{ item.title }}
                 </a>
               </div>
@@ -29,19 +30,29 @@
             {# menu with submenu item #}
             {% if item.children %}
               <div class="item open-submenu {{- item.current ? ' current-menu-item underline underline-offset-4' }}" >
-                <a class="link font-menu" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+                <a class="link font-h1Serif no-underline" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
                   {{ item.title }}
                 </a>
                 <div class="submenu">
                   {% for subitem in item.children %}
                     <div class="item {{- subitem.current ? ' current-menu-item underline underline-offset-4' }}">
-                      <a class="link !p-0 font-menu" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
+                      <a class="link !p-0 font-h1Serif no-underline" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
                     </div>
                   {% endfor %}
                 </div>
               </div>
             {% endif %}
           {% endfor %}
+
+          {% if menuSecondary %}
+            <div class="grid grid-cols-2 justify-center gap-x-xs gap-y-xs mt-sm">
+              {% for item in menuSecondary.items %}
+                <a class="link font-body no-underline odd:text-right" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+                  {{ item.title }}
+                </a>
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
 
         {# Footer Links Section #}
