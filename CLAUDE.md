@@ -95,3 +95,13 @@ All themes are coded from scratch using Flynt as a structural foundation.
 - When generating SCSS, keep specificity low and nest sparingly
 - When generating Alpine.js, prefer readability over cleverness
 - Default output format: clean, copy-pasteable code blocks
+
+---
+
+## Memory Management
+
+When you discover something valuable for future sessions — architectural decisions, bug fixes, gotchas, environment quirks — immediately append it to .claude/memory.md
+
+Don't wait to be asked. Don't wait for session end.
+
+Keep entries short: date, what, why. Read this file at the start of every session.
