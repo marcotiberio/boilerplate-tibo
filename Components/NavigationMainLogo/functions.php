@@ -10,5 +10,7 @@ add_filter('Flynt/addComponentData?name=NavigationMainLogo', function ($data) {
         'alt' => get_bloginfo('name')
     ];
 
+    $data['tagline'] = get_bloginfo('description');
+
     return $data;
 });

@@ -25,7 +25,15 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'name' => 'postIntro',
                 'type' => 'textarea',
                 'wrapper' => [
-                    'width' => 100,
+                    'width' => 50,
+                ]
+            ],
+            [
+                'label' => __('Intro (Homepage)', 'flynt'),
+                'name' => 'postIntroHomepage',
+                'type' => 'textarea',
+                'wrapper' => [
+                    'width' => 50,
                 ]
             ],
             [

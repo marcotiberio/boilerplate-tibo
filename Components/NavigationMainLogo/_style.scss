@@ -1,0 +1,28 @@
+flynt-component[name='NavigationMainLogo'] {
+  @screen desktop {
+    &:hover {
+      .logo-image {
+        transform: translateY(-100px);
+      }
+
+      .logo-tagline {
+          transform: translateY(-60px);
+      }
+    }
+
+    .logo-image {
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .logo-tagline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      font-size: 2rem;
+      font-style: italic;
+      white-space: nowrap;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+}

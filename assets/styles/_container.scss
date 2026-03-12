@@ -39,6 +39,11 @@ flynt-component {
   @apply px-sm;
   @apply py-sm;
 
+  &--inner {
+    @apply px-sm;
+    @apply py-sm;
+  }
+
   // &--small {
   //   @apply py-xs;
   //   @apply sm:py-sm;

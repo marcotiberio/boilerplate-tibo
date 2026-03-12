@@ -37,9 +37,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                             'instagram' => 'Instagram',
                             'linkedin' => 'LinkedIn',
                             'x' => 'X',
-                            'facebook' => 'Facebook',
                             'youtube' => 'YouTube',
-                            'tiktok' => 'TikTok',
                             'email' => 'Email',
                         ],
                         'wrapper' => [

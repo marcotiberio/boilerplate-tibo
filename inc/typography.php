@@ -1559,9 +1559,9 @@ add_filter('tiny_mce_before_init', function ($init) {
     $buttonStyles .= "h1, h2, h3, h4, h5, h6 {";
     $buttonStyles .= "font-family: '{$headingFont}', {$headingFontFallback};";
     $buttonStyles .= "}";
-    // Add body styles
+    // Add body styles — matches frontend which uses var(--primary-font-family) on body
     $buttonStyles .= "body, p {";
-    $buttonStyles .= "font-family: '{$bodyFont}', {$bodyFontFallback};";
+    $buttonStyles .= "font-family: '{$headingFont}', {$headingFontFallback};";
     $buttonStyles .= "}";
     
     // Add custom font styles CSS to TinyMCE

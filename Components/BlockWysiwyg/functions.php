@@ -47,22 +47,20 @@ function getACFLayout()
                     'width' => 100
                 ],
             ],
-            // [
-            //     'label' => __('Form', 'flynt'),
-            //     'name' => 'formTab',
-            //     'type' => 'tab',
-            //     'placement' => 'top',
-            //     'endpoint' => 0
-            // ],
-            // [
-            //     'label' => __('Form', 'flynt'),
-            //     'name' => 'formHtml',
-            //     'type' => 'wysiwyg',
-            //     'tabs' => 'visual',
-            //     'delay' => 1,
-            //     'media_upload' => 0,
-            //     'required' => 0,
-            // ],
+            [
+                'label' => __('Form', 'flynt'),
+                'name' => 'formTab',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0
+            ],
+            [
+                'label' => __('Form ID', 'flynt'),
+                'instructions' => __('Add the ID of your form here (eg tw6999e2ea58949).', 'flynt'),
+                'name' => 'formHtml',
+                'type' => 'text',
+                'required' => 0,
+            ],
             [
                 'label' => __('Options', 'flynt'),
                 'name' => 'optionsTab',

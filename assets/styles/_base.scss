@@ -41,6 +41,10 @@ body {
   font-family: var(--primary-font-family, 'Inter', Arial, sans-serif);
 }
 
+a {
+  @apply underline-offset-4 hover:no-underline;
+}
+
 // ── Halftone SVG hover effect ─────────────────────────────────────────────────
 // Replicates the p5.js canvas effect: all dots shrink to 60% on container hover.
 // transform-box: fill-box makes each circle scale around its own centre.

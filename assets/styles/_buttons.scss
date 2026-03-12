@@ -6,7 +6,7 @@ button {
   @include reset-link;
   appearance: none;
   font-family: var(--primary-font-family, 'Inter', Arial, sans-serif);
-  font-size: var(--button-size, 1rem);
+  font-size: var(--button-font-size, 1rem);
   line-height: var(--button-line-height, 1.2);
   font-weight: var(--button-font-weight, 500);
   @apply w-fit;
@@ -28,6 +28,7 @@ button {
   }
 
   &--link {
+    font-size: 1.25rem;
     @apply underline-offset-4 !important;
     @apply hover:no-underline !important;
     @apply focus:no-underline !important;
@@ -35,7 +36,6 @@ button {
 
     &::after {
       content: '→';
-      @apply translate-x-2
     }
   }
 

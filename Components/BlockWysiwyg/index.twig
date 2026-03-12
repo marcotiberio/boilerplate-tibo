@@ -4,9 +4,7 @@
   <div
     class="boxed {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
     <div 
-      class="boxed--inner px-sm py-sm
-        {% if options.stickyText %}stickyText{% endif %}
-        wysiwyg flex flex-col
+      class="wysiwyg {% if options.colorBackground %}boxed--inner{% endif %} flex flex-col
         {% if textPosition == 'right' %} justify-end w-full lg:w-[calc(75%_-_12.5px)] ml-auto{% endif %}
         {% if textPosition == 'left' %} justify-start w-full lg:w-[calc(75%_-_12.5px)] mr-auto{% endif %}
         {% if textPosition == 'center_narrow' %} justify-center w-full md:w-2/3 mx-auto{% endif %}
@@ -14,6 +12,19 @@
       "
       style="background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
       {{ contentHtml|e('wp_kses_post') }}
+      <!-- twingle -->
+        <script type="text/javascript">
+          (function() {
+            var u="https://spenden.twingle.de/embed/netzwerk-klimajournalismus-deutschland-e-v/brandmelder/{{ formHtml }}/widget";
+            var id = '_' + Math.random().toString(36).substr(2, 9);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0], t=d.createElement('div');
+                t.id = 'twingle-public-embed-' + id;
+                document.currentScript.after(t);
+            g.type='text/javascript'; g.async=true; g.id='tw-' + id; g.defer=true; g.src=u; s.parentNode.insertBefore(g,s);
+          })();
+        </script>
+      <!-- twingle -->
+
       {% if buttonLink %}
         <a 
           class="button button--outline" 

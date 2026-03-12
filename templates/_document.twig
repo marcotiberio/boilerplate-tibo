@@ -12,9 +12,9 @@
         class="pageWrapper">
         <header class="w-full">
           {% block header %}
-            <div class="wrapper wrapper--menu flex justify-center items-center w-full h-[87px] lg:h-auto fixed top-0 left-0 z-[3000] transition ease-in-out delay-300">
-              <div class="hidden lg:block w-full boxed !max-w-screen-box mx-aut bg-white">
-                <div class="boxed !p-0 flex flex-row justify-between gap-sm">
+            <div class="wrapper wrapper--menu flex justify-center items-center w-full h-[72px] lg:h-auto fixed top-0 left-0 z-[3000] transition ease-in-out delay-300">
+              <div class="hidden lg:flex w-full boxed !py-0 !max-w-screen-box mx-auto bg-white justify-center items-center">
+                <div class="boxed h-[72px] over !p-0 flex flex-row justify-between gap-sm overflow-hidden">
                   {{ renderComponent('NavigationMainLeft') }}
                   {{ renderComponent('NavigationMainLogo') }}
                   {{ renderComponent('NavigationMainRight') }}
@@ -29,7 +29,7 @@
             </div>
           {% endblock %}
         </header>
-        <main id="mainContent" class="mainContent min-h-screen" aria-label="{{ __('Content', 'flynt') }}">
+        <main id="mainContent" class="mainContent min-h-screen {% if fn('is_front_page') %}mt-0 lg:mt-0 {% else %} mt-[44px] lg:mt-[72px]{% endif %}" aria-label="{{ __('Content', 'flynt') }}">
           <a href="#mainContent" class="skipLink">
             {{ __("Skip to main content", "flynt") }}
           </a>

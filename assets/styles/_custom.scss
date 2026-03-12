@@ -36,6 +36,10 @@ body {
     @apply hidden;
   }
 
+  // :not(.home) .mainContent {
+  //   @apply mt-0;
+  // }
+
   flynt-component[name='BlockWysiwyg'] {
     .boxed {
       @apply px-0 !important;

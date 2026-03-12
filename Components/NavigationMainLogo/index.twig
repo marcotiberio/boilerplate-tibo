@@ -1,5 +1,8 @@
 <flynt-component load:on="idle" name="NavigationMainLogo" class="w-[255px] h-auto flex justify-center items-center">
-  <a class="logo" href="{{ site.link }}">
-    <img class="logo-image" src="{{ logo.src }}" alt="{{ logo.alt }}">
+  <a class="logo no-underline flex flex-col justify-center items-center mt-[68px]" href="{{ site.link }}">
+    <img class="logo-image mb-[20px]" src="{{ logo.src }}" alt="{{ logo.alt }}">
+    {% if tagline %}
+    <span class="logo-tagline no-underline">{{ tagline }}</span>
+  {% endif %}
   </a>
 </flynt-component>

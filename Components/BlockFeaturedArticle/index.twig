@@ -1,6 +1,6 @@
 <flynt-component
   load:on="visible" name="BlockFeaturedArticle"
-  class="w-full lgplus:w-screen {{ height|default('h-screen') }} mx-auto relative overflow-hidden">
+  class="w-full lgplus:w-screen h-screen mx-auto relative overflow-hidden">
   {% if post %}
     <div class="block w-full h-full {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
       {% if halftoneSvg %}
@@ -17,12 +17,14 @@
       {% endif %}
       {# Info Box #}
       <a href="{{ post.link }}" class="w-full absolute bottom-0 no-underline">
-        <div class="max-w-screen-tablet mx-auto bg-white p-md flex flex-col gap-sm justify-center items-center text-center">
+        <div class="max-w-screen-tablet mx-auto bg-white p-sm md:p-md flex flex-col justify-center items-center text-center">
           <h1 class="font-h1">„{{ post.title }}”</h1>
-          {% if post.postIntro %}
-            <p class="font-subline">{{ post.postIntro }}</p>
+          {% if post.postIntroHomepage %}
+            <p class="font-subline mt-min">{{ post.postIntroHomepage }}</p>
+          {% else %}
+            <p class="font-subline mt-min">{{ post.postIntro }}</p>
           {% endif %}
-          <div class="w-full flex flex-row gap-xs items-center justify-center">
+          <div class="w-full flex flex-row flex-wrap gap-xs items-center justify-center mt-sm">
             <div class="">
               {% set postCategories = post.terms('category') %}
               {% for term in postCategories %}
