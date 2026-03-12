@@ -1,8 +1,9 @@
 .hamburger {
-  --line-width: 18px;
+  --line-width: 20px;
   --line-height: 2px;
+  --line-spacing: 5px;
   align-items: center;
-  @apply bg-transparent;
+  @apply bg-orange;
   border-radius: 100%;
   cursor: pointer;
   display: flex;
@@ -10,64 +11,64 @@
   justify-content: center;
   position: relative;
   width: 44px;
+  z-index: 3002;
 
   &:focus:not(:focus-visible) {
     outline: none;
   }
 
   &-lines {
-    height: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 14px;
+    justify-content: space-between;
     position: relative;
     width: var(--line-width);
   }
 
   &-line {
-    background-color: var(--black);
+    background-color: var(--white);
     border-radius: 2px;
     display: block;
     height: var(--line-height);
     left: 0;
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: opacity 0.3s ease-in-out;
+    transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     width: var(--line-width);
 
-    &::before,
-    &::after {
-      background-color: var(--black);
-      border-radius: 2px;
-      content: '';
-      display: block;
-      height: var(--line-height);
-      left: 0;
-      position: absolute;
-      transition: transform 0.3s ease-in-out;
-      width: var(--line-width);
+    &-top {
+      top: 0;
+      transform-origin: center;
     }
 
-    &::before {
-      top: -6px;
+    &-middle {
+      top: 50%;
+      transform: translateY(-50%);
+      transform-origin: center;
     }
 
-    &::after {
-      bottom: -6px;
+    &-bottom {
+      bottom: 0;
+      transform-origin: center;
     }
   }
 }
 
 &[data-status='menuIsOpen'] {
   .hamburger-line {
-    opacity: 1;
-
-    &::before {
-      top: 0;
-      transform: translateY(0) rotate(45deg);
+    &-top {
+      top: calc(50%);
+      transform: translateY(-50%) rotate(45deg);
     }
 
-    &::after {
-      bottom: 0;
-      transform: translateY(0) rotate(-45deg);
+    &-middle {
+      opacity: 0;
+      transform: translateY(-50%) scaleX(0);
+    }
+
+    &-bottom {
+      bottom: calc(50% - 2px);
+      transform: translateY(-50%) rotate(-45deg);
     }
   }
 }
