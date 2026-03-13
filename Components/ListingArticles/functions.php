@@ -33,7 +33,9 @@ add_filter('Flynt/addComponentData?name=ListingArticles', function ($data) {
             'post'           => $post,
             'postImage'      => $post->thumbnail(),
             'halftoneSvg'    => get_post_meta($post->ID, 'halftone_svg', true),
-            'categorySlugs'  => $categorySlugs,
+            'categorySlugs'       => $categorySlugs,
+            'postIntro'           => get_field('postIntro', $post->ID),
+            'postIntroHomepage'   => get_field('postIntroHomepage', $post->ID),
         ];
     }
 

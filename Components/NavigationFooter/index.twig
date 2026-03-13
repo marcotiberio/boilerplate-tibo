@@ -1,8 +1,16 @@
 <flynt-component load:on="visible" name="NavigationFooter" class="bg-white text-black mt-xs">
   <div class="boxed !min-h-fit flex flex-row justify-between items-end">
-    <div class="w-full flex flex-col gap-sm sm:gap-lg border-t-2 border-black">
+    <div class="w-full flex flex-col gap-md sm:gap-sm md:gap-lg border-t-2 border-black">
       {# Row 1 #}
-      <div class="w-full mt-md">
+      <div class="block sm:hidden w-full mt-sm sm:mt-md">
+        {% if logoFooterMobile %}
+          <img class="lazyload h-auto w-full"
+            src="{{ logoFooterMobile.src }}"
+            data-srcset="{{function('wp_get_attachment_image_srcset', logoFooterMobile.id)}}"
+            data-sizes="auto">
+        {% endif %}
+      </div>
+      <div class="hidden sm:block w-full mt-sm md:mt-md">
         {% if logoFooter %}
           <img class="lazyload h-auto w-full"
             src="{{ logoFooter.src }}"

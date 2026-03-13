@@ -11,7 +11,7 @@ add_filter('Flynt/addComponentData?name=ListingAuthors', function ($data) {
         'ignore_sticky_posts' => 1,
         'posts_per_page'      => -1,
         'orderby'             => 'date',
-        'order'               => 'DESC',
+        'order'               => 'menu_order',
         'tax_query'           => [
             [
                 'taxonomy' => 'post_tag',

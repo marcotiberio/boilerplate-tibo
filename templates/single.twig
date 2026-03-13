@@ -67,7 +67,7 @@
               <div class="w-full">
                 <h2 class="font-h1">{{ post.title }}</h2>
               </div>
-              <div class="w-full flex flex-row gap-xs items-center justify-start lg:mt-lg">
+              <div class="w-full flex flex-row flex-wrap gap-xs items-center justify-start lg:mt-lg">
                 <div class="">
                   {% set postCategories = post.terms('category') %}
                   {% for term in postCategories %}

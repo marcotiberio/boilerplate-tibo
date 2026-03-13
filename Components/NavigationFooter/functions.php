@@ -28,6 +28,18 @@ Options::addTranslatable('NavigationFooter', [
         'endpoint' => 0
     ],
     [
+        'label' => __('Logo Mobile', 'flynt'),
+        'name' => 'logoFooterMobile',
+        'type' => 'image',
+        'preview_size' => 'medium',
+        'instructions' => __('Image-Format: JPG, PNG, SVG.', 'flynt'),
+        'required' => 0,
+        'mime_types' => 'jpg,jpeg,png,svg',
+        'wrapper' =>  [
+            'width' => 50,
+        ]
+    ],
+    [
         'label' => __('Logo', 'flynt'),
         'name' => 'logoFooter',
         'type' => 'image',
@@ -36,7 +48,7 @@ Options::addTranslatable('NavigationFooter', [
         'required' => 0,
         'mime_types' => 'jpg,jpeg,png,svg',
         'wrapper' =>  [
-            'width' => 100,
+            'width' => 50,
         ]
     ],
     [

@@ -1372,7 +1372,7 @@ add_action('wp_head', function () {
             
             // Add desktop size if different
             if ($sizeDesktop != $sizeMobile) {
-                $customStylesCss .= "@media (min-width: 1024px) {\n";
+                $customStylesCss .= "@media (min-width: 1180px) {\n";
                 // Use same selector pattern for desktop
                 if (!empty($headingLevel)) {
                     $customStylesCss .= "  {$headingLevel}, .{$className} {\n";
@@ -1549,6 +1549,44 @@ add_filter('tiny_mce_before_init', function ($init) {
             ? esc_attr($typographyOptions['primaryFontFallback']) 
             : 'Arial, sans-serif');
     
+    // Body & list font settings for TinyMCE
+    $bodySizeMobile = !empty($typographyOptions['bodySizeMobile'])
+        ? floatval($typographyOptions['bodySizeMobile'])
+        : 1.25;
+    $bodySizeDesktop = !empty($typographyOptions['bodySizeDesktop'])
+        ? floatval($typographyOptions['bodySizeDesktop'])
+        : 1.25;
+    $bodyLineHeight = !empty($typographyOptions['bodyLineHeight'])
+        ? floatval($typographyOptions['bodyLineHeight'])
+        : 1.2;
+    $bodyFontWeight = !empty($typographyOptions['bodyFontWeight'])
+        ? esc_attr($typographyOptions['bodyFontWeight'])
+        : '500';
+    $bodySmallSize = !empty($typographyOptions['bodySmallSize'])
+        ? floatval($typographyOptions['bodySmallSize'])
+        : 0.75;
+    $bodySmallLineHeight = !empty($typographyOptions['bodySmallLineHeight'])
+        ? floatval($typographyOptions['bodySmallLineHeight'])
+        : 1.2;
+    $listSizeMobile = !empty($typographyOptions['listSizeMobile'])
+        ? floatval($typographyOptions['listSizeMobile'])
+        : 1.25;
+    $listSizeDesktop = !empty($typographyOptions['listSizeDesktop'])
+        ? floatval($typographyOptions['listSizeDesktop'])
+        : 1.25;
+    $listLineHeight = !empty($typographyOptions['listLineHeight'])
+        ? floatval($typographyOptions['listLineHeight'])
+        : 1.2;
+    $listFontWeight = !empty($typographyOptions['listFontWeight'])
+        ? esc_attr($typographyOptions['listFontWeight'])
+        : '500';
+    $baseFontSizeMobile = !empty($typographyOptions['baseFontSizeMobile'])
+        ? floatval($typographyOptions['baseFontSizeMobile'])
+        : 14;
+    $baseFontSizeDesktop = !empty($typographyOptions['baseFontSizeDesktop'])
+        ? floatval($typographyOptions['baseFontSizeDesktop'])
+        : 16;
+
     // Get button font style settings from Buttons scope (with fallback)
     $buttonOptions = \Flynt\Utils\Options::getGlobal('Buttons');
     if (empty($buttonOptions)) {
@@ -1696,9 +1734,48 @@ add_filter('tiny_mce_before_init', function ($init) {
     $buttonStyles .= "h1, h2, h3, h4, h5, h6 {";
     $buttonStyles .= "font-family: '{$headingFont}', {$headingFontFallback};";
     $buttonStyles .= "}";
+    // Inject CSS variables so tinyMce.scss var() calls work in the editor iframe
+    $buttonStyles .= ":root {";
+    $buttonStyles .= "--primary-font-family: '{$headingFont}', {$headingFontFallback};";
+    $buttonStyles .= "--secondary-font-family: '{$bodyFont}', {$bodyFontFallback};";
+    $buttonStyles .= "--body-size-mobile: {$bodySizeMobile}rem;";
+    $buttonStyles .= "--body-size-desktop: {$bodySizeDesktop}rem;";
+    $buttonStyles .= "--body-line-height: {$bodyLineHeight};";
+    $buttonStyles .= "--body-font-weight: {$bodyFontWeight};";
+    $buttonStyles .= "--body-small-size: {$bodySmallSize}rem;";
+    $buttonStyles .= "--body-small-line-height: {$bodySmallLineHeight};";
+    $buttonStyles .= "--list-size-mobile: {$listSizeMobile}rem;";
+    $buttonStyles .= "--list-size-desktop: {$listSizeDesktop}rem;";
+    $buttonStyles .= "--list-line-height: {$listLineHeight};";
+    $buttonStyles .= "--list-font-weight: {$listFontWeight};";
+    $buttonStyles .= "--base-font-size-mobile: {$baseFontSizeMobile}px;";
+    $buttonStyles .= "--base-font-size-desktop: {$baseFontSizeDesktop}px;";
+    $buttonStyles .= "}";
     // Add body styles — matches frontend which uses var(--primary-font-family) on body
-    $buttonStyles .= "body, p {";
+    $buttonStyles .= "body {";
     $buttonStyles .= "font-family: '{$headingFont}', {$headingFontFallback};";
+    $buttonStyles .= "}";
+    $buttonStyles .= "p, .paragraph, .font-body {";
+    $buttonStyles .= "font-family: '{$headingFont}', {$headingFontFallback};";
+    $buttonStyles .= "font-size: {$bodySizeMobile}rem;";
+    $buttonStyles .= "line-height: {$bodyLineHeight};";
+    $buttonStyles .= "font-weight: {$bodyFontWeight};";
+    $buttonStyles .= "}";
+    $buttonStyles .= "@media (min-width: 1180px) {";
+    $buttonStyles .= "p, .paragraph, .font-body {";
+    $buttonStyles .= "font-size: {$bodySizeDesktop}rem;";
+    $buttonStyles .= "}";
+    $buttonStyles .= "}";
+    // Add list styles
+    $buttonStyles .= "ul li, ol li {";
+    $buttonStyles .= "font-size: {$listSizeMobile}rem;";
+    $buttonStyles .= "line-height: {$listLineHeight};";
+    $buttonStyles .= "font-weight: {$listFontWeight};";
+    $buttonStyles .= "}";
+    $buttonStyles .= "@media (min-width: 1180px) {";
+    $buttonStyles .= "ul li, ol li {";
+    $buttonStyles .= "font-size: {$listSizeDesktop}rem;";
+    $buttonStyles .= "}";
     $buttonStyles .= "}";
     
     // Add custom font styles CSS to TinyMCE
@@ -1775,7 +1852,7 @@ add_filter('tiny_mce_before_init', function ($init) {
             
             // Add desktop size if different
             if ($sizeDesktop != $sizeMobile) {
-                $buttonStyles .= "@media (min-width: 1024px) {";
+                $buttonStyles .= "@media (min-width: 1180px) {";
                 if (!empty($headingLevel)) {
                     $buttonStyles .= "{$headingLevel}, .{$className} {";
                 } else {

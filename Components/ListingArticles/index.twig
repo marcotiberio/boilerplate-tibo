@@ -75,6 +75,11 @@
             {# Info Box #}
             <div class="flex flex-col gap-xs">
               <h3 class="!mb-0 font-h3">{{ article.post.title }}</h3>
+              {% if article.postIntroHomepage %}
+                <p class="font-subline mt-min">{{ article.postIntroHomepage }}</p>
+              {% else %}
+                <p class="font-subline mt-min">{{ article.postIntro }}</p>
+              {% endif %}
               <div class="flex flex-row gap-xs items-center flex-wrap">
                 {% set postCategories = article.post.terms('category') %}
                 {% for term in postCategories %}
