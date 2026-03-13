@@ -58,13 +58,13 @@ add_action('Flynt/afterRegisterComponents', function () {
                 ]
             ],
             array_merge(getColorBackground(), ['default_value' => '#f1f1f1']),
-            [
-                'label' => __('Media', 'flynt'),
-                'name' => 'mediaTab',
-                'type' => 'tab',
-                'placement' => 'top',
-                'endpoint' => 0
-            ],
+            // [
+            //     'label' => __('Media', 'flynt'),
+            //     'name' => 'mediaTab',
+            //     'type' => 'tab',
+            //     'placement' => 'top',
+            //     'endpoint' => 0
+            // ],
             // [
             //     'label' => __('Featured Image (Alternative)', 'flynt'),
             //     'instructions' => __('Image-Format: JPG, PNG.', 'flynt'),
