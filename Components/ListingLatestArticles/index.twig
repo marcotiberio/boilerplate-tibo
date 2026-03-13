@@ -8,9 +8,9 @@
           <div class="max-w-screen-tablet mx-auto bg-white px-0 py-sm md:py-sm md:px-sm lg:px-md flex flex-col gap-sm justify-center items-center md:items-start">
             <h2 class="font-h1 text-center md:text-left">{{ post.title }}</h2>
             {% if post.postIntroHomepage %}
-              <p class="font-subline mt-min">{{ post.postIntroHomepage }}</p>
+              <p class="font-subline mt-min text-center md:text-left">{{ post.postIntroHomepage }}</p>
             {% else %}
-              <p class="font-subline mt-min">{{ post.postIntro }}</p>
+              <p class="font-subline mt-min text-center md:text-left">{{ post.postIntro }}</p>
             {% endif %}
             <div class="w-full flex flex-row flex-wrap gap-xs items-center justify-center md:justify-start">
               <div class="">
