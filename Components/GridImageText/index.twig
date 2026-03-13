@@ -4,7 +4,7 @@
   style="background-color:{% if options.colorBackground %}{{ options.colorBackground }}{% else %}var(--transparent){% endif %};">
   <div class="wrapper boxed !pt-0 max-w-screen-max mx-auto {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
     {% if headlineTitle %}
-      <div class="max-w-screen-max mx-auto py-md md:py-xl flex justify-center items-center text-center font-smallTitle {% if options.addBorderTop %}border-t{% endif %}">
+      <div class="max-w-screen-max mx-auto py-md md:py-xl flex justify-center items-center text-center font-smallTitle {% if options.addBorderTop %}border-t-2{% endif %}">
         {{ headlineTitle }}
       </div>
     {% endif %}
@@ -39,7 +39,7 @@
             {% endif %}
           {% endif %}
           {% if item.imageBoxTitle %}
-            <div class="font-bodySmall !mb-0 pt-[10px] uppercase border-t border-white">{{ item.imageBoxTitle }}</div>
+            <div class="font-bodySmall !mb-0 pt-[10px] uppercase border-t-2 border-white">{{ item.imageBoxTitle }}</div>
           {% endif %}
           <div class="w-full flex flex-col grow justify-start">
             <div class="w-full flex flex-col">

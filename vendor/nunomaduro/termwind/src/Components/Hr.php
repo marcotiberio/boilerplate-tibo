@@ -6,5 +6,5 @@ namespace Termwind\Components;
 
 final class Hr extends Element
 {
-    protected static array $defaultStyles = ['block', 'border-t'];
+    protected static array $defaultStyles = ['block', 'border-t-2'];
 }

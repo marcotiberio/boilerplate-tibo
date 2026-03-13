@@ -61,7 +61,7 @@
       </div>
 
       <!-- Posts Grid -->
-      <div class="flex flex-col border-t">
+      <div class="flex flex-col border-t-2">
         {% for post in posts %}
           {% set journalCategoryTerms = post.terms('journal-category') %}
           {% set allTerms = journalCategoryTerms %}

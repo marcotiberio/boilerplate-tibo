@@ -375,7 +375,7 @@ final class Styles
     final public function borderT(int $width = 1): self
     {
         if (! $this->element instanceof Hr) {
-            throw new InvalidStyle('`border-t` can only be used on an "hr" element.');
+            throw new InvalidStyle('`border-t-2` can only be used on an "hr" element.');
         }
 
         $this->styleModifiers[__METHOD__] = function ($text, $styles): string {
