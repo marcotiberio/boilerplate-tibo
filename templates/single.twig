@@ -96,9 +96,9 @@
                 <section class="flex flex-col">
                   {# Author Box Mobile #}
                   {% if post.meta('postAuthor') %}
-                    <div class="flex lg:hidden">
+                    <div class="flex flex-col gap-xs lg:hidden">
                       {% for author in Post(post.meta('postAuthor')) %}
-                        <div class="w-full flex flex-row items-center gap-xs bg-white py-lg px-sm">
+                        <div class="w-full flex flex-row items-center gap-xs bg-white py-sm px-sm">
                           {% if author.thumbnail %}
                             <img class="w-[70px] h-[70px] rounded-full object-cover"
                               src="{{ author.thumbnail.src('thumbnail') }}"
