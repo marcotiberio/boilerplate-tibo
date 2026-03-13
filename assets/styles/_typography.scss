@@ -58,28 +58,19 @@
 //   }
 // }
 
-// // Body
-// p,
-// .paragraph,
-// .font-body {
-//   font-size: var(--body-size-mobile, 1.25rem);
-//   line-height: var(--body-line-height, 1.2);
-//   font-weight: var(--body-font-weight, 500);
-//   margin-block-end: 1rem;
+// Body
+p,
+.paragraph,
+.font-body {
+  font-family: var(--primary-font-family, Arial, sans-serif);
+  font-size: var(--body-size-mobile, 1rem);
+  line-height: var(--body-line-height, 1.2);
+  font-weight: var(--body-font-weight, 500);
 
-//   :last-child {
-//     margin-block-end: 0;
-//   }
-
-//   @screen desktop {
-//     font-size: var(--body-size-desktop, 1.25rem);
-//   }
-
-//   a {
-//     @apply no-underline;
-//     @apply hover:text-black;
-//   }
-// }
+  @screen desktop {
+    font-size: var(--body-size-desktop, 1.25rem);
+  }
+}
 
 // // Body Small
 // .font-bodySmall,

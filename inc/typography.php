@@ -450,6 +450,126 @@ add_action('acf/init', function () {
                 ],
             ],
         ],
+        // Tab: Body & Lists
+        [
+            'label' => __('Body & Lists', 'flynt'),
+            'name' => 'bodyListsTab',
+            'type' => 'tab',
+            'placement' => 'top',
+            'endpoint' => 0,
+        ],
+        [
+            'label' => __('Body Font Size (Desktop)', 'flynt'),
+            'instructions' => __('Body/paragraph font size in rem for desktop.', 'flynt'),
+            'name' => 'bodySizeDesktop',
+            'type' => 'number',
+            'default_value' => 1.25,
+            'min' => 0.5,
+            'max' => 4,
+            'step' => 0.125,
+            'wrapper' => [
+                'width' => 25,
+            ],
+        ],
+        [
+            'label' => __('Body Font Size (Mobile)', 'flynt'),
+            'instructions' => __('Body/paragraph font size in rem for mobile.', 'flynt'),
+            'name' => 'bodySizeMobile',
+            'type' => 'number',
+            'default_value' => 1.25,
+            'min' => 0.5,
+            'max' => 4,
+            'step' => 0.125,
+            'wrapper' => [
+                'width' => 25,
+            ],
+        ],
+        [
+            'label' => __('Body Line Height', 'flynt'),
+            'instructions' => __('Line height for body text (unitless).', 'flynt'),
+            'name' => 'bodyLineHeight',
+            'type' => 'number',
+            'default_value' => 1.2,
+            'min' => 0.8,
+            'max' => 2,
+            'step' => 0.1,
+            'wrapper' => [
+                'width' => 25,
+            ],
+        ],
+        [
+            'label' => __('Body Font Weight', 'flynt'),
+            'instructions' => __('Font weight for body text.', 'flynt'),
+            'name' => 'bodyFontWeight',
+            'type' => 'select',
+            'choices' => [
+                '300' => '300 (Light)',
+                '400' => '400 (Regular)',
+                '500' => '500 (Medium)',
+                '600' => '600 (Semibold)',
+                '700' => '700 (Bold)',
+            ],
+            'default_value' => '500',
+            'wrapper' => [
+                'width' => 25,
+            ],
+        ],
+        [
+            'label' => __('List Font Size (Desktop)', 'flynt'),
+            'instructions' => __('List item font size in rem for desktop.', 'flynt'),
+            'name' => 'listSizeDesktop',
+            'type' => 'number',
+            'default_value' => 1.25,
+            'min' => 0.5,
+            'max' => 4,
+            'step' => 0.125,
+            'wrapper' => [
+                'width' => 25,
+            ],
+        ],
+        [
+            'label' => __('List Font Size (Mobile)', 'flynt'),
+            'instructions' => __('List item font size in rem for mobile.', 'flynt'),
+            'name' => 'listSizeMobile',
+            'type' => 'number',
+            'default_value' => 1.25,
+            'min' => 0.5,
+            'max' => 4,
+            'step' => 0.125,
+            'wrapper' => [
+                'width' => 25,
+            ],
+        ],
+        [
+            'label' => __('List Line Height', 'flynt'),
+            'instructions' => __('Line height for list items (unitless).', 'flynt'),
+            'name' => 'listLineHeight',
+            'type' => 'number',
+            'default_value' => 1.2,
+            'min' => 0.8,
+            'max' => 2,
+            'step' => 0.1,
+            'wrapper' => [
+                'width' => 25,
+            ],
+        ],
+        [
+            'label' => __('List Font Weight', 'flynt'),
+            'instructions' => __('Font weight for list items.', 'flynt'),
+            'name' => 'listFontWeight',
+            'type' => 'select',
+            'choices' => [
+                '300' => '300 (Light)',
+                '400' => '400 (Regular)',
+                '500' => '500 (Medium)',
+                '600' => '600 (Semibold)',
+                '700' => '700 (Bold)',
+            ],
+            'default_value' => '500',
+            'wrapper' => [
+                'width' => 25,
+            ],
+        ],
     ], 'Typography');
 
     // Button Styles — separate options group
@@ -1077,8 +1197,21 @@ add_action('wp_head', function () {
     $bodySmallLineHeight = !empty($typographyOptions['bodySmallLineHeight']) 
         ? floatval($typographyOptions['bodySmallLineHeight']) 
         : 1.2;
-    $bodyFontWeight = !empty($typographyOptions['bodyFontWeight']) 
-        ? esc_attr($typographyOptions['bodyFontWeight']) 
+    $bodyFontWeight = !empty($typographyOptions['bodyFontWeight'])
+        ? esc_attr($typographyOptions['bodyFontWeight'])
+        : '500';
+    // List font settings
+    $listSizeMobile = !empty($typographyOptions['listSizeMobile'])
+        ? floatval($typographyOptions['listSizeMobile'])
+        : 1.25;
+    $listSizeDesktop = !empty($typographyOptions['listSizeDesktop'])
+        ? floatval($typographyOptions['listSizeDesktop'])
+        : 1.25;
+    $listLineHeight = !empty($typographyOptions['listLineHeight'])
+        ? floatval($typographyOptions['listLineHeight'])
+        : 1.2;
+    $listFontWeight = !empty($typographyOptions['listFontWeight'])
+        ? esc_attr($typographyOptions['listFontWeight'])
         : '500';
     // Get button options from separate Buttons scope (with fallback to Typography for backward compat)
     $buttonOptions = Options::getGlobal('Buttons');
@@ -1152,6 +1285,10 @@ add_action('wp_head', function () {
     $css .= "  --body-font-weight: {$bodyFontWeight};\n";
     $css .= "  --body-small-size: {$bodySmallSize}rem;\n";
     $css .= "  --body-small-line-height: {$bodySmallLineHeight};\n";
+    $css .= "  --list-size-mobile: {$listSizeMobile}rem;\n";
+    $css .= "  --list-size-desktop: {$listSizeDesktop}rem;\n";
+    $css .= "  --list-line-height: {$listLineHeight};\n";
+    $css .= "  --list-font-weight: {$listFontWeight};\n";
     $css .= "}\n";
     
     echo "<style id='flynt-typography-css'>\n{$css}\n</style>\n";
