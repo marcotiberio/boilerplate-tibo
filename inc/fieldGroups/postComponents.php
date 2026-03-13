@@ -105,6 +105,19 @@ add_action('Flynt/afterRegisterComponents', function () {
             //         'width' => 33,
             //     ],
             // ],
+            [
+                'label' => __('Share Buttons', 'flynt'),
+                'name' => 'shareButtonsTab',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0,
+            ],
+            [
+                'label' => __('Title', 'flynt'),
+                'name' => 'shareButtonsTitle',
+                'type' => 'text',
+                'default_value' => 'Beitrag teilen',
+            ],
         ],
         'location' => [
             [
@@ -151,6 +164,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockGalleryMedia\getACFLayout(),
                     Components\BlockSpacer\getACFLayout(),
                     Components\BlockWysiwyg\getACFLayout(),
+                    Components\BlockShareButtons\getACFLayout(),
                 ],
             ],
         ],

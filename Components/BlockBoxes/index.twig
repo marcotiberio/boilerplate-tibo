@@ -11,7 +11,11 @@
       {% if options.columns == '4' %}boxes--4{% endif %}
     ">
       {% for box in boxes %}
+      {% if box.link %}
+      <a href="{{ box.link }}" class="box flex flex-col justify-center items-center gap-xs no-underline">
+      {% else %}
       <div class="box flex flex-col justify-center items-center gap-xs">
+      {% endif %}
         <div
           class="flex flex-col justify-center items-center p-sm w-full aspect-video"
           style="background-color: {% if box.colorBackground %}{{ box.colorBackground }}{% else %}transparent{% endif %};">
@@ -27,7 +31,11 @@
         {% if box.title %}
           <h3 class="font-h3 !mb-0">{{ box.title|e }}</h3>
         {% endif %}
+      {% if box.link %}
+      </a>
+      {% else %}
       </div>
+      {% endif %}
       {% endfor %}
     </div>
   </div>

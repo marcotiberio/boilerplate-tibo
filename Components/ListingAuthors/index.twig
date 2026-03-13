@@ -29,7 +29,10 @@
             {# Halftone or Featured Image #}
             <div class="relative w-full aspect-3/4 overflow-hidden">
               {% if author.postImage %}
-                <a href="{{ author.post.link }}" title="{{ author.post.title }}">
+                <a 
+                  {# href="{{ author.post.link }}" #}
+                  class="pointer-events-none"
+                  title="{{ author.post.title }}">
                   <img
                     class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     src="{{ author.postImage.src }}"
@@ -42,7 +45,12 @@
 
             {# Info Box #}
             <div class="flex flex-col gap-min items-start justify-start">
-              <a href="{{ author.post.link }}" class="!mb-0 font-h3 no-underline" title="{{ author.post.title }}">{{ author.post.title }}</a>
+              <a 
+                {# href="{{ author.post.link }}"  #}
+                class="!mb-0 font-h3 no-underline pointer-events-none" 
+                title="{{ author.post.title }}">
+                {{ author.post.title }}
+              </a>
               <div class="flex flex-col gap-xs items-start justify-start flex-wrap">
                 {% set authorCategories = author.post.terms('position-category') %}
                 {% for term in authorCategories %}

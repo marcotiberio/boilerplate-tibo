@@ -12,6 +12,14 @@ add_filter('Flynt/addComponentData?name=ListingAuthors', function ($data) {
         'posts_per_page'      => -1,
         'orderby'             => 'date',
         'order'               => 'DESC',
+        'tax_query'           => [
+            [
+                'taxonomy' => 'post_tag',
+                'field'    => 'slug',
+                'terms'    => ['guest'],
+                'operator' => 'NOT IN',
+            ],
+        ],
     ];
 
     $posts = Timber::get_posts($queryArgs);

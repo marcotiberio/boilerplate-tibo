@@ -72,27 +72,24 @@ Options::addTranslatable('NavigationFooter', [
         'button_label' => __('Add Column', 'flynt'),
         'sub_fields' => [
             [
-                'label' => __('Content', 'flynt'),
-                'name' => 'contentHtml',
-                'type' => 'wysiwyg',
-                'tabs' => 'visual,text',
-                'delay' => 1,
-                'media_upload' => 0,
-                'required' => 0,
-                'wrapper' => [
-                    'width' => 100
+                'label' => __('Links', 'flynt'),
+                'name' => 'links',
+                'type' => 'repeater',
+                'layout' => 'table',
+                'min' => 0,
+                'button_label' => __('Add Link', 'flynt'),
+                'sub_fields' => [
+                    [
+                        'label' => __('Link', 'flynt'),
+                        'name' => 'link',
+                        'type' => 'link',
+                        'required' => 1,
+                        'wrapper' => [
+                            'width' => 100
+                        ],
+                    ],
                 ],
             ],
-            // [
-            //     'label' => __('Enable Newsletter Form', 'flynt'),
-            //     'name' => 'enableNewsletter',
-            //     'type' => 'true_false',
-            //     'default_value' => 0,
-            //     'ui' => 1,
-            //     'wrapper' => [
-            //         'width' => 50
-            //     ],
-            // ],
         ]
     ],
     [

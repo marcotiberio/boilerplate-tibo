@@ -24,11 +24,11 @@
               x-bind:href="document.referrer && new URL(document.referrer).hostname === window.location.hostname ? 'javascript:history.back()' : '{{ site.url }}'"
               class="no-underline w-[calc(100%-48px)] flex items-center justify-center text-center p-min absolute bg-white top-sm left-sm z-10"
             >
-              {# TODO: Label #}
-              <span class="before:content-['←'] before:mr-min">Zurück</span>
+              <span class="before:content-['←'] before:mr-min">{{ backButtonLabel }}</span>
             </a>
+            {# Author Box Desktop #}
             {% if post.meta('postAuthor') %}
-              <div class="w-[calc(100%-48px)] md:w-fit absolute bottom-sm left-sm right-sm z-10 flex flex-row gap-xs">
+              <div class="hidden lg:flex w-[calc(100%-48px)] md:w-fit absolute bottom-sm left-sm right-sm z-10 flex-row gap-xs">
                 {% for author in Post(post.meta('postAuthor')) %}
                   <div class="flex flex-row items-center gap-xs bg-white p-sm">
                     {% if author.thumbnail %}
@@ -38,15 +38,14 @@
                     {% endif %}
                     <div class="flex flex-col gap-min">
                       <div class="flex flex-row gap-min">
-                        {# TODO: Label #}
-                        <span class="font-bodySmall font-sans font-bold !mb-0">Ein Artikel von</span>
+                        <span class="font-bodySmall font-sans font-bold !mb-0">{{ authorLabel }}</span>
                         <span class="font-bodySmall font-sans font-bold !mb-0">{{ author.title }}</span>
                       </div>
                       {% set socials = author.meta('authorSocials') %}
                       {% if socials %}
                         <div class="flex flex-row gap-xs">
                           {% for social in socials %}
-                            <a href="{{ social.platform == 'email' ? 'mailto:' ~ social.url : social.url }}" target="_blank" rel="noopener" class="block w-[30px] h-[30px] bg-grei p-min [&_svg]:w-full [&_svg]:h-full [&_svg]:fill-current">
+                            <a href="{{ social.platform == 'email' ? 'mailto:' ~ social.url : social.url }}" target="_blank" rel="noopener" class="block w-[30px] h-[30px] bg-grei p-min [&_svg]:w-full [&_svg]:h-full">
                               {% include 'assets/icons/' ~ social.platform ~ '.svg' ignore missing %}
                             </a>
                           {% endfor %}
@@ -59,15 +58,15 @@
             {% endif %}
           </div>
           {# Right #}
-          <div class="w-full lg:w-full h-full flex flex-col justify-between p-sm">
+          <div class="w-full lg:w-full h-full flex flex-col justify-between px-xs pt-sm md:p-sm md:pb-0">
             <div class="flex flex-col gap-sm">
               <div class="w-full">
                 <h3 class="font-body">{{ post.postCustomText }}</h3>
               </div>
               <div class="w-full">
-                <h2 class="font-h1">„{{ post.title }}”</h2>
+                <h2 class="font-h1">{{ post.title }}</h2>
               </div>
-              <div class="w-full flex flex-row gap-xs items-center justify-start mt-lg">
+              <div class="w-full flex flex-row gap-xs items-center justify-start lg:mt-lg">
                 <div class="">
                   {% set postCategories = post.terms('category') %}
                   {% for term in postCategories %}
@@ -93,6 +92,39 @@
                   {% for component in post.meta('postComponents') %}
                     {{ renderComponent(component) }}
                   {% endfor %}
+                </section>
+                <section class="flex flex-col">
+                  {# Author Box Mobile #}
+                  {% if post.meta('postAuthor') %}
+                    <div class="flex lg:hidden">
+                      {% for author in Post(post.meta('postAuthor')) %}
+                        <div class="w-full flex flex-row items-center gap-xs bg-white py-lg px-sm">
+                          {% if author.thumbnail %}
+                            <img class="w-[70px] h-[70px] rounded-full object-cover"
+                              src="{{ author.thumbnail.src('thumbnail') }}"
+                              alt="{{ author.thumbnail.alt|e | default('') }}">
+                          {% endif %}
+                          <div class="flex flex-col gap-min">
+                            <div class="flex flex-row gap-min">
+                              <span class="font-bodySmall font-sans font-bold !mb-0">{{ authorLabel }}</span>
+                              <span class="font-bodySmall font-sans font-bold !mb-0">{{ author.title }}</span>
+                            </div>
+                            {% set socials = author.meta('authorSocials') %}
+                            {% if socials %}
+                              <div class="flex flex-row gap-xs">
+                                {% for social in socials %}
+                                  <a href="{{ social.platform == 'email' ? 'mailto:' ~ social.url : social.url }}" target="_blank" rel="noopener" class="block w-[30px] h-[30px] bg-grei p-min [&_svg]:w-full [&_svg]:h-full">
+                                    {% include 'assets/icons/' ~ social.platform ~ '.svg' ignore missing %}
+                                  </a>
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                  {{ renderComponent('BlockShareButtons') }}
                 </section>
               </div>
             </div>

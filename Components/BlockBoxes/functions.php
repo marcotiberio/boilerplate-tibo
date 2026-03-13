@@ -50,7 +50,16 @@ function getACFLayout()
                         'type' => 'text',
                         'required' => 0,
                         'wrapper' => [
-                            'width' => 60
+                            'width' => 30
+                        ],
+                    ],
+                    [
+                        'label' => __('Link', 'flynt'),
+                        'name' => 'link',
+                        'type' => 'url',
+                        'required' => 0,
+                        'wrapper' => [
+                            'width' => 30
                         ],
                     ],
                     FieldVariables\getColorBackground(),

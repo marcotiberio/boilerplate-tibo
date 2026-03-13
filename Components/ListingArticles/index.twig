@@ -1,6 +1,11 @@
 {% if articles|length > 0 %}
   <flynt-component load:on="visible" name="ListingArticles" class="w-full">
-    <div class="boxed flex flex-col gap-sm {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
+    <div
+      class="boxed flex flex-col gap-sm {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}"
+      x-data="{ activeFilter: location.hash.replace('#', '') || 'all' }"
+      x-init="$watch('activeFilter', val => history.replaceState(null, '', val === 'all' ? location.pathname : '#' + val))"
+      @hashchange.window="activeFilter = location.hash.replace('#', '') || 'all'"
+    >
 
       {# Header: Title + See All #}
       {% if blockTitle or seeAllLink %}
@@ -10,21 +15,46 @@
           {% endif %}
           {% if seeAllLink %}
             <a href="{{ seeAllLink.url }}" class="see-all-button flex flex-row items-center gap-xs font-body hover:opacity-70 transition-opacity" {% if seeAllLink.target %}target="{{ seeAllLink.target }}"{% endif %}>
-              {# <span>{{ seeAllLink.title|default('See All') }}</span> #}
-              {# TODO: svg icon #}
               <svg width="32" height="22" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M19.0322 21.2399C18.8242 21.2399 18.6562 21.1839 18.5282 21.0719C18.4002 20.9439 18.3362 20.7999 18.3362 20.6399C18.3522 20.5599 18.3682 20.4639 18.3842 20.3519C18.4642 20.0479 18.5682 19.7119 18.6962 19.3439L21.5522 11.7119L3.91222 12.9839C2.56822 13.1279 1.57622 12.9839 0.936215 12.5519C0.312215 12.1039 0.000214994 11.4639 0.000214994 10.6319C0.000214994 9.79987 0.320215 9.15987 0.960215 8.71187C1.61622 8.24787 2.60022 8.09587 3.91222 8.25587L21.5282 9.50387L18.6962 1.87187C18.5682 1.56787 18.4722 1.31187 18.4082 1.10387C18.3602 0.895866 18.3362 0.727866 18.3362 0.599865C18.3362 0.439866 18.4002 0.303866 18.5282 0.191866C18.6562 0.0638661 18.8242 -0.000133991 19.0322 -0.000133991C19.3682 -0.000133991 19.6802 0.119866 19.9682 0.359866L31.1522 9.59987C31.3442 9.75987 31.4882 9.91987 31.5842 10.0799C31.6802 10.2239 31.7282 10.3999 31.7282 10.6079C31.7282 10.7999 31.6802 10.9759 31.5842 11.1359C31.5042 11.2959 31.3602 11.4639 31.1522 11.6399L19.9682 20.8799C19.6802 21.1199 19.3682 21.2399 19.0322 21.2399Z" fill="black"/>
               </svg>
-
             </a>
           {% endif %}
+        </div>
+      {% endif %}
+
+      {# Category Filters #}
+      {% if categories|length > 1 %}
+        <div class="flex flex-row gap-xs items-center flex-wrap">
+          <button
+            class="button button--grey !font-body !mb-0 cursor-pointer transition-opacity"
+            :class="activeFilter === 'all' ? '' : 'opacity-40'"
+            x-on:click="activeFilter = 'all'"
+          >
+            All
+          </button>
+          {% for slug, name in categories %}
+            <button
+              class="button button--grey !font-body !mb-0 cursor-pointer transition-opacity"
+              :class="activeFilter === '{{ slug }}' ? '' : 'opacity-40'"
+              x-on:click="activeFilter = '{{ slug }}'"
+            >
+              {{ name }}
+            </button>
+          {% endfor %}
         </div>
       {% endif %}
 
       {# Articles Grid #}
       <div class="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-sm">
         {% for article in articles %}
-          <a href="{{ article.post.link }}" class="group flex flex-col gap-xs no-underline" title="{{ article.post.title }}">
+          <a
+            href="{{ article.post.link }}"
+            class="group flex flex-col gap-xs no-underline"
+            title="{{ article.post.title }}"
+            x-show="activeFilter === 'all' || '{{ article.categorySlugs|join(',') }}'.split(',').includes(activeFilter)"
+            x-transition.opacity.duration.200ms
+          >
 
             {# Halftone or Featured Image #}
             <div class="relative w-full aspect-4/3 overflow-hidden">

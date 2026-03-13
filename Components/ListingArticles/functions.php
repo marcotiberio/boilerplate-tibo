@@ -5,11 +5,14 @@ namespace Flynt\Components\ListingArticles;
 use Timber\Timber;
 
 add_filter('Flynt/addComponentData?name=ListingArticles', function ($data) {
+    $postsPerPage = $data['postsPerPage'] ?? -1;
+    $postsPerPage = $postsPerPage ? (int) $postsPerPage : -1;
+
     $queryArgs = [
         'post_status'         => 'publish',
         'post_type'           => 'post',
         'ignore_sticky_posts' => 1,
-        'posts_per_page'      => -1,
+        'posts_per_page'      => $postsPerPage,
         'orderby'             => 'date',
         'order'               => 'DESC',
     ];
@@ -17,13 +20,25 @@ add_filter('Flynt/addComponentData?name=ListingArticles', function ($data) {
     $posts = Timber::get_posts($queryArgs);
 
     $data['articles'] = [];
+    $allCategories = [];
     foreach ($posts as $post) {
+        $terms = wp_get_post_terms($post->ID, 'category', ['fields' => 'all']);
+        $categorySlugs = [];
+        foreach ($terms as $term) {
+            $categorySlugs[] = $term->slug;
+            $allCategories[$term->slug] = $term->name;
+        }
+
         $data['articles'][] = [
-            'post'        => $post,
-            'postImage'   => $post->thumbnail(),
-            'halftoneSvg' => get_post_meta($post->ID, 'halftone_svg', true),
+            'post'           => $post,
+            'postImage'      => $post->thumbnail(),
+            'halftoneSvg'    => get_post_meta($post->ID, 'halftone_svg', true),
+            'categorySlugs'  => $categorySlugs,
         ];
     }
+
+    $showFiltering = $data['options']['showFiltering'] ?? false;
+    $data['categories'] = $showFiltering ? $allCategories : [];
 
     return $data;
 });
@@ -47,6 +62,9 @@ function getACFLayout()
                 'name' => 'blockTitle',
                 'type' => 'text',
                 'required' => 0,
+                'wrapper' => [
+                    'width' => 33,
+                ],
             ],
             [
                 'label' => __('See All Link', 'flynt'),
@@ -55,6 +73,20 @@ function getACFLayout()
                 'type' => 'link',
                 'return_format' => 'array',
                 'required' => 0,
+                'wrapper' => [
+                    'width' => 33,
+                ],
+            ],
+            [
+                'label' => __('Number of Posts', 'flynt'),
+                'instructions' => __('Number of posts to display. Leave empty to show all.', 'flynt'),
+                'name' => 'postsPerPage',
+                'type' => 'number',
+                'min' => 1,
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 33,
+                ],
             ],
             [
                 'label' => __('Options', 'flynt'),
@@ -77,6 +109,22 @@ function getACFLayout()
                         'ui' => 1,
                         'ui_on_text' => __('Yes', 'flynt'),
                         'ui_off_text' => __('No', 'flynt'),
+                        'wrapper' => [
+                            'width' => 50,
+                        ],
+                    ],
+                    [
+                        'label' => __('Show Filtering', 'flynt'),
+                        'instructions' => __('Show or hide the category filter.', 'flynt'),
+                        'name' => 'showFiltering',
+                        'type' => 'true_false',
+                        'default_value' => 1,
+                        'ui' => 1,
+                        'ui_on_text' => __('Yes', 'flynt'),
+                        'ui_off_text' => __('No', 'flynt'),
+                        'wrapper' => [
+                            'width' => 50,
+                        ],
                     ],
                 ]
             ]

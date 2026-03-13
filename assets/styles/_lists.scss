@@ -11,7 +11,7 @@
         font-size: inherit;
         line-height: var(--body-line-height, 1.2) !important;
         margin-bottom: 0;
-        margin-left: 3rem;
+        margin-left: 1.2rem;
         text-indent: -1.2rem;
 
         &.font-body {
@@ -28,7 +28,7 @@
         }
 
         &::before {
-          content: '-';
+          content: '•';
           @apply mr-[8px];
         }
       }
@@ -38,7 +38,7 @@
       font-size: var(--body-size-mobile, 1.25rem);
       line-height: var(--body-line-height, 1.2) !important;
       margin-bottom: 0;
-      margin-left: 3rem;
+      margin-left: 1.2rem;
       text-indent: -1.2rem;
 
       @screen desktop {
@@ -59,7 +59,7 @@
       }
 
       &::before {
-        content: '-';
+        content: '•';
         @apply mr-[8px];
       }
     }

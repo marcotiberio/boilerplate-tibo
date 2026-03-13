@@ -36,8 +36,9 @@ flynt-component {
   @apply w-full;
   @apply max-w-screen-box;
   @apply mx-auto;
-  @apply px-sm;
+  @apply px-xs;
   @apply py-sm;
+  @apply md:p-sm;
 
   &--inner {
     @apply px-sm;
