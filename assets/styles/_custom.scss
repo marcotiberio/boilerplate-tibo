@@ -33,7 +33,7 @@ body {
 
 .single {
   header {
-    @apply hidden;
+    @apply lg:hidden;
   }
 
   // :not(.home) .mainContent {

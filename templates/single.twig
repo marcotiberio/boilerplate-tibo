@@ -5,12 +5,12 @@
     <div 
       class="w-full mx-auto flex flex-col justify-between items-center">
       <div class="wrapper max-w-screen-max mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 h-full relative">
+        <div class="grid grid-cols-1 lg:grid-cols-2 h-full relative">
           {# Left #}
-          <div class="w-full md:sticky md:top-0 md:h-screen relative">
+          <div class="w-full lg:sticky lg:top-0 lg:h-screen relative">
             {% set halftone_svg = post.meta('halftone_svg') %}
             {% if halftone_svg %}
-              <div class="halftone-image relative h-[100vw] md:h-screen overflow-hidden [&_svg]:absolute [&_svg]:inset-0 [&_svg]:w-full [&_svg]:h-full">{{ halftone_svg|raw }}</div>
+              <div class="halftone-image relative h-[100vw] lg:h-screen overflow-hidden [&_svg]:absolute [&_svg]:inset-0 [&_svg]:w-full [&_svg]:h-full">{{ halftone_svg|raw }}</div>
             {% elseif post.thumbnail %}
               <img class="w-full h-full igure-image lazyload object-cover"
                 src="{{ post.thumbnail.src }}"
@@ -19,16 +19,17 @@
                 style="opacity: 0; transition: opacity 0.5s ease-in-out;"
                 onload="this.style.opacity='1'">
             {% endif %}
+            {# Back Button #}
             <a
               x-data
               x-bind:href="document.referrer && new URL(document.referrer).hostname === window.location.hostname ? 'javascript:history.back()' : '{{ site.url }}'"
-              class="no-underline w-[calc(100%-48px)] flex items-center justify-center text-center p-min absolute bg-white top-sm left-sm z-10"
+              class="hidden lg:flex no-underline w-[calc(100%-48px)] items-center justify-center text-center p-min absolute bg-white top-sm left-sm z-10"
             >
               <span class="before:content-['←'] before:mr-min">{{ backButtonLabel }}</span>
             </a>
             {# Author Box Desktop #}
             {% if post.meta('postAuthor') %}
-              <div class="hidden lg:flex w-[calc(100%-48px)] md:w-fit absolute bottom-sm left-sm right-sm z-10 flex-row gap-xs">
+              <div class="hidden lg:flex w-[calc(100%-48px)] lg:w-fit absolute bottom-sm left-sm right-sm z-10 flex-row gap-xs">
                 {% for author in Post(post.meta('postAuthor')) %}
                   <div class="flex flex-row items-center gap-xs bg-white p-sm">
                     {% if author.thumbnail %}
@@ -58,7 +59,7 @@
             {% endif %}
           </div>
           {# Right #}
-          <div class="w-full lg:w-full h-full flex flex-col justify-between px-xs pt-sm md:p-sm md:pb-0">
+          <div class="w-full lg:w-full h-full flex flex-col justify-between px-xs pt-sm lg:p-sm lg:pb-0">
             <div class="flex flex-col gap-sm">
               <div class="w-full">
                 <h3 class="font-body">{{ post.postCustomText }}</h3>
