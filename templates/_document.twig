@@ -29,7 +29,7 @@
             </div>
           {% endblock %}
         </header>
-        <main id="mainContent" class="mainContent min-h-screen {% if fn('is_front_page') or fn('is_single') or fn('is_singular', 'author') %}mt-0 lg:mt-0 {% else %} mt-[44px] lg:mt-[72px]{% endif %}" aria-label="{{ __('Content', 'flynt') }}">
+        <main id="mainContent" class="mainContent min-h-[calc(100vh-675px)] lg:min-h-[calc(100vh-500px)] {% if fn('is_front_page') or fn('is_single') or fn('is_singular', 'author') %}mt-0 lg:mt-0 {% else %} mt-[44px] lg:mt-[72px]{% endif %}" aria-label="{{ __('Content', 'flynt') }}">
           <a href="#mainContent" class="skipLink">
             {{ __("Skip to main content", "flynt") }}
           </a>
