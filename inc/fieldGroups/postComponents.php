@@ -165,6 +165,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockSpacer\getACFLayout(),
                     Components\BlockWysiwyg\getACFLayout(),
                     Components\BlockShareButtons\getACFLayout(),
+                    Components\BlockTable\getACFLayout(),
                 ],
             ],
         ],

@@ -1,0 +1,33 @@
+<flynt-component
+  load:on="visible"
+  name="BlockTable">
+  <div class="boxed flex flex-col gap-sm {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
+    {% if blockTitle %}
+      <h2 class="font-h2 !mb-0">{{ blockTitle|e }}</h2>
+    {% endif %}
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse min-w-[600px] table-fixed">
+        {% if columns %}
+          <thead>
+            <tr class="border-t-2 border-b-2 border-current">
+              {% for column in columns %}
+                <th class="font-bodyBold p-sm text-left align-top relative {% if not loop.first %}before:content-[''] before:absolute before:left-0 before:top-sm before:h-[calc(100%-48px)] before:w-[2px] before:bg-current{% else %}!pl-0{% endif %}">{{ column.columnTitle|e }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+        {% endif %}
+        {% if rows %}
+          <tbody>
+            {% for row in rows %}
+              <tr class="border-b-2 border-current">
+                {% for cell in row.cells %}
+                  <td class="font-body p-sm text-left align-top relative {% if not loop.first %}before:content-[''] before:absolute before:left-0 before:top-sm before:h-[calc(100%-48px)] before:w-[2px] before:bg-current{% else %}!pl-0{% endif %}">{{ cell.cellContent|nl2br }}</td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        {% endif %}
+      </table>
+    </div>
+  </div>
+</flynt-component>
