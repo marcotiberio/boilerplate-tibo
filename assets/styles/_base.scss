@@ -31,6 +31,10 @@ html {
   }
 }
 
+.dark-exclude {
+  filter: hue-rotate(0);
+}
+
 :disabled {
   pointer-events: none;
 }
