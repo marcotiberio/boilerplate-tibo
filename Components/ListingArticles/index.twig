@@ -31,7 +31,7 @@
             :class="activeFilter === 'all' ? '' : 'opacity-40'"
             x-on:click="activeFilter = 'all'"
           >
-            All
+            Alle
           </button>
           {% for slug, name in categories %}
             <button
@@ -53,7 +53,12 @@
             class="group flex flex-col gap-xs no-underline"
             title="{{ article.post.title }}"
             x-show="activeFilter === 'all' || '{{ article.categorySlugs|join(',') }}'.split(',').includes(activeFilter)"
-            x-transition.opacity.duration.200ms
+            x-transition:enter="transition-opacity duration-200"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition-opacity duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
           >
 
             {# Halftone or Featured Image #}
