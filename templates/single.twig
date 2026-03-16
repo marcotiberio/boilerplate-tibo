@@ -33,14 +33,16 @@
                 {% for author in Post(post.meta('postAuthor')) %}
                   <div class="flex flex-row items-center gap-xs bg-white p-sm">
                     {% if author.thumbnail %}
-                      <img class="w-[70px] h-[70px] rounded-full object-cover"
-                        src="{{ author.thumbnail.src('thumbnail') }}"
-                        alt="{{ author.thumbnail.alt|e | default('') }}">
+                      <a href="{{ author.link }}">
+                        <img class="w-[70px] h-[70px] rounded-full object-cover"
+                          src="{{ author.thumbnail.src('thumbnail') }}"
+                          alt="{{ author.thumbnail.alt|e | default('') }}">
+                      </a>
                     {% endif %}
                     <div class="flex flex-col gap-min">
                       <div class="flex flex-col xl:flex-row  gap-min">
                         <span class="font-bodySmall font-sans font-bold !mb-0">{{ authorLabel }}</span>
-                        <span class="font-bodySmall font-sans font-bold !mb-0">{{ author.title }}</span>
+                        <a href="{{ author.link }}" class="font-bodySmall no-underline font-sans font-bold !mb-0">{{ author.title }}</a>
                       </div>
                       {% set socials = author.meta('authorSocials') %}
                       {% if socials %}
@@ -101,14 +103,16 @@
                       {% for author in Post(post.meta('postAuthor')) %}
                         <div class="w-full flex flex-row items-center gap-xs bg-white py-sm px-sm">
                           {% if author.thumbnail %}
-                            <img class="w-[70px] h-[70px] rounded-full object-cover"
-                              src="{{ author.thumbnail.src('thumbnail') }}"
-                              alt="{{ author.thumbnail.alt|e | default('') }}">
+                            <a href="{{ author.link }}">
+                              <img class="w-[70px] h-[70px] rounded-full object-cover"
+                                src="{{ author.thumbnail.src('thumbnail') }}"
+                                alt="{{ author.thumbnail.alt|e | default('') }}">
+                            </a>
                           {% endif %}
                           <div class="flex flex-col gap-min">
                             <div class="flex flex-col gap-min">
                               <span class="font-bodySmall font-sans font-bold !mb-0">{{ authorLabel }}</span>
-                              <span class="font-bodySmall font-sans font-bold !mb-0">{{ author.title }}</span>
+                              <a href="{{ author.link }}" class="font-bodySmall no-underline font-sans font-bold !mb-0">{{ author.title }}</a>
                             </div>
                             {% set socials = author.meta('authorSocials') %}
                             {% if socials %}
