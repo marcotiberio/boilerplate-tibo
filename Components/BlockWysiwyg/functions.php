@@ -27,7 +27,7 @@ function getACFLayout()
                     'center_full' => sprintf('<i class=\'dashicons dashicons-menu-alt3\' title=\'%1$s\'></i>', __('Text centered (full-width)', 'flynt')),
                     'right' => sprintf('<i class=\'dashicons dashicons-align-right\' title=\'%1$s\'></i>', __('Text on the right (half-width)', 'flynt'))
                 ],
-                'default_value' => 'center_narrow',
+                'default_value' => 'center_full',
             ],
             [
                 'label' => __('Content', 'flynt'),
