@@ -38,7 +38,7 @@
                         alt="{{ author.thumbnail.alt|e | default('') }}">
                     {% endif %}
                     <div class="flex flex-col gap-min">
-                      <div class="flex flex-row gap-min">
+                      <div class="flex flex-col xl:flex-row  gap-min">
                         <span class="font-bodySmall font-sans font-bold !mb-0">{{ authorLabel }}</span>
                         <span class="font-bodySmall font-sans font-bold !mb-0">{{ author.title }}</span>
                       </div>
@@ -97,7 +97,7 @@
                 <section class="flex flex-col">
                   {# Author Box Mobile #}
                   {% if post.meta('postAuthor') %}
-                    <div class="flex flex-col gap-xs lg:hidden">
+                    <div class="flex flex-col sm:flex-row gap-xs lg:hidden">
                       {% for author in Post(post.meta('postAuthor')) %}
                         <div class="w-full flex flex-row items-center gap-xs bg-white py-sm px-sm">
                           {% if author.thumbnail %}
@@ -106,7 +106,7 @@
                               alt="{{ author.thumbnail.alt|e | default('') }}">
                           {% endif %}
                           <div class="flex flex-col gap-min">
-                            <div class="flex flex-row gap-min">
+                            <div class="flex flex-col gap-min">
                               <span class="font-bodySmall font-sans font-bold !mb-0">{{ authorLabel }}</span>
                               <span class="font-bodySmall font-sans font-bold !mb-0">{{ author.title }}</span>
                             </div>
