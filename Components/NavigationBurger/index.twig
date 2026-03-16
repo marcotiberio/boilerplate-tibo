@@ -21,22 +21,22 @@
           {% for item in menu.items %}
             {# regular menu item #}
             {% if not item.children %}
-              <div class="item {{- item.current ? ' current-menu-item underline underline-offset-4' }}">
-                <a class="link font-h1Serif no-underline" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+              <div class="item">
+                <a class="link font-h1Serif no-underline {{ item.classes|join('') }}" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
                   {{ item.title }}
                 </a>
               </div>
             {% endif %}
             {# menu with submenu item #}
             {% if item.children %}
-              <div class="item open-submenu {{- item.current ? ' current-menu-item underline underline-offset-4' }}" >
-                <a class="link font-h1Serif no-underline" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+              <div class="item open-submenu">
+                <a class="link font-h1Serif no-underline {{ item.classes|join(' ') }}" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
                   {{ item.title }}
                 </a>
                 <div class="submenu">
                   {% for subitem in item.children %}
-                    <div class="item {{- subitem.current ? ' current-menu-item underline underline-offset-4' }}">
-                      <a class="link !p-0 font-h1Serif no-underline" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
+                    <div class="item">
+                      <a class="link !p-0 font-h1Serif no-underline {{ subitem.classes|join(' ') }}" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
                     </div>
                   {% endfor %}
                 </div>
@@ -45,9 +45,9 @@
           {% endfor %}
 
           {% if menuSecondary %}
-            <div class="grid grid-cols-2 justify-center gap-x-xs gap-y-xs mt-sm">
+            <div class="flex flex-row flex-wrap justify-center gap-x-xs gap-y-xs mt-sm">
               {% for item in menuSecondary.items %}
-                <a class="link font-body no-underline odd:text-right" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+                <a class="w-[calc(32%-var(--spacing-sm)/3)] link font-body no-underline {{ item.classes|join(' ') }}" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
                   {{ item.title }}
                 </a>
               {% endfor %}

@@ -77,6 +77,13 @@ function getACFLayout()
                 'type' => 'text',
             ],
             [
+                'label' => __('All Filter Label', 'flynt'),
+                'instructions' => __('Label for the "show all" filter button. Defaults to "Alle" if left empty.', 'flynt'),
+                'name' => 'labelAll',
+                'type' => 'text',
+                'default_value' => 'Alle',
+            ],
+            [
                 'label' => __('Categories', 'flynt'),
                 'instructions' => __('Select 1 or more categories or leave empty to show from all posts.', 'flynt'),
                 'name' => 'taxonomies',

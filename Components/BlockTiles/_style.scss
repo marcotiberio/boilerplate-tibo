@@ -5,24 +5,24 @@ flynt-component[name='BlockTiles'] {
   }
 
   .tiles--2 .tile {
-    @media (min-width: theme('screens.md')) {
+    @screen tablet {
       width: calc(50% - var(--spacing-sm) / 2);
     }
   }
 
   .tiles--3 .tile {
-    @media (min-width: theme('screens.md')) {
-      width: calc(50% - var(--spacing-sm) / 2);
+    @screen tablet {
+      width: calc(32% - var(--spacing-sm) / 3);
     }
   }
 
   .tiles--4 .tile {
-    @media (min-width: theme('screens.md')) {
+   @screen tablet {
       width: calc(50% - var(--spacing-sm) / 2);
     }
 
-    @media (min-width: theme('screens.lg')) {
-      width: calc(50% - var(--spacing-sm) / 2);
+    @screen desktop {
+      width: calc(24% - var(--spacing-sm) / 2);
     }
   }
 }
