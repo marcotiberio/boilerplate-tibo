@@ -10,7 +10,8 @@ html {
     picture,
     canvas,
     iframe,
-    .halftone-image {
+    .halftone-image,
+    .no-invert {
       filter: invert(1) hue-rotate(180deg);
     }
   }
@@ -29,10 +30,6 @@ html {
   @screen desktop {
     font-size: var(--base-font-size-desktop, 16px);
   }
-}
-
-.dark-exclude {
-  filter: hue-rotate(0);
 }
 
 :disabled {

@@ -27,7 +27,7 @@
       {% if categories|length > 1 %}
         <div class="flex flex-row gap-xs items-center flex-wrap">
           <button
-            class="button button--grey !font-body !mb-0 cursor-pointer transition-opacity"
+            class="button button--grey !font-body !mb-0 cursor-pointer transition-opacity no-invert"
             :class="activeFilter === 'all' ? '' : 'opacity-40'"
             x-on:click="activeFilter = 'all'"
           >
@@ -35,7 +35,7 @@
           </button>
           {% for slug, name in categories %}
             <button
-              class="button button--grey !font-body !mb-0 cursor-pointer transition-opacity"
+              class="button button--grey !font-body !mb-0 cursor-pointer transition-opacity no-invert"
               :class="activeFilter === '{{ slug }}' ? '' : 'opacity-40'"
               x-on:click="activeFilter = '{{ slug }}'"
             >
@@ -88,14 +88,14 @@
               <div class="flex flex-row gap-xs items-center flex-wrap">
                 {% set postCategories = article.post.terms('category') %}
                 {% for term in postCategories %}
-                  <span class="button !mb-0" style="background-color: {{ article.post.meta('colorBackground')|default('#f1f1f1') }}">{{ term }}{% if not loop.last %},{% endif %}</span>
+                  <span class="button !mb-0 no-invert" style="background-color: {{ article.post.meta('colorBackground')|default('#f1f1f1') }}">{{ term }}{% if not loop.last %},{% endif %}</span>
                 {% endfor %}
                 {% if article.post.date %}
-                  <span class="button button--grey pointer-events-none !mb-0">{{ article.post.date('d.m.Y') }}</span>
+                  <span class="button button--grey pointer-events-none !mb-0 no-invert">{{ article.post.date('d.m.Y') }}</span>
                 {% endif %}
                 {% if article.post.meta('postAuthor') %}
                   {% for author in Post(article.post.meta('postAuthor')) %}
-                    <span class="button button--grey pointer-events-none !mb-0">{{ author.title }}</span>
+                    <span class="button button--grey pointer-events-none !mb-0 no-invert">{{ author.title }}</span>
                   {% endfor %}
                 {% endif %}
               </div>
