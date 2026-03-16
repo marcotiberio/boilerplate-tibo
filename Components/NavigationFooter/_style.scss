@@ -7,4 +7,23 @@ flynt-component[name='NavigationFooter'] {
   //     }
   //   }
   // }
+
+  .footer-theme-toggle {
+    @apply bg-grei;
+    @apply py-min px-xs;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--black);
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      @apply opacity-80;
+    }
+
+    [x-cloak] {
+      display: none !important;
+    }
+  }
 }
