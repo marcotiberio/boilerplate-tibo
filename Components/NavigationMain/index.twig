@@ -6,17 +6,21 @@
         {% if menu %}
           {% include 'Partials/_menu.twig' with { 'items': menu.items } only %}
         {% endif %}
-        {% if ctaLink %}
+        {% if menuSecondary %}
           <div class="flex justify-end items-center gap-xs">
             {% if menuSecondary %}
               {% include 'Partials/_menuSecondary.twig' with { 'items': menuSecondary.items, 'isSecondary': true } only %}
             {% endif %}
-            <a 
-              class="button button--fullOrange" 
-              href="{{ ctaLink.url }}" 
-              {% if ctaLink.target %} target="{{ ctaLink.target }}" rel="noreferrer noopener"{% endif %}>
-              {{ ctaLink.title }}
-            </a>
+            {% for item in ctaLinks %}
+              {% if item.ctaLink %}
+                <a
+                  class="button button--fullOrange"
+                  href="{{ item.ctaLink.url }}"
+                  {% if item.ctaLink.target %} target="{{ item.ctaLink.target }}" rel="noreferrer noopener"{% endif %}>
+                  {{ item.ctaLink.title }}
+                </a>
+              {% endif %}
+            {% endfor %}
           </div>
         {% endif %}
       </div>

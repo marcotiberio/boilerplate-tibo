@@ -33,13 +33,21 @@ Options::addTranslatable('NavigationMain', [
         'endpoint' => 0
     ],
     [
-        'label' => __('CTA Link', 'flynt'),
-        'name' => 'ctaLink',
-        'type' => 'link',
-        'return_format' => 'array',
-        'wrapper' =>  [
-            'width' => '100',
-        ]
+        'label' => __('CTA Links', 'flynt'),
+        'name' => 'ctaLinks',
+        'type' => 'repeater',
+        'min' => 0,
+        'max' => 0,
+        'layout' => 'table',
+        'button_label' => __('Add Link', 'flynt'),
+        'sub_fields' => [
+            [
+                'label' => __('Link', 'flynt'),
+                'name' => 'ctaLink',
+                'type' => 'link',
+                'return_format' => 'array',
+            ],
+        ],
     ],
     [
         'label' => __('Labels', 'flynt'),
