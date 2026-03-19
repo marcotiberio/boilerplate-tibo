@@ -9,13 +9,15 @@ use Timber\Timber;
 add_action('init', function () {
     register_nav_menus([
         'navigation_burger' => __('Navigation Burger', 'flynt'),
-        'navigation_secondary' => __('Navigation Secondary', 'flynt')
+        'navigation_secondary' => __('Navigation Secondary', 'flynt'),
+        'navigation_burger_secondary' => __('Navigation Burger Secondary', 'flynt')
     ]);
 });
 
 add_filter('Flynt/addComponentData?name=NavigationBurger', function ($data) {
     $data['menu'] = Timber::get_menu('navigation_burger') ?? Timber::get_pages_menu();
     $data['menuSecondary'] = Timber::get_menu('navigation_secondary');
+    $data['menuBurgerSecondary'] = Timber::get_menu('navigation_burger_secondary');
     $data['logo'] = [
         'src' => get_theme_mod('custom_header_logo') ? get_theme_mod('custom_header_logo') : Asset::requireUrl('assets/images/logo.svg'),
         'alt' => get_bloginfo('name')
