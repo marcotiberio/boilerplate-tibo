@@ -68,7 +68,7 @@
     "src": "Components/GridPostsArchive/script.js"
   },
   "Components/ListingVideosRelated/script.js": {
-    "file": "assets/script-6a1ccb89.js",
+    "file": "assets/script-865bbfd7.js",
     "imports": [
       "_swiper-bundle-70f174a6.js",
       "_navigation-2c37c78e.js",
@@ -232,7 +232,7 @@
     "src": "Components/ZZZ/ListingHomepage/script.js"
   },
   "Components/ZZZ/ListingJournalRelated/script.js": {
-    "file": "assets/script-865bbfd7.js",
+    "file": "assets/script-6a1ccb89.js",
     "imports": [
       "_swiper-bundle-70f174a6.js",
       "_navigation-2c37c78e.js",
