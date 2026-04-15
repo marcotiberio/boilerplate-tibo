@@ -3,7 +3,7 @@
   name="BlockTable">
   <div class="boxed flex flex-col gap-sm {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
     {% if blockTitle %}
-      <h2 class="font-h2 !mb-0">{{ blockTitle|e }}</h2>
+      <{{ titleStyle }} class="font-{{ titleStyle }} !mb-0">{{ blockTitle|e }}</{{ titleStyle }}>
     {% endif %}
     <div class="overflow-x-auto">
       <table class="w-full border-collapse min-w-[600px] table-fixed">

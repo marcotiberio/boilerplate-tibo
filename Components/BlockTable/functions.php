@@ -18,10 +18,26 @@ function getACFLayout()
                 'endpoint' => 0,
             ],
             [
+                'label' => __('Title Style', 'flynt'),
+                'name' => 'titleStyle',
+                'type' => 'button_group',
+                'choices' => [
+                    'h2' => 'H2',
+                    'h3' => 'H3',
+                ],
+                'default_value' => 'h2',
+                'wrapper' => [
+                    'width' => 10,
+                ],
+            ],
+            [
                 'label' => __('Block Title', 'flynt'),
                 'name' => 'blockTitle',
                 'type' => 'text',
                 'required' => 0,
+                'wrapper' => [
+                    'width' => 90,
+                ],
             ],
             [
                 'label' => __('Columns', 'flynt'),

@@ -73,7 +73,7 @@
                 <div class="">
                   {% set postCategories = post.terms('category') %}
                   {% for term in postCategories %}
-                    <span class="button !mb-0" style="background-color: {{ post.meta('colorBackground')|default('#f1f1f1') }}">{{ term }}{% if not loop.last %},{% endif %}</span>
+                    <a class="button !mb-0" style="background-color: {{ post.meta('colorBackground')|default('#f1f1f1') }}" href="{{ site.url }}/alle-artikel/#{{ term.slug }}">{{ term }}{% if not loop.last %},{% endif %}</a>
                   {% endfor %}
                 </div>
                 {% if post.date %}
