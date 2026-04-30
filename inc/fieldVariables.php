@@ -47,6 +47,7 @@ function getColorBackground()
         'label' => __('Color Background', 'flynt'),
         'name' => 'colorBackground',
         'type' => 'color_picker',
+        'default_value' => '#ffffff',
         'wrapper' => [
             'width' => 100,
         ],
@@ -73,7 +74,7 @@ function getColorText()
         ),
         'name' => 'colorText',
         'type' => 'color_picker',
-        'default_value' => '#0066FF',
+        'default_value' => '#000000',
         'wrapper' => [
             'width' => 100,
         ],
