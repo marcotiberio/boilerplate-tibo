@@ -1,95 +1,109 @@
 {% extends 'templates/_document.twig' %}
 
 {% block content %}
-  <article class="post mt-pageTop">
+  {% set categoryTerm = post.terms('category')|first %}
+  {% set categoryColor = categoryTerm ? categoryTerm.meta('categoryColor') : null %}
+  {% if categoryColor %}
+    <div class="project-orbs pointer-events-none fixed inset-0 z-[2999] overflow-hidden" aria-hidden="true" style="--cat-color: {{ categoryColor }};">
+      <span class="project-orb project-orb--1"></span>
+      <span class="project-orb project-orb--2"></span>
+      <span class="project-orb project-orb--3"></span>
+    </div>
+    <style>
+      .project-orb {
+        position: absolute;
+        display: block;
+        border-radius: 9999px;
+        background-color: var(--cat-color);
+        opacity: 0.45;
+        will-change: transform;
+        mix-blend-mode: multiply;
+      }
+      .project-orb--1 { width: 40px; height: 40px; top: 30%; left: 6%; animation: orbFloat1 100s ease-in-out infinite alternate; }
+      .project-orb--2 { width: 40px; height: 40px; top: 60%; left: 78%; animation: orbFloat2 100s ease-in-out infinite alternate; }
+      .project-orb--3 { width: 40px; height: 40px; top: 70%; left: 28%; animation: orbFloat3 100s ease-in-out infinite alternate; }
+      @keyframes orbFloat1 {
+        0%   { transform: translate(0, 0); }
+        50%  { transform: translate(35vw, 28vh); }
+        100% { transform: translate(60vw, 5vh); }
+      }
+      @keyframes orbFloat2 {
+        0%   { transform: translate(0, 0); }
+        50%  { transform: translate(-45vw, -22vh); }
+        100% { transform: translate(-25vw, 35vh); }
+      }
+      @keyframes orbFloat3 {
+        0%   { transform: translate(0, 0); }
+        50%  { transform: translate(28vw, -38vh); }
+        100% { transform: translate(-18vw, -22vh); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .project-orb { animation: none; }
+      }
+    </style>
+  {% endif %}
+  <article class="post mt-pageTop boxed relative z-10">
     <div 
       class="w-full mx-auto flex flex-col justify-between items-center">
       <div class="wrapper max-w-screen-max mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 h-full relative">
-          {# Left #}
-          <div class="w-full md:sticky md:top-0 md:h-screen relative">
-            {% set halftone_svg = post.meta('halftone_svg') %}
-            {% if halftone_svg %}
-              <div class="halftone-image relative h-[100vw] md:h-screen overflow-hidden [&_svg]:absolute [&_svg]:inset-0 [&_svg]:w-full [&_svg]:h-full">{{ halftone_svg|raw }}</div>
-            {% elseif post.thumbnail %}
-              <img class="w-full h-full igure-image lazyload object-cover"
+        <a href="javascript:history.back()" class="button button--outline no-underline !py-min mb-xs">
+          <span class="font-small inline-flex items-center gap-xs">
+            {{ singleProject.backLabel|default('Go back') }}
+            <svg class="shrink-1" width="29" height="12" viewBox="0 0 29 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M0.219669 4.99262C-0.0732231 5.28551 -0.0732231 5.76039 0.219669 6.05328L4.99264 10.8263C5.28553 11.1191 5.76041 11.1191 6.0533 10.8263C6.34619 10.5334 6.34619 10.0585 6.0533 9.76559L1.81066 5.52295L6.0533 1.28031C6.34619 0.987415 6.34619 0.512542 6.0533 0.219648C5.76041 -0.073245 5.28553 -0.073245 4.99264 0.219648L0.219669 4.99262ZM28.75 5.52295V4.77295L0.75 4.77295V5.52295V6.27295L28.75 6.27295V5.52295Z" fill="currentColor"/>
+            </svg>
+          </span>
+        </a>
+        <div class="flex flex-col gap-md h-full relative">
+          {# Top #}
+          <div class="w-full relative">
+            {% if post.thumbnail %}
+              <img class="w-full h-full igure-image lazyload object-cover aspect-16/6"
                 src="{{ post.thumbnail.src }}"
                 alt="{{ post.thumbnail.alt|e | default('') }}"
                 loading="lazy"
                 style="opacity: 0; transition: opacity 0.5s ease-in-out;"
                 onload="this.style.opacity='1'">
             {% endif %}
-            <a href="javascript:history.back()" class="no-underline w-[calc(100%-48px)] flex items-center justify-center text-center p-min absolute bg-white top-sm left-sm z-10">
-              {# TODO: Label #}
-              <span class="before:content-['←'] before:mr-min">Zurück</span>
-            </a>
-            {% if post.meta('postAuthor') %}
-              <div class="w-[calc(100%-48px)] md:w-fit absolute bottom-sm left-sm right-sm z-10 flex flex-row gap-xs">
-                {% for author in Post(post.meta('postAuthor')) %}
-                  <div class="flex flex-row items-center gap-xs bg-white p-sm">
-                    {% if author.thumbnail %}
-                      <img class="w-[70px] h-[70px] rounded-full object-cover"
-                        src="{{ author.thumbnail.src('thumbnail') }}"
-                        alt="{{ author.thumbnail.alt|e | default('') }}">
-                    {% endif %}
-                    <div class="flex flex-col gap-min">
-                      <div class="flex flex-row gap-min">
-                        <span class="font-bodySmall font-sans font-bold !mb-0">Ein Artikel von</span>
-                        <span class="font-bodySmall font-sans font-bold !mb-0">{{ author.title }}</span>
-                      </div>
-                      {% set socials = author.meta('authorSocials') %}
-                      {% if socials %}
-                        <div class="flex flex-row gap-xs">
-                          {% for social in socials %}
-                            <a href="{{ social.platform == 'email' ? 'mailto:' ~ social.url : social.url }}" target="_blank" rel="noopener" class="block w-[30px] h-[30px] bg-grei p-min [&_svg]:w-full [&_svg]:h-full [&_svg]:fill-current">
-                              {% include 'assets/icons/' ~ social.platform ~ '.svg' ignore missing %}
-                            </a>
-                          {% endfor %}
-                        </div>
-                      {% endif %}
-                    </div>
-                  </div>
-                {% endfor %}
-              </div>
-            {% endif %}
           </div>
-          {# Right #}
-          <div class="w-full lg:w-full h-full flex flex-col justify-between p-sm">
-            <div class="flex flex-col gap-sm">
-              <div class="w-full">
-                <h3 class="font-h3 italic">{{ post.postCustomText }}</h3>
-              </div>
-              <div class="w-full">
-                <h2 class="font-h1">„{{ post.title }}”</h2>
-              </div>
-              <div class="w-full flex flex-row gap-xs items-center justify-start mt-lg">
-                <div class="">
+          {# Bottom #}
+          <div class="w-full lg:w-full h-full flex flex-col justify-between">
+            <div class="flex flex-row justify-between items-end gap-sm mb-md">
+              <h1 class="w-full flex flex-col gap-min items-start justify-start">
+                <span class="font-h1 !mb-0">{{ post.postArtist }}</span>
+                <span class="font-h1">{{ post.title }}</span>
+              </h1>
+              <div class="w-full flex flex-col gap-min items-end justify-end">
+                {# <div class="">
                   {% set postCategories = post.terms('category') %}
                   {% for term in postCategories %}
-                    <span class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ term }}{% if not loop.last %},{% endif %}</span>
+                    <span class="font-bodySmall !mb-0">{{ term }}{% if not loop.last %},{% endif %}</span>
                   {% endfor %}
+                </div> #}
+                <div class="">
+                  {% if post.dateStart %}
+                    <span class="font-h2 !mb-0">{{ post.dateStart('d.m.Y') }} - </span>
+                  {% endif %}
+                  {% if post.dateEnd %}
+                    <span class="font-h2 !mb-0">{{ post.dateEnd('d.m.Y') }}</span>
+                  {% endif %}
                 </div>
-                {% if post.date %}
-                  <div class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ post.date('d.m.Y') }}</div>
-                {% endif %}
-                {% if post.meta('postAuthor') %}
-                  {% for author in Post(post.meta('postAuthor')) %}
-                    <div class="font-bodySmall !mb-0 px-xs py-min bg-grei">{{ author.title }}</div>
-                  {% endfor %}
+                {% if post.postLocation %}
+                  <div class="font-h2Regular !mb-0">{{ post.postLocation }}</div>
                 {% endif %}
               </div>
-              <div class="flex flex-col">
-                {% if post.postIntro %}
-                  <div class="text-center flex flex-coljustify-center items-center border-t border-b p-sm">
-                    <p class="font-bodySans">{{ post.postIntro }}</p>
-                  </div>
-                {% endif %}
-                <section class="post-main">
-                  {% for component in post.meta('postComponents') %}
-                    {{ renderComponent(component) }}
-                  {% endfor %}
-                </section>
-              </div>
+            </div>
+            <div class="flex flex-col">
+              {% if post.postDescription %}
+                <div class="flex flex-col border-t border-b py-md">
+                  <p class="font-bodySans">{{ post.postDescription }}</p>
+                </div>
+              {% endif %}
+              <section class="post-main">
+                {% for component in post.meta('postComponents') %}
+                  {{ renderComponent(component) }}
+                {% endfor %}
+              </section>
             </div>
           </div>
         </div>

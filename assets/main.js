@@ -41,6 +41,39 @@ Alpine.data('themeSwitcher', () => ({
 
 window.Alpine = Alpine
 Alpine.plugin(intersect)
+
+Alpine.store('projectFilters', {
+  activeCategory: [],
+  activeLocation: [],
+  categoryColors: {},
+  matchFilter (selected, slugs) {
+    return selected.length === 0 || slugs.some(s => selected.includes(s))
+  },
+  toggleCategory (slug) {
+    this.activeCategory = this.activeCategory.includes(slug)
+      ? this.activeCategory.filter(s => s !== slug)
+      : [...this.activeCategory, slug]
+  },
+  toggleLocation (slug) {
+    this.activeLocation = this.activeLocation.includes(slug)
+      ? this.activeLocation.filter(s => s !== slug)
+      : [...this.activeLocation, slug]
+  },
+  setCategoryColors (map) {
+    this.categoryColors = { ...this.categoryColors, ...map }
+  },
+  get activeColors () {
+    return this.activeCategory
+      .map(slug => this.categoryColors[slug])
+      .filter(Boolean)
+      .map(hex => hex.toLowerCase())
+  },
+  reset () {
+    this.activeCategory = []
+    this.activeLocation = []
+  }
+})
+
 Alpine.start()
 
 gsap.registerPlugin(ScrollTrigger)

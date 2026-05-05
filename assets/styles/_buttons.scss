@@ -5,13 +5,13 @@ button {
 .button {
   @include reset-link;
   appearance: none;
-  font-family: var(--primary-font-family, 'Inter', Arial, sans-serif);
+  font-family: var(--primary-font-family, Arial, sans-serif);
   font-size: var(--button-size, 1rem);
   line-height: var(--button-line-height, 1.2);
   font-weight: var(--button-font-weight, 500);
   @apply w-fit;
-  @apply px-xs;
-  @apply py-[7px];
+  @apply px-sm;
+  @apply py-xs;
   @apply flex;
   @apply justify-center;
   @apply items-center;
@@ -27,6 +27,20 @@ button {
     pointer-events: none;
   }
 
+  &--outline {
+    @apply text-black;
+    @apply bg-transparent;
+    @apply border;
+    @apply border-black;
+    @apply rounded-button;
+
+    &:hover,
+    &:focus {
+      color: var(--white) !important;
+      @apply bg-black;
+    }
+  }
+
   &--link {
     @apply underline-offset-4 !important;
     @apply hover:no-underline !important;
@@ -35,7 +49,7 @@ button {
 
     &::after {
       content: '→';
-      @apply translate-x-2
+      @apply translate-x-2;
     }
   }
 
@@ -48,35 +62,22 @@ button {
   //   &:hover,
   //   &:focus {
   //     @apply text-white;
-  //     @apply bg-grey-700;
-  //     @apply border-grey-700;
+  //     @apply bg-grey;
+  //     @apply border-grey;
   //   }
   // }
 
   // &--secondary {
   //   @apply text-white;
-  //   @apply bg-grey-600;
+  //   @apply bg-grey;
   //   @apply border;
   //   @apply border-grey-600;
 
   //   &:hover,
   //   &:focus {
   //     @apply text-white;
-  //     @apply bg-grey-800;
+  //     @apply bg-grey;
   //     @apply border-grey-800;
-  //   }
-  // }
-
-  // &--outline {
-  //   @apply text-black;
-  //   @apply bg-transparent;
-  //   @apply border;
-  //   @apply border-black;
-
-  //   &:hover,
-  //   &:focus {
-  //     color: var(--white) !important;
-  //     @apply bg-black;
   //   }
   // }
 }
@@ -107,7 +108,7 @@ button {
 
   &:hover,
   &:focus {
-    @apply bg-grey-700;
-    @apply border-grey-700;
+    @apply bg-grey;
+    @apply border-grey;
   }
 }

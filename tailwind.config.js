@@ -16,7 +16,7 @@ module.exports = {
       none: '0',
       DEFAULT: '8px',
       image: '8px',
-      button: '50px',
+      button: '20px',
       full: '9999px'
     },
     colors: {
@@ -25,18 +25,8 @@ module.exports = {
       current: 'currentColor',
       transparent: 'transparent',
       // Project colors
-      grei: '#f1f1f1',
-      grey: {
-        100: '#f5f5f5',
-        200: '#e5e5e5',
-        300: '#d4d4d4',
-        400: '#a3a3a3',
-        500: '#737373',
-        600: '#525252',
-        700: '#404040',
-        800: '#262626',
-        900: '#171717',
-      },
+      grey: '#D2D2D2',
+      green: '#00c351',
     },
     fontFamily: {
       sans: ['Inter', 'Arial', 'sans-serif']
@@ -51,7 +41,7 @@ module.exports = {
       md: '780px',
       lg: '1024px',
       lgplus: '1200px',
-      box: '1440px',
+      box: '1680px',
       xl: '1680px',
       max: '1920px'
     },

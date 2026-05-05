@@ -3,125 +3,156 @@
 namespace Flynt\Components\ListingProjects;
 
 use Flynt\FieldVariables;
-use Timber\Timber;
 use Flynt\Utils\Oembed;
-
+use Timber\Timber;
 
 add_filter('Flynt/addComponentData?name=ListingProjects', function ($data) {
-    if (isset($data['mediaItems']) && is_array($data['mediaItems'])) {
-        foreach ($data['projects'] as &$project) {
-            if (isset($project['project']) && isset($project['project']->featVideoEmbed) && !empty($project['project']->featVideoEmbed)) {
-                $project['project']->featVideoEmbed = Oembed::setSrcAsDataAttribute(
-                    $item['oembed'],
-                    [
-                        'autoplay' => 'true',
-                        'loop' => 'true',
-                        'muted' => 'true',
-                        'controls' => 'false'
-                    ]
-                );
+    $postsPerPage = $data['postsPerPage'] ?? -1;
+    $postsPerPage = $postsPerPage ? (int) $postsPerPage : -1;
+
+    $queryArgs = [
+        'post_status'         => 'publish',
+        'post_type'           => 'post',
+        'ignore_sticky_posts' => 1,
+        'posts_per_page'      => $postsPerPage,
+        'orderby'             => 'date',
+        'order'               => 'DESC',
+    ];
+
+    $posts = Timber::get_posts($queryArgs);
+
+    $data['projects'] = [];
+    foreach ($posts as $post) {
+        $categoryTerms = get_the_terms($post->ID, 'category');
+        $categorySlugs = !empty($categoryTerms) && !is_wp_error($categoryTerms)
+            ? wp_list_pluck($categoryTerms, 'slug')
+            : [];
+        $locationSlugs = wp_get_post_terms($post->ID, 'location', ['fields' => 'slugs']);
+
+        $categoryColor = null;
+        if (!empty($categoryTerms) && !is_wp_error($categoryTerms)) {
+            $color = get_field('categoryColor', $categoryTerms[0]);
+            if (!empty($color)) {
+                $categoryColor = $color;
             }
         }
+
+        if (!empty($post->featVideoEmbed)) {
+            $post->featVideoEmbed = Oembed::setSrcAsDataAttribute(
+                $post->featVideoEmbed,
+                [
+                    'autoplay' => 'true',
+                    'loop'     => 'true',
+                    'muted'    => 'true',
+                    'controls' => 'false',
+                ]
+            );
+        }
+
+        $data['projects'][] = [
+            'project'        => $post,
+            'categorySlugs'  => $categorySlugs,
+            'locationSlugs'  => is_array($locationSlugs) ? $locationSlugs : [],
+            'categoryColor'  => $categoryColor,
+        ];
     }
+
+    $showFiltering = $data['options']['showFiltering'] ?? false;
+    $data['categories'] = $showFiltering ? termsAsSlugNameMap('category', [
+        'exclude' => [(int) get_option('default_category')],
+    ]) : [];
+    $data['categoryColors'] = $showFiltering ? termsAsSlugColorMap('category', [
+        'exclude' => [(int) get_option('default_category')],
+    ]) : [];
+    $data['locations']  = $showFiltering ? termsAsSlugNameMap('location') : [];
 
     return $data;
 });
+
+function termsAsSlugColorMap(string $taxonomy, array $extraArgs = []): array
+{
+    $terms = get_terms(array_merge([
+        'taxonomy'   => $taxonomy,
+        'hide_empty' => false,
+        'orderby'    => 'name',
+        'order'      => 'ASC',
+    ], $extraArgs));
+
+    if (is_wp_error($terms) || !is_array($terms)) {
+        return [];
+    }
+
+    $map = [];
+    foreach ($terms as $term) {
+        $color = get_field('categoryColor', $term);
+        $map[$term->slug] = !empty($color) ? $color : null;
+    }
+    return $map;
+}
+
+function termsAsSlugNameMap(string $taxonomy, array $extraArgs = []): array
+{
+    $terms = get_terms(array_merge([
+        'taxonomy'   => $taxonomy,
+        'hide_empty' => false,
+        'orderby'    => 'name',
+        'order'      => 'ASC',
+    ], $extraArgs));
+
+    if (is_wp_error($terms) || !is_array($terms)) {
+        return [];
+    }
+
+    $map = [];
+    foreach ($terms as $term) {
+        $map[$term->slug] = $term->name;
+    }
+    return $map;
+}
 
 function getACFLayout()
 {
     return [
         'name' => 'ListingProjects',
-        'label' => 'Listing Projects',
+        'label' => __('Listing: Projects', 'flynt'),
         'sub_fields' => [
             [
-                'label' => __('General', 'flynt'),
+                'label' => __('Content', 'flynt'),
                 'name' => 'generalTab',
                 'type' => 'tab',
                 'placement' => 'top',
-                'endpoint' => 0
+                'endpoint' => 0,
             ],
             [
-                'label' => __('Projects', 'flynt'),
-                'name' => 'projects',
-                'type' => 'repeater',
+                'label' => __('Block Title', 'flynt'),
+                'instructions' => __('Title displayed above the projects grid.', 'flynt'),
+                'name' => 'blockTitle',
+                'type' => 'text',
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 33,
+                ],
+            ],
+            [
+                'label' => __('See All Link', 'flynt'),
+                'instructions' => __('Link for the "See All" button.', 'flynt'),
+                'name' => 'seeAllLink',
+                'type' => 'link',
+                'return_format' => 'array',
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 33,
+                ],
+            ],
+            [
+                'label' => __('Number of Projects', 'flynt'),
+                'instructions' => __('Number of projects to display. Leave empty to show all.', 'flynt'),
+                'name' => 'postsPerPage',
+                'type' => 'number',
                 'min' => 1,
-                'layout' => 'table',
-                'button_label' => __('Add Project', 'flynt'),
-                'sub_fields' => [
-                    [
-                        'label' => __('Project', 'flynt'),
-                        'name' => 'project',
-                        'type' => 'post_object',
-                        'post_type' => [
-                            'post',
-                        ],
-                        'allow_null' => 0,
-                        'multiple' => 0,
-                        'return_format' => 'object',
-                        'ui' => 1,
-                        'required' => 0,
-                        'wrapper' => [
-                            'width' => 100,
-                        ]
-                    ],
-                    [
-                        'label' => __('Project Width', 'flynt'),
-                        'name' => 'width',
-                        'type' => 'button_group',
-                        'choices' => [
-                            'w-full' => sprintf('<p>Full</p>', __('Full', 'flynt')),
-                            'w-full lg:w-[calc(50%_-_10px)]' => sprintf('<p>Half</p>', __('Half', 'flynt')),
-                            'w-full lg:w-[calc(33.33%_-_10px)]' => sprintf('<p>Third</p>', __('Third', 'flynt')),
-                            'w-full lg:w-[calc(25%_-_10px)]' => sprintf('<p>Quarter</p>', __('Quarter', 'flynt')),
-                        ],
-                        'wrapper' => [
-                            'width' => 50
-                        ],
-                    ],
-                    // [
-                    //     'label' => __('Project starts in column:', 'flynt'),
-                    //     'name' => 'colStart',
-                    //     'type' => 'button_group',
-                    //     'choices' => [
-                    //         'col-start-1 lg:col-start-1' => sprintf('<p>1</p>', __('1', 'flynt')),
-                    //         'col-start-1 lg:col-start-2' => sprintf('<p>2</p>', __('2', 'flynt')),
-                    //         'col-start-1 lg:col-start-3' => sprintf('<p>3</p>', __('3', 'flynt')),
-                    //         'col-start-1 lg:col-start-4' => sprintf('<p>4</p>', __('4', 'flynt')),
-                    //         'col-start-1 lg:col-start-5' => sprintf('<p>5</p>', __('5', 'flynt')),
-                    //         'col-start-1 lg:col-start-6' => sprintf('<p>6</p>', __('6', 'flynt')),
-                    //         'col-start-1 lg:col-start-7' => sprintf('<p>7</p>', __('7', 'flynt')),
-                    //         'col-start-1 lg:col-start-8' => sprintf('<p>8</p>', __('8', 'flynt')),
-                    //         'col-start-1 lg:col-start-9' => sprintf('<p>9</p>', __('9', 'flynt')),
-                    //         'col-start-1 lg:col-start-10' => sprintf('<p>10</p>', __('10', 'flynt')),
-                    //         'col-start-1 lg:col-start-11' => sprintf('<p>11</p>', __('11', 'flynt')),
-                    //         'col-start-1 lg:col-start-12' => sprintf('<p>12</p>', __('12', 'flynt'))
-                    //     ],
-                    //     'wrapper' => [
-                    //         'width' => 50
-                    //     ],
-                    // ],
-                    // [
-                    //     'label' => __('Project ends in column:', 'flynt'),
-                    //     'name' => 'colEnd',
-                    //     'type' => 'button_group',
-                    //     'choices' => [
-                    //         'col-end-13 lg:col-end-1' => sprintf('<p>1</p>', __('1', 'flynt')),
-                    //         'col-end-13 lg:col-end-2' => sprintf('<p>2</p>', __('2', 'flynt')),
-                    //         'col-end-13 lg:col-end-3' => sprintf('<p>3</p>', __('3', 'flynt')),
-                    //         'col-end-13 lg:col-end-4' => sprintf('<p>4</p>', __('4', 'flynt')),
-                    //         'col-end-13 lg:col-end-5' => sprintf('<p>5</p>', __('5', 'flynt')),
-                    //         'col-end-13 lg:col-end-6' => sprintf('<p>6</p>', __('6', 'flynt')),
-                    //         'col-end-13 lg:col-end-7' => sprintf('<p>7</p>', __('7', 'flynt')),
-                    //         'col-end-13 lg:col-end-8' => sprintf('<p>8</p>', __('8', 'flynt')),
-                    //         'col-end-13 lg:col-end-9' => sprintf('<p>9</p>', __('9', 'flynt')),
-                    //         'col-end-13 lg:col-end-10' => sprintf('<p>10</p>', __('10', 'flynt')),
-                    //         'col-end-13 lg:col-end-11' => sprintf('<p>11</p>', __('11', 'flynt')),
-                    //         'col-end-13 lg:col-end-13' => sprintf('<p>12</p>', __('12', 'flynt')),
-                    //     ],
-                    //     'wrapper' => [
-                    //         'width' => 50
-                    //     ],
-                    // ],
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 33,
                 ],
             ],
             [
@@ -137,6 +168,41 @@ function getACFLayout()
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => [
+                    [
+                        'label' => __('Top Border', 'flynt'),
+                        'name' => 'topBorder',
+                        'type' => 'true_false',
+                        'default_value' => 0,
+                        'ui' => 1,
+                        'ui_on_text' => __('Yes', 'flynt'),
+                        'ui_off_text' => __('No', 'flynt'),
+                        'wrapper' => [
+                            'width' => 50,
+                        ],
+                    ],
+                    [
+                        'label' => __('Show Filtering', 'flynt'),
+                        'instructions' => __('Show or hide the category filter.', 'flynt'),
+                        'name' => 'showFiltering',
+                        'type' => 'true_false',
+                        'default_value' => 1,
+                        'ui' => 1,
+                        'ui_on_text' => __('Yes', 'flynt'),
+                        'ui_off_text' => __('No', 'flynt'),
+                        'wrapper' => [
+                            'width' => 50,
+                        ],
+                    ],
+                    [
+                        'label' => __('Reset Label', 'flynt'),
+                        'instructions' => __('Label for the "Reset all" filter button.', 'flynt'),
+                        'name' => 'resetLabel',
+                        'type' => 'text',
+                        'default_value' => __('Reset all', 'flynt'),
+                        'wrapper' => [
+                            'width' => 50,
+                        ],
+                    ],
                     FieldVariables\getColorBackground(),
                     FieldVariables\getColorText(),
                 ]

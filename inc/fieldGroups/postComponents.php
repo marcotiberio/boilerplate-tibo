@@ -19,81 +19,56 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'endpoint' => 0
             ],
             [
-                'label' => __('Intro', 'flynt'),
-                'name' => 'postIntro',
-                'type' => 'textarea',
+                'label' => __('Date Start', 'flynt'),
+                'name' => 'dateStart',
+                'type' => 'date_picker',
+                'display_format' => 'd.m.Y',
+                'return_format' => 'd.m.Y',
+                'first_day' => 1,
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 50,
+                ],
+            ],
+            [
+                'label' => __('Date End', 'flynt'),
+                'name' => 'dateEnd',
+                'type' => 'date_picker',
+                'display_format' => 'd.m.Y',
+                'return_format' => 'd.m.Y',
+                'first_day' => 1,
+                'required' => 1,
+                'wrapper' => [
+                    'width' => 50,
+                ],
+            ],
+            [
+                'label' => __('Artist', 'flynt'),
+                'name' => 'postArtist',
+                'type' => 'text',
+                'wrapper' => [
+                    'width' => 50,
+                ],
+            ],
+            [
+                'label' => __('Location', 'flynt'),
+                'name' => 'postLocation',
+                'type' => 'text',
+                'wrapper' => [
+                    'width' => 50,
+                ],
+            ],
+            [
+                'label' => __('Description', 'flynt'),
+                'name' => 'postDescription',
+                'type' => 'wysiwyg',
+                'tabs' => 'visual',
+                'toolbar' => 'full',
+                'media_upload' => 0,
                 'wrapper' => [
                     'width' => 100,
                 ]
             ],
-            [
-                'label' => __('Custom Text', 'flynt'),
-                'name' => 'postCustomText',
-                'type' => 'text',
-                'wrapper' => [
-                    'width' => 50,
-                ]
-            ],
-            [
-                'label' => __('Author', 'flynt'),
-                'name' => 'postAuthor',
-                'type' => 'relationship',
-                'post_type' => ['author'],
-                'filters' => ['search'],
-                'return_format' => 'object',
-                'min' => 0,
-                'max' => 0,
-                'wrapper' => [
-                    'width' => 50,
-                ]
-            ],
-            [
-                'label' => __('Media', 'flynt'),
-                'name' => 'mediaTab',
-                'type' => 'tab',
-                'placement' => 'top',
-                'endpoint' => 0
-            ],
-            // [
-            //     'label' => __('Featured Image (Alternative)', 'flynt'),
-            //     'instructions' => __('Image-Format: JPG, PNG.', 'flynt'),
-            //     'name' => 'featImageAlt',
-            //     'type' => 'image',
-            //     'preview_size' => 'medium',
-            //     'required' => 0,
-            //     'mime_types' => 'jpg,jpeg,png',
-            //     'wrapper' => [
-            //         'width' => 33,
-            //     ],
-            // ],
-            // [
-            //     'label' => __('Featured Video', 'flynt'),
-            //     'instructions' => __('Video-Format: MP4, MOV.', 'flynt'),
-            //     'name' => 'featVideo',
-            //     'type' => 'file',
-            //     'preview_size' => 'medium',
-            //     'mime_types' => 'mp4,mov',
-            //     'wrapper' => [
-            //         'width' => 33,
-            //     ],
-            // ],
-            // [
-            //     'label' => __('Featured Video Embed', 'flynt'),
-            //     'name' => 'featVideoEmbed',
-            //     'type' => 'oembed',
-            // ],
-            // [
-            //     'label' => __('Project Overview Image', 'flynt'),
-            //     'instructions' => __('Image-Format: JPG, PNG.', 'flynt'),
-            //     'name' => 'projectOverviewImage',
-            //     'type' => 'image',
-            //     'preview_size' => 'medium',
-            //     'required' => 0,
-            //     'mime_types' => 'jpg,jpeg,png',
-            //     'wrapper' => [
-            //         'width' => 33,
-            //     ],
-            // ],
         ],
         'location' => [
             [
@@ -105,25 +80,6 @@ add_action('Flynt/afterRegisterComponents', function () {
             ],
         ],
     ]);
-    // ACFComposer::registerFieldGroup([
-    //     'name' => 'postMedia',
-    //     'title' => 'Featured Media',
-    //     'style' => '',
-    //     'menu_order' => 1,
-    //     'position' => 'side',
-    //     'fields' => [
-            
-    //     ],
-    //     'location' => [
-    //         [
-    //             [
-    //                 'param' => 'post_type',
-    //                 'operator' => '==',
-    //                 'value' => 'post',
-    //             ],
-    //         ],
-    //     ],
-    // ]);
     ACFComposer::registerFieldGroup([
         'name' => 'postComponents',
         'title' => __('Post Components', 'flynt'),
@@ -136,10 +92,14 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'button_label' => __('Add Component', 'flynt'),
                 'layouts' => [
                     Components\BlockAnchor\getACFLayout(),
+                    Components\BlockDivider\getACFLayout(),
                     Components\BlockImage\getACFLayout(),
-                    Components\BlockGalleryMedia\getACFLayout(),
-                    Components\BlockSpacer\getACFLayout(),
+                    Components\BlockImageText\getACFLayout(),
                     Components\BlockWysiwyg\getACFLayout(),
+                    Components\BlockWysiwygColumns\getACFLayout(),
+                    Components\ListingProjects\getACFLayout(),
+                    Components\BlockSpacer\getACFLayout(),
+                    Components\BlockSliderImages\getACFLayout(),
                 ],
             ],
         ],

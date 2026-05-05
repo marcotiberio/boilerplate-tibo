@@ -32,10 +32,7 @@
         {% endfor %}
         <div class="flex flex-row gap-xs mt-xs">
           {% if buttonLink1 %}
-            <a class="button button--fullBlue" href="{{buttonLink1.url}}" {% if buttonLink1.target %} target="{{ buttonLink1.target }}" rel="noreferrer noopener"{% endif %}>{{buttonLink1.title}}</a>
-          {% endif %}
-          {% if buttonLink2 %}
-            <a class="button button--fullOrange" href="{{buttonLink2.url}}" {% if buttonLink2.target %} target="{{ buttonLink2.target }}" rel="noreferrer noopener"{% endif %}>{{buttonLink2.title}}</a>
+            <a class="button button--outline" href="{{buttonLink1.url}}" {% if buttonLink1.target %} target="{{ buttonLink1.target }}" rel="noreferrer noopener"{% endif %}>{{buttonLink1.title}}</a>
           {% endif %}
         </div>
       </div>

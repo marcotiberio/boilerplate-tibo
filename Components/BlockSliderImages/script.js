@@ -3,9 +3,9 @@ import { Navigation, A11y, Autoplay, Pagination } from 'swiper/modules'
 import 'swiper/swiper-bundle.css'
 import { buildRefs, getJSON } from '@/assets/scripts/helpers.js'
 
-export default function (sliderBox) {
-  const refs = buildRefs(sliderBox)
-  const data = getJSON(sliderBox)
+export default function (blockSliderImages) {
+  const refs = buildRefs(blockSliderImages)
+  const data = getJSON(blockSliderImages)
   const swiper = initSlider(refs, data)
   return () => swiper.destroy()
 }

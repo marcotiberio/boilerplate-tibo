@@ -76,53 +76,12 @@ function getACFLayout()
                 ],
             ],
             [
-                'label' => __('Regular Buttons', 'flynt'),
-                'name' => 'regularButtonsTab',
-                'type' => 'tab',
-                'placement' => 'top',
-                'endpoint' => 0,
-            ],
-            [
-                'label' => __('Button 1', 'flynt'),
+                'label' => __('Button', 'flynt'),
                 'name' => 'buttonLink1',
                 'type' => 'link',
                 'required' => 0,
                 'wrapper' => [
                     'width' => 50
-                ],
-            ],
-            [
-                'label' => __('Button 2', 'flynt'),
-                'name' => 'buttonLink2',
-                'type' => 'link',
-                'required' => 0,
-                'wrapper' => [
-                    'width' => 50
-                ],
-            ],
-            [
-                'label' => __('Anchor Scroll Buttons', 'flynt'),
-                'name' => 'anchorScrollButtonsTab',
-                'type' => 'tab',
-                'placement' => 'top',
-                'endpoint' => 0,
-            ],
-            [
-                'label' => __('Anchor Scroll Buttons', 'flynt'),
-                'name' => 'repeaterButtons',
-                'type' => 'repeater',
-                'layout' => 'row',
-                'button_label' => __('Add Button', 'flynt'),
-                'sub_fields' => [
-                    [
-                        'label' => __('Button', 'flynt'),
-                        'name' => 'buttonLink',
-                        'type' => 'link',
-                        'required' => 0,
-                        'wrapper' => [
-                            'width' => 100
-                        ],
-                    ],
                 ],
             ],
             [

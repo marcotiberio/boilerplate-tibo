@@ -149,7 +149,7 @@ function getConfig()
             //     'items' => [
             //         [
             //             'title' => 'Button Full Blue',
-            //             'classes' => 'button button--fullBlue',
+            //             'classes' => 'button button--outline',
             //             'selector' => 'a'
             //         ],
             //         [

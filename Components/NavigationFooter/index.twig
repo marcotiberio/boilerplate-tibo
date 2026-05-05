@@ -52,18 +52,8 @@
       </div>
       {% endif %}
       <div class="w-full grid grid-cols-1 md:grid-cols-2 justify-start items-center gap-sm">
-        <div x-data="themeSwitcher" class="flex items-center gap-xs">
-          <button
-            @click="setTheme('light')"
-            class="font-body bg-grei text-black py-min px-xs transition-opacity duration-300"
-          >{{ labels.themeLight }}</button>
-          <button
-            @click="setTheme('dark')"
-            class="font-body bg-black text-white py-min px-xs transition-opacity duration-300"
-          >{{ labels.themeDark }}</button>
-        </div>
         <div class="flex flex-row justify-end items-center">
-          <div class="wysiwyg">{{ copyrightsHtml|e('wp_kses_post') }}</div>
+          {# <div class="wysiwyg">{{ copyrightsHtml|e('wp_kses_post') }}</div> #}
         </div>
       </div>
       {# Col 5 #}

@@ -116,6 +116,18 @@
 //   font-weight: var(--menu-font-weight, 500);
 // }
 
+p,
+.font-body {
+  font-family: var(--secondary-font-family, var(--body-font-family, Arial, sans-serif));
+  font-size: var(--body-size-mobile, 1rem);
+  font-weight: var(--body-font-weight, 400);
+  line-height: var(--body-line-height, 1.5);
+
+  @screen desktop {
+    font-size: var(--body-size-desktop, 1rem);
+  }
+}
+
 hr {
   border: 0.5px solid var(--black);
   margin: 0 auto;
@@ -163,7 +175,7 @@ blockquote,
   h3,
   .h3,
   .font-h3 {
-    margin-bottom: 1rem;
+    // margin-bottom: 1rem;
   }
 
   button {

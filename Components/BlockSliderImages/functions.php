@@ -1,11 +1,11 @@
 <?php
 
-namespace Flynt\Components\SliderImages;
+namespace Flynt\Components\BlockSliderImages;
 
 use Flynt\FieldVariables;
 use Flynt\Utils\Options;
 
-add_filter('Flynt/addComponentData?name=SliderImages', function ($data) {
+add_filter('Flynt/addComponentData?name=BlockSliderImages', function ($data) {
     $translatableOptions = Options::getTranslatable('SliderOptions');
     $data['jsonData'] = [
         'options' => array_merge($translatableOptions, $data['options']),
@@ -16,7 +16,7 @@ add_filter('Flynt/addComponentData?name=SliderImages', function ($data) {
 function getACFLayout()
 {
     return [
-        'name' => 'SliderImages',
+        'name' => 'BlockSliderImages',
         'label' => 'Carousel: Images',
         'sub_fields' => [
             [
