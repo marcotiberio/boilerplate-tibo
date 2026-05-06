@@ -4,7 +4,7 @@
   name="NavigationBurger"
   class="block lg:hidden fixed top-0 left-0 w-screen z-50 flex-row justify-between mx-auto">
   <nav aria-label="{{ labels.ariaLabel|e }}" class="h-auto w-full">
-    <div class="w-full h-auto max-w-screen-max mx-auto !px-xs md:!px-sm !min-h-fit grid grid-cols-2 lg:gap-sm align-middle items-center z-[3001] relative">
+    <div class="w-full h-auto max-w-screen-max mx-auto !p-xs !min-h-fit flex flex-row justify-between lg:gap-sm align-middle items-center z-[3001] relative">
       {% include 'Partials/_logo.twig' with { 'logo': logo, 'site': site } only %}
       {% if menu %}
         <div class="flex justify-end items-center">
@@ -15,33 +15,42 @@
     {% if menu %}
       <div
         data-ref="menu" 
-        class="menu w-full h-fit !pt-[50px] z-40 relative bg-white">
-        <div class="w-full h-full max-w-screen-max mx-auto flex flex-col justify-start items-start gap-xs px-xs py-xs">
+        class="menu w-full h-fit z-40 relative bg-white">
+        <div class="w-full h-full max-w-screen-max mx-auto flex flex-col justify-start items-center gap-xs px-xs py-lg border-b-2 rounded-[45px]">
           {% for item in menu.items %}
             {# regular menu item #}
             {% if not item.children %}
-              <div class="item {{- item.current ? ' current-menu-item underline underline-offset-4' }}">
-                <a class="link font-menu" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+              <div class="item {{- item.current ? ' [&_a]:bg-black [&_a]:text-white' }}">
+                <a class="link border rounded-button bg-white py-min px-xs flex align-middle items-center hover:bg-black hover:text-white no-underline transition-transform duration-200 ease-in-out" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
                   {{ item.title }}
                 </a>
               </div>
             {% endif %}
             {# menu with submenu item #}
             {% if item.children %}
-              <div class="item open-submenu {{- item.current ? ' current-menu-item underline underline-offset-4' }}" >
-                <a class="link font-menu" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+              <div class="item open-submenu {{- item.current ? ' [&_a]:bg-black [&_a]:text-white' }}" >
+                <a class="link border rounded-button bg-white py-min px-xs flex align-middle items-center hover:bg-black hover:text-white no-underline transition-transform duration-200 ease-in-out" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
                   {{ item.title }}
                 </a>
                 <div class="submenu">
                   {% for subitem in item.children %}
-                    <div class="item {{- subitem.current ? ' current-menu-item underline underline-offset-4' }}">
-                      <a class="link !p-0 font-menu" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
+                    <div class="item {{- subitem.current ? ' [&_a]:bg-black [&_a]:text-white' }}">
+                      <a class="link border rounded-button bg-white py-min px-xs flex align-middle items-center hover:bg-black hover:text-white no-underline transition-transform duration-200 ease-in-out" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
                     </div>
                   {% endfor %}
                 </div>
               </div>
             {% endif %}
           {% endfor %}
+          {% if ctaMenu %}
+            {% for item in ctaMenu.items %}
+              <div class="mt-xxl item cta-item {{- item.current ? ' [&_a]:bg-black [&_a]:text-white' }}">
+                <a class="link border rounded-button bg-white py-min px-xs flex align-middle items-center hover:bg-black hover:text-white no-underline transition-transform duration-200 ease-in-out" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+                  {{ item.title }}
+                </a>
+              </div>
+            {% endfor %}
+          {% endif %}
         </div>
 
         {# Footer Links Section #}

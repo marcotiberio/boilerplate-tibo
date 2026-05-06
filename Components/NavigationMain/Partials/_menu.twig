@@ -3,7 +3,7 @@
     {# regular menu item #}
     {% if not item.children %}
       <div class="item font-menu flex align-middle items-center no-underline {{ item.classes|join(' ') }} {{- item.current ? ' [&_a]:bg-black [&_a]:text-white' }} {{- item.target == '_blank' ? ' external-link' }} {{- item.object == 'page' ? ' page-item' }} {{- item.object == 'post' ? ' post-item' }}">
-        <a class="link border rounded-button py-min px-xs flex align-middle items-center hover:bg-black hover:text-white no-underline transition-transform duration-200 ease-in-out" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+        <a class="link border rounded-button bg-white py-min px-xs flex align-middle items-center hover:bg-black hover:text-white no-underline transition-transform duration-200 ease-in-out" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
           {{ item.title }}
         </a>
       </div>
@@ -15,7 +15,7 @@
           @mouseover="showDropdown = true"
           @mouseleave="showDropdown = false"
           @click="showDropdown = !showDropdown" 
-          class="link border rounded-button py-min px-xs flex align-middle items-center hover:bg-black hover:text-white no-underline transition-transform duration-200 ease-in-out cursor-pointer z-[100]" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+          class="link border rounded-button bg-white py-min px-xs flex align-middle items-center hover:bg-black hover:text-white no-underline transition-transform duration-200 ease-in-out cursor-pointer z-[100]" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
             {{ item.title }}
         </a>
         <div 
@@ -25,7 +25,7 @@
           @mouseleave="showDropdown = false">
             {% for subitem in item.children %}
               <div class="item font-menu {{ subitem.classes|join(' ') }} {{- subitem.current ? ' [&_a]:bg-black [&_a]:text-white' }} {{- subitem.target == '_blank' ? ' external-link' }} {{- subitem.object == 'page' ? ' page-item' }} {{- subitem.object == 'post' ? ' post-item' }}">
-                <a class="link border rounded-button py-min px-xs flex align-middle items-center hover:bg-black hover:text-white no-underline transition-transform duration-200 ease-in-out" href="{{ subitem.link }}">{{ subitem.title }}</a>
+                <a class="link border rounded-button bg-white py-min px-xs flex align-middle items-center hover:bg-black hover:text-white no-underline transition-transform duration-200 ease-in-out" href="{{ subitem.link }}">{{ subitem.title }}</a>
               </div>
             {% endfor %}
         </div>

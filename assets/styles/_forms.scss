@@ -18,17 +18,29 @@ label {
   font-weight: 500 !important;
 }
 
+.wpforms-container {
+  margin: 0 !important;
+}
+
+.wpforms-head-container {
+  padding-bottom: 7px !important;
+}
+
+.wpforms-field {
+  padding: 0 0 14px 0 !important;
+}
+
 #{$input-selectors} {
   appearance: none !important;
   background-color: transparent !important;
-  border-bottom: 1px solid var(--black) !important;
-  border-radius: 0 !important;
+  border: 1px solid var(--black) !important;
+  border-radius: 20px !important;
   caret-color: var(--color-text) !important;
   color: var(--color-text) !important;
   margin-bottom: 15px;
   max-width: 100%;
   outline: none !important;
-  padding: 0;
+  padding: 14px !important;
   transition: border-color 0.3s ease-in-out;
   width: 100%;
 
@@ -100,23 +112,16 @@ textarea {
   }
 }
 
-input:where([type='submit']) {
+.wpforms-submit {
   @include reset-link;
   appearance: none;
-  font-family: inherit;
-  font-size: 1rem;
-  line-height: 1;
-  border-radius: 0 !important;
-  @apply py-[10px];
-  @apply px-[10px];
-  @apply text-black;
-  @apply uppercase;
-  @apply bg-transparent;
-  @apply justify-center;
-  @apply border;
-  @apply border-black;
-  @apply whitespace-nowrap;
-  @apply w-full;
+  font-family: var(--primary-font-family, Arial, sans-serif);
+  font-size: var(--button-size, 1rem);
+  line-height: var(--button-line-height, 1.2);
+  font-weight: var(--button-font-weight, 500);
+  @apply w-fit;
+  @apply px-sm;
+  @apply py-xs;
   @apply flex;
   @apply justify-center;
   @apply items-center;
@@ -124,6 +129,13 @@ input:where([type='submit']) {
   @apply relative;
   @apply text-center;
   @apply no-underline;
+  @apply whitespace-nowrap;
+  @apply text-white hover:text-black !important;
+  @apply bg-black hover:bg-white !important;
+  @apply opacity-100 !important;
+  @apply border !important;
+  @apply border-black !important;
+  @apply rounded-button !important;
 
   &:hover,
   &:focus {

@@ -6,7 +6,7 @@
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--blue){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
   <div class="boxed">
-    <div class="flex flex-col {{ imagePosition }} gap-lg items-center h-full">
+    <div class="flex flex-col {{ imagePosition }} gap-sm items-center lg:items-stretch h-full">
       <div class="w-full lg:w-1/2">
         {% if image %}
           <figure class="figure">
@@ -25,16 +25,11 @@
         {% if contentHtml %}
           <div class="wysiwyg">{{ contentHtml|e('wp_kses_post') }}</div>
         {% endif %}
-        {% for panel in repeaterButtons %}
-          <div class="flex flex-col gap-sm mt-xs">
-            <a class="button button--outline button--outlineBig" href="{{panel.buttonLink.url}}" {% if panel.buttonLink.target %} target="{{ panel.buttonLink.target }}" rel="noreferrer noopener"{% endif %}>{{panel.buttonLink.title}}</a>
-          </div>
-        {% endfor %}
+        {% if buttonLink1 %}
         <div class="flex flex-row gap-xs mt-xs">
-          {% if buttonLink1 %}
-            <a class="button button--outline" href="{{buttonLink1.url}}" {% if buttonLink1.target %} target="{{ buttonLink1.target }}" rel="noreferrer noopener"{% endif %}>{{buttonLink1.title}}</a>
-          {% endif %}
+          <a class="button button--outline hover:!bg-white hover:!text-black" href="{{buttonLink1.url}}"{% if buttonColor %} style="background: {{ buttonColor }};"{% endif %}{% if buttonLink1.target %} target="{{ buttonLink1.target }}" rel="noreferrer noopener"{% endif %}>{{buttonLink1.title}}</a>
         </div>
+        {% endif %}
       </div>
     </div>
   </div>

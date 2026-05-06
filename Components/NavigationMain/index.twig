@@ -6,7 +6,7 @@
         {% if menu %}
           {% include 'Partials/_menu.twig' with { 'items': menu.items } only %}
         {% endif %}
-        <div class="relative flex items-center gap-xs">
+        <div class="relative flex items-center">
           {% if ctaMenu %}
             {% include 'Partials/_menuCta.twig' with { 'items': ctaMenu.items } only %}
           {% endif %}

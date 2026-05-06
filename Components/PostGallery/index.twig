@@ -1,0 +1,40 @@
+{% set gallery = post.meta('postGallery') %}
+{% set slides = gallery|default([]) %}
+{% set fallback = post.thumbnail %}
+
+{% if slides is empty and fallback %}
+  <img class="w-full h-full lazyload object-cover aspect-video lg:aspect-16/6"
+    src="{{ fallback.src }}"
+    alt="{{ fallback.alt|e | default('') }}"
+    loading="lazy"
+    style="opacity: 0; transition: opacity 0.5s ease-in-out;"
+    onload="this.style.opacity='1'">
+{% elseif slides is not empty %}
+  <flynt-component load:on="idle" name="PostGallery" class="block w-full relative overflow-hidden">
+    <div data-ref="slider" class="post-gallery swiper-container w-full relative overflow-hidden">
+      <div class="swiper-wrapper">
+        {% for image in slides %}
+          <div class="post-gallery-slide swiper-slide w-full h-auto">
+            <img class="w-full h-full lazyload object-cover aspect-video lg:aspect-16/6"
+              src="{{ image.src }}"
+              alt="{{ image.alt|e | default('') }}"
+              loading="lazy"
+              style="opacity: 0; transition: opacity 0.5s ease-in-out;"
+              onload="this.style.opacity='1'">
+          </div>
+        {% endfor %}
+      </div>
+      {% if slides|length > 1 %}
+        <div class="post-gallery-buttons absolute inset-0 pointer-events-none flex justify-between items-center boxed z-50">
+          <button type="button" data-ref="prev" class="post-gallery-button post-gallery-button--prev pointer-events-auto" aria-label="{{ __('Previous slide', 'flynt') }}">
+            <span class="text-white text-[40px] md:text-[60px]">←</span>
+          </button>
+          <button type="button" data-ref="next" class="post-gallery-button post-gallery-button--next pointer-events-auto" aria-label="{{ __('Next slide', 'flynt') }}">
+            <span class="text-white text-[40px] md:text-[60px]">→</span>
+          </button>
+        </div>
+        <div data-ref="dots" class="post-gallery-pagination absolute bottom-xs left-0 right-0 z-50 flex justify-center"></div>
+      {% endif %}
+    </div>
+  </flynt-component>
+{% endif %}

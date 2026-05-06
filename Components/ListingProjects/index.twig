@@ -32,7 +32,7 @@
         <div
           data-listing-filters
           data-category-colors="{{ categoryColors|json_encode|e('html_attr') }}"
-          class="flex flex-col gap-xs lg:flex-row lg:items-center"
+          class="flex flex-col gap-min md:gap-xs lg:flex-row lg:items-center md:ml-xs"
           x-init="
             $store.projectFilters.setCategoryColors(JSON.parse($el.dataset.categoryColors));
             $nextTick(() => {
@@ -46,7 +46,7 @@
             <div x-data="{ open: false }" @click.outside="open = false" class="relative">
               <button
                 type="button"
-                class="border rounded-button bg-white py-min px-xs min-w-[180px] !font-body !mb-0 cursor-pointer no-invert inline-flex items-center justify-between gap-xs"
+                class="border rounded-button bg-white py-min px-xs min-w-full md:min-w-[180px] !font-body !mb-0 cursor-pointer no-invert inline-flex items-center justify-between gap-xs"
                 :aria-expanded="open"
                 @click="open = !open"
               >
@@ -59,12 +59,12 @@
                 x-show="open"
                 x-transition.opacity
                 x-cloak
-                class="absolute top-full left-0 mt-min flex flex-col gap-min items-start z-10"
+                class="absolute top-full left-0 mt-min flex flex-col gap-min items-start z-10 w-full"
               >
                 {% for slug, name in categories %}
                   {% set color = categoryColors[slug]|default('#000000') %}
                   <button
-                    class="border rounded-button bg-white py-min px-xs min-w-[180px] !font-body !mb-0 cursor-pointer transition-opacity no-invert inline-flex items-center justify-between gap-xs"
+                    class="border rounded-button bg-white py-min px-xs min-w-full md:min-w-[180px] !font-body !mb-0 cursor-pointer transition-opacity no-invert inline-flex items-center justify-between gap-xs"
                     x-on:click="$store.projectFilters.toggleCategory('{{ slug }}')"
                   >
                     <span>{{ name }}</span>
@@ -82,7 +82,7 @@
             <div x-data="{ open: false }" @click.outside="open = false" class="relative">
               <button
                 type="button"
-                class="border rounded-button bg-white py-min px-xs min-w-[180px] !font-body !mb-0 cursor-pointer no-invert inline-flex items-center justify-between gap-xs"
+                class="border rounded-button bg-white py-min px-xs min-w-full md:min-w-[180px] !font-body !mb-0 cursor-pointer no-invert inline-flex items-center justify-between gap-xs"
                 :aria-expanded="open"
                 @click="open = !open"
               >
@@ -95,11 +95,11 @@
                 x-show="open"
                 x-transition.opacity
                 x-cloak
-                class="absolute top-full left-0 mt-min flex flex-col gap-min items-start z-10"
+                class="absolute top-full left-0 mt-min flex flex-col gap-min items-start z-10 w-full"
               >
                 {% for slug, name in locations %}
                   <button
-                    class="border rounded-button bg-white py-min px-xs min-w-[180px] !font-body !mb-0 cursor-pointer transition-opacity no-invert inline-flex items-center justify-between gap-xs"
+                    class="border rounded-button bg-white py-min px-xs min-w-full md:min-w-[180px] !font-body !mb-0 cursor-pointer transition-opacity no-invert inline-flex items-center justify-between gap-xs"
                     x-on:click="$store.projectFilters.toggleLocation('{{ slug }}')"
                   >
                     <span>{{ name }}</span>

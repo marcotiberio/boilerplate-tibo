@@ -1,0 +1,41 @@
+flynt-component[name='PostGallery'] {
+  overflow: hidden;
+
+  .post-gallery {
+    max-width: 100%;
+    overflow: hidden;
+
+    .swiper-wrapper {
+      box-sizing: inherit;
+    }
+
+    .swiper-slide {
+      display: flex;
+      height: auto;
+    }
+
+    &-button {
+      align-items: center;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      z-index: 10;
+
+      &.swiper-button-disabled {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+    }
+
+    &-pagination {
+      .swiper-pagination-bullet {
+        background-color: var(--white, #fff);
+        opacity: 0.5;
+
+        &-active {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

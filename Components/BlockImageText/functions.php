@@ -85,6 +85,15 @@ function getACFLayout()
                 ],
             ],
             [
+                'label' => __('Button Color', 'flynt'),
+                'name' => 'buttonColor',
+                'type' => 'color_picker',
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 50
+                ],
+            ],
+            [
                 'label' => __('Options', 'flynt'),
                 'name' => 'optionsTab',
                 'type' => 'tab',

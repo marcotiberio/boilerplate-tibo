@@ -57,23 +57,16 @@
         <div class="flex flex-col gap-md h-full relative">
           {# Top #}
           <div class="w-full relative">
-            {% if post.thumbnail %}
-              <img class="w-full h-full igure-image lazyload object-cover aspect-16/6"
-                src="{{ post.thumbnail.src }}"
-                alt="{{ post.thumbnail.alt|e | default('') }}"
-                loading="lazy"
-                style="opacity: 0; transition: opacity 0.5s ease-in-out;"
-                onload="this.style.opacity='1'">
-            {% endif %}
+            {{ renderComponent('PostGallery', { post: post }) }}
           </div>
           {# Bottom #}
           <div class="w-full lg:w-full h-full flex flex-col justify-between">
-            <div class="flex flex-row justify-between items-end gap-sm mb-md">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-sm pb-md border-b">
               <h1 class="w-full flex flex-col gap-min items-start justify-start">
                 <span class="font-h1 !mb-0">{{ post.postArtist }}</span>
                 <span class="font-h1">{{ post.title }}</span>
               </h1>
-              <div class="w-full flex flex-col gap-min items-end justify-end">
+              <div class="w-full flex flex-col gap-min md:items-end md:justify-end">
                 {# <div class="">
                   {% set postCategories = post.terms('category') %}
                   {% for term in postCategories %}
@@ -93,9 +86,9 @@
                 {% endif %}
               </div>
             </div>
-            <div class="flex flex-col">
+            <div class="flex flex-col pt-md">
               {% if post.postDescription %}
-                <div class="flex flex-col border-t border-b py-md">
+                <div class="flex flex-col w-full lg:w-[calc(66%_-_12.5px)] mr-auto">
                   <p class="font-bodySans">{{ post.postDescription }}</p>
                 </div>
               {% endif %}

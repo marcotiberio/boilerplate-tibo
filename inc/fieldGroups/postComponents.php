@@ -69,6 +69,18 @@ add_action('Flynt/afterRegisterComponents', function () {
                     'width' => 100,
                 ]
             ],
+            [
+                'label' => __('Gallery', 'flynt'),
+                'name' => 'postGallery',
+                'type' => 'gallery',
+                'instructions' => __('Add images to display as a carousel at the top of the post. Falls back to the featured image when empty.', 'flynt'),
+                'return_format' => 'array',
+                'preview_size' => 'medium',
+                'mime_types' => 'jpg,jpeg,png,svg,webp',
+                'wrapper' => [
+                    'width' => 100,
+                ],
+            ],
         ],
         'location' => [
             [
