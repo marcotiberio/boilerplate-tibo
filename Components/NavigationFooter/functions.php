@@ -2,9 +2,21 @@
 
 namespace Flynt\Components\NavigationFooter;
 
+use Flynt\Utils\Asset;
 use Flynt\Utils\Options;
 use Flynt\Shortcodes;
 use Timber\Timber;
+
+const SOCIAL_PLATFORMS = [
+    'facebook'  => 'Facebook',
+    'instagram' => 'Instagram',
+    'linkedin'  => 'LinkedIn',
+    'x'         => 'X / Twitter',
+    'youtube'   => 'YouTube',
+    'tiktok'    => 'TikTok',
+    'email'     => 'Email',
+    'website'   => 'Website',
+];
 
 add_action('init', function () {
     register_nav_menus([
@@ -15,6 +27,18 @@ add_action('init', function () {
 add_filter('Flynt/addComponentData?name=NavigationFooter', function ($data) {
     $data['maxLevel'] = 0;
     $data['menu'] = Timber::get_menu('navigation_footer') ?? Timber::get_pages_menu();
+
+    if (!empty($data['socialLinks']) && is_array($data['socialLinks'])) {
+        $data['socialLinks'] = array_values(array_filter(array_map(function ($link) {
+            if (empty($link['platform']) || empty($link['url'])) {
+                return null;
+            }
+            $iconPath = "assets/icons/{$link['platform']}.svg";
+            $link['iconUrl'] = Asset::requireUrl($iconPath);
+            $link['label']   = SOCIAL_PLATFORMS[$link['platform']] ?? $link['platform'];
+            return $link;
+        }, $data['socialLinks'])));
+    }
 
     return $data;
 });
@@ -83,32 +107,43 @@ Options::addTranslatable('NavigationFooter', [
                     'width' => 100
                 ],
             ],
-            // [
-            //     'label' => __('Enable Newsletter Form', 'flynt'),
-            //     'name' => 'enableNewsletter',
-            //     'type' => 'true_false',
-            //     'default_value' => 0,
-            //     'ui' => 1,
-            //     'wrapper' => [
-            //         'width' => 50
-            //     ],
-            // ],
         ]
     ],
     [
-        'label' => __('Newsletter', 'flynt'),
-        'name' => 'newsletterTab',
+        'label' => __('Social', 'flynt'),
+        'name' => 'socialTab',
         'type' => 'tab',
         'placement' => 'top',
         'endpoint' => 0
     ],
     [
-        'label' => __('Newsletter Link', 'flynt'),
-        'name' => 'newsletterLink',
-        'type' => 'link',
-        'required' => 0,
-        'wrapper' => [
-            'width' => 100
+        'label' => __('Social Links', 'flynt'),
+        'name' => 'socialLinks',
+        'type' => 'repeater',
+        'layout' => 'table',
+        'min' => 0,
+        'button_label' => __('Add Social Link', 'flynt'),
+        'sub_fields' => [
+            [
+                'label' => __('Platform', 'flynt'),
+                'name' => 'platform',
+                'type' => 'select',
+                'choices' => SOCIAL_PLATFORMS,
+                'required' => 1,
+                'allow_null' => 0,
+                'wrapper' => [
+                    'width' => '30',
+                ],
+            ],
+            [
+                'label' => __('URL', 'flynt'),
+                'name' => 'url',
+                'type' => 'url',
+                'required' => 1,
+                'wrapper' => [
+                    'width' => '70',
+                ],
+            ],
         ],
     ],
     [
