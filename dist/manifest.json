@@ -1,6 +1,6 @@
 {
   "Components/BlockGalleryMedia/script.js": {
-    "file": "assets/script-ecbf5980.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -24,7 +24,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-48bc6e8a.js",
+    "file": "assets/script-ecbf5980.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -126,27 +126,27 @@
     "src": "Components/ZZZ/AccordionSystems/script.js"
   },
   "Components/ZZZ/BlockCta/Assets/facebook.svg": {
-    "file": "assets/facebook-8975c208.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/linkedin.svg"
+    "file": "assets/facebook-d6bdf3cf.svg",
+    "src": "assets/icons/facebook.svg"
   },
   "Components/ZZZ/BlockCta/Assets/instagram.svg": {
-    "file": "assets/instagram-5bab2c82.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/instagram.svg"
+    "file": "assets/instagram-222090b4.svg",
+    "src": "assets/icons/instagram.svg"
   },
   "Components/ZZZ/BlockCta/Assets/linkedin.svg": {
-    "file": "assets/facebook-8975c208.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/linkedin.svg"
+    "file": "assets/linkedin-921f7201.svg",
+    "src": "assets/icons/linkedin.svg"
   },
   "Components/ZZZ/BlockCta/Assets/logo.svg": {
     "file": "assets/logo-eeb7436e.svg",
     "src": "Components/ZZZ/BlockCta/Assets/logo.svg"
   },
   "Components/ZZZ/BlockCta/Assets/twitter.svg": {
-    "file": "assets/twitter-bc2ba69f.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/twitter.svg"
+    "file": "assets/x-3cb64b92.svg",
+    "src": "assets/icons/x.svg"
   },
   "Components/ZZZ/BlockCta/Assets/youtube.svg": {
-    "file": "assets/youtube-77f3f8fd.svg",
+    "file": "assets/youtube-a1830879.svg",
     "src": "assets/icons/youtube.svg"
   },
   "Components/ZZZ/BlockPostArchive/script.js": {
@@ -192,7 +192,7 @@
     "src": "Components/ZZZ/HeroSliderComposite/script.js"
   },
   "Components/ZZZ/HeroVideoBackground/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-48bc6e8a.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -309,6 +309,10 @@
     "file": "assets/at-sign-d935f6b5.svg",
     "src": "assets/icons/at-sign.svg"
   },
+  "assets/icons/bluesky.svg": {
+    "file": "assets/bluesky-2fad3c99.svg",
+    "src": "assets/icons/bluesky.svg"
+  },
   "assets/icons/chevron-down.svg": {
     "file": "assets/chevron-down-ec010283.svg",
     "src": "assets/icons/chevron-down.svg"
@@ -318,19 +322,23 @@
     "src": "assets/icons/email.svg"
   },
   "assets/icons/facebook.svg": {
-    "file": "assets/facebook-3e628692.svg",
+    "file": "assets/facebook-d6bdf3cf.svg",
     "src": "assets/icons/facebook.svg"
   },
   "assets/icons/instagram.svg": {
-    "file": "assets/instagram-fcb24f23.svg",
+    "file": "assets/instagram-222090b4.svg",
     "src": "assets/icons/instagram.svg"
   },
   "assets/icons/linkedin.svg": {
-    "file": "assets/linkedin-e0e59379.svg",
+    "file": "assets/linkedin-921f7201.svg",
     "src": "assets/icons/linkedin.svg"
   },
+  "assets/icons/mastodon.svg": {
+    "file": "assets/mastodon-9c8be2ce.svg",
+    "src": "assets/icons/mastodon.svg"
+  },
   "assets/icons/tiktok.svg": {
-    "file": "assets/tiktok-8b42f2b4.svg",
+    "file": "assets/tiktok-fe87e57b.svg",
     "src": "assets/icons/tiktok.svg"
   },
   "assets/icons/website.svg": {
@@ -338,11 +346,11 @@
     "src": "assets/icons/website.svg"
   },
   "assets/icons/x.svg": {
-    "file": "assets/x-35488143.svg",
+    "file": "assets/x-3cb64b92.svg",
     "src": "assets/icons/x.svg"
   },
   "assets/icons/youtube.svg": {
-    "file": "assets/youtube-77f3f8fd.svg",
+    "file": "assets/youtube-a1830879.svg",
     "src": "assets/icons/youtube.svg"
   },
   "assets/images/logo.svg": {
