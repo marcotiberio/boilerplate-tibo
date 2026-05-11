@@ -32,21 +32,23 @@
         <div
           data-listing-filters
           data-category-colors="{{ categoryColors|json_encode|e('html_attr') }}"
-          class="flex flex-col gap-min md:gap-xs lg:flex-row lg:items-center md:ml-xs"
+          class="flex flex-col lg:flex-row gap-min md:gap-xs items-stretch lg:items-center md:ml-xs w-full lg:w-auto"
           x-init="
             $store.projectFilters.setCategoryColors(JSON.parse($el.dataset.categoryColors));
             $nextTick(() => {
-              const slot = document.querySelector('[data-nav-slot=&quot;projectFilters&quot;]');
-              if (!slot || !window.matchMedia('(min-width: 1024px)').matches) return;
+              const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+              const selector = isDesktop ? '[data-nav-slot=&quot;projectFilters&quot;]' : '[data-nav-slot=&quot;projectFiltersMobile&quot;]';
+              const slot = document.querySelector(selector);
+              if (!slot) return;
               slot.appendChild($el);
             })
           "
         >
           {% if categories|length > 0 %}
-            <div x-data="{ open: false }" @click.outside="open = false" class="relative">
+            <div x-data="{ open: false }" @click.outside="open = false" class="relative w-full lg:w-auto">
               <button
                 type="button"
-                class="border rounded-button bg-white py-min px-xs min-w-full md:min-w-[180px] !font-body !mb-0 cursor-pointer no-invert inline-flex items-center justify-between gap-xs"
+                class="border rounded-button bg-white py-min px-xs w-full lg:min-w-[180px] !font-body !mb-0 cursor-pointer no-invert inline-flex items-center justify-between gap-xs"
                 :aria-expanded="open"
                 @click="open = !open"
               >
@@ -79,10 +81,10 @@
           {% endif %}
 
           {% if locations|length > 0 %}
-            <div x-data="{ open: false }" @click.outside="open = false" class="relative">
+            <div x-data="{ open: false }" @click.outside="open = false" class="relative w-full lg:w-auto">
               <button
                 type="button"
-                class="border rounded-button bg-white py-min px-xs min-w-full md:min-w-[180px] !font-body !mb-0 cursor-pointer no-invert inline-flex items-center justify-between gap-xs"
+                class="border rounded-button bg-white py-min px-xs w-full lg:min-w-[180px] !font-body !mb-0 cursor-pointer no-invert inline-flex items-center justify-between gap-xs"
                 :aria-expanded="open"
                 @click="open = !open"
               >
@@ -115,7 +117,7 @@
 
           <button
             type="button"
-            class="border rounded-button py-min px-xs min-w-[180px] bg-grey text-black border-grey !font-body !mb-0 cursor-pointer no-invert transition-opacity inline-flex items-center justify-between gap-xs"
+            class="border rounded-button py-min px-xs w-full lg:w-auto lg:min-w-[180px] bg-grey text-black border-grey !font-body !mb-0 cursor-pointer no-invert transition-opacity inline-flex items-center justify-between gap-xs"
             :class="($store.projectFilters.activeCategory.length === 0 && $store.projectFilters.activeLocation.length === 0) ? 'opacity-40 pointer-events-none' : ''"
             @click="$store.projectFilters.reset()"
           >

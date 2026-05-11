@@ -1,10 +1,18 @@
-<a class="logo flex flex-row justify-start items-center shrink-0" href="{{ site.link }}" aria-label="Home">
+<a
+  class="logo flex flex-row justify-start items-center shrink-0 transition-[width,height] duration-300 ease-out"
+  x-data="{ scrolled: false }"
+  x-init="scrolled = window.scrollY > 20"
+  @scroll.window.passive="scrolled = window.scrollY > 20"
+  :class="scrolled ? 'w-[169px] h-[104px]' : 'w-[242px] h-[149px]'"
+  href="{{ site.link }}"
+  aria-label="Home"
+>
   {% if site.logo %}
-    <img class="logo-image" src="{{ site.logo }}" alt="{{ site.title }} logo">
+    <img class="logo-image w-auto h-full max-w-full" src="{{ site.logo }}" alt="{{ site.title }} logo">
   {% else %}
   {% set staticColor = categoryColor ? categoryColor|lower : '' %}
   <svg
-    class="scale-100"
+    class="w-full h-full"
     x-data="{
       staticColor: '{{ staticColor }}',
       shouldHide(hex) {

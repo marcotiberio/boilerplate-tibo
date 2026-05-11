@@ -31,6 +31,12 @@ body {
 
 // Scopes
 
+.page-projects {
+  .mainContent {
+    @apply mt-[225px];
+  }
+}
+
 // .single {
 //   header {
 //     @apply hidden;

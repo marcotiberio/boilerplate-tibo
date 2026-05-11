@@ -2,7 +2,7 @@
   load:on="idle"
   {# client:media="(max-width: 1023px)" #}
   name="NavigationBurger"
-  class="block lg:hidden fixed top-0 left-0 w-screen z-50 flex-row justify-between mx-auto">
+  class="block lg:hidden fixed top-0 left-0 w-screen z-50 flex-row justify-between mx-auto bg-white">
   <nav aria-label="{{ labels.ariaLabel|e }}" class="h-auto w-full">
     <div class="w-full h-auto max-w-screen-max mx-auto !p-xs !min-h-fit flex flex-row justify-between lg:gap-sm align-middle items-center z-[3001] relative">
       {% include 'Partials/_logo.twig' with { 'logo': logo, 'site': site } only %}
@@ -12,6 +12,7 @@
         </div>
       {% endif %}
     </div>
+    <div data-nav-slot="projectFiltersMobile" class="empty:hidden w-full max-w-screen-max mx-auto px-xs pb-xs z-[3000] relative"></div>
     {% if menu %}
       <div
         data-ref="menu" 
