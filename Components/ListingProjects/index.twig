@@ -66,12 +66,13 @@
                 {% for slug, name in categories %}
                   {% set color = categoryColors[slug]|default('#000000') %}
                   <button
-                    class="border rounded-button bg-white py-min px-xs min-w-full md:min-w-[180px] !font-body !mb-0 cursor-pointer transition-opacity no-invert inline-flex items-center justify-between gap-xs"
+                    class="group border rounded-button bg-white py-min px-xs min-w-full md:min-w-[180px] !font-body !mb-0 cursor-pointer transition-opacity no-invert inline-flex items-center justify-between gap-xs"
+                    style="--cat-color: {{ color }};"
                     x-on:click="$store.projectFilters.toggleCategory('{{ slug }}')"
                   >
                     <span>{{ name }}</span>
                     <span
-                      class="block w-[18px] h-[18px] rounded-full border border-black transition-colors"
+                      class="block w-[18px] h-[18px] rounded-full border border-black transition-colors group-hover:bg-[var(--cat-color)] group-hover:border-[var(--cat-color)]"
                       :style="$store.projectFilters.activeCategory.includes('{{ slug }}') ? 'background-color: {{ color }}; border-color: {{ color }};' : ''"
                     ></span>
                   </button>
@@ -101,12 +102,12 @@
               >
                 {% for slug, name in locations %}
                   <button
-                    class="border rounded-button bg-white py-min px-xs min-w-full md:min-w-[180px] !font-body !mb-0 cursor-pointer transition-opacity no-invert inline-flex items-center justify-between gap-xs"
+                    class="group border rounded-button bg-white py-min px-xs min-w-full md:min-w-[180px] !font-body !mb-0 cursor-pointer transition-opacity no-invert inline-flex items-center justify-between gap-xs"
                     x-on:click="$store.projectFilters.toggleLocation('{{ slug }}')"
                   >
                     <span>{{ name }}</span>
                     <span
-                      class="block w-[18px] h-[18px] rounded-full border border-black transition-colors"
+                      class="block w-[18px] h-[18px] rounded-full border border-black transition-colors group-hover:bg-black"
                       :class="$store.projectFilters.activeLocation.includes('{{ slug }}') ? 'bg-black' : ''"
                     ></span>
                   </button>
