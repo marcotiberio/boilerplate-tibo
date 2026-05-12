@@ -4,7 +4,7 @@
   {% set categoryTerm = post.terms('category')|first %}
   {% set categoryColor = categoryTerm ? categoryTerm.meta('categoryColor') : null %}
   {% if categoryColor %}
-    <div class="project-orbs pointer-events-none fixed inset-0 z-[2999] overflow-hidden" aria-hidden="true" style="--cat-color: {{ categoryColor }};">
+    <div class="project-orbs pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true" style="--cat-color: {{ categoryColor }};">
       <span class="project-orb project-orb--1"></span>
       <span class="project-orb project-orb--2"></span>
       <span class="project-orb project-orb--3"></span>
@@ -15,13 +15,12 @@
         display: block;
         border-radius: 9999px;
         background-color: var(--cat-color);
-        opacity: 0.45;
         will-change: transform;
         mix-blend-mode: multiply;
       }
-      .project-orb--1 { width: 40px; height: 40px; top: 30%; left: 6%; animation: orbFloat1 100s ease-in-out infinite alternate; }
-      .project-orb--2 { width: 40px; height: 40px; top: 60%; left: 78%; animation: orbFloat2 100s ease-in-out infinite alternate; }
-      .project-orb--3 { width: 40px; height: 40px; top: 70%; left: 28%; animation: orbFloat3 100s ease-in-out infinite alternate; }
+      .project-orb--1 { width: 40px; height: 40px; top: 30%; left: 6%; animation: orbFloat1 90s ease-in-out infinite alternate; }
+      .project-orb--2 { width: 40px; height: 40px; top: 60%; left: 78%; animation: orbFloat2 90s ease-in-out infinite alternate; }
+      .project-orb--3 { width: 40px; height: 40px; top: 70%; left: 28%; animation: orbFloat3 90s ease-in-out infinite alternate; }
       @keyframes orbFloat1 {
         0%   { transform: translate(0, 0); }
         50%  { transform: translate(35vw, 28vh); }

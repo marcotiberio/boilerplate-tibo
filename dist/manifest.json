@@ -49,7 +49,7 @@
   },
   "Components/ZZZ/BlockCta/Assets/facebook.svg": {
     "file": "assets/facebook-8975c208.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/facebook.svg"
+    "src": "Components/ZZZ/BlockCta/Assets/linkedin.svg"
   },
   "Components/ZZZ/BlockCta/Assets/instagram.svg": {
     "file": "assets/instagram-5bab2c82.svg",
@@ -57,7 +57,7 @@
   },
   "Components/ZZZ/BlockCta/Assets/linkedin.svg": {
     "file": "assets/facebook-8975c208.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/facebook.svg"
+    "src": "Components/ZZZ/BlockCta/Assets/linkedin.svg"
   },
   "Components/ZZZ/BlockCta/Assets/logo.svg": {
     "file": "assets/logo-eeb7436e.svg",
@@ -103,7 +103,7 @@
     "src": "Components/ZZZ/BlockSliderLogos/script.js"
   },
   "Components/ZZZ/BlockVideoOembed/script.js": {
-    "file": "assets/script-48bc6e8a.js",
+    "file": "assets/script-ecbf5980.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -111,7 +111,7 @@
     "src": "Components/ZZZ/BlockVideoOembed/script.js"
   },
   "Components/ZZZ/BlockVideoText/script.js": {
-    "file": "assets/script-ecbf5980.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -173,7 +173,7 @@
     "src": "Components/ZZZ/HeroSliderComposite/script.js"
   },
   "Components/ZZZ/HeroVideoBackground/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-48bc6e8a.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -186,7 +186,7 @@
     "src": "Components/ZZZ/ListingHomepage/script.js"
   },
   "Components/ZZZ/ListingJournalRelated/script.js": {
-    "file": "assets/script-563b7329.js",
+    "file": "assets/script-3aa6b9ec.js",
     "imports": [
       "_swiper-bundle-270a28d4.js",
       "_pagination-7b21a626.js",
@@ -197,7 +197,7 @@
     "src": "Components/ZZZ/ListingJournalRelated/script.js"
   },
   "Components/ZZZ/ListingVideosRelated/script.js": {
-    "file": "assets/script-3aa6b9ec.js",
+    "file": "assets/script-563b7329.js",
     "imports": [
       "_swiper-bundle-270a28d4.js",
       "_pagination-7b21a626.js",
@@ -413,7 +413,7 @@
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-b55d2bcb.css",
+    "file": "assets/main-cf04bca5.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
