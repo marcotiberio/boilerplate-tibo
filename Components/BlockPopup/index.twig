@@ -47,8 +47,9 @@
         <div class="flex flex-col {{ imagePosition }} items-stretch h-full">
           <div class="w-full lg:w-1/2 h-full overflow-hidden" style="background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}var(--orange){% endif %};">
             {% if image %}
+              {% set imageFit = (image.src|lower ends with '.svg') ? 'object-contain p-sm' : 'object-cover' %}
               <figure class="figure h-full">
-                <img class="figure-image lazyload h-full w-full object-contain"
+                <img class="figure-image lazyload h-full w-full {{ imageFit }}"
                   src="{{ image.src | resize(32) }}"
                   data-srcset="{{ function('wp_get_attachment_image_srcset', image.id) }}"
                   data-sizes="auto"
