@@ -18,6 +18,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'layouts' => [
                     Components\BlockButtons\getACFLayout(),
                     Components\BlockForm\getACFLayout(),
+                    Components\BlockPopup\getACFLayout(),
                 ],
             ]
         ],
