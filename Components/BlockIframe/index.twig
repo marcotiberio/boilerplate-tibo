@@ -1,0 +1,28 @@
+<flynt-component
+  load:on="visible"
+  name="BlockIframe"
+  style="
+    color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
+    background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
+  <div class="flex flex-col gap-sm {% if options.topBorder %}border-t-2 border-black mt-sm{% endif %}">
+    <div
+      class="iframe-wrap w-full mx-auto"
+      data-ref="wrap"
+      data-auto-resize="{{ autoResize ? 'true' : 'false' }}">
+      <iframe
+        data-ref="iframe"
+        src="{{ iframeUrl|e('esc_url') }}"
+        title="{{ iframeTitle|e('html_attr') }}"
+        {% if iframeId %}id="{{ iframeId|e('html_attr') }}"{% endif %}
+        height="{{ iframeHeight|default(600) }}"
+        scrolling="{{ scrolling ? 'yes' : 'no' }}"
+        frameborder="0"
+        loading="lazy"
+        style="width: 0; min-width: 100% !important; border: none;"
+        data-external="1"></iframe>
+    </div>
+    {% if caption %}
+      <figcaption class="font-bodySmall">{{ caption|e }}</figcaption>
+    {% endif %}
+  </div>
+</flynt-component>

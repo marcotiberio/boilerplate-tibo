@@ -1,11 +1,19 @@
 {
   "Components/BlockGalleryMedia/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-ecbf5980.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
     "isDynamicEntry": true,
     "src": "Components/BlockGalleryMedia/script.js"
+  },
+  "Components/BlockIframe/script.js": {
+    "file": "assets/script-0675e79c.js",
+    "imports": [
+      "_helpers-0bb72b7a.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "Components/BlockIframe/script.js"
   },
   "Components/BlockSliderLogos/script.js": {
     "file": "assets/script-e6269e81.js",
@@ -16,7 +24,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -24,7 +32,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-ecbf5980.js",
+    "file": "assets/script-48bc6e8a.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -39,7 +47,7 @@
     "css": [
       "assets/script-b3ce9496.css"
     ],
-    "file": "assets/script-ebe7751e.js",
+    "file": "assets/script-2000385d.js",
     "imports": [
       "assets/main.js"
     ],
@@ -94,7 +102,7 @@
   },
   "Components/NavigationMainLogo/Assets/logo.svg": {
     "file": "assets/logo-eeb7436e.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/logo.svg"
+    "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/SliderBox/script.js": {
     "file": "assets/script-f8e40592.js",
@@ -139,7 +147,7 @@
   },
   "Components/ZZZ/BlockCta/Assets/logo.svg": {
     "file": "assets/logo-eeb7436e.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/logo.svg"
+    "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/BlockCta/Assets/twitter.svg": {
     "file": "assets/x-3cb64b92.svg",
@@ -192,7 +200,7 @@
     "src": "Components/ZZZ/HeroSliderComposite/script.js"
   },
   "Components/ZZZ/HeroVideoBackground/script.js": {
-    "file": "assets/script-48bc6e8a.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -206,10 +214,10 @@
   },
   "Components/ZZZ/NavigationMainLogo/Assets/logo.svg": {
     "file": "assets/logo-eeb7436e.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/logo.svg"
+    "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
-    "file": "assets/script-c4d6d777.js",
+    "file": "assets/script-4e9df85f.js",
     "imports": [
       "assets/main.js"
     ],
@@ -361,6 +369,7 @@
     "dynamicImports": [
       "node_modules/@webreflection/custom-elements-builtin/esm/index.js",
       "Components/BlockGalleryMedia/script.js",
+      "Components/BlockIframe/script.js",
       "Components/BlockSliderLogos/script.js",
       "Components/BlockVideoOembed/script.js",
       "Components/BlockVideoText/script.js",
@@ -390,12 +399,12 @@
       "Components/ZZZ/SliderLogos/script.js",
       "Components/ZZZ/SliderQuotes/script.js"
     ],
-    "file": "assets/main-defbc25b.js",
+    "file": "assets/main-d8c26e3f.js",
     "isEntry": true,
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-fe8716dc.css",
+    "file": "assets/main-8dc0f543.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },

@@ -1,0 +1,13 @@
+flynt-component[name='BlockIframe'] {
+  display: block;
+
+  .iframe-wrap {
+    position: relative;
+
+    iframe {
+      display: block;
+      width: 100%;
+      border: 0;
+    }
+  }
+}

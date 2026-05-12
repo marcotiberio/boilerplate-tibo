@@ -1,0 +1,1 @@
+import{b as n}from"./helpers-0bb72b7a.js";function d(s){const t=n(s);if(t.wrap.dataset.autoResize!=="true")return;const i=e=>{const a=e.data&&e.data["datawrapper-height"];if(!a||t.iframe.contentWindow!==e.source)return;const r=Object.values(a);r.length&&(t.iframe.style.height=r[0]+"px")};window.addEventListener("message",i)}export{d as default};
