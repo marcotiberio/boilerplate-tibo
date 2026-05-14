@@ -87,7 +87,7 @@ function getACFLayout()
                             '3' => __('3 Columns', 'flynt'),
                             '4' => __('4 Columns', 'flynt'),
                         ],
-                        'default_value' => '3',
+                        'default_value' => '4',
                         'wrapper' => [
                             'width' => 50
                         ],
