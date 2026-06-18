@@ -1,0 +1,23 @@
+<flynt-component
+  load:on="visible"
+  name="BlockGallery">
+  <div class="boxed flex flex-col gap-sm md:gap-md">
+    {% if preContent %}
+      <h2 class="font-h1 !mb-0">{{ preContent|e }}</h2>
+    {% endif %}
+    <div class="columns-1 md:columns-2 lg:columns-3 gap-sm md:gap-md">
+      {% for image in images %}
+        <figure class="break-inside-avoid mb-sm md:mb-md m-0" id="image-{{ loop.index }}">
+          <img
+            class="w-full h-auto object-cover"
+            src="{{ image.src }}"
+            srcset="{{ function('wp_get_attachment_image_srcset', image.id) }}"
+            sizes="(min-width: 1024px) 33vw, (min-width: 780px) 50vw, 100vw"
+            alt="{{ image.alt|e | default('') }}"
+            loading="lazy"
+          />
+        </figure>
+      {% endfor %}
+    </div>
+  </div>
+</flynt-component>

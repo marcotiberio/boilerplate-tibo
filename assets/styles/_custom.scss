@@ -91,3 +91,15 @@ body {
     }
   }
 }
+
+/**
+* Scopes
+*/
+
+.single {
+  flynt-component {
+    .boxed {
+      @apply px-0 !important;
+    }
+  }
+}

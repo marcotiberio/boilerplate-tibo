@@ -1,0 +1,49 @@
+<flynt-component
+  load:on="visible" name="SliderBoxText"
+  style="
+    color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
+    background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};"
+  >
+  <div class="boxed">
+    <div class="w-full max-w-screen-max mx-auto flex flex-col md:flex-row justify-start items-center gap-sm md:gap-xxl">
+      {% if title %}
+        <h2 class="font-h1 !mb-0 w-full">{{ title|e }}</h2>
+      {% endif %}
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-sm md:gap-md mt-lg">
+      {% for box in boxes %}
+        <div class="flex flex-col">
+          {% if box.image %}
+            <img
+              class="w-full h-auto object-cover"
+              src="{{ box.image.src }}"
+              srcset="{{ function('wp_get_attachment_image_srcset', box.image.id) }}"
+              alt="{{ box.image.alt|e | default('') }}"
+              loading="lazy"
+            />
+          {% endif %}
+          <div class="flex flex-row gap-xs mt-sm">
+            {% if box.title %}
+              <div class="font-h2 font-bold">{{ box.title|e }}</div>
+            {% endif %}
+            {% if box.artist %}
+              <div class="font-h2Regular">{{ box.artist|e }}</div>
+            {% endif %}
+          </div>
+          {% if box.text %}
+            <div class="font-small !my-xs">{{ box.text }}</div>
+          {% endif %}
+          {% if box.buttonLink %}
+            <a
+              class="button button--outline w-fit"
+              href="{{ box.buttonLink.url }}"
+              {% if box.buttonLink.target %} target="{{ box.buttonLink.target }}" rel="noreferrer noopener"{% endif %}>
+              {{ box.buttonLink.title }}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</flynt-component>

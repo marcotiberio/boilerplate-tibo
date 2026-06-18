@@ -105,6 +105,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'layouts' => [
                     Components\BlockAnchor\getACFLayout(),
                     Components\BlockDivider\getACFLayout(),
+                    Components\BlockGallery\getACFLayout(),
                     Components\BlockImage\getACFLayout(),
                     Components\BlockImageText\getACFLayout(),
                     Components\BlockWysiwyg\getACFLayout(),
@@ -112,6 +113,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\ListingProjects\getACFLayout(),
                     Components\BlockSpacer\getACFLayout(),
                     Components\BlockSliderImages\getACFLayout(),
+                    Components\SliderBoxText\getACFLayout(),
                 ],
             ],
         ],

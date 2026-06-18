@@ -3,15 +3,6 @@
 namespace Flynt\Components\SliderBoxText;
 
 use Flynt\FieldVariables;
-use Flynt\Utils\Options;
-
-add_filter('Flynt/addComponentData?name=SliderBoxText', function ($data) {
-    $translatableOptions = Options::getTranslatable('SliderOptions');
-    $data['jsonData'] = [
-        'options' => array_merge($translatableOptions, $data['options']),
-    ];
-    return $data;
-});
 
 function getACFLayout()
 {
@@ -39,16 +30,38 @@ function getACFLayout()
                 'min' => 1,
                 'button_label' => __('Add Step', 'flynt'),
                 'sub_fields' => [
-                    FieldVariables\getColorBackground(),
+                    [
+                        'label' => __('Image', 'flynt'),
+                        'name' => 'image',
+                        'type' => 'image',
+                        'preview_size' => 'medium',
+                        'mime_types' => 'jpg,jpeg,png,svg,webp',
+                    ],
+                    [
+                        'label' => __('Artist', 'flynt'),
+                        'name' => 'artist',
+                        'type' => 'text',
+                        'wrapper' => [
+                            'width' => 50
+                        ]
+                    ],
                     [
                         'label' => __('Title', 'flynt'),
                         'name' => 'title',
-                        'type' => 'text'
+                        'type' => 'text',
+                         'wrapper' => [
+                            'width' => 50
+                        ]
                     ],
                     [
                         'label' => __('Text', 'flynt'),
                         'name' => 'text',
                         'type' => 'textarea',
+                    ],
+                    [
+                        'label' => __('Button', 'flynt'),
+                        'name' => 'buttonLink',
+                        'type' => 'link',
                     ],
                 ],
             ],
