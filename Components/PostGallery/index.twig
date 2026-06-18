@@ -3,7 +3,7 @@
 {% set fallback = post.thumbnail %}
 
 {% if slides is empty and fallback %}
-  <img class="w-full h-full lazyload object-cover aspect-video lg:aspect-16/6"
+  <img class="w-full h-full lazyload object-cover aspect-video"
     src="{{ fallback.src }}"
     alt="{{ fallback.alt|e | default('') }}"
     loading="lazy"
@@ -15,7 +15,7 @@
       <div class="swiper-wrapper">
         {% for image in slides %}
           <div class="post-gallery-slide swiper-slide w-full h-auto">
-            <img class="w-full h-full lazyload object-cover aspect-video lg:aspect-16/6"
+            <img class="w-full h-full lazyload object-cover aspect-video"
               src="{{ image.src }}"
               alt="{{ image.alt|e | default('') }}"
               loading="lazy"

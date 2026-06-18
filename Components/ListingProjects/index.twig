@@ -81,7 +81,7 @@
             </div>
           {% endif %}
 
-          {% if locations|length > 0 %}
+          {% if locations|length > 1 %}
             <div x-data="{ open: false }" @click.outside="open = false" class="relative w-full lg:w-auto">
               <button
                 type="button"
@@ -131,7 +131,7 @@
       {% endif %}
 
       {# Projects Grid #}
-      <div class="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-sm">
+      <div class="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-sm lg:gap-y-md">
         {% for item in projects %}
           {% set project = item.project %}
           <a
@@ -163,7 +163,7 @@
 
             {# Info Box #}
             <div class="flex flex-col">
-              <div class="flex flex-row justify-between gap-xs">
+              <div class="flex flex-row justify-between items-center gap-xs">
                 <div class="">
                   {% if project.dateStart %}
                     <span class="font-h3Regular !mb-0">{{ project.dateStart('d.m.Y') }} - </span>
@@ -176,9 +176,12 @@
                   <div class="font-h3Regular !mb-0">{{ project.postLocation }}</div>
                 {% endif %}
               </div>
-              <div class="mb-min transition-colors duration-200 group-hover:text-[var(--cat-color)]"><span class="!mb-0 font-h2">{{ project.postArtist }} – </span><span class="!mb-0 font-h2Regular">{{ project.title }}</span></div>
+              <div class="mb-min transition-colors duration-200 group-hover:text-[var(--cat-color)]">
+                <span class="!mb-0 font-h2">{{ project.postArtist }} – </span>
+                <span class="!mb-0 font-h2Regular">{{ project.title }}</span>
+              </div>
               {% if project.postDescription %}
-                <span class="font-bodySmall !mb-0">{{ project.postDescription|split('.')|first ~ '.' }}</span>
+                <span class="font-bodySmall !mb-0">{{ project.postDescription|length > 130 ? project.postDescription|slice(0, 130) ~ '…' : project.postDescription }}</span>
               {% endif %}
             </div>
 
