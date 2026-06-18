@@ -116,6 +116,11 @@ textarea {
   }
 }
 
+select {
+  padding-bottom: 0 !important; 
+  padding-top: 0 !important; 
+}
+
 .wpforms-submit {
   @include reset-link;
   appearance: none;
