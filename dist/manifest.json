@@ -72,7 +72,7 @@
     "src": "assets/icons/youtube.svg"
   },
   "Components/ZZZ/BlockGalleryMedia/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-ecbf5980.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -111,7 +111,7 @@
     "src": "Components/ZZZ/BlockVideoOembed/script.js"
   },
   "Components/ZZZ/BlockVideoText/script.js": {
-    "file": "assets/script-ecbf5980.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
