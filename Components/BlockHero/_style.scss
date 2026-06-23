@@ -1,0 +1,7 @@
+flynt-component[name='BlockHero'] {
+  // Keep the giant wordmark from forcing horizontal scroll on small screens.
+  span.font-poppins {
+    max-width: 100%;
+    overflow: hidden;
+  }
+}

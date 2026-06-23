@@ -25,6 +25,7 @@ module.exports = {
       current: 'currentColor',
       transparent: 'transparent',
       // Project colors
+      'bright-green': '#c7f59a', // Looptopia accent
       grei: '#f1f1f1',
       grey: {
         100: '#f5f5f5',
@@ -39,7 +40,8 @@ module.exports = {
       },
     },
     fontFamily: {
-      sans: ['Inter', 'Arial', 'sans-serif']
+      sans: ['Poppins', 'Arial', 'sans-serif'],
+      poppins: ['Poppins', 'Arial', 'sans-serif']
     },
     screens: {
       // Breakpoints from _variables.scss

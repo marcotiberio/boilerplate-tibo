@@ -39,6 +39,44 @@ button {
     }
   }
 
+  // Looptopia pill button: rounded outline pill with a circular arrow icon.
+  &--pill {
+    @apply gap-xs;
+    @apply pl-sm;
+    @apply pr-[6px];
+    @apply py-[6px];
+    @apply border-2;
+    @apply border-black;
+    @apply rounded-button;
+    @apply bg-bright-green;
+    @apply text-black;
+    font-weight: 600;
+
+    &::after {
+      content: '→';
+      @apply flex;
+      @apply items-center;
+      @apply justify-center;
+      @apply w-8;
+      @apply h-8;
+      @apply rounded-full;
+      @apply border-2;
+      @apply border-black;
+      @apply bg-white;
+    }
+
+    &:hover,
+    &:focus {
+      @apply bg-black;
+      @apply text-white;
+
+      &::after {
+        @apply bg-bright-green;
+        @apply text-black;
+      }
+    }
+  }
+
   // &--primary {
   //   @apply text-white;
   //   @apply bg-black;

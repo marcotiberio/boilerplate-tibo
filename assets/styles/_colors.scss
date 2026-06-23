@@ -2,10 +2,14 @@
     /* Colors (Primitives) */
     --white: #fff;
     --black: #000000;
+    --bright-green: #c7f59a; /* Looptopia accent (Figma "Bright Green") */
+
+    /* Fonts */
+    --primary-font-family: 'Poppins', Arial, sans-serif;
 
     /* Colors (Tokens) */
     --brandColor: var(--black);
-    --accentColor: var(--grey-500);
+    --accentColor: var(--bright-green);
 
     --textColor: var(--black);
     --linkColor: var(--black);

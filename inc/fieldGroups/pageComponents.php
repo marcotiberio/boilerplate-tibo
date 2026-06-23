@@ -64,6 +64,11 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'type' => 'flexible_content',
                 'button_label' => __('Add Component', 'flynt'),
                 'layouts' => [
+                    // Looptopia custom / adapted components
+                    Components\BlockHero\getACFLayout(),
+                    Components\BlockCards\getACFLayout(),
+                    Components\BlockPartnerLogos\getACFLayout(),
+                    // Boilerplate components in use
                     Components\BlockAnchor\getACFLayout(),
                     Components\BlockBannerCta\getACFLayout(),
                     Components\BlockDivider\getACFLayout(),
@@ -71,6 +76,8 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockImageText\getACFLayout(),
                     Components\BlockGalleryMedia\getACFLayout(),
                     Components\BlockWysiwyg\getACFLayout(),
+                    Components\BlockWysiwygColumns\getACFLayout(),
+                    Components\BlockAccordionDefault\getACFLayout(),
                     Components\GridImages\getACFLayout(),
                     Components\GridImageText\getACFLayout(),
                     Components\BlockFeaturedArticle\getACFLayout(),

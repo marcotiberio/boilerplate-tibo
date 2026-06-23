@@ -1,0 +1,121 @@
+<?php
+
+namespace Flynt\Components\BlockHero;
+
+use Flynt\FieldVariables;
+use Flynt\Utils\Asset;
+
+add_filter('Flynt/addComponentData?name=BlockHero', function ($data) {
+    $data['wordmarkUrl'] = Asset::requireUrl('Components/BlockHero/Assets/wordmark.svg');
+    $data['chevronUrl'] = Asset::requireUrl('Components/BlockHero/Assets/chevron-down.svg');
+    return $data;
+});
+
+function getACFLayout()
+{
+    return [
+        'name' => 'BlockHero',
+        'label' => __('Block: Hero', 'flynt'),
+        'sub_fields' => [
+            [
+                'label' => __('Content', 'flynt'),
+                'name' => 'contentTab',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0,
+            ],
+            [
+                'label' => __('Kicker', 'flynt'),
+                'name' => 'kicker',
+                'type' => 'text',
+                'instructions' => __('Small label top-left, e.g. "BAU MIT UNS".', 'flynt'),
+                'wrapper' => ['width' => 50],
+            ],
+            [
+                'label' => __('Date', 'flynt'),
+                'name' => 'dateText',
+                'type' => 'text',
+                'instructions' => __('Date top-right, e.g. "13.–15.11.26".', 'flynt'),
+                'wrapper' => ['width' => 50],
+            ],
+            [
+                'label' => __('Headline', 'flynt'),
+                'name' => 'headline',
+                'type' => 'text',
+                'instructions' => __('Main hero headline, e.g. "48 Stunden Berlin neu entdecken".', 'flynt'),
+            ],
+            [
+                'label' => __('Scroll Target', 'flynt'),
+                'name' => 'scrollAnchor',
+                'type' => 'text',
+                'instructions' => __('Anchor the scroll chevron jumps to, e.g. "#intro". Leave empty to hide.', 'flynt'),
+                'required' => 0,
+            ],
+            [
+                'label' => __('Funders', 'flynt'),
+                'name' => 'funders',
+                'type' => 'group',
+                'layout' => 'block',
+                'sub_fields' => [
+                    [
+                        'label' => __('Label', 'flynt'),
+                        'name' => 'label',
+                        'type' => 'text',
+                        'instructions' => __('e.g. "Gefördert durch".', 'flynt'),
+                        'required' => 0,
+                    ],
+                    [
+                        'label' => __('Logos', 'flynt'),
+                        'name' => 'logos',
+                        'type' => 'repeater',
+                        'layout' => 'block',
+                        'button_label' => __('Add Logo', 'flynt'),
+                        'sub_fields' => [
+                            [
+                                'label' => __('Logo', 'flynt'),
+                                'name' => 'logo',
+                                'type' => 'image',
+                                'preview_size' => 'small',
+                                'mime_types' => 'svg,png,jpg,jpeg',
+                                'required' => 0,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'label' => __('Image', 'flynt'),
+                'name' => 'imageTab',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0,
+            ],
+            [
+                'label' => __('Background Image', 'flynt'),
+                'instructions' => __('Image-Format: JPG, PNG, WEBP.', 'flynt'),
+                'name' => 'backgroundImage',
+                'type' => 'image',
+                'preview_size' => 'medium',
+                'required' => 0,
+                'mime_types' => 'jpg,jpeg,png,webp',
+            ],
+            [
+                'label' => __('Options', 'flynt'),
+                'name' => 'optionsTab',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0,
+            ],
+            [
+                'label' => '',
+                'name' => 'options',
+                'type' => 'group',
+                'layout' => 'row',
+                'sub_fields' => [
+                    FieldVariables\getColorBackground(),
+                    FieldVariables\getColorText(),
+                ],
+            ],
+        ],
+    ];
+}
