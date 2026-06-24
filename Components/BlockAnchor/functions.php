@@ -16,7 +16,7 @@ function getACFLayout()
 {
     return [
         'name' => 'blockAnchor',
-        'label' => __('Block: Anchor', 'flynt'),
+        'label' => __('Anchor', 'flynt'),
         'sub_fields' => [
             [
                 [

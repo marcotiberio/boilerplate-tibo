@@ -13,7 +13,7 @@ function getACFLayout()
 {
     return [
         'name' => 'BlockBannerCta',
-        'label' => __('Block: Banner Cta', 'flynt'),
+        'label' => __('Banner Cta', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Content', 'flynt'),

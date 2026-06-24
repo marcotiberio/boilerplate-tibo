@@ -15,7 +15,7 @@ function getACFLayout()
 {
     return [
         'name' => 'BlockHero',
-        'label' => __('Block: Hero', 'flynt'),
+        'label' => __('Hero', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Content', 'flynt'),

@@ -8,7 +8,7 @@ function getACFLayout()
 {
     return [
         'name' => 'BlockDivider',
-        'label' => __('Block: Divider', 'flynt'),
+        'label' => __('Divider', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Divider', 'flynt'),

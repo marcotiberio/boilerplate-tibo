@@ -8,7 +8,7 @@ function getACFLayout()
 {
     return [
         'name' => 'formProgramEntry',
-        'label' => __('Form: Program Entry', 'flynt'),
+        'label' => __('Form Program Entry', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Content', 'flynt'),

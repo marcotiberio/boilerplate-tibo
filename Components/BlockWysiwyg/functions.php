@@ -8,7 +8,7 @@ function getACFLayout()
 {
     return [
         'name' => 'blockWysiwyg',
-        'label' => __('Block: Text Editor', 'flynt'),
+        'label' => __('Text Editor', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('General', 'flynt'),

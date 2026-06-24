@@ -12,7 +12,7 @@ function getACFLayout()
 {
     return [
         'name' => 'BlockCards',
-        'label' => __('Block: Cards', 'flynt'),
+        'label' => __('Cards', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('General', 'flynt'),

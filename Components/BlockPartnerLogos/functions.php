@@ -13,7 +13,7 @@ function getACFLayout()
 {
     return [
         'name' => 'BlockPartnerLogos',
-        'label' => __('Block: Partner Logos', 'flynt'),
+        'label' => __('Partner Logos', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('General', 'flynt'),

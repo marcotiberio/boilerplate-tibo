@@ -8,7 +8,7 @@ function getACFLayout()
 {
     return [
         'name' => 'blockProgramMap',
-        'label' => __('Block: Program Map', 'flynt'),
+        'label' => __('Map Program', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Intro', 'flynt'),
