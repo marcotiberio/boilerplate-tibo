@@ -58,7 +58,7 @@
           </div>
 
           <label class="flex flex-col gap-xs">
-            <span class="font-h4">{{ fields.nameLabel ?: __('Name', 'flynt') }} *</span>
+            <span class="font-bodySmall">{{ fields.nameLabel ?: __('Name', 'flynt') }} *</span>
             <input type="text" required x-model="form.contactName"
               placeholder="{{ fields.namePlaceholder|e('html_attr') }}"
               class="rounded border border-black p-xs bg-white">
@@ -66,13 +66,13 @@
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
             <label class="flex flex-col gap-xs">
-              <span class="font-h4">{{ fields.emailLabel ?: __('Email', 'flynt') }} *</span>
+              <span class="font-bodySmall">{{ fields.emailLabel ?: __('Email', 'flynt') }} *</span>
               <input type="email" required x-model="form.contactEmail"
                 placeholder="{{ fields.emailPlaceholder|e('html_attr') }}"
                 class="rounded border border-black p-xs bg-white">
             </label>
             <label class="flex flex-col gap-xs">
-              <span class="font-h4">{{ fields.phoneLabel ?: __('Phone', 'flynt') }}</span>
+              <span class="font-bodySmall">{{ fields.phoneLabel ?: __('Phone', 'flynt') }}</span>
               <input type="tel" x-model="form.contactPhone"
                 placeholder="{{ fields.phonePlaceholder|e('html_attr') }}"
                 class="rounded border border-black p-xs bg-white">
@@ -80,7 +80,7 @@
           </div>
 
           <label class="flex flex-col gap-xs">
-            <span class="font-h4">{{ fields.descriptionLabel ?: __('Description', 'flynt') }} *</span>
+            <span class="font-bodySmall">{{ fields.descriptionLabel ?: __('Description', 'flynt') }} *</span>
             <textarea required rows="4" x-model="form.description"
               placeholder="{{ fields.descriptionPlaceholder|e('html_attr') }}"
               class="rounded border border-black p-xs bg-white"></textarea>
@@ -88,7 +88,7 @@
 
           {# Single choice — radio #}
           <fieldset class="flex flex-col gap-xs">
-            <legend class="font-h4">{{ fields.categoryLabel ?: __('Category', 'flynt') }} *</legend>
+            <legend class="font-bodySmall mb-xs">{{ fields.categoryLabel ?: __('Category', 'flynt') }} *</legend>
             <div class="flex flex-wrap gap-sm">
               {% for value, label in categories %}
                 <label class="flex items-center gap-xs">
@@ -101,7 +101,7 @@
 
           {# Multiple choice — checkboxes #}
           <fieldset class="flex flex-col gap-xs">
-            <legend class="font-h4">{{ fields.themesLabel ?: __('Themes', 'flynt') }}</legend>
+            <legend class="font-bodySmall mb-xs">{{ fields.themesLabel ?: __('Themes', 'flynt') }}</legend>
             <div class="flex flex-wrap gap-sm">
               {% for value, label in themes %}
                 <label class="flex items-center gap-xs">
@@ -113,7 +113,7 @@
           </fieldset>
 
           <label class="flex flex-col gap-xs">
-            <span class="font-h4">{{ fields.addressLabel ?: __('Address', 'flynt') }}</span>
+            <span class="font-bodySmall">{{ fields.addressLabel ?: __('Address', 'flynt') }}</span>
             <input type="text" x-model="form.address" autocomplete="street-address"
               placeholder="{{ (fields.addressPlaceholder ?: __('Street, city', 'flynt'))|e('html_attr') }}"
               class="rounded border border-black p-xs bg-white">
