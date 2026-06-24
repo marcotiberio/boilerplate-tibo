@@ -18,34 +18,34 @@
 //   font-weight: 500 !important;
 // }
 
-// #{$input-selectors} {
-//   appearance: none !important;
-//   background-color: transparent !important;
-//   border-bottom: 1px solid var(--black) !important;
-//   border-radius: 0 !important;
-//   caret-color: var(--color-text) !important;
-//   color: var(--color-text) !important;
-//   margin-bottom: 15px;
-//   max-width: 100%;
-//   outline: none !important;
-//   padding: 0;
-//   transition: border-color 0.3s ease-in-out;
-//   width: 100%;
+#{$input-selectors} {
+  // appearance: none !important;
+  // background-color: transparent !important;
+  // border-bottom: 1px solid var(--black) !important;
+  // border-radius: 0 !important;
+  // caret-color: var(--color-text) !important;
+  // color: var(--color-text) !important;
+  // margin-bottom: 15px;
+  // max-width: 100%;
+  outline: none !important;
+  // padding: 0;
+  // transition: border-color 0.3s ease-in-out;
+  // width: 100%;
 
-//   &::placeholder {
-//     color: var(--color-border-secondary);
-//   }
+  // &::placeholder {
+  //   color: var(--color-border-secondary);
+  // }
 
-//   &:disabled {
-//     cursor: default;
-//     opacity: 0.5;
-//     pointer-events: none;
-//   }
+  // &:disabled {
+  //   cursor: default;
+  //   opacity: 0.5;
+  //   pointer-events: none;
+  // }
 
-//   &:invalid {
-//     border-color: var(--color-error);
-//   }
-// }
+  // &:invalid {
+  //   border-color: var(--color-error);
+  // }
+}
 
 // .select {
 //   --icon-size: 17px;
