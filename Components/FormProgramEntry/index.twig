@@ -1,0 +1,148 @@
+<flynt-component name="FormProgramEntry" class="w-full">
+  <div class="wrapper boxed max-w-screen-max mx-auto">
+    {% if preContentHtml %}
+      <div class="wysiwyg mb-sm">{{ preContentHtml|e('wp_kses_post') }}</div>
+    {% endif %}
+
+    <form
+      class="flex flex-col gap-sm"
+      x-data="{
+        form: {
+          contactName: '', contactEmail: '', contactPhone: '',
+          description: '', category: '', themes: [], address: '',
+          consent: false, website_hp: ''
+        },
+        state: 'idle',
+        message: '',
+        async submit() {
+          this.state = 'loading';
+          this.message = '';
+          try {
+            const res = await fetch('{{ restUrl }}', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-WP-Nonce': '{{ restNonce }}'
+              },
+              body: JSON.stringify({ ...this.form, nonce: '{{ nonce }}' })
+            });
+            const data = await res.json();
+            if (!res.ok || !data.success) {
+              throw new Error(data.message || 'Something went wrong. Please try again.');
+            }
+            this.state = 'success';
+          } catch (e) {
+            this.state = 'error';
+            this.message = e.message;
+          }
+        }
+      }"
+      x-on:submit.prevent="submit()"
+    >
+      {# Success state replaces the form #}
+      <div x-show="state === 'success'" x-cloak x-transition class="wysiwyg rounded bg-green p-sm">
+        {% if successHtml %}
+          {{ successHtml|e('wp_kses_post') }}
+        {% else %}
+          <p>{{ __('Thanks! Your entry has been submitted for review.', 'flynt') }}</p>
+        {% endif %}
+      </div>
+
+      <template x-if="state !== 'success'">
+        <div class="flex flex-col gap-sm">
+          {# Honeypot — hidden from humans, tempting to bots #}
+          <div class="absolute left-[-9999px]" aria-hidden="true">
+            <label>{{ __('Leave this field empty', 'flynt') }}
+              <input type="text" tabindex="-1" autocomplete="off" x-model="form.website_hp">
+            </label>
+          </div>
+
+          <label class="flex flex-col gap-xs">
+            <span class="font-h4">{{ fields.nameLabel ?: __('Name', 'flynt') }} *</span>
+            <input type="text" required x-model="form.contactName"
+              placeholder="{{ fields.namePlaceholder|e('html_attr') }}"
+              class="rounded border border-black p-xs bg-white">
+          </label>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
+            <label class="flex flex-col gap-xs">
+              <span class="font-h4">{{ fields.emailLabel ?: __('Email', 'flynt') }} *</span>
+              <input type="email" required x-model="form.contactEmail"
+                placeholder="{{ fields.emailPlaceholder|e('html_attr') }}"
+                class="rounded border border-black p-xs bg-white">
+            </label>
+            <label class="flex flex-col gap-xs">
+              <span class="font-h4">{{ fields.phoneLabel ?: __('Phone', 'flynt') }}</span>
+              <input type="tel" x-model="form.contactPhone"
+                placeholder="{{ fields.phonePlaceholder|e('html_attr') }}"
+                class="rounded border border-black p-xs bg-white">
+            </label>
+          </div>
+
+          <label class="flex flex-col gap-xs">
+            <span class="font-h4">{{ fields.descriptionLabel ?: __('Description', 'flynt') }} *</span>
+            <textarea required rows="4" x-model="form.description"
+              placeholder="{{ fields.descriptionPlaceholder|e('html_attr') }}"
+              class="rounded border border-black p-xs bg-white"></textarea>
+          </label>
+
+          {# Single choice — radio #}
+          <fieldset class="flex flex-col gap-xs">
+            <legend class="font-h4">{{ fields.categoryLabel ?: __('Category', 'flynt') }} *</legend>
+            <div class="flex flex-wrap gap-sm">
+              {% for value, label in categories %}
+                <label class="flex items-center gap-xs">
+                  <input type="radio" name="category" value="{{ value }}" required x-model="form.category">
+                  <span>{{ label }}</span>
+                </label>
+              {% endfor %}
+            </div>
+          </fieldset>
+
+          {# Multiple choice — checkboxes #}
+          <fieldset class="flex flex-col gap-xs">
+            <legend class="font-h4">{{ fields.themesLabel ?: __('Themes', 'flynt') }}</legend>
+            <div class="flex flex-wrap gap-sm">
+              {% for value, label in themes %}
+                <label class="flex items-center gap-xs">
+                  <input type="checkbox" value="{{ value }}" x-model="form.themes">
+                  <span>{{ label }}</span>
+                </label>
+              {% endfor %}
+            </div>
+          </fieldset>
+
+          <label class="flex flex-col gap-xs">
+            <span class="font-h4">{{ fields.addressLabel ?: __('Address', 'flynt') }}</span>
+            <input type="text" x-model="form.address" autocomplete="street-address"
+              placeholder="{{ (fields.addressPlaceholder ?: __('Street, city', 'flynt'))|e('html_attr') }}"
+              class="rounded border border-black p-xs bg-white">
+          </label>
+
+          {# GDPR consent #}
+          <label class="flex items-start gap-xs">
+            <input type="checkbox" required x-model="form.consent" class="mt-1">
+            <span class="wysiwyg">
+              {% if consentLabel %}
+                {{ consentLabel|e('wp_kses_post') }}
+              {% else %}
+                {{ __('I agree my submission may be reviewed and published on the public program map.', 'flynt') }}
+              {% endif %}
+            </span>
+          </label>
+
+          <div x-show="state === 'error'" x-cloak x-transition
+            class="rounded bg-red-100 text-red-800 p-xs" x-text="message"></div>
+
+          <button type="submit"
+            class="button button--green w-fit"
+            x-bind:disabled="state === 'loading'"
+            x-bind:class="state === 'loading' ? 'button--disabled' : ''">
+            <span x-show="state !== 'loading'">{{ submitLabel ?: __('Submit entry', 'flynt') }}</span>
+            <span x-show="state === 'loading'" x-cloak>{{ __('Submitting…', 'flynt') }}</span>
+          </button>
+        </div>
+      </template>
+    </form>
+  </div>
+</flynt-component>

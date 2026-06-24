@@ -1,0 +1,18 @@
+<flynt-component load:on="visible" name="BlockProgramMap" class="w-full">
+  <div class="wrapper boxed max-w-screen-max mx-auto flex flex-col gap-sm">
+    {% if preContentHtml %}
+      <div class="wysiwyg">{{ preContentHtml|e('wp_kses_post') }}</div>
+    {% endif %}
+
+    <div
+      data-ref="map"
+      class="program-map w-full rounded overflow-hidden"
+      style="height: 70vh; min-height: 400px;"
+      data-center="{{ center|e('html_attr') }}"
+      data-zoom="{{ zoom|e('html_attr') }}"
+    ></div>
+
+    {# Marker data for the Leaflet script — read via the getJSON helper. #}
+    <script type="application/json" data-ref="entries">{{ entries|json_encode|raw }}</script>
+  </div>
+</flynt-component>

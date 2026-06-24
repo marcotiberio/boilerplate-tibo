@@ -68,6 +68,8 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockHero\getACFLayout(),
                     Components\BlockCards\getACFLayout(),
                     Components\BlockPartnerLogos\getACFLayout(),
+                    Components\FormProgramEntry\getACFLayout(),
+                    Components\BlockProgramMap\getACFLayout(),
                     // Boilerplate components in use
                     Components\BlockAnchor\getACFLayout(),
                     Components\BlockBannerCta\getACFLayout(),
@@ -102,11 +104,11 @@ add_action('Flynt/afterRegisterComponents', function () {
                     'operator' => '!=',
                     'value' => 'post'
                 ],
-                // [
-                //     'param' => 'post_type',
-                //     'operator' => '!=',
-                //     'value' => 'video'
-                // ],
+                [
+                    'param' => 'post_type',
+                    'operator' => '!=',
+                    'value' => 'program_entry'
+                ],
                 [
                     'param' => 'post_type',
                     'operator' => '!=',

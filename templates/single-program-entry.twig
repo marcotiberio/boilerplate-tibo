@@ -1,0 +1,52 @@
+{% extends 'templates/_document.twig' %}
+
+{% block content %}
+  {# Bare-bones output of the submitted entry data — style as needed. #}
+  <article class="program-entry mt-pageTop boxed max-w-screen-max mx-auto">
+    <h1>{{ post.title }}</h1>
+
+    {% if post.thumbnail %}
+      <img src="{{ post.thumbnail.src }}" alt="{{ post.thumbnail.alt|e|default('') }}">
+    {% endif %}
+
+    <dl>
+      {% if post.meta('description') %}
+        <dt>{{ __('Description', 'flynt') }}</dt>
+        <dd>{{ post.meta('description') }}</dd>
+      {% endif %}
+
+      {% if categoryLabel %}
+        <dt>{{ __('Category', 'flynt') }}</dt>
+        <dd>{{ categoryLabel }}</dd>
+      {% endif %}
+
+      {% if themeLabels %}
+        <dt>{{ __('Themes', 'flynt') }}</dt>
+        <dd>{{ themeLabels|join(', ') }}</dd>
+      {% endif %}
+
+      {% set location = post.meta('location') %}
+      {% if post.meta('address') or location.lat %}
+        <dt>{{ __('Address', 'flynt') }}</dt>
+        <dd>
+          {{ post.meta('address') }}
+          {% if location.lat %}<br>({{ location.lat }}, {{ location.lng }}){% endif %}
+        </dd>
+      {% endif %}
+
+      {# Private contact details submitted via the form — remove if this page is public. #}
+      {% if post.meta('contactName') %}
+        <dt>{{ __('Contact name', 'flynt') }}</dt>
+        <dd>{{ post.meta('contactName') }}</dd>
+      {% endif %}
+      {% if post.meta('contactEmail') %}
+        <dt>{{ __('Email', 'flynt') }}</dt>
+        <dd>{{ post.meta('contactEmail') }}</dd>
+      {% endif %}
+      {% if post.meta('contactPhone') %}
+        <dt>{{ __('Phone', 'flynt') }}</dt>
+        <dd>{{ post.meta('contactPhone') }}</dd>
+      {% endif %}
+    </dl>
+  </article>
+{% endblock %}

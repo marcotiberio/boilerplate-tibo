@@ -1,0 +1,28 @@
+.program-map {
+  // Leaflet needs an explicit stacking context below site overlays.
+  z-index: 0;
+
+  &__pin {
+    span {
+      background: var(--accentColor);
+      border: 2px solid var(--brandColor);
+      border-radius: 50% 50% 50% 0;
+      display: block;
+      height: 22px;
+      transform: rotate(-45deg);
+      width: 22px;
+    }
+  }
+
+  &__popup {
+    em {
+      display: block;
+      margin-block: 2px 4px;
+      opacity: 0.7;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+}

@@ -32,7 +32,21 @@
       "Bash(md5 -q Components/NavigationFooter/Assets/wordmark.svg)",
       "Bash(md5 -q assets/images/looptopia-wordmark.svg)",
       "Bash(md5 -q _assets-incoming/looptopia-wordmark.svg)",
-      "Bash(md5 -q Components/BlockHero/Assets/wordmark.svg)"
+      "Bash(md5 -q Components/BlockHero/Assets/wordmark.svg)",
+      "Bash(xargs -I {} sh -c 'echo \"=== {} ===\" && head -30 \"{}\"')",
+      "Bash(npx standard *)",
+      "Bash(npx stylelint *)",
+      "Bash(./vendor/bin/phpcs inc/programEntryFields.php inc/restApi/programSubmission.php Components/FormProgramEntry/functions.php)",
+      "Bash(echo \"fixed scss exit: $?\")",
+      "Bash(php -l Components/FormProgramEntry/functions.php)",
+      "Bash(./vendor/bin/phpcs Components/FormProgramEntry/functions.php)",
+      "Bash(php -l inc/programEntryFields.php)",
+      "Bash(./vendor/bin/phpcs inc/programEntryFields.php)",
+      "Bash(php -l inc/customPostTypes/program-entry.php)",
+      "Bash(./vendor/bin/phpcs inc/customPostTypes/program-entry.php)",
+      "Bash(php -l inc/fieldGroups/pageComponents.php)",
+      "Bash(php -l single-program_entry.php)",
+      "Bash(./vendor/bin/phpcs single-program_entry.php)"
     ]
   }
 }
