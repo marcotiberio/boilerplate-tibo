@@ -64,9 +64,9 @@
       {% endif %}
 
       {% if badge %}
-        <div class="flex flex-row items-center gap-sm">
+        <div class="flex flex-col items-start">
           <img class="w-[136px] h-[136px] object-contain" src="{{ badge.src }}" alt="{{ badge.alt|e | default('') }}">
-          {% if badgeCaption %}<span class="font-body !mb-0 max-w-[30rem]">{{ badgeCaption }}</span>{% endif %}
+          {% if badgeCaption %}<span class="font-body !mb-0">{{ badgeCaption }}</span>{% endif %}
         </div>
       {% endif %}
     </div>
