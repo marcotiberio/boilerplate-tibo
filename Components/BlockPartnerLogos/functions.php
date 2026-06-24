@@ -23,6 +23,12 @@ function getACFLayout()
                 'endpoint' => 0,
             ],
             [
+                'label' => __('Title', 'flynt'),
+                'name' => 'blockTitle',
+                'type' => 'text',
+                'instructions' => __('e.g. Förderer, Vorreiter, Gestalter, Unterstützer.', 'flynt'),
+            ],
+            [
                 'label' => __('Logo Tiers', 'flynt'),
                 'name' => 'logoRows',
                 'type' => 'repeater',

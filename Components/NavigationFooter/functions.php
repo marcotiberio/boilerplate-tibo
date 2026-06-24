@@ -3,6 +3,7 @@
 namespace Flynt\Components\NavigationFooter;
 
 use Flynt\Utils\Options;
+use Flynt\Utils\Asset;
 use Flynt\Shortcodes;
 use Timber\Timber;
 
@@ -15,30 +16,31 @@ add_action('init', function () {
 add_filter('Flynt/addComponentData?name=NavigationFooter', function ($data) {
     $data['maxLevel'] = 0;
     $data['menu'] = Timber::get_menu('navigation_footer') ?? Timber::get_pages_menu();
+    $data['wordmarkUrl'] = Asset::requireUrl('Components/NavigationFooter/Assets/wordmark.svg');
 
     return $data;
 });
 
 Options::addTranslatable('NavigationFooter', [
-    [
-        'label' => __('Logo', 'flynt'),
-        'name' => 'logoTab',
-        'type' => 'tab',
-        'placement' => 'top',
-        'endpoint' => 0
-    ],
-    [
-        'label' => __('Logo', 'flynt'),
-        'name' => 'logoFooter',
-        'type' => 'image',
-        'preview_size' => 'medium',
-        'instructions' => __('Image-Format: JPG, PNG, SVG.', 'flynt'),
-        'required' => 0,
-        'mime_types' => 'jpg,jpeg,png,svg',
-        'wrapper' =>  [
-            'width' => 100,
-        ]
-    ],
+    // [
+    //     'label' => __('Logo', 'flynt'),
+    //     'name' => 'logoTab',
+    //     'type' => 'tab',
+    //     'placement' => 'top',
+    //     'endpoint' => 0
+    // ],
+    // [
+    //     'label' => __('Logo', 'flynt'),
+    //     'name' => 'logoFooter',
+    //     'type' => 'image',
+    //     'preview_size' => 'medium',
+    //     'instructions' => __('Image-Format: JPG, PNG, SVG.', 'flynt'),
+    //     'required' => 0,
+    //     'mime_types' => 'jpg,jpeg,png,svg',
+    //     'wrapper' =>  [
+    //         'width' => 100,
+    //     ]
+    // ],
     [
         'label' => __('Copyrighs', 'flynt'),
         'name' => 'copyrightsTab',
@@ -54,6 +56,43 @@ Options::addTranslatable('NavigationFooter', [
         'toolbar' => 'default',
         'media_upload' => 0,
         'delay' => 1
+    ],
+    [
+        'label' => __('Funders', 'flynt'),
+        'name' => 'fundersTab',
+        'type' => 'tab',
+        'placement' => 'top',
+        'endpoint' => 0
+    ],
+    [
+        'label' => __('Funders Logos', 'flynt'),
+        'name' => 'fundersLogos',
+        'type' => 'repeater',
+        'layout' => 'block',
+        'button_label' => __('Add Funder Logo', 'flynt'),
+        'sub_fields' => [
+            [
+                'label' => __('Logo', 'flynt'),
+                'name' => 'logo',
+                'type' => 'image',
+                'preview_size' => 'medium',
+                'instructions' => __('Image-Format: JPG, PNG, SVG.', 'flynt'),
+                'required' => 1,
+                'mime_types' => 'jpg,jpeg,png,svg',
+                'wrapper' => [
+                    'width' => 50,
+                ],
+            ],
+            [
+                'label' => __('Link', 'flynt'),
+                'name' => 'link',
+                'type' => 'link',
+                'required' => 0,
+                'wrapper' => [
+                    'width' => 50,
+                ],
+            ],
+        ],
     ],
     [
         'label' => __('Content', 'flynt'),

@@ -11,8 +11,8 @@
         font-size: inherit;
         line-height: var(--body-line-height, 1.2) !important;
         margin-bottom: 0;
-        margin-left: 3rem;
-        text-indent: -1.2rem;
+        margin-left: 1rem;
+        // text-indent: -1.65rem;
 
         &.font-body {
           font-size: var(--body-size-mobile, 1.25rem);
@@ -28,7 +28,7 @@
         }
 
         &::before {
-          content: '-';
+          content: '•';
           @apply mr-[8px];
         }
       }
@@ -38,8 +38,8 @@
       font-size: var(--body-size-mobile, 1.25rem);
       line-height: var(--body-line-height, 1.2) !important;
       margin-bottom: 0;
-      margin-left: 3rem;
-      text-indent: -1.2rem;
+      margin-left: 1rem;
+      // text-indent: -1.65rem;
 
       @screen desktop {
         font-size: var(--body-size-desktop, 1.25rem);
@@ -59,7 +59,7 @@
       }
 
       &::before {
-        content: '-';
+        content: '•';
         @apply mr-[8px];
       }
     }

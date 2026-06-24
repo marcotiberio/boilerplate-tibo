@@ -27,23 +27,24 @@ flynt-component[name='ListingVideo'] {
     }
   }
 
-  .button--link {
-    @apply no-underline !important;
+  // .button--chevron {
+  //   @apply border-none !important;
+  //   @apply underline !important;
 
-    span {
-      &::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        transform: scaleX(1);
-        height: 1px;
-        bottom: 0;
-        left: 0;
-        background-color: var(--white);
-        transition: transform 0.25s ease-out;
-      }
-    }
-  }
+  //   span {
+  //     &::after {
+  //       content: '';
+  //       position: absolute;
+  //       width: 100%;
+  //       transform: scaleX(1);
+  //       height: 1px;
+  //       bottom: 0;
+  //       left: 0;
+  //       background-color: var(--white);
+  //       transition: transform 0.25s ease-out;
+  //     }
+  //   }
+  // }
 
   .post {
     &:hover {

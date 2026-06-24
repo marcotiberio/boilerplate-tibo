@@ -4,32 +4,34 @@
   style="
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
-  <div class="wrapper boxed max-w-screen-max mx-auto flex flex-col gap-md">
-    {% if title %}
-      <div class="h3 w-full max-w-[60rem]">{{ title }}</div>
-    {% endif %}
+  <div class="wrapper boxed max-w-screen-max mx-auto">
+    <div class="boxed panel bg-greenFaded rounded flex flex-col gap-md">
+      {% if title %}
+        <div class="font-h2">{{ title }}</div>
+      {% endif %}
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-sm md:gap-md items-stretch">
-      {% for card in cards %}
-        <div class="flex flex-col gap-sm h-full p-sm rounded border-2 border-black bg-bright-green/30">
-          {% if card.image %}
-            <img class="logo lazyload w-[140px] h-[140px] object-contain mx-auto"
-              src="{{ card.image.src | resize(140) }}"
-              alt="{{ card.image.alt|e | default('') }}"
-              data-srcset="{{ function('wp_get_attachment_image_srcset', card.image.id) }}"
-              data-sizes="auto">
-          {% endif %}
-          {% if card.title %}
-            <h3 class="h3 flex gap-xs">
-              {% if showNumbers %}<span>{{ loop.index }}.</span>{% endif %}
-              <span>{{ card.title }}</span>
-            </h3>
-          {% endif %}
-          {% if card.text %}
-            <div class="wysiwyg">{{ card.text|e('wp_kses_post') }}</div>
-          {% endif %}
-        </div>
-      {% endfor %}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-sm">
+        {% for card in cards %}
+          <div class="card flex flex-col h-fit gap-sm p-sm rounded bg-white">
+            {% if card.image %}
+              <img class="logo lazyload w-[120px] h-[120px] object-contain mx-auto mb-xs"
+                src="{{ card.image.src | resize(120) }}"
+                alt="{{ card.image.alt|e | default('') }}"
+                data-srcset="{{ function('wp_get_attachment_image_srcset', card.image.id) }}"
+                data-sizes="auto">
+            {% endif %}
+            {% if card.title %}
+              <h3 class="font-h3 flex gap-xs">
+                {% if showNumbers %}<span>{{ loop.index }}.</span>{% endif %}
+                <span>{{ card.title }}</span>
+              </h3>
+            {% endif %}
+            {% if card.text %}
+              <div class="wysiwyg">{{ card.text|e('wp_kses_post') }}</div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </flynt-component>

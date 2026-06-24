@@ -101,8 +101,8 @@
       <h2 id="typography">2. Typography <a href="#typography" aria-label="Link to Typography">#</a></h2>
       <p>Use consistent spacing values (e.g., <code>1.5625rem</code> or Tailwind spacing classes) to create a smooth flow rhythm between elements.</p>
       {% block blockTypography %}
-        <h3 class="h1">H1: The quick brown fox jumps over the lazy dog</h3>
-        <h3 class="h2">H2: The quick brown fox jumps over the lazy dog</h3>
+        <h3 class="font-h1">H1: The quick brown fox jumps over the lazy dog</h3>
+        <h3 class="font-h2">H2: The quick brown fox jumps over the lazy dog</h3>
         <h3>H3: The quick brown fox jumps over the lazy dog</h3>
         <h3 class="h4">H4: The quick brown fox jumps over the lazy dog</h3>
         <h3 class="h5">H5: The quick brown fox jumps over the lazy dog</h3>
@@ -281,7 +281,7 @@
   <!-- 6. Themes -->
   <section class="boxed componentSpacing">
     <div class="contentMaxWidth">
-      <h2 class="h1" id="themes">6. Themes <a href="#themes" aria-label="Link to Themes">#</a></h2>
+      <h2 class="font-h1" id="themes">6. Themes <a href="#themes" aria-label="Link to Themes">#</a></h2>
       <p>To easily change the appearance of a group of content, using themes is a reliable method. The <code>data-theme</code> attribute makes it simple to apply styles and customize the appearance of a group of content, while the code keeps readable.</p>
     </div>
   </section>
@@ -289,7 +289,7 @@
     <section data-theme="{{ theme }}" class="componentSpacing">
       <div class="boxed">
         <div class="contentMaxWidth">
-          <h3 class="h2" id="theme-{{ theme }}">Theme {{ theme|capitalize }} <a href="#theme-{{ theme }}" aria-label="Link to Theme {{ theme|capitalize }}">#</a></h3>
+          <h3 class="font-h2" id="theme-{{ theme }}">Theme {{ theme|capitalize }} <a href="#theme-{{ theme }}" aria-label="Link to Theme {{ theme|capitalize }}">#</a></h3>
           <p>Using the attribute <code>data-theme="{{ theme }}"</code> allows you to style a group content as Theme {{ theme|capitalize }}.</p>
             <ol>
               <li><a href="#theme-reset-colors">Colors</a></li>
@@ -317,7 +317,7 @@
   <section data-theme="{{ themes[0] }}" class="componentSpacing">
     <div class="boxed">
       <div class="contentMaxWidth boxPadding" data-theme="reset">
-        <h3 class="h2" id="theme-reset">Theme Reset <a href="#theme-reset" aria-label="Link to Theme Reset">#</a></h3>
+        <h3 class="font-h2" id="theme-reset">Theme Reset <a href="#theme-reset" aria-label="Link to Theme Reset">#</a></h3>
         <p>Using the attribute <code>data-theme="reset"</code> allows you to revert the styles of a parent theme back to the initial styles.</p>
         {% set theme = 'reset' %}
         <ol>

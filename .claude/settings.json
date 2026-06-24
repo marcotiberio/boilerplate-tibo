@@ -9,7 +9,30 @@
       "Bash(set -e)",
       "Bash(git remote *)",
       "Bash(gh auth *)",
-      "Bash(git branch *)"
+      "Bash(git branch *)",
+      "Bash(git push *)",
+      "Bash(node -p \"require\\('./node_modules/vite/package.json'\\).version\")",
+      "Bash(ddev describe *)",
+      "Bash(curl -sI http://localhost:5173/assets/main.js)",
+      "Bash(curl -skI https://localhost:5173/assets/main.js)",
+      "Bash(curl -sI http://looptopia.ddev.site)",
+      "Bash(curl -skI https://looptopia.ddev.site)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://raw.githubusercontent.com/marcotiberio/boilerplate-tibo/website/goodtrouble/inc/typography.php)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/marcotiberio/boilerplate-tibo/website/goodtrouble/inc/typography.php\" -o \"/private/tmp/claude-502/-Users-marco-Sites-looptopia-wp-content-themes-looptopia/ee2d4ef9-9f1d-4f91-8323-d0330d0d6773/scratchpad/typography-remote.php\")",
+      "Bash(md5 -q /Users/marco/Sites/looptopia/wp-content/themes/looptopia/inc/typography.php)",
+      "Bash(md5 -q /private/tmp/claude-502/-Users-marco-Sites-looptopia-wp-content-themes-looptopia/ee2d4ef9-9f1d-4f91-8323-d0330d0d6773/scratchpad/typography-remote.php)",
+      "Bash(grep -vE '\\\\.\\(woff2|woff|png|jpg|svg|css|js\\)$')",
+      "Bash(php -l inc/typography.php)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('oauthAccount:', json.dumps\\(d.get\\('oauthAccount'\\), indent=2\\)\\); print\\('userID present:', bool\\(d.get\\('userID'\\)\\)\\)\")",
+      "Bash(php -l Components/BlockWysiwygColumns/functions.php)",
+      "Bash(grep -n 'p, .{$className}\\\\|$htmlTag = '\\\\''p'\\\\''\\\\|font-body' inc/typography.php)",
+      "Bash(php -r *)",
+      "Bash(awk '/tiny_mce_before_init/,0' inc/typography.php)",
+      "Bash(php -l Components/NavigationFooter/functions.php)",
+      "Bash(md5 -q Components/NavigationFooter/Assets/wordmark.svg)",
+      "Bash(md5 -q assets/images/looptopia-wordmark.svg)",
+      "Bash(md5 -q _assets-incoming/looptopia-wordmark.svg)",
+      "Bash(md5 -q Components/BlockHero/Assets/wordmark.svg)"
     ]
   }
 }

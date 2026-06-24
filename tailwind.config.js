@@ -14,7 +14,7 @@ module.exports = {
     },
     borderRadius: {
       none: '0',
-      DEFAULT: '8px',
+      DEFAULT: '12px',
       image: '8px',
       button: '50px',
       full: '9999px'
@@ -25,7 +25,8 @@ module.exports = {
       current: 'currentColor',
       transparent: 'transparent',
       // Project colors
-      'bright-green': '#c7f59a', // Looptopia accent
+      green: '#c7f59a',
+      greenFaded: '#ecf2e5',
       grei: '#f1f1f1',
       grey: {
         100: '#f5f5f5',

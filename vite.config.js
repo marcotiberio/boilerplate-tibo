@@ -32,7 +32,13 @@ export default defineConfig(({ mode }) => {
             cert: fs.readFileSync(env.VITE_DEV_SERVER_CERT)
           }
         : false,
-      host: 'localhost' // preserve conflicts with IpV6
+      host: 'localhost', // preserve conflicts with IpV6
+      // Vite 4.5.14 (CVE-2025-24010) locked the default dev-server CORS to
+      // localhost origins only. The WP site is served from the ddev host, so
+      // allow that origin explicitly or asset requests are blocked by CORS.
+      cors: {
+        origin: [host, /https?:\/\/([a-z0-9-]+\.)*ddev\.site(:\d+)?$/]
+      }
     },
     build: {
       // generate manifest.json in outDir

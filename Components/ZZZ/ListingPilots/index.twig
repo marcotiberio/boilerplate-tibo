@@ -4,7 +4,7 @@
       {% if preContentTitle %}
       <div class="w-full flex justify-between items-center">
         <h2>{{ preContentTitle }}</h2>
-        {# <a href="{{ labels.allPostsLink.url }}" class="button--link underline hover:no-underline caption font-bold text-body">{{ labels.allPosts }}</a> #}
+        {# <a href="{{ labels.allPostsLink.url }}" class="button--chevron underline hover:no-underline caption font-bold text-body">{{ labels.allPosts }}</a> #}
       </div>
       {% endif %}
       <ul class="w-full mx-auto mt-lg md:mt-xl grid grid-cols-1 sm:grid-cols-3 gap-sm sm:gap-md">
@@ -20,7 +20,7 @@
                   <div class="text-body font-bold">{{ item.title }}</div>
                   <div class="text-body font-bold text-black">{{ item.partner }}</div>
                   <div class="text-body">{{ item.intro|truncate(10) }}</div>
-                  <div class="h3">→</div>
+                  <div class="font-h3">→</div>
                 </div>
               </a>
             </div>

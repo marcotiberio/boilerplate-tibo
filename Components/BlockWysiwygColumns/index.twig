@@ -11,7 +11,10 @@
     </div> #}
     <div class="flex flex-col md:flex-row gap-sm">
       {% for column in columns %}
-        <div class="flex flex-col w-full">
+        <div
+          class="flex flex-col w-full{% if column.colorBackground %} p-sm rounded{% endif %}"
+          {% if column.colorBackground %}style="background-color: {{ column.colorBackground }};"{% endif %}
+        >
           {% if column.image %}
             <img 
               class="figure-image lazyload w-full aspect-8/5 object-cover mb-xs"

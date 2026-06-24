@@ -226,7 +226,7 @@ final class Color
 
     public const GREEN = 'green';
 
-    public const BRIGHTGREEN = 'bright-green';
+    public const BRIGHTGREEN = 'green';
 
     public const GREEN_50 = '#f0fdf4';
 

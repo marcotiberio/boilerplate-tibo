@@ -4,6 +4,32 @@ namespace Flynt\Typography;
 
 use Flynt\Utils\Options;
 
+/**
+ * CSS for the circular arrow icon used by the button "Arrow" option.
+ * arrow-circle.svg inlined as a data URI (kept in one place so the front-end
+ * and the TinyMCE editor stay in sync). Pass the full button selector, e.g.
+ * ".button.button--primary".
+ */
+function getArrowAfterCss($selector)
+{
+    $icon = <<<'SVG'
+data:image/svg+xml,%3Csvg width='21' height='20' viewBox='0 0 21 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19.1888 10.0001H1.20001' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M9.60004 18.8001L18.9144 10.6009C18.9996 10.5258 19.0677 10.4335 19.1144 10.33C19.1611 10.2266 19.1853 10.1144 19.1853 10.0009C19.1853 9.88737 19.1611 9.77517 19.1144 9.67172C19.0677 9.56827 18.9996 9.47595 18.9144 9.40087L9.60004 1.20007' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E
+SVG;
+
+    return "{$selector}::after {"
+        . "content: '';"
+        . "width: 2rem;"
+        . "height: 2rem;"
+        . "flex-shrink: 0;"
+        . "border-radius: 9999px;"
+        . "background-color: #fff;"
+        . "background-image: url(\"{$icon}\");"
+        . "background-repeat: no-repeat;"
+        . "background-position: center;"
+        . "background-size: 0.875rem auto;"
+        . "}";
+}
+
 add_action('acf/init', function () {
     // Add Typography fields to Global Options
     Options::addGlobal('Typography', [
@@ -372,7 +398,7 @@ add_action('acf/init', function () {
                 ],
                 [
                     'label' => __('Font Variant', 'flynt'),
-                    'instructions' => __('Select an uploaded font variant. Choices are populated from Primary/Secondary Font Variants above.', 'flynt'),
+                    'instructions' => __('Select a font weight/variant. For Custom Upload fonts the list shows your uploaded variants; for Google Fonts it shows the full weight range (ensure the weight is included in your Google Fonts URL).', 'flynt'),
                     'name' => 'fontVariant',
                     'type' => 'select',
                     'choices' => [],
@@ -753,41 +779,55 @@ add_filter('acf/load_field/name=fontVariant', function ($field) {
         ? $typographyOptions['bodyFontFamily']
         : 'Secondary';
 
-    // Add heading font variants
-    $headingVariants = !empty($typographyOptions['headingFontVariants'])
-        ? $typographyOptions['headingFontVariants']
-        : [];
-    foreach ($headingVariants as $variant) {
-        if (empty($variant['fontFile'])) {
-            continue;
-        }
-        $weight = $variant['fontWeight'] ?? '400';
-        $style = $variant['fontStyle'] ?? 'normal';
-        $label = !empty($variant['variantLabel'])
-            ? $variant['variantLabel']
-            : "{$weight} {$style}";
-        $value = "heading|{$weight}|{$style}";
-        $choices[$value] = "{$headingFontName} — {$label}";
-    }
+    // Resolve font sources (backward compatible with the old global fontSource)
+    $headingFontSource = !empty($typographyOptions['headingFontSource'])
+        ? $typographyOptions['headingFontSource']
+        : (!empty($typographyOptions['fontSource']) ? $typographyOptions['fontSource'] : 'google');
+    $bodyFontSource = !empty($typographyOptions['bodyFontSource'])
+        ? $typographyOptions['bodyFontSource']
+        : (!empty($typographyOptions['fontSource']) ? $typographyOptions['fontSource'] : 'google');
 
-    // Add body font variants
-    $bodyVariants = !empty($typographyOptions['bodyFontVariants'])
-        ? $typographyOptions['bodyFontVariants']
-        : [];
-    foreach ($bodyVariants as $variant) {
-        if (empty($variant['fontFile'])) {
-            continue;
-        }
-        $weight = $variant['fontWeight'] ?? '400';
-        $style = $variant['fontStyle'] ?? 'normal';
-        $label = !empty($variant['variantLabel'])
-            ? $variant['variantLabel']
-            : "{$weight} {$style}";
-        $value = "body|{$weight}|{$style}";
-        $choices[$value] = "{$bodyFontName} — {$label}";
-    }
+    // Full weight range offered for Google Fonts (no uploaded files to enumerate).
+    // Make sure the chosen weight is actually included in the Google Fonts URL.
+    $allWeights = [
+        '100' => 'Thin',
+        '200' => 'Extra Light',
+        '300' => 'Light',
+        '400' => 'Regular',
+        '500' => 'Medium',
+        '600' => 'Semibold',
+        '700' => 'Bold',
+        '800' => 'Extrabold',
+        '900' => 'Heavy',
+    ];
 
-    // If no custom variants, offer Google Fonts fallback choices
+    // Build choices for a single font: from uploaded variants (custom) or the
+    // full weight range (google).
+    $addChoices = function ($source, $variants, $prefix, $fontName) use (&$choices, $allWeights) {
+        if ($source === 'custom' && !empty($variants)) {
+            foreach ($variants as $variant) {
+                if (empty($variant['fontFile'])) {
+                    continue;
+                }
+                $weight = $variant['fontWeight'] ?? '400';
+                $style = $variant['fontStyle'] ?? 'normal';
+                $label = !empty($variant['variantLabel'])
+                    ? $variant['variantLabel']
+                    : "{$weight} {$style}";
+                $choices["{$prefix}|{$weight}|{$style}"] = "{$fontName} — {$label}";
+            }
+            return;
+        }
+        // Google Fonts: offer every weight (normal style)
+        foreach ($allWeights as $weight => $weightLabel) {
+            $choices["{$prefix}|{$weight}|normal"] = "{$fontName} — {$weight} ({$weightLabel})";
+        }
+    };
+
+    $addChoices($headingFontSource, $typographyOptions['headingFontVariants'] ?? [], 'heading', $headingFontName);
+    $addChoices($bodyFontSource, $typographyOptions['bodyFontVariants'] ?? [], 'body', $bodyFontName);
+
+    // Final fallback if nothing was generated
     if (empty($choices)) {
         $choices['heading|400|normal'] = "{$headingFontName} — Regular";
         $choices['heading|700|normal'] = "{$headingFontName} — Bold";
@@ -1179,6 +1219,13 @@ add_action('wp_head', function () {
                 ? esc_attr($style['headingLevel'])
                 : '';
 
+            // HTML tag to bind this style to (in addition to its class).
+            // The "font-body" style always also styles every <p> tag.
+            $htmlTag = $headingLevel;
+            if (empty($htmlTag) && $className === 'font-body') {
+                $htmlTag = 'p';
+            }
+
             // Parse fontVariant (format: "heading|700|normal") with fallback to legacy fields
             $selectedFontFamily = 'heading';
             $fontWeight = '400';
@@ -1207,10 +1254,10 @@ add_action('wp_head', function () {
                 ? esc_attr($style['textTransform'])
                 : 'none';
 
-            // Build selector: include HTML tag if heading level is set
+            // Build selector: include HTML tag (heading level, or <p> for font-body)
             $selector = '';
-            if (!empty($headingLevel)) {
-                $selector = "{$headingLevel}, .{$className}";
+            if (!empty($htmlTag)) {
+                $selector = "{$htmlTag}, .{$className}";
             } else {
                 $selector = ".{$className}";
             }
@@ -1237,8 +1284,8 @@ add_action('wp_head', function () {
             if ($sizeDesktop != $sizeMobile) {
                 $customStylesCss .= "@media (min-width: 1024px) {\n";
                 // Use same selector pattern for desktop
-                if (!empty($headingLevel)) {
-                    $customStylesCss .= "  {$headingLevel}, .{$className} {\n";
+                if (!empty($htmlTag)) {
+                    $customStylesCss .= "  {$htmlTag}, .{$className} {\n";
                 } else {
                     $customStylesCss .= "  .{$className} {\n";
                 }
@@ -1314,12 +1361,9 @@ add_action('wp_head', function () {
             }
             $customButtonCss .= "}\n\n";
 
-            // Arrow ::after
+            // Arrow ::after (circular arrow icon)
             if (!empty($style['showArrow'])) {
-                $customButtonCss .= ".button.{$className}::after {\n";
-                $customButtonCss .= "  content: '\\2192';\n";
-                $customButtonCss .= "  margin-left: 0.5em;\n";
-                $customButtonCss .= "}\n\n";
+                $customButtonCss .= getArrowAfterCss(".button.{$className}") . "\n\n";
             }
 
             // Hover styles
@@ -1710,7 +1754,10 @@ add_filter('tiny_mce_before_init', function ($init) {
             }
             $buttonStyles .= "}";
 
-            // Arrow ::after
+            // Arrow ::after (editor preview only — use a simple glyph here.
+            // TinyMCE's content_style is wrapped in double quotes without
+            // escaping, so a url("data:…") data URI would break editor init.
+            // The front end renders the circular icon via getArrowAfterCss().)
             if (!empty($style['showArrow'])) {
                 $buttonStyles .= ".button.{$className}::after {";
                 $buttonStyles .= "content: '\\2192';";

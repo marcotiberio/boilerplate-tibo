@@ -10,7 +10,7 @@ module.exports = {
   colors: {
     black: "#000000",
     white: "#ffffff",
-    "bright-green": "#c7f59a",
+    "green": "#c7f59a",
   },
   fontFamily: {
     // Poppins is the only family in the design. Load weights 500 (Medium) + 600 (SemiBold).

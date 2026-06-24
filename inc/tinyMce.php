@@ -84,8 +84,8 @@ function getConfig()
         'textcolor_map' => [
             '000000', 'Black',
             'ffffff', 'White',
-            '3d6bff', 'Blue',
-            'fef7ca', 'Beige',
+            'c7f59a', 'Green',
+            'ecf2e5', 'Green Faded',
         ],
         'blockformats' => [
             'Heading 1' => 'h1',

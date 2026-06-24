@@ -19,11 +19,8 @@ function getACFLayout()
             ],
             [
                 'label' => __('Title', 'flynt'),
-                'name' => 'blockTitleHtml',
-                'type' => 'wysiwyg',
-                'tabs' => 'visual, text',
-                'media_upload' => 0,
-                'delay' => 1,
+                'name' => 'blockTitle',
+                'type' => 'text'
             ],
             [
                 'label' => __('Accordion', 'flynt'),

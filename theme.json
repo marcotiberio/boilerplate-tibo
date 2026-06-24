@@ -15,29 +15,14 @@
           "name": "Black"
         },
         {
-          "slug": "red",
-          "color": "#FB8666",
-          "name": "Red"
+          "slug": "green",
+          "color": "#c7f59a",
+          "name": "Green"
         },
         {
-          "slug": "lightRed",
-          "color": "#FFC3A3",
-          "name": "Light Red"
-        },
-        {
-          "slug": "lightBlue",
-          "color": "#BEE1FF",
-          "name": "Light Blue"
-        },
-        {
-          "slug": "blue",
-          "color": "#7ABDEA",
-          "name": "Blue"
-        },
-        {
-          "slug": "grey",
-          "color": "#F1F1F1",
-          "name": "Grey"
+          "slug": "greenFaded",
+          "color": "#ecf2e5",
+          "name": "Green Faded"
         }
       ]
     }

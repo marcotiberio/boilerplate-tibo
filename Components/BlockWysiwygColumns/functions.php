@@ -59,6 +59,7 @@ function getACFLayout()
                             'width' => 100
                         ],
                     ],
+                    FieldVariables\getColorBackground(),
                 ]
             ],
             [

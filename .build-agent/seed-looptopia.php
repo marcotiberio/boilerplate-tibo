@@ -79,7 +79,7 @@ $rows[] = [
 $rows[] = [
     'acf_fc_layout' => 'BlockImageText',
     'image'         => $ABOUT,
-    'contentHtml'   => '<h2 class="h2">ÜBER UNS</h2>'
+    'contentHtml'   => '<h2 class="font-h2">ÜBER UNS</h2>'
         . '<p>LOOPTOPIA macht Berlins zirkuläres Potenzial für alle sichtbar und erlebbar. Von 13. bis 15. November 2026 zeigen wir das an Orten, die ohnehin Teil des Berliner Alltags sind: Werkstätten, Cafés, Clubs, Märkte, Spätis, Nachbarschaftshäuser, Unternehmen. Überall in der Stadt entstehen Formate, die Kreislaufwirtschaft greifbar machen. Reparieren, tauschen, herstellen, diskutieren – mit Menschen, die das schon tun, und allen, die das noch entdecken wollen.</p>'
         . '<p><strong>Das Ziel:</strong> Kreislaufwirtschaft raus aus der Bubble und rein in den Alltag. Mit Relevanz, weil zirkuläre Lösungen konkreten Mehrwert bieten. Und mit Resonanz, weil Kultur und Erlebnis niedrigschwelligen Zugang zu neuen Themen schaffen.</p>'
         . '<p>LOOPTOPIA ist ein Projekt von Circular City – Zirkuläre Stadt g.e.V. und wird ermöglicht durch eine Förderung der Stiftung Naturschutz Berlin. Jetzt fehlst nur noch du!</p>',
@@ -89,7 +89,7 @@ $rows[] = [
 // Teilnehmen intro
 $rows[] = [
     'acf_fc_layout' => 'blockWysiwyg',
-    'contentHtml'   => '<h2 class="h2">TEILNEHMEN</h2>'
+    'contentHtml'   => '<h2 class="font-h2">TEILNEHMEN</h2>'
         . '<p>LOOPTOPIA entsteht nicht an einem Ort, sondern in der ganzen Stadt – und nur mit dir! Egal ob Initiative, Unternehmen, Institution, Kulturort, Werkstätte, Bar, Späti oder Bildungseinrichtung: Du möchtest unser dezentrales Stadtfestival mitgestalten?</p>',
 ];
 
@@ -122,7 +122,7 @@ $rows[] = [
     'acf_fc_layout' => 'BlockWysiwygColumns',
     'columns'       => [
         [
-            'contentHtml' => '<h3 class="h3">Was auf dich wartet</h3>'
+            'contentHtml' => '<h3 class="font-h3">Was auf dich wartet</h3>'
                 . '<ul>'
                 . '<li>Teil des Programms und der Kampagne mit Ankündigung und Logoplatzierung (Website, Presse, Multiplikatoren)</li>'
                 . '<li>Feature auf Social Media</li>'
@@ -131,7 +131,7 @@ $rows[] = [
                 . '</ul>',
         ],
         [
-            'contentHtml' => '<h3 class="h3">So wirst du Teil von LOOPTOPIA</h3>'
+            'contentHtml' => '<h3 class="font-h3">So wirst du Teil von LOOPTOPIA</h3>'
                 . '<p>Reiche deine Programmidee bis 1.9. über das Formular unten ein. Wir kuratieren das Programm Schritt-für-Schritt und melden uns innerhalb von 2-3 Wochen bei dir. Am 1.10. geht das Programm online – und unsere Kampagne live.</p>'
                 . '<p><a href="#kriterien">Teilnahmekriterien</a></p>',
             'buttonLink'  => lt_link('Programmidee einreichen', '#teilnehmen'),
@@ -158,7 +158,7 @@ $rows[] = [
 // Partner & Förderer heading
 $rows[] = [
     'acf_fc_layout' => 'blockWysiwyg',
-    'contentHtml'   => '<h2 class="h2">Partner &amp; Förderer</h2>',
+    'contentHtml'   => '<h2 class="font-h2">Partner &amp; Förderer</h2>',
 ];
 
 // Partner logos (tiers). Only "Förderer" has provided logos; other tiers are
@@ -195,14 +195,14 @@ foreach ($faq as $q) {
 }
 $rows[] = [
     'acf_fc_layout'   => 'BlockAccordionDefault',
-    'blockTitleHtml'  => '<h2 class="h2">FAQs</h2>',
+    'blockTitleHtml'  => '<h2 class="font-h2">FAQs</h2>',
     'accordionPanels' => $panels,
 ];
 
 // Kontakt
 $rows[] = [
     'acf_fc_layout' => 'blockWysiwyg',
-    'contentHtml'   => '<h2 class="h2">Kontakt</h2>'
+    'contentHtml'   => '<h2 class="font-h2">Kontakt</h2>'
         . '<p>Hast du eine Frage zu LOOPTOPIA oder eine Idee für ein Programm, über die du dich mit uns austauschen möchtest? Dann schreib uns gerne an <a href="mailto:looptopia@circular.berlin">looptopia@circular.berlin</a>. Für kurze Updates und aktuelle Infos folge uns auf Instagram und abonniere unseren Newsletter.</p>',
 ];
 

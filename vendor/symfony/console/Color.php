@@ -33,7 +33,7 @@ final class Color
     private const BRIGHT_COLORS = [
         'gray' => 0,
         'bright-red' => 1,
-        'bright-green' => 2,
+        'green' => 2,
         'bright-yellow' => 3,
         'bright-blue' => 4,
         'bright-magenta' => 5,
