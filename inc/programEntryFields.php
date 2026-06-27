@@ -5,6 +5,7 @@
  *
  * Single source of truth for the submission fields so the public form,
  * the ACF field group and the REST handler never drift apart.
+ * Field spec mirrors the client's intake sheet (German labels).
  */
 
 namespace Flynt\ProgramEntry;
@@ -15,70 +16,93 @@ const POST_TYPE = 'program_entry';
 const NONCE_ACTION = 'looptopia_program_entry';
 
 /**
- * Built-in fallback choices, used until the client fills the Theme Options
- * lists (and before `acf/init`, when options can't be read yet).
- */
-function getDefaults()
-{
-    return [
-        'categories' => [
-            'workshop'    => __('Workshop', 'flynt'),
-            'performance' => __('Performance', 'flynt'),
-            'exhibition'  => __('Exhibition', 'flynt'),
-            'talk'        => __('Talk', 'flynt'),
-        ],
-        'themes' => [
-            'music'          => __('Music', 'flynt'),
-            'art'            => __('Art', 'flynt'),
-            'tech'           => __('Technology', 'flynt'),
-            'community'      => __('Community', 'flynt'),
-            'sustainability' => __('Sustainability', 'flynt'),
-        ],
-    ];
-}
-
-/**
- * Single source of truth for the choice lists used by the single-choice
- * (radio) and multiple-choice (checkbox) fields. Read from Theme Options so
- * the public form, the CPT review screen and the REST validation always agree.
- * Keys are stored, labels are displayed.
+ * Choice lists for every select/checkbox/radio field. Keys are stored,
+ * labels are displayed. Single source for form, ACF and REST validation.
  */
 function getConfig()
 {
-    $defaults = getDefaults();
-
-    // Options live behind ACF; before acf/init we can only use the defaults.
-    if (!did_action('acf/init')) {
-        return $defaults;
-    }
-
     return [
-        'categories' => optionRowsToChoices(Options::getGlobal('ProgramEntry', 'categories'), $defaults['categories']),
-        'themes'     => optionRowsToChoices(Options::getGlobal('ProgramEntry', 'themes'), $defaults['themes']),
+        // Thema / Ziele — multiple choice
+        'goals' => [
+            'werterhalt'      => __('Werterhalt in der Praxis', 'flynt'),
+            'instrumente'     => __('Instrumente & Hilfsmittel für die Transformation', 'flynt'),
+            'geschaeftsmodelle' => __('Zirkuläre Geschäftsmodelle & Innovation', 'flynt'),
+            'finanzierung'    => __('Finanzierung & Skalierung', 'flynt'),
+            'spielregeln'     => __('Neue Spielregeln für eine kreislauffähige Zukunft', 'flynt'),
+            'politik'         => __('Politische Hebel & Rahmenbedingungen für Circular Economy', 'flynt'),
+            'kooperation'     => __('Kooperation, Beteiligung & Wissensaufbau', 'flynt'),
+            'lifestyle'       => __('Circular Lifestyle', 'flynt'),
+            'orte'            => __('Alltägliche Orte, um zirkuläre Lösungen auszuprobieren', 'flynt'),
+            'nachbarschaft'   => __('Nachbarschaft, Teilhabe & soziale Innovation', 'flynt'),
+        ],
+        // Sektor — multiple choice
+        'sectors' => [
+            'ernaehrung'    => __('Ernährung', 'flynt'),
+            'bauen'         => __('Bauen & Wohnen', 'flynt'),
+            'mobilitaet'    => __('Mobilität & Logistik', 'flynt'),
+            'digital'       => __('Digitalwirtschaft & Technologie', 'flynt'),
+            'kunst'         => __('Kunst & Kreativwirtschaft', 'flynt'),
+            'produktion'    => __('Produktion & Industrie', 'flynt'),
+            'handel'        => __('Handel & Konsumgüter', 'flynt'),
+            'wissenschaft'  => __('Wissenschaft, Forschung & Bildung', 'flynt'),
+            'tourismus'     => __('Tourismus, Freizeit & Veranstaltungen', 'flynt'),
+        ],
+        // Art des Programmpunkts — multiple choice
+        'programTypes' => [
+            'workshop'   => __('Mitmachaktion / Workshop', 'flynt'),
+            'reparatur'  => __('Reparaturangebot / Reparatur Workshop', 'flynt'),
+            'panel'      => __('Panel / Vortrag', 'flynt'),
+            'kunst'      => __('Kunst / Kultur (Ausstellung, Performance, Tanz, Musik, Film, Lesung, Podcast)', 'flynt'),
+            'community'  => __('Community / Networking Event', 'flynt'),
+            'openhouse'  => __('Open House / Behind the Scene', 'flynt'),
+            'tour'       => __('Tour / Walk / Stadt-Erlebnis', 'flynt'),
+        ],
+        // Zielgruppe — multiple choice
+        'audiences' => [
+            'fach'        => __('Fachveranstaltung', 'flynt'),
+            'unternehmen' => __('Unternehmen', 'flynt'),
+            'wissenschaft' => __('Wissenschaft & Bildung', 'flynt'),
+            'politik'     => __('Politik & Verwaltung', 'flynt'),
+            'freizeit'    => __('Freizeit', 'flynt'),
+            'erwachsene'  => __('Erwachsene', 'flynt'),
+            'senioren'    => __('Senior:innen', 'flynt'),
+            'jugend'      => __('Jugendliche', 'flynt'),
+            'familien'    => __('Familien & Kinder', 'flynt'),
+        ],
+        // Barrierefreiheit — multiple choice
+        'accessibility' => [
+            'eingang'   => __('Eingang barrierefrei', 'flynt'),
+            'wc'        => __('WC barrierefrei', 'flynt'),
+            'komplett'  => __('Komplett barrierefrei', 'flynt'),
+            'keine'     => __('Nicht barrierefrei', 'flynt'),
+        ],
+        // Format — single choice
+        'format' => [
+            'vorort' => __('Vor Ort', 'flynt'),
+            'hybrid' => __('Hybrid', 'flynt'),
+            'online' => __('Online', 'flynt'),
+        ],
+        // Anmeldung erforderlich? — single choice (conditional link)
+        'registration' => [
+            'offen'      => __('Offenes Format', 'flynt'),
+            'anmeldung'  => __('Mit Anmeldung', 'flynt'),
+        ],
+        // Kosten? — single choice (conditional price + link)
+        'costs' => [
+            'nein' => __('Nein', 'flynt'),
+            'ja'   => __('Ja', 'flynt'),
+        ],
+        // Wann? — either/or radio
+        'dateMode' => [
+            'flexibel' => __('Wir sind zeitlich flexibel, macht uns gerne ein Angebot', 'flynt'),
+            'wunsch'   => __('Wir haben einen Wunschtermin', 'flynt'),
+        ],
+        // Wo? — either/or radio
+        'locationMode' => [
+            'suche' => __('Wir haben keinen passenden Veranstaltungsort und freuen uns über Tipps und/oder Vernetzung', 'flynt'),
+            'eigen' => __('Wir haben einen passenden Veranstaltungsort', 'flynt'),
+        ],
     ];
-}
-
-/**
- * Turn an ACF repeater value ([['value' => , 'label' => ], ...]) into an
- * ACF-style choices map ['value' => 'label']. Falls back to $default when the
- * option is empty so the form is never left without options.
- */
-function optionRowsToChoices($rows, $default)
-{
-    if (empty($rows) || !is_array($rows)) {
-        return $default;
-    }
-
-    $choices = [];
-    foreach ($rows as $row) {
-        $value = sanitize_key($row['value'] ?? '');
-        $label = trim((string) ($row['label'] ?? ''));
-        if ($value !== '' && $label !== '') {
-            $choices[$value] = $label;
-        }
-    }
-
-    return $choices ?: $default;
 }
 
 /**
@@ -126,8 +150,18 @@ function geocodeAddress($address)
 }
 
 /**
+ * Compose a geocodable address from the submitted street + postal code.
+ * Berlin is appended to keep results within the city.
+ */
+function composeAddress($street, $postalCode)
+{
+    $parts = array_filter([trim((string) $street), trim((string) $postalCode), 'Berlin, Germany']);
+    return implode(', ', $parts);
+}
+
+/**
  * Re-geocode when an editor saves an entry with an address but no pin yet.
- * Lets the client paste an address in wp-admin and get a marker automatically,
+ * Lets the client adjust street/PLZ in wp-admin and get a marker automatically,
  * while still being able to drag the pin manually afterwards.
  */
 add_action('acf/save_post', function ($postId) {
@@ -135,13 +169,12 @@ add_action('acf/save_post', function ($postId) {
         return;
     }
 
-    $address = get_field('address', $postId);
     $location = get_field('location', $postId);
-
-    if (empty($address) || !empty($location['lat'])) {
+    if (!empty($location['lat'])) {
         return;
     }
 
+    $address = composeAddress(get_field('street', $postId), get_field('postalCode', $postId));
     $geo = geocodeAddress($address);
     if ($geo) {
         update_field('location', [
@@ -151,55 +184,3 @@ add_action('acf/save_post', function ($postId) {
         ], $postId);
     }
 }, 20);
-
-/**
- * Editable choice lists under Theme Options → Program Entry.
- * Each row is a stable machine value plus a human label.
- */
-$choiceRepeater = function ($name, $label, $buttonLabel) {
-    return [
-        'label' => $label,
-        'name' => $name,
-        'type' => 'repeater',
-        'instructions' => __('Leave empty to use the built-in defaults. The Value is stored with each entry — set it once and don’t change it afterwards.', 'flynt'),
-        'layout' => 'table',
-        'button_label' => $buttonLabel,
-        'sub_fields' => [
-            [
-                'label' => __('Value', 'flynt'),
-                'name' => 'value',
-                'type' => 'text',
-                'instructions' => __('Lowercase key, e.g. "workshop".', 'flynt'),
-                'required' => 1,
-                'wrapper' => ['width' => 40],
-            ],
-            [
-                'label' => __('Label', 'flynt'),
-                'name' => 'label',
-                'type' => 'text',
-                'required' => 1,
-                'wrapper' => ['width' => 60],
-            ],
-        ],
-    ];
-};
-
-Options::addGlobal('ProgramEntry', [
-    $choiceRepeater('categories', __('Categories (single choice)', 'flynt'), __('Add category', 'flynt')),
-    $choiceRepeater('themes', __('Themes (multiple choice)', 'flynt'), __('Add theme', 'flynt')),
-]);
-
-/**
- * Populate the CPT radio/checkbox choices from the same source at render time.
- * Done via load_field (after acf/init) because the field group registers
- * before acf/init, when the options can't be read yet.
- */
-add_filter('acf/load_field/key=field_programEntryDetails_category', function ($field) {
-    $field['choices'] = getConfig()['categories'];
-    return $field;
-});
-
-add_filter('acf/load_field/key=field_programEntryDetails_themes', function ($field) {
-    $field['choices'] = getConfig()['themes'];
-    return $field;
-});

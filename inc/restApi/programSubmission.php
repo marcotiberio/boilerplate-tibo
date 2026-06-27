@@ -4,8 +4,9 @@
  * REST endpoint that receives public submissions from the FormProgramEntry
  * component and stores them as `pending` Program Entry posts for review.
  *
- * Security: nonce check, honeypot, per-IP rate limit, strict sanitisation,
- * choice allow-listing. Anonymous callers can only ever create pending posts.
+ * Accepts multipart/form-data (file uploads). Security: nonce, honeypot,
+ * per-IP rate limit, strict sanitisation, choice allow-listing, conditional
+ * required validation. Anonymous callers can only ever create pending posts.
  */
 
 namespace Flynt\ProgramEntry;
@@ -20,22 +21,16 @@ add_action('rest_api_init', function () {
 
 function handleSubmission(\WP_REST_Request $request)
 {
-    $params = $request->get_json_params();
-    if (empty($params)) {
-        $params = $request->get_params();
-    }
+    $params = $request->get_body_params();
+    $files = $request->get_file_params();
 
-    // 1. Nonce — rejects cross-site / stale form posts.
+    // 1. Nonce.
     if (empty($params['nonce']) || !wp_verify_nonce($params['nonce'], NONCE_ACTION)) {
-        return new \WP_REST_Response([
-            'success' => false,
-            'message' => __('Your session expired. Please reload the page and try again.', 'flynt'),
-        ], 403);
+        return reject(__('Deine Sitzung ist abgelaufen. Bitte lade die Seite neu.', 'flynt'), 403);
     }
 
-    // 2. Honeypot — a filled hidden field means a bot.
+    // 2. Honeypot.
     if (!empty($params['website_hp'])) {
-        // Pretend success so bots don't learn the trap exists.
         return new \WP_REST_Response(['success' => true], 200);
     }
 
@@ -44,75 +39,172 @@ function handleSubmission(\WP_REST_Request $request)
     $rateKey = 'le_pe_' . md5($ip);
     $count = (int) get_transient($rateKey);
     if ($count >= 5) {
-        return new \WP_REST_Response([
-            'success' => false,
-            'message' => __('Too many submissions. Please try again later.', 'flynt'),
-        ], 429);
+        return reject(__('Zu viele Einsendungen. Bitte versuche es später erneut.', 'flynt'), 429);
     }
 
-    // 4. Sanitise.
-    $contactName  = sanitize_text_field($params['contactName'] ?? '');
-    $contactEmail = sanitize_email($params['contactEmail'] ?? '');
-    $contactPhone = sanitize_text_field($params['contactPhone'] ?? '');
-    $description  = sanitize_textarea_field($params['description'] ?? '');
-    $address      = sanitize_text_field($params['address'] ?? '');
-    $category     = sanitize_key($params['category'] ?? '');
-    $themes       = array_map('sanitize_key', (array) ($params['themes'] ?? []));
-    $consent      = !empty($params['consent']);
+    $config = getConfig();
+
+    // 4. Sanitise scalars.
+    $data = [
+        'orgName'        => sanitize_text_field($params['orgName'] ?? ''),
+        'contactPerson'  => sanitize_text_field($params['contactPerson'] ?? ''),
+        'contactEmail'   => sanitize_email($params['contactEmail'] ?? ''),
+        'website'        => esc_url_raw($params['website'] ?? ''),
+        'instagram'      => esc_url_raw($params['instagram'] ?? ''),
+        'linkedin'       => esc_url_raw($params['linkedin'] ?? ''),
+        'registration'   => sanitize_key($params['registration'] ?? ''),
+        'registrationLink' => esc_url_raw($params['registrationLink'] ?? ''),
+        'costs'          => sanitize_key($params['costs'] ?? ''),
+        'price'          => sanitize_text_field($params['price'] ?? ''),
+        'paymentLink'    => esc_url_raw($params['paymentLink'] ?? ''),
+        'description'    => sanitize_textarea_field($params['description'] ?? ''),
+        'language'       => sanitize_text_field($params['language'] ?? ''),
+        'format'         => sanitize_key($params['format'] ?? ''),
+        'eventTitle'     => sanitize_text_field($params['eventTitle'] ?? ''),
+        'intro'          => sanitize_text_field($params['intro'] ?? ''),
+        'credits'        => sanitize_text_field($params['credits'] ?? ''),
+        'dateMode'       => sanitize_key($params['dateMode'] ?? ''),
+        'dateFrom'       => sanitize_text_field($params['dateFrom'] ?? ''),
+        'dateTo'         => sanitize_text_field($params['dateTo'] ?? ''),
+        'timeStart'      => sanitize_text_field($params['timeStart'] ?? ''),
+        'timeEnd'        => sanitize_text_field($params['timeEnd'] ?? ''),
+        'locationMode'   => sanitize_key($params['locationMode'] ?? ''),
+        'street'         => sanitize_text_field($params['street'] ?? ''),
+        'postalCode'     => sanitize_text_field($params['postalCode'] ?? ''),
+        'mobilityInfo'   => sanitize_textarea_field($params['mobilityInfo'] ?? ''),
+    ];
+
+    // Multiple choice — keep only known keys.
+    $goals        = allowedKeys($params['goals'] ?? [], $config['goals']);
+    $sectors      = allowedKeys($params['sectors'] ?? [], $config['sectors']);
+    $programTypes = allowedKeys($params['programTypes'] ?? [], $config['programTypes']);
+    $audiences    = allowedKeys($params['audiences'] ?? [], $config['audiences']);
+    $accessibility = allowedKeys($params['accessibility'] ?? [], $config['accessibility']);
+
+    // Booleans.
+    $venueOpenForOthers = !empty($params['venueOpenForOthers']);
+    $fundingInterest    = !empty($params['fundingInterest']);
+    $acceptCriteria     = !empty($params['acceptCriteria']);
+    $acceptTerms        = !empty($params['acceptTerms']);
+    $newsletter         = !empty($params['newsletter']);
 
     // 5. Validate.
     $errors = [];
-    $config = getConfig();
-    if ($contactName === '') {
-        $errors[] = __('Please enter your name.', 'flynt');
+    $required = [
+        'orgName'       => __('Name der Organisation', 'flynt'),
+        'contactPerson' => __('Kontaktperson', 'flynt'),
+        'description'   => __('Beschreibungstext', 'flynt'),
+        'language'      => __('Sprache', 'flynt'),
+        'eventTitle'    => __('Titel der Veranstaltung', 'flynt'),
+        'intro'         => __('Introtext', 'flynt'),
+    ];
+    foreach ($required as $key => $label) {
+        if ($data[$key] === '') {
+            $errors[] = sprintf(__('Bitte fülle das Feld „%s“ aus.', 'flynt'), $label);
+        }
     }
-    if (!is_email($contactEmail)) {
-        $errors[] = __('Please enter a valid email address.', 'flynt');
+    if (!is_email($data['contactEmail'])) {
+        $errors[] = __('Bitte gib eine gültige E-Mail-Adresse an.', 'flynt');
     }
-    if ($description === '') {
-        $errors[] = __('Please enter a description.', 'flynt');
+    if (!isset($config['registration'][$data['registration']])) {
+        $errors[] = __('Bitte wähle, ob eine Anmeldung erforderlich ist.', 'flynt');
+    } elseif ($data['registration'] === 'anmeldung' && $data['registrationLink'] === '') {
+        $errors[] = __('Bitte gib einen Anmeldelink an.', 'flynt');
     }
-    if (!isset($config['categories'][$category])) {
-        $errors[] = __('Please choose a valid category.', 'flynt');
+    if (!isset($config['costs'][$data['costs']])) {
+        $errors[] = __('Bitte wähle, ob Kosten anfallen.', 'flynt');
+    } elseif ($data['costs'] === 'ja' && $data['price'] === '') {
+        $errors[] = __('Bitte gib den Preis an.', 'flynt');
     }
-    $themes = array_values(array_filter($themes, fn ($t) => isset($config['themes'][$t])));
-    if (!$consent) {
-        $errors[] = __('Please accept the privacy terms.', 'flynt');
+    if (!isset($config['format'][$data['format']])) {
+        $errors[] = __('Bitte wähle ein Format.', 'flynt');
+    }
+    if (!isset($config['dateMode'][$data['dateMode']])) {
+        $errors[] = __('Bitte wähle eine Terminoption.', 'flynt');
+    } elseif ($data['dateMode'] === 'wunsch' && $data['dateFrom'] === '') {
+        $errors[] = __('Bitte gib ein Datum an.', 'flynt');
+    }
+    if (!isset($config['locationMode'][$data['locationMode']])) {
+        $errors[] = __('Bitte wähle eine Ortsoption.', 'flynt');
+    } elseif ($data['locationMode'] === 'eigen' && ($data['street'] === '' || $data['postalCode'] === '')) {
+        $errors[] = __('Bitte gib Straße und Postleitzahl an.', 'flynt');
+    }
+    if (!$goals) {
+        $errors[] = __('Bitte wähle mindestens ein Thema.', 'flynt');
+    }
+    if (!$sectors) {
+        $errors[] = __('Bitte wähle mindestens einen Sektor.', 'flynt');
+    }
+    if (!$programTypes) {
+        $errors[] = __('Bitte wähle die Art des Programmpunkts.', 'flynt');
+    }
+    if (!$accessibility) {
+        $errors[] = __('Bitte gib Infos zur Barrierefreiheit an.', 'flynt');
+    }
+    if (!$acceptCriteria || !$acceptTerms) {
+        $errors[] = __('Bitte akzeptiere die Teilnahmekriterien und Nutzungsbedingungen.', 'flynt');
+    }
+    // Required uploads must be present and error-free.
+    if (!hasUpload($files, 'orgLogo')) {
+        $errors[] = __('Bitte lade das Logo der Organisation hoch.', 'flynt');
+    }
+    if (!hasUpload($files, 'featuredImage')) {
+        $errors[] = __('Bitte lade ein Titelbild hoch.', 'flynt');
     }
 
     if (!empty($errors)) {
-        return new \WP_REST_Response([
-            'success' => false,
-            'message' => implode(' ', $errors),
-        ], 422);
+        return reject(implode(' ', $errors), 422);
     }
 
-    // 6. Geocode (best-effort — entry is still stored without a pin).
-    $geo = geocodeAddress($address);
+    // 6. Geocode (best-effort) for an own venue.
+    $geo = null;
+    if ($data['locationMode'] === 'eigen') {
+        $geo = geocodeAddress(composeAddress($data['street'], $data['postalCode']));
+    }
 
     // 7. Create the pending post.
     $postId = wp_insert_post([
         'post_type'    => POST_TYPE,
         'post_status'  => 'pending',
-        'post_title'   => $contactName,
-        'post_content' => $description,
+        'post_title'   => $data['eventTitle'],
+        'post_content' => $data['description'],
     ], true);
 
     if (is_wp_error($postId)) {
-        return new \WP_REST_Response([
-            'success' => false,
-            'message' => __('Something went wrong saving your entry. Please try again.', 'flynt'),
-        ], 500);
+        return reject(__('Beim Speichern ist etwas schiefgelaufen. Bitte versuche es erneut.', 'flynt'), 500);
     }
 
-    // 8. Store ACF fields.
-    update_field('contactName', $contactName, $postId);
-    update_field('contactEmail', $contactEmail, $postId);
-    update_field('contactPhone', $contactPhone, $postId);
-    update_field('description', $description, $postId);
-    update_field('category', $category, $postId);
-    update_field('themes', $themes, $postId);
-    update_field('address', $geo['formatted'] ?? $address, $postId);
+    // 8. Uploads.
+    requireMediaDeps();
+    $logoId = uploadSingle('orgLogo', $postId);
+    $featuredId = uploadSingle('featuredImage', $postId);
+    $galleryIds = uploadMultiple('gallery', $postId);
+
+    // 9. Store ACF fields.
+    foreach ($data as $key => $value) {
+        update_field($key, $value, $postId);
+    }
+    update_field('goals', $goals, $postId);
+    update_field('sectors', $sectors, $postId);
+    update_field('programTypes', $programTypes, $postId);
+    update_field('audiences', $audiences, $postId);
+    update_field('accessibility', $accessibility, $postId);
+    update_field('venueOpenForOthers', $venueOpenForOthers, $postId);
+    update_field('fundingInterest', $fundingInterest, $postId);
+    update_field('acceptCriteria', $acceptCriteria, $postId);
+    update_field('acceptTerms', $acceptTerms, $postId);
+    update_field('newsletter', $newsletter, $postId);
+
+    if ($logoId) {
+        update_field('orgLogo', $logoId, $postId);
+    }
+    if ($featuredId) {
+        update_field('featuredImage', $featuredId, $postId);
+        set_post_thumbnail($postId, $featuredId);
+    }
+    if ($galleryIds) {
+        update_field('gallery', $galleryIds, $postId);
+    }
     if ($geo) {
         update_field('location', [
             'address' => $geo['formatted'],
@@ -121,16 +213,15 @@ function handleSubmission(\WP_REST_Request $request)
         ], $postId);
     }
 
-    // 9. Notify the editor that an entry awaits review.
-    $editLink = admin_url('post.php?post=' . $postId . '&action=edit');
+    // 10. Notify the editor.
     wp_mail(
         get_option('admin_email'),
-        __('New program entry awaiting review', 'flynt'),
+        __('Neuer Programm-Eintrag zur Prüfung', 'flynt'),
         sprintf(
-            /* translators: 1: contact name, 2: edit link */
-            __("A new program entry was submitted by %1\$s.\n\nReview and publish it here:\n%2\$s", 'flynt'),
-            $contactName,
-            $editLink
+            /* translators: 1: event title, 2: edit link */
+            __("Ein neuer Eintrag wurde eingereicht: %1\$s\n\nPrüfen und veröffentlichen:\n%2\$s", 'flynt'),
+            $data['eventTitle'],
+            admin_url('post.php?post=' . $postId . '&action=edit')
         )
     );
 
@@ -138,6 +229,78 @@ function handleSubmission(\WP_REST_Request $request)
 
     return new \WP_REST_Response([
         'success' => true,
-        'message' => __('Thanks! Your entry has been submitted for review.', 'flynt'),
+        'message' => __('Danke! Dein Eintrag wurde zur Prüfung eingereicht.', 'flynt'),
     ], 201);
+}
+
+/**
+ * Keep only the submitted values that exist in the allow-list.
+ */
+function allowedKeys($values, $allowed)
+{
+    $values = array_map('sanitize_key', (array) $values);
+    return array_values(array_filter($values, fn ($v) => isset($allowed[$v])));
+}
+
+/**
+ * Whether a usable (error-free) upload exists for the given field.
+ */
+function hasUpload($files, $key)
+{
+    return !empty($files[$key]['name']) && ($files[$key]['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK;
+}
+
+function requireMediaDeps()
+{
+    require_once ABSPATH . 'wp-admin/includes/image.php';
+    require_once ABSPATH . 'wp-admin/includes/file.php';
+    require_once ABSPATH . 'wp-admin/includes/media.php';
+}
+
+/**
+ * Sideload one uploaded file into the media library; returns attachment ID or null.
+ */
+function uploadSingle($key, $postId)
+{
+    if (empty($_FILES[$key]['name']) || ($_FILES[$key]['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+        return null;
+    }
+    $id = media_handle_upload($key, $postId);
+    return is_wp_error($id) ? null : $id;
+}
+
+/**
+ * Sideload a multi-file field (name="key[]"); returns an array of attachment IDs.
+ */
+function uploadMultiple($key, $postId)
+{
+    if (empty($_FILES[$key]['name']) || !is_array($_FILES[$key]['name'])) {
+        return [];
+    }
+
+    $ids = [];
+    $count = count($_FILES[$key]['name']);
+    for ($i = 0; $i < $count; $i++) {
+        if (($_FILES[$key]['error'][$i] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+            continue;
+        }
+        // Reshape this one file into the structure media_handle_sideload expects.
+        $file = [
+            'name'     => $_FILES[$key]['name'][$i],
+            'type'     => $_FILES[$key]['type'][$i],
+            'tmp_name' => $_FILES[$key]['tmp_name'][$i],
+            'error'    => $_FILES[$key]['error'][$i],
+            'size'     => $_FILES[$key]['size'][$i],
+        ];
+        $id = media_handle_sideload($file, $postId);
+        if (!is_wp_error($id)) {
+            $ids[] = $id;
+        }
+    }
+    return $ids;
+}
+
+function reject($message, $status)
+{
+    return new \WP_REST_Response(['success' => false, 'message' => $message], $status);
 }

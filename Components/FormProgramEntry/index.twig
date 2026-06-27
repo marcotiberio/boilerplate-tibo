@@ -5,32 +5,60 @@
     {% endif %}
 
     <form
-      class="flex flex-col gap-sm"
+      class="flex flex-col gap-md"
       x-data="{
         form: {
-          contactName: '', contactEmail: '', contactPhone: '',
-          description: '', category: '', themes: [], address: '',
-          consent: false, website_hp: ''
+          orgName: '', contactPerson: '', contactEmail: '', website: '', instagram: '', linkedin: '',
+          goals: [], sectors: [], registration: '', registrationLink: '', costs: '', price: '', paymentLink: '',
+          description: '', language: '', programTypes: [], format: '', audiences: [],
+          eventTitle: '', intro: '', credits: '',
+          dateMode: '', dateFrom: '', dateTo: '', timeStart: '', timeEnd: '',
+          locationMode: '', street: '', postalCode: '', mobilityInfo: '',
+          venueOpenForOthers: false, accessibility: [],
+          fundingInterest: false, acceptCriteria: false, acceptTerms: false, newsletter: false,
+          website_hp: ''
         },
         state: 'idle',
         message: '',
+        validate() {
+          if (!this.form.goals.length) return '{{ __('Bitte wähle mindestens ein Thema.', 'flynt') }}';
+          if (!this.form.sectors.length) return '{{ __('Bitte wähle mindestens einen Sektor.', 'flynt') }}';
+          if (!this.form.programTypes.length) return '{{ __('Bitte wähle die Art des Programmpunkts.', 'flynt') }}';
+          if (!this.form.accessibility.length) return '{{ __('Bitte gib Infos zur Barrierefreiheit an.', 'flynt') }}';
+          if (!this.form.acceptCriteria || !this.form.acceptTerms) return '{{ __('Bitte akzeptiere die Teilnahmekriterien und Nutzungsbedingungen.', 'flynt') }}';
+          return null;
+        },
         async submit() {
+          const err = this.validate();
+          if (err) { this.state = 'error'; this.message = err; return; }
           this.state = 'loading';
           this.message = '';
+          const fd = new FormData();
+          Object.entries(this.form).forEach(([key, value]) => {
+            if (Array.isArray(value)) { value.forEach(v => fd.append(key + '[]', v)); }
+            else if (typeof value === 'boolean') { if (value) fd.append(key, '1'); }
+            else { fd.append(key, value); }
+          });
+          fd.append('nonce', '{{ nonce }}');
+          ['orgLogo', 'featuredImage'].forEach(ref => {
+            const el = this.$refs[ref];
+            if (el && el.files[0]) fd.append(ref, el.files[0]);
+          });
+          if (this.$refs.gallery) {
+            Array.from(this.$refs.gallery.files).forEach(f => fd.append('gallery[]', f));
+          }
           try {
             const res = await fetch('{{ restUrl }}', {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'X-WP-Nonce': '{{ restNonce }}'
-              },
-              body: JSON.stringify({ ...this.form, nonce: '{{ nonce }}' })
+              headers: { 'X-WP-Nonce': '{{ restNonce }}' },
+              body: fd
             });
             const data = await res.json();
             if (!res.ok || !data.success) {
-              throw new Error(data.message || 'Something went wrong. Please try again.');
+              throw new Error(data.message || '{{ __('Etwas ist schiefgelaufen. Bitte versuche es erneut.', 'flynt') }}');
             }
             this.state = 'success';
+            window.scrollTo({ top: this.$el.offsetTop - 80, behavior: 'smooth' });
           } catch (e) {
             this.state = 'error';
             this.message = e.message;
@@ -44,92 +72,313 @@
         {% if successHtml %}
           {{ successHtml|e('wp_kses_post') }}
         {% else %}
-          <p>{{ __('Thanks! Your entry has been submitted for review.', 'flynt') }}</p>
+          <p>{{ __('Danke! Dein Eintrag wurde zur Prüfung eingereicht.', 'flynt') }}</p>
         {% endif %}
       </div>
 
       <template x-if="state !== 'success'">
-        <div class="flex flex-col gap-sm">
-          {# Honeypot — hidden from humans, tempting to bots #}
+        <div class="flex flex-col gap-md">
+          {# Honeypot #}
           <div class="absolute left-[-9999px]" aria-hidden="true">
             <label>{{ __('Leave this field empty', 'flynt') }}
               <input type="text" tabindex="-1" autocomplete="off" x-model="form.website_hp">
             </label>
           </div>
 
-          <label class="flex flex-col gap-xs">
-            <span class="font-bodySmall">{{ fields.nameLabel ?: __('Name', 'flynt') }} *</span>
-            <input type="text" required x-model="form.contactName"
-              placeholder="{{ fields.namePlaceholder|e('html_attr') }}"
-              class="rounded border border-black p-xs bg-white">
-          </label>
+          {# ============ 1. Organisation ============ #}
+          <fieldset class="flex flex-col gap-sm">
+            <legend class="font-h3 mb-xs">{{ __('Organisation', 'flynt') }}</legend>
+            {% if introOrg %}<div class="wysiwyg">{{ introOrg|e('wp_kses_post') }}</div>{% endif %}
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
             <label class="flex flex-col gap-xs">
-              <span class="font-bodySmall">{{ fields.emailLabel ?: __('Email', 'flynt') }} *</span>
-              <input type="email" required x-model="form.contactEmail"
-                placeholder="{{ fields.emailPlaceholder|e('html_attr') }}"
-                class="rounded border border-black p-xs bg-white">
+              <span class="font-bodySmall">{{ __('Name der Organisation', 'flynt') }} *</span>
+              <input type="text" required x-model="form.orgName" class="rounded border border-black p-xs bg-white">
             </label>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('Kontaktperson', 'flynt') }} *</span>
+                <input type="text" required x-model="form.contactPerson" class="rounded border border-black p-xs bg-white">
+              </label>
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('Mailadresse', 'flynt') }} *</span>
+                <input type="email" required x-model="form.contactEmail" class="rounded border border-black p-xs bg-white">
+              </label>
+            </div>
+
             <label class="flex flex-col gap-xs">
-              <span class="font-bodySmall">{{ fields.phoneLabel ?: __('Phone', 'flynt') }}</span>
-              <input type="tel" x-model="form.contactPhone"
-                placeholder="{{ fields.phonePlaceholder|e('html_attr') }}"
-                class="rounded border border-black p-xs bg-white">
+              <span class="font-bodySmall">{{ __('Logo der Organisation', 'flynt') }} * <small>(.jpg, .png, .svg)</small></span>
+              <input type="file" required x-ref="orgLogo" accept=".jpg,.jpeg,.png,.svg">
             </label>
-          </div>
 
-          <label class="flex flex-col gap-xs">
-            <span class="font-bodySmall">{{ fields.descriptionLabel ?: __('Description', 'flynt') }} *</span>
-            <textarea required rows="4" x-model="form.description"
-              placeholder="{{ fields.descriptionPlaceholder|e('html_attr') }}"
-              class="rounded border border-black p-xs bg-white"></textarea>
-          </label>
-
-          {# Single choice — radio #}
-          <fieldset class="flex flex-col gap-xs">
-            <legend class="font-bodySmall mb-xs">{{ fields.categoryLabel ?: __('Category', 'flynt') }} *</legend>
-            <div class="flex flex-wrap gap-sm">
-              {% for value, label in categories %}
-                <label class="flex items-center gap-xs">
-                  <input type="radio" name="category" value="{{ value }}" required x-model="form.category">
-                  <span>{{ label }}</span>
-                </label>
-              {% endfor %}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-sm">
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('Website', 'flynt') }}</span>
+                <input type="url" x-model="form.website" class="rounded border border-black p-xs bg-white">
+              </label>
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('Instagram', 'flynt') }}</span>
+                <input type="url" x-model="form.instagram" class="rounded border border-black p-xs bg-white">
+              </label>
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('LinkedIn', 'flynt') }}</span>
+                <input type="url" x-model="form.linkedin" class="rounded border border-black p-xs bg-white">
+              </label>
             </div>
           </fieldset>
 
-          {# Multiple choice — checkboxes #}
-          <fieldset class="flex flex-col gap-xs">
-            <legend class="font-bodySmall mb-xs">{{ fields.themesLabel ?: __('Themes', 'flynt') }}</legend>
-            <div class="flex flex-wrap gap-sm">
-              {% for value, label in themes %}
-                <label class="flex items-center gap-xs">
-                  <input type="checkbox" value="{{ value }}" x-model="form.themes">
-                  <span>{{ label }}</span>
-                </label>
-              {% endfor %}
+          {# ============ 2. Angebot ============ #}
+          <fieldset class="flex flex-col gap-sm">
+            <legend class="font-h3 mb-xs">{{ __('Angebot', 'flynt') }}</legend>
+            {% if introOffer %}<div class="wysiwyg">{{ introOffer|e('wp_kses_post') }}</div>{% endif %}
+
+            <fieldset class="flex flex-col gap-xs">
+              <legend class="font-bodySmall mb-xs">{{ __('Thema — Welche Ziele verfolgt euer Programm?', 'flynt') }} *</legend>
+              <div class="flex flex-col gap-min">
+                {% for value, label in config.goals %}
+                  <label class="flex items-start gap-xs">
+                    <input type="checkbox" value="{{ value }}" x-model="form.goals" class="mt-1"><span>{{ label }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+            </fieldset>
+
+            <fieldset class="flex flex-col gap-xs">
+              <legend class="font-bodySmall mb-xs">{{ __('Sektor', 'flynt') }} *</legend>
+              <div class="flex flex-col gap-min">
+                {% for value, label in config.sectors %}
+                  <label class="flex items-start gap-xs">
+                    <input type="checkbox" value="{{ value }}" x-model="form.sectors" class="mt-1"><span>{{ label }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+            </fieldset>
+
+            <fieldset class="flex flex-col gap-xs">
+              <legend class="font-bodySmall mb-xs">{{ __('Ist eine Anmeldung erforderlich?', 'flynt') }} *</legend>
+              <div class="flex flex-wrap gap-sm">
+                {% for value, label in config.registration %}
+                  <label class="flex items-center gap-xs">
+                    <input type="radio" name="registration" value="{{ value }}" required x-model="form.registration"><span>{{ label }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+            </fieldset>
+            <label class="flex flex-col gap-xs" x-show="form.registration === 'anmeldung'" x-cloak>
+              <span class="font-bodySmall">{{ __('Anmeldelink', 'flynt') }} *</span>
+              <input type="url" x-model="form.registrationLink" :required="form.registration === 'anmeldung'" class="rounded border border-black p-xs bg-white">
+            </label>
+
+            <fieldset class="flex flex-col gap-xs">
+              <legend class="font-bodySmall mb-xs">{{ __('Fallen für die Teilnahme Kosten an?', 'flynt') }} *</legend>
+              <div class="flex flex-wrap gap-sm">
+                {% for value, label in config.costs %}
+                  <label class="flex items-center gap-xs">
+                    <input type="radio" name="costs" value="{{ value }}" required x-model="form.costs"><span>{{ label }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+            </fieldset>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-sm" x-show="form.costs === 'ja'" x-cloak>
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('Preis', 'flynt') }} *</span>
+                <input type="text" x-model="form.price" :required="form.costs === 'ja'" class="rounded border border-black p-xs bg-white">
+              </label>
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('Link zur Bezahlung / Buchung', 'flynt') }}</span>
+                <input type="url" x-model="form.paymentLink" class="rounded border border-black p-xs bg-white">
+              </label>
             </div>
           </fieldset>
 
-          <label class="flex flex-col gap-xs">
-            <span class="font-bodySmall">{{ fields.addressLabel ?: __('Address', 'flynt') }}</span>
-            <input type="text" x-model="form.address" autocomplete="street-address"
-              placeholder="{{ (fields.addressPlaceholder ?: __('Street, city', 'flynt'))|e('html_attr') }}"
-              class="rounded border border-black p-xs bg-white">
-          </label>
+          {# ============ 3. Details ============ #}
+          <fieldset class="flex flex-col gap-sm">
+            <legend class="font-h3 mb-xs">{{ __('Details zum Angebot', 'flynt') }}</legend>
+            {% if introDetails %}<div class="wysiwyg">{{ introDetails|e('wp_kses_post') }}</div>{% endif %}
 
-          {# GDPR consent #}
-          <label class="flex items-start gap-xs">
-            <input type="checkbox" required x-model="form.consent" class="mt-1">
-            <span class="wysiwyg">
-              {% if consentLabel %}
-                {{ consentLabel|e('wp_kses_post') }}
-              {% else %}
-                {{ __('I agree my submission may be reviewed and published on the public program map.', 'flynt') }}
-              {% endif %}
-            </span>
-          </label>
+            <label class="flex flex-col gap-xs">
+              <span class="font-bodySmall">{{ __('Beschreibungstext des Angebots', 'flynt') }} *</span>
+              <textarea required rows="6" x-model="form.description" class="rounded border border-black p-xs bg-white"></textarea>
+            </label>
+
+            <label class="flex flex-col gap-xs md:w-1/2">
+              <span class="font-bodySmall">{{ __('Sprache der Veranstaltung', 'flynt') }} *</span>
+              <input type="text" required x-model="form.language" class="rounded border border-black p-xs bg-white">
+            </label>
+
+            <fieldset class="flex flex-col gap-xs">
+              <legend class="font-bodySmall mb-xs">{{ __('Art des Programmpunkts', 'flynt') }} *</legend>
+              <div class="flex flex-col gap-min">
+                {% for value, label in config.programTypes %}
+                  <label class="flex items-start gap-xs">
+                    <input type="checkbox" value="{{ value }}" x-model="form.programTypes" class="mt-1"><span>{{ label }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+            </fieldset>
+
+            <fieldset class="flex flex-col gap-xs">
+              <legend class="font-bodySmall mb-xs">{{ __('Format', 'flynt') }} *</legend>
+              <div class="flex flex-wrap gap-sm">
+                {% for value, label in config.format %}
+                  <label class="flex items-center gap-xs">
+                    <input type="radio" name="format" value="{{ value }}" required x-model="form.format"><span>{{ label }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+            </fieldset>
+
+            <fieldset class="flex flex-col gap-xs">
+              <legend class="font-bodySmall mb-xs">{{ __('Zielgruppe', 'flynt') }}</legend>
+              <div class="flex flex-col gap-min">
+                {% for value, label in config.audiences %}
+                  <label class="flex items-start gap-xs">
+                    <input type="checkbox" value="{{ value }}" x-model="form.audiences" class="mt-1"><span>{{ label }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+            </fieldset>
+          </fieldset>
+
+          {# ============ 4. Veranstaltung ============ #}
+          <fieldset class="flex flex-col gap-sm">
+            <legend class="font-h3 mb-xs">{{ __('Veranstaltung', 'flynt') }}</legend>
+            {% if introEvent %}<div class="wysiwyg">{{ introEvent|e('wp_kses_post') }}</div>{% endif %}
+
+            <label class="flex flex-col gap-xs">
+              <span class="font-bodySmall">{{ __('Titel der Veranstaltung', 'flynt') }} *</span>
+              <input type="text" required x-model="form.eventTitle" class="rounded border border-black p-xs bg-white">
+            </label>
+
+            <label class="flex flex-col gap-xs">
+              <span class="font-bodySmall">{{ __('Kurzer Introtext (1 Satz)', 'flynt') }} *</span>
+              <input type="text" required x-model="form.intro" class="rounded border border-black p-xs bg-white">
+            </label>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('Titelbild', 'flynt') }} * <small>(.jpg, .png)</small></span>
+                <input type="file" required x-ref="featuredImage" accept=".jpg,.jpeg,.png">
+              </label>
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('Weitere Fotos (optional)', 'flynt') }} <small>(.jpg, .png)</small></span>
+                <input type="file" multiple x-ref="gallery" accept=".jpg,.jpeg,.png">
+              </label>
+            </div>
+
+            <label class="flex flex-col gap-xs">
+              <span class="font-bodySmall">{{ __('Bildnachweise / Credits', 'flynt') }}</span>
+              <input type="text" x-model="form.credits" class="rounded border border-black p-xs bg-white">
+            </label>
+
+            {# When #}
+            <fieldset class="flex flex-col gap-xs">
+              <legend class="font-bodySmall mb-xs">{{ __('Wann soll eure Veranstaltung stattfinden?', 'flynt') }} *</legend>
+              <div class="flex flex-col gap-min">
+                {% for value, label in config.dateMode %}
+                  <label class="flex items-start gap-xs">
+                    <input type="radio" name="dateMode" value="{{ value }}" required x-model="form.dateMode" class="mt-1"><span>{{ label }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+            </fieldset>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-sm" x-show="form.dateMode === 'wunsch'" x-cloak>
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('Datum von', 'flynt') }} *</span>
+                <input type="date" x-model="form.dateFrom" :required="form.dateMode === 'wunsch'" class="rounded border border-black p-xs bg-white">
+              </label>
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('Datum bis', 'flynt') }}</span>
+                <input type="date" x-model="form.dateTo" class="rounded border border-black p-xs bg-white">
+              </label>
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('Startzeit', 'flynt') }}</span>
+                <input type="time" x-model="form.timeStart" class="rounded border border-black p-xs bg-white">
+              </label>
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('Ende', 'flynt') }}</span>
+                <input type="time" x-model="form.timeEnd" class="rounded border border-black p-xs bg-white">
+              </label>
+            </div>
+
+            {# Where #}
+            <fieldset class="flex flex-col gap-xs">
+              <legend class="font-bodySmall mb-xs">{{ __('Wo soll euer Angebot stattfinden?', 'flynt') }} *</legend>
+              <div class="flex flex-col gap-min">
+                {% for value, label in config.locationMode %}
+                  <label class="flex items-start gap-xs">
+                    <input type="radio" name="locationMode" value="{{ value }}" required x-model="form.locationMode" class="mt-1"><span>{{ label }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+            </fieldset>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-sm" x-show="form.locationMode === 'eigen'" x-cloak>
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('Straße + Hausnummer', 'flynt') }} *</span>
+                <input type="text" x-model="form.street" :required="form.locationMode === 'eigen'" autocomplete="street-address" class="rounded border border-black p-xs bg-white">
+              </label>
+              <label class="flex flex-col gap-xs">
+                <span class="font-bodySmall">{{ __('Postleitzahl', 'flynt') }} *</span>
+                <input type="text" x-model="form.postalCode" :required="form.locationMode === 'eigen'" autocomplete="postal-code" class="rounded border border-black p-xs bg-white">
+              </label>
+            </div>
+
+            <label class="flex flex-col gap-xs">
+              <span class="font-bodySmall">{{ __('Hinweise zur klimafreundlichen Anreise', 'flynt') }}</span>
+              <textarea rows="3" x-model="form.mobilityInfo" class="rounded border border-black p-xs bg-white"></textarea>
+            </label>
+
+            <label class="flex items-start gap-xs">
+              <input type="checkbox" x-model="form.venueOpenForOthers" class="mt-1">
+              <span>{{ __('Unser Veranstaltungsort bietet Möglichkeiten für weitere Programmpunkte oder Kooperationen.', 'flynt') }}</span>
+            </label>
+
+            <fieldset class="flex flex-col gap-xs">
+              <legend class="font-bodySmall mb-xs">{{ __('Info über Barrierefreiheit', 'flynt') }} *</legend>
+              <div class="flex flex-col gap-min">
+                {% for value, label in config.accessibility %}
+                  <label class="flex items-start gap-xs">
+                    <input type="checkbox" value="{{ value }}" x-model="form.accessibility" class="mt-1"><span>{{ label }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+            </fieldset>
+          </fieldset>
+
+          {# ============ 5. Zustimmung ============ #}
+          <fieldset class="flex flex-col gap-sm">
+            <legend class="font-h3 mb-xs">{{ __('Anmeldeformular absenden', 'flynt') }}</legend>
+
+            <label class="flex items-start gap-xs">
+              <input type="checkbox" x-model="form.fundingInterest" class="mt-1">
+              <span>{{ __('Ja, wir möchten uns für eine Programmförderung bewerben.', 'flynt') }}</span>
+            </label>
+
+            <label class="flex items-start gap-xs">
+              <input type="checkbox" required x-model="form.acceptCriteria" class="mt-1">
+              <span>
+                {{ __('Ja, ich stimme den Teilnahmekriterien zu', 'flynt') }}
+                {% if criteriaLink %}
+                  (<a href="{{ criteriaLink.url }}" target="_blank" rel="noopener" class="underline">{{ criteriaLink.title ?: __('öffnen', 'flynt') }}</a>)
+                {% endif %} *
+              </span>
+            </label>
+
+            <label class="flex items-start gap-xs">
+              <input type="checkbox" required x-model="form.acceptTerms" class="mt-1">
+              <span>
+                {{ __('Ich stimme den Nutzungsbedingungen zu', 'flynt') }}
+                {% if termsLink %}
+                  (<a href="{{ termsLink.url }}" target="_blank" rel="noopener" class="underline">{{ termsLink.title ?: __('öffnen', 'flynt') }}</a>)
+                {% endif %} *
+              </span>
+            </label>
+
+            <label class="flex items-start gap-xs">
+              <input type="checkbox" x-model="form.newsletter" class="mt-1">
+              <span>{{ newsletterLabel ?: __('Ja, ich möchte den Circular Berlin Newsletter abonnieren', 'flynt') }}</span>
+            </label>
+          </fieldset>
 
           <div x-show="state === 'error'" x-cloak x-transition
             class="rounded bg-red-100 text-red-800 p-xs" x-text="message"></div>
@@ -138,8 +387,8 @@
             class="button button--green w-fit"
             x-bind:disabled="state === 'loading'"
             x-bind:class="state === 'loading' ? 'button--disabled' : ''">
-            <span x-show="state !== 'loading'">{{ submitLabel ?: __('Submit entry', 'flynt') }}</span>
-            <span x-show="state === 'loading'" x-cloak>{{ __('Submitting…', 'flynt') }}</span>
+            <span x-show="state !== 'loading'">{{ submitLabel ?: __('Anmeldeformular absenden', 'flynt') }}</span>
+            <span x-show="state === 'loading'" x-cloak>{{ __('Wird gesendet…', 'flynt') }}</span>
           </button>
         </div>
       </template>

@@ -46,7 +46,8 @@
       "Bash(./vendor/bin/phpcs inc/customPostTypes/program-entry.php)",
       "Bash(php -l inc/fieldGroups/pageComponents.php)",
       "Bash(php -l single-program_entry.php)",
-      "Bash(./vendor/bin/phpcs single-program_entry.php)"
+      "Bash(./vendor/bin/phpcs single-program_entry.php)",
+      "mcp__claude_ai_Google_Drive__read_file_content"
     ]
   }
 }

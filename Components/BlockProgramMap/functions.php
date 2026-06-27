@@ -59,11 +59,11 @@ add_filter('Flynt/addComponentData?name=BlockProgramMap', function ($data) {
         if (empty($location['lat']) || empty($location['lng'])) {
             return null;
         }
-        $categoryKey = get_field('category', $post->ID);
+        $formatKey = get_field('format', $post->ID);
         return [
             'title'       => get_the_title($post),
             'description' => wp_trim_words(get_field('description', $post->ID) ?: '', 30),
-            'category'    => $config['categories'][$categoryKey] ?? '',
+            'category'    => $config['format'][$formatKey] ?? '',
             'link'        => get_permalink($post),
             'lat'         => (float) $location['lat'],
             'lng'         => (float) $location['lng'],
