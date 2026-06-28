@@ -1,11 +1,11 @@
-<flynt-component name="FormProgramEntry" class="w-full">
+<flynt-component name="FormEvent" class="w-full">
   <div class="wrapper boxed max-w-screen-max mx-auto">
     {% if preContentHtml %}
       <div class="wysiwyg mb-sm">{{ preContentHtml|e('wp_kses_post') }}</div>
     {% endif %}
 
     <form
-      class="program-entry-form flex flex-col gap-md"
+      class="event-form flex flex-col gap-md"
       novalidate
       :class="attempted ? 'attempted' : ''"
       x-data="{

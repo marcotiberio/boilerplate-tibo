@@ -21,7 +21,7 @@ export default function (el) {
 
   // CSS pin avoids Leaflet's bundler-broken default marker images.
   const icon = L.divIcon({
-    className: 'program-map__pin',
+    className: 'event-map__pin',
     html: '<span></span>',
     iconSize: [24, 24],
     iconAnchor: [12, 24],
@@ -54,7 +54,7 @@ function buildPopup (entry) {
     : esc(entry.title)
 
   return `
-    <div class="program-map__popup">
+    <div class="event-map__popup">
       <strong>${title}</strong>
       ${entry.category ? `<em>${esc(entry.category)}</em>` : ''}
       ${entry.description ? `<p>${esc(entry.description)}</p>` : ''}

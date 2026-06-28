@@ -1,13 +1,13 @@
 <?php
 
 use Timber\Timber;
-use Flynt\ProgramEntry;
+use Flynt\Event;
 
 $context = Timber::context();
 $post = $context['post'];
 
 // Resolve stored choice keys to their human labels.
-$config = ProgramEntry\getConfig();
+$config = Event\getConfig();
 
 $mapLabels = function ($keys, $choices) {
     return array_map(function ($key) use ($choices) {
@@ -41,4 +41,4 @@ $context['galleryUrls'] = array_values(array_filter(array_map(function ($id) {
     return wp_get_attachment_image_url($id, 'medium');
 }, (array) $galleryIds)));
 
-Timber::render('templates/single-program-entry.twig', $context);
+Timber::render('templates/single-event.twig', $context);

@@ -1,18 +1,18 @@
 <?php
 
 /**
- * REST endpoint that receives public submissions from the FormProgramEntry
- * component and stores them as `pending` Program Entry posts for review.
+ * REST endpoint that receives public submissions from the FormEvent
+ * component and stores them as `pending` Event posts for review.
  *
  * Accepts multipart/form-data (file uploads). Security: nonce, honeypot,
  * per-IP rate limit, strict sanitisation, choice allow-listing, conditional
  * required validation. Anonymous callers can only ever create pending posts.
  */
 
-namespace Flynt\ProgramEntry;
+namespace Flynt\Event;
 
 add_action('rest_api_init', function () {
-    register_rest_route('looptopia/v1', '/program-entry', [
+    register_rest_route('looptopia/v1', '/event', [
         'methods' => 'POST',
         'callback' => __NAMESPACE__ . '\\handleSubmission',
         'permission_callback' => '__return_true',

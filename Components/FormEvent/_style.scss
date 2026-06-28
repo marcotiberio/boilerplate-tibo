@@ -1,4 +1,4 @@
-.program-entry-form {
+.event-form {
   // After a submit attempt, outline every empty/invalid text-like control.
   &.attempted {
     input:not([type='radio']):not([type='checkbox']):invalid,

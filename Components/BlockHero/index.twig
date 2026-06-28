@@ -30,15 +30,16 @@
 
     <div class="flex flex-col">
       {# Headline + scroll chevron #}
-      <div class="flex flex-col gap-sm w-full md:w-1/3">
+      <div class="flex flex-col gap-md w-full md:w-1/3">
         {% if headline %}<h1 class="font-bodyLarge">{{ headline }}</h1>{% endif %}
         {% if scrollAnchor %}
-          <a href="{{ scrollAnchor }}" class="inline-flex w-12 h-12 items-center justify-center rounded-full border-2 border-black" aria-label="{{ __('Scroll down', 'flynt') }}">
-            <img class="w-5 h-5" src="{{ chevronUrl }}" alt="" aria-hidden="true">
+          <a href="{{ scrollAnchor }}" class="inline-flex w-full h-full items-start justify-start" aria-label="{{ __('Scroll down', 'flynt') }}">
+            <svg class="w-10 h-auto" width="19" height="11" viewBox="0 0 19 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.33333 1.33334L9.33333 9.33334L17.3333 1.33334" stroke="black" stroke-width="2.66667" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </a>
         {% endif %}
       </div>
-
       {# Funders #}
       {% if funders.logos %}
         <div class="flex flex-col items-end gap-xs ml-auto">

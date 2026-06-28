@@ -1,21 +1,21 @@
 <?php
 
 /**
- * ACF field group for the Program Entry CPT.
+ * ACF field group for the Event CPT.
  *
  * Fields the client reviews/edits in wp-admin before publishing. Mirrors the
- * public form (Components/FormProgramEntry) and the intake sheet, grouped into
- * the same sections. Choice lists come from ProgramEntry\getConfig().
+ * public form (Components/FormEvent) and the intake sheet, grouped into
+ * the same sections. Choice lists come from Event\getConfig().
  */
 
 use ACFComposer\ACFComposer;
-use Flynt\ProgramEntry;
+use Flynt\Event;
 
 add_action('Flynt/afterRegisterComponents', function () {
-    $config = ProgramEntry\getConfig();
+    $config = Event\getConfig();
 
     ACFComposer::registerFieldGroup([
-        'name' => 'programEntryDetails',
+        'name' => 'eventDetails',
         'title' => __('Submission Details', 'flynt'),
         'style' => 'default',
         'position' => 'normal',
@@ -397,7 +397,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                 [
                     'param' => 'post_type',
                     'operator' => '==',
-                    'value' => ProgramEntry\POST_TYPE,
+                    'value' => Event\POST_TYPE,
                 ],
             ],
         ],

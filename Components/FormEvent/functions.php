@@ -1,14 +1,14 @@
 <?php
 
-namespace Flynt\Components\FormProgramEntry;
+namespace Flynt\Components\FormEvent;
 
-use Flynt\ProgramEntry;
+use Flynt\Event;
 
 function getACFLayout()
 {
     return [
-        'name' => 'formProgramEntry',
-        'label' => __('Form Program Entry', 'flynt'),
+        'name' => 'formEvent',
+        'label' => __('Form Event', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Content', 'flynt'),
@@ -105,10 +105,10 @@ function getACFLayout()
 
 // Inject the REST endpoint, fresh nonces and the shared choice lists so the
 // Alpine form can render and submit without a separate config request.
-add_filter('Flynt/addComponentData?name=FormProgramEntry', function ($data) {
-    $data['config'] = ProgramEntry\getConfig();
-    $data['restUrl'] = esc_url_raw(rest_url('looptopia/v1/program-entry'));
-    $data['nonce'] = wp_create_nonce(ProgramEntry\NONCE_ACTION);
+add_filter('Flynt/addComponentData?name=FormEvent', function ($data) {
+    $data['config'] = Event\getConfig();
+    $data['restUrl'] = esc_url_raw(rest_url('looptopia/v1/event'));
+    $data['nonce'] = wp_create_nonce(Event\NONCE_ACTION);
     // Keeps the REST request authenticated as the same user the nonce above was
     // created for. Without it WordPress runs the request as user 0 when a login
     // cookie is present, breaking our user-bound nonce check.

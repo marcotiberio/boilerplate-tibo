@@ -1,14 +1,14 @@
 <?php
 
-namespace Flynt\Components\BlockProgramMap;
+namespace Flynt\Components\BlockEventMap;
 
-use Flynt\ProgramEntry;
+use Flynt\Event;
 
 function getACFLayout()
 {
     return [
-        'name' => 'blockProgramMap',
-        'label' => __('Map Program', 'flynt'),
+        'name' => 'blockEventMap',
+        'label' => __('Event Map', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Intro', 'flynt'),
@@ -42,11 +42,11 @@ function getACFLayout()
 
 // Query published entries that have a pin and hand them to the template as
 // a plain array; the Leaflet script reads it from an inline JSON block.
-add_filter('Flynt/addComponentData?name=BlockProgramMap', function ($data) {
-    $config = ProgramEntry\getConfig();
+add_filter('Flynt/addComponentData?name=BlockEventMap', function ($data) {
+    $config = Event\getConfig();
 
     $posts = get_posts([
-        'post_type'      => ProgramEntry\POST_TYPE,
+        'post_type'      => Event\POST_TYPE,
         'post_status'    => 'publish',
         'posts_per_page' => -1,
         'meta_query'     => [

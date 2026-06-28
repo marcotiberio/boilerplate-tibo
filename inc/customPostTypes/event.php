@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Event CPT (internal key kept as `program_entry` to preserve existing data).
+ * Event CPT (internal key kept as `event` to preserve existing data).
  *
- * Public visitors submit events through the FormProgramEntry component.
+ * Public visitors submit events through the FormEvent component.
  * Submissions are created as `pending` and only become part of the program
- * (and appear on the BlockProgramMap) once the client reviews and publishes.
+ * (and appear on the BlockEventMap) once the client reviews and publishes.
  */
 
 namespace Flynt\CustomPostTypes;
 
-function registerProgramEntryPostType()
+function registerEventPostType()
 {
     $labels = [
         'name'                  => _x('Events', 'Post Type General Name', 'flynt'),
@@ -58,14 +58,14 @@ function registerProgramEntryPostType()
         'publicly_queryable'    => true,
         'capability_type'       => 'post',
     ];
-    register_post_type('program_entry', $args);
+    register_post_type('event', $args);
 }
 
-add_action('init', '\\Flynt\\CustomPostTypes\\registerProgramEntryPostType');
+add_action('init', '\\Flynt\\CustomPostTypes\\registerEventPostType');
 
-// Use the classic (TinyMCE) editor for program entries instead of Gutenberg.
+// Use the classic (TinyMCE) editor for events instead of Gutenberg.
 add_filter('use_block_editor_for_post_type', function ($useBlockEditor, $postType) {
-    if ($postType === 'program_entry') {
+    if ($postType === 'event') {
         return false;
     }
     return $useBlockEditor;

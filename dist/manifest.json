@@ -1,6 +1,22 @@
 {
+  "Components/BlockEventMap/script.css": {
+    "file": "assets/script-f4a21acd.css",
+    "src": "Components/BlockEventMap/script.css"
+  },
+  "Components/BlockEventMap/script.js": {
+    "css": [
+      "assets/script-f4a21acd.css"
+    ],
+    "file": "assets/script-942e1daf.js",
+    "imports": [
+      "assets/main.js",
+      "_helpers-0bb72b7a.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "Components/BlockEventMap/script.js"
+  },
   "Components/BlockGalleryMedia/script.js": {
-    "file": "assets/script-48bc6e8a.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -14,22 +30,6 @@
   "Components/BlockHero/Assets/wordmark.svg": {
     "file": "assets/wordmark-e86fafa8.svg",
     "src": "Components/NavigationFooter/Assets/wordmark.svg"
-  },
-  "Components/BlockProgramMap/script.css": {
-    "file": "assets/script-f4a21acd.css",
-    "src": "Components/BlockProgramMap/script.css"
-  },
-  "Components/BlockProgramMap/script.js": {
-    "css": [
-      "assets/script-f4a21acd.css"
-    ],
-    "file": "assets/script-7067bc02.js",
-    "imports": [
-      "assets/main.js",
-      "_helpers-0bb72b7a.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "Components/BlockProgramMap/script.js"
   },
   "Components/BlockSliderLogos/script.js": {
     "file": "assets/script-e6269e81.js",
@@ -63,7 +63,7 @@
     "css": [
       "assets/script-b3ce9496.css"
     ],
-    "file": "assets/script-632586a1.js",
+    "file": "assets/script-9c5e58e9.js",
     "imports": [
       "assets/main.js"
     ],
@@ -224,7 +224,7 @@
     "src": "Components/ZZZ/HeroSliderComposite/script.js"
   },
   "Components/ZZZ/HeroVideoBackground/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-48bc6e8a.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -241,7 +241,7 @@
     "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
-    "file": "assets/script-7a94de00.js",
+    "file": "assets/script-efe8d52a.js",
     "imports": [
       "assets/main.js"
     ],
@@ -384,8 +384,8 @@
   "assets/main.js": {
     "dynamicImports": [
       "node_modules/@webreflection/custom-elements-builtin/esm/index.js",
+      "Components/BlockEventMap/script.js",
       "Components/BlockGalleryMedia/script.js",
-      "Components/BlockProgramMap/script.js",
       "Components/BlockSliderLogos/script.js",
       "Components/BlockVideoOembed/script.js",
       "Components/BlockVideoText/script.js",
@@ -415,12 +415,12 @@
       "Components/ZZZ/SliderLogos/script.js",
       "Components/ZZZ/SliderQuotes/script.js"
     ],
-    "file": "assets/main-674acc25.js",
+    "file": "assets/main-8e87332f.js",
     "isEntry": true,
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-9f58afd8.css",
+    "file": "assets/main-d344226d.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },

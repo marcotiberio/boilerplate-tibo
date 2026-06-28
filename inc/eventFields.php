@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Shared configuration + helpers for the Program Entry feature.
+ * Shared configuration + helpers for the Event feature.
  *
  * Single source of truth for the submission fields so the public form,
  * the ACF field group and the REST handler never drift apart.
  * Field spec mirrors the client's intake sheet (German labels).
  */
 
-namespace Flynt\ProgramEntry;
+namespace Flynt\Event;
 
 use Flynt\Utils\Options;
 
-const POST_TYPE = 'program_entry';
-const NONCE_ACTION = 'looptopia_program_entry';
+const POST_TYPE = 'event';
+const NONCE_ACTION = 'looptopia_event';
 
 /**
  * Choice lists for every select/checkbox/radio field. Keys are stored,

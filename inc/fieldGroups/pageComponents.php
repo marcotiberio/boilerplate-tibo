@@ -69,11 +69,11 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockBannerCta\getACFLayout(),
                     Components\BlockCards\getACFLayout(),
                     Components\BlockDivider\getACFLayout(),
-                    Components\FormProgramEntry\getACFLayout(),
+                    Components\FormEvent\getACFLayout(),
                     Components\BlockHero\getACFLayout(),
                     Components\BlockImage\getACFLayout(),
                     Components\BlockImageText\getACFLayout(),
-                    // Components\BlockProgramMap\getACFLayout(),
+                    // Components\BlockEventMap\getACFLayout(),
                     Components\BlockPartnerLogos\getACFLayout(),
                     Components\BlockSpacer\getACFLayout(),
                     Components\BlockWysiwyg\getACFLayout(),
@@ -105,7 +105,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                 [
                     'param' => 'post_type',
                     'operator' => '!=',
-                    'value' => 'program_entry'
+                    'value' => 'event'
                 ],
                 [
                     'param' => 'post_type',
