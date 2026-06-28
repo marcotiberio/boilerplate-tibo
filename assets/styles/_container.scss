@@ -5,12 +5,12 @@
 flynt-component {
   display: block;
   position: relative;
-  scroll-margin-block-start: 60px;
-  scroll-margin-top: 60px;
+  scroll-margin-block-start: 72px;
+  scroll-margin-top: 72px;
 
   @screen desktop {
-    scroll-margin-block-start: 77px;
-    scroll-margin-top: 77px;
+    scroll-margin-block-start: 72px;
+    scroll-margin-top: 72px;
   }
 
   &:last-child:not(flynt-component[name='NavigationFooter']) {

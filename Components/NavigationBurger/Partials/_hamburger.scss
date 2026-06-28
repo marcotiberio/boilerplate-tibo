@@ -2,12 +2,12 @@
   --line-width: 18px;
   --line-height: 2px;
   align-items: center;
-  @apply bg-black;
+  @apply bg-transparent;
   border-radius: 100%;
   cursor: pointer;
   display: flex;
   height: 44px;
-  justify-content: center;
+  justify-content: flex-end;
   position: relative;
   width: 44px;
 
@@ -22,7 +22,7 @@
   }
 
   &-line {
-    background-color: var(--white);
+    background-color: var(--black);
     border-radius: 2px;
     display: block;
     height: var(--line-height);
@@ -30,12 +30,12 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    transition: opacity 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
     width: var(--line-width);
 
     &::before,
     &::after {
-      background-color: var(--white);
+      background-color: var(--black);
       border-radius: 2px;
       content: '';
       display: block;
@@ -58,7 +58,7 @@
 
 &[data-status='menuIsOpen'] {
   .hamburger-line {
-    opacity: 0;
+    background-color: transparent;
 
     &::before {
       top: 0;
