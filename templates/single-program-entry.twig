@@ -1,7 +1,7 @@
 {% extends 'templates/_document.twig' %}
 
 {% block content %}
-  {# Bare-bones output of the submitted entry data — style as needed. #}
+  {# Bare, unstyled dump of every event field — style later. #}
   <article class="program-entry mt-pageTop boxed max-w-screen-max mx-auto">
     <h1>{{ post.title }}</h1>
     {% if post.meta('intro') %}<p class="intro">{{ post.meta('intro') }}</p>{% endif %}
@@ -10,88 +10,80 @@
       <img src="{{ post.thumbnail.src }}" alt="{{ post.thumbnail.alt|e|default('') }}">
     {% endif %}
 
+    {# ---- Organisation ---- #}
+    <h2>{{ __('Organisation', 'flynt') }}</h2>
     <dl>
-      {% if post.meta('description') %}
-        <dt>{{ __('Beschreibung', 'flynt') }}</dt>
-        <dd>{{ post.meta('description') }}</dd>
-      {% endif %}
+      {% if post.meta('orgName') %}<dt>{{ __('Name der Organisation', 'flynt') }}</dt><dd>{{ post.meta('orgName') }}</dd>{% endif %}
+      {% if post.meta('contactPerson') %}<dt>{{ __('Kontaktperson', 'flynt') }}</dt><dd>{{ post.meta('contactPerson') }}</dd>{% endif %}
+      {% if post.meta('contactEmail') %}<dt>{{ __('Mailadresse', 'flynt') }}</dt><dd>{{ post.meta('contactEmail') }}</dd>{% endif %}
+      {% if orgLogoUrl %}<dt>{{ __('Logo', 'flynt') }}</dt><dd><img src="{{ orgLogoUrl }}" alt="{{ post.meta('orgName')|e }}"></dd>{% endif %}
+      {% if post.meta('website') %}<dt>{{ __('Website', 'flynt') }}</dt><dd><a href="{{ post.meta('website') }}" target="_blank" rel="noopener">{{ post.meta('website') }}</a></dd>{% endif %}
+      {% if post.meta('instagram') %}<dt>{{ __('Instagram', 'flynt') }}</dt><dd><a href="{{ post.meta('instagram') }}" target="_blank" rel="noopener">{{ post.meta('instagram') }}</a></dd>{% endif %}
+      {% if post.meta('linkedin') %}<dt>{{ __('LinkedIn', 'flynt') }}</dt><dd><a href="{{ post.meta('linkedin') }}" target="_blank" rel="noopener">{{ post.meta('linkedin') }}</a></dd>{% endif %}
+    </dl>
 
-      {% if post.meta('orgName') %}
-        <dt>{{ __('Organisation', 'flynt') }}</dt>
-        <dd>{{ post.meta('orgName') }}</dd>
-      {% endif %}
+    {# ---- Angebot ---- #}
+    <h2>{{ __('Angebot', 'flynt') }}</h2>
+    <dl>
+      {% if labels.goals %}<dt>{{ __('Thema / Ziele', 'flynt') }}</dt><dd>{{ labels.goals|join(', ') }}</dd>{% endif %}
+      {% if labels.sectors %}<dt>{{ __('Sektor', 'flynt') }}</dt><dd>{{ labels.sectors|join(', ') }}</dd>{% endif %}
+      {% if labels.registration %}<dt>{{ __('Anmeldung erforderlich?', 'flynt') }}</dt><dd>{{ labels.registration }}</dd>{% endif %}
+      {% if post.meta('registrationLink') %}<dt>{{ __('Anmeldelink', 'flynt') }}</dt><dd><a href="{{ post.meta('registrationLink') }}" target="_blank" rel="noopener">{{ post.meta('registrationLink') }}</a></dd>{% endif %}
+      {% if labels.costs %}<dt>{{ __('Kosten?', 'flynt') }}</dt><dd>{{ labels.costs }}</dd>{% endif %}
+      {% if post.meta('price') %}<dt>{{ __('Preis', 'flynt') }}</dt><dd>{{ post.meta('price') }}</dd>{% endif %}
+      {% if post.meta('paymentLink') %}<dt>{{ __('Bezahllink', 'flynt') }}</dt><dd><a href="{{ post.meta('paymentLink') }}" target="_blank" rel="noopener">{{ post.meta('paymentLink') }}</a></dd>{% endif %}
+    </dl>
 
-      {% if goalLabels %}
-        <dt>{{ __('Thema / Ziele', 'flynt') }}</dt>
-        <dd>{{ goalLabels|join(', ') }}</dd>
-      {% endif %}
+    {# ---- Details ---- #}
+    <h2>{{ __('Details zum Angebot', 'flynt') }}</h2>
+    <dl>
+      {% if post.meta('description') %}<dt>{{ __('Beschreibung', 'flynt') }}</dt><dd>{{ post.meta('description') }}</dd>{% endif %}
+      {% if post.meta('language') %}<dt>{{ __('Sprache', 'flynt') }}</dt><dd>{{ post.meta('language') }}</dd>{% endif %}
+      {% if labels.programTypes %}<dt>{{ __('Art des Programmpunkts', 'flynt') }}</dt><dd>{{ labels.programTypes|join(', ') }}</dd>{% endif %}
+      {% if labels.format %}<dt>{{ __('Format', 'flynt') }}</dt><dd>{{ labels.format }}</dd>{% endif %}
+      {% if labels.audiences %}<dt>{{ __('Zielgruppe', 'flynt') }}</dt><dd>{{ labels.audiences|join(', ') }}</dd>{% endif %}
+    </dl>
 
-      {% if sectorLabels %}
-        <dt>{{ __('Sektor', 'flynt') }}</dt>
-        <dd>{{ sectorLabels|join(', ') }}</dd>
-      {% endif %}
+    {# ---- Veranstaltung ---- #}
+    <h2>{{ __('Veranstaltung', 'flynt') }}</h2>
+    <dl>
+      {% if post.meta('eventTitle') %}<dt>{{ __('Titel', 'flynt') }}</dt><dd>{{ post.meta('eventTitle') }}</dd>{% endif %}
+      {% if post.meta('intro') %}<dt>{{ __('Introtext', 'flynt') }}</dt><dd>{{ post.meta('intro') }}</dd>{% endif %}
+      {% if post.meta('credits') %}<dt>{{ __('Bildnachweise / Credits', 'flynt') }}</dt><dd>{{ post.meta('credits') }}</dd>{% endif %}
 
-      {% if programTypeLabels %}
-        <dt>{{ __('Art des Programmpunkts', 'flynt') }}</dt>
-        <dd>{{ programTypeLabels|join(', ') }}</dd>
+      {% if labels.dateMode %}<dt>{{ __('Termin', 'flynt') }}</dt><dd>{{ labels.dateMode }}</dd>{% endif %}
+      {% if post.meta('dateFrom') %}
+        <dt>{{ __('Datum', 'flynt') }}</dt>
+        <dd>{{ post.meta('dateFrom') }}{% if post.meta('dateTo') %} – {{ post.meta('dateTo') }}{% endif %}</dd>
       {% endif %}
+      {% if post.meta('timeStart') %}<dt>{{ __('Zeit', 'flynt') }}</dt><dd>{{ post.meta('timeStart') }}{% if post.meta('timeEnd') %}–{{ post.meta('timeEnd') }}{% endif %}</dd>{% endif %}
 
-      {% if formatLabel %}
-        <dt>{{ __('Format', 'flynt') }}</dt>
-        <dd>{{ formatLabel }}</dd>
-      {% endif %}
-
-      {% if audienceLabels %}
-        <dt>{{ __('Zielgruppe', 'flynt') }}</dt>
-        <dd>{{ audienceLabels|join(', ') }}</dd>
-      {% endif %}
-
-      {% if post.meta('language') %}
-        <dt>{{ __('Sprache', 'flynt') }}</dt>
-        <dd>{{ post.meta('language') }}</dd>
-      {% endif %}
-
-      {% if post.meta('dateMode') == 'wunsch' and post.meta('dateFrom') %}
-        <dt>{{ __('Termin', 'flynt') }}</dt>
-        <dd>
-          {{ post.meta('dateFrom') }}{% if post.meta('dateTo') %} – {{ post.meta('dateTo') }}{% endif %}
-          {% if post.meta('timeStart') %}, {{ post.meta('timeStart') }}{% if post.meta('timeEnd') %}–{{ post.meta('timeEnd') }}{% endif %}{% endif %}
-        </dd>
-      {% endif %}
-
+      {% if labels.locationMode %}<dt>{{ __('Ort', 'flynt') }}</dt><dd>{{ labels.locationMode }}</dd>{% endif %}
+      {% if post.meta('street') %}<dt>{{ __('Straße + Hausnummer', 'flynt') }}</dt><dd>{{ post.meta('street') }}</dd>{% endif %}
+      {% if post.meta('postalCode') %}<dt>{{ __('Postleitzahl', 'flynt') }}</dt><dd>{{ post.meta('postalCode') }}</dd>{% endif %}
       {% set location = post.meta('location') %}
-      {% if post.meta('street') or location.lat %}
-        <dt>{{ __('Ort', 'flynt') }}</dt>
+      {% if location.lat %}<dt>{{ __('Koordinaten', 'flynt') }}</dt><dd>{{ location.lat }}, {{ location.lng }}</dd>{% endif %}
+      {% if post.meta('mobilityInfo') %}<dt>{{ __('Anreise', 'flynt') }}</dt><dd>{{ post.meta('mobilityInfo') }}</dd>{% endif %}
+      <dt>{{ __('Ort für weitere Programmpunkte?', 'flynt') }}</dt><dd>{{ post.meta('venueOpenForOthers') ? __('Ja', 'flynt') : __('Nein', 'flynt') }}</dd>
+      {% if labels.accessibility %}<dt>{{ __('Barrierefreiheit', 'flynt') }}</dt><dd>{{ labels.accessibility|join(', ') }}</dd>{% endif %}
+
+      {% if galleryUrls %}
+        <dt>{{ __('Weitere Fotos', 'flynt') }}</dt>
         <dd>
-          {{ post.meta('street') }}{% if post.meta('postalCode') %}, {{ post.meta('postalCode') }} Berlin{% endif %}
-          {% if location.lat %}<br>({{ location.lat }}, {{ location.lng }}){% endif %}
+          {% for url in galleryUrls %}
+            <img src="{{ url }}" alt="">
+          {% endfor %}
         </dd>
       {% endif %}
+    </dl>
 
-      {% if post.meta('mobilityInfo') %}
-        <dt>{{ __('Anreise', 'flynt') }}</dt>
-        <dd>{{ post.meta('mobilityInfo') }}</dd>
-      {% endif %}
-
-      {% if accessibilityLabels %}
-        <dt>{{ __('Barrierefreiheit', 'flynt') }}</dt>
-        <dd>{{ accessibilityLabels|join(', ') }}</dd>
-      {% endif %}
-
-      {% if post.meta('registration') == 'anmeldung' and post.meta('registrationLink') %}
-        <dt>{{ __('Anmeldung', 'flynt') }}</dt>
-        <dd><a href="{{ post.meta('registrationLink') }}" target="_blank" rel="noopener">{{ post.meta('registrationLink') }}</a></dd>
-      {% endif %}
-
-      {% if post.meta('costs') == 'ja' %}
-        <dt>{{ __('Kosten', 'flynt') }}</dt>
-        <dd>{{ post.meta('price') }}{% if post.meta('paymentLink') %} — <a href="{{ post.meta('paymentLink') }}" target="_blank" rel="noopener">{{ __('Buchung', 'flynt') }}</a>{% endif %}</dd>
-      {% endif %}
-
-      {% if post.meta('website') %}
-        <dt>{{ __('Website', 'flynt') }}</dt>
-        <dd><a href="{{ post.meta('website') }}" target="_blank" rel="noopener">{{ post.meta('website') }}</a></dd>
-      {% endif %}
+    {# ---- Intern & Zustimmung ---- #}
+    <h2>{{ __('Intern & Zustimmung', 'flynt') }}</h2>
+    <dl>
+      <dt>{{ __('Programmförderung gewünscht?', 'flynt') }}</dt><dd>{{ post.meta('fundingInterest') ? __('Ja', 'flynt') : __('Nein', 'flynt') }}</dd>
+      <dt>{{ __('Teilnahmekriterien akzeptiert', 'flynt') }}</dt><dd>{{ post.meta('acceptCriteria') ? __('Ja', 'flynt') : __('Nein', 'flynt') }}</dd>
+      <dt>{{ __('Nutzungsbedingungen akzeptiert', 'flynt') }}</dt><dd>{{ post.meta('acceptTerms') ? __('Ja', 'flynt') : __('Nein', 'flynt') }}</dd>
+      <dt>{{ __('Newsletter abonniert', 'flynt') }}</dt><dd>{{ post.meta('newsletter') ? __('Ja', 'flynt') : __('Nein', 'flynt') }}</dd>
     </dl>
   </article>
 {% endblock %}
