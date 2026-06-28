@@ -1,0 +1,23 @@
+.program-entry-form {
+  // After a submit attempt, outline every empty/invalid text-like control.
+  &.attempted {
+    input:not([type='radio']):not([type='checkbox']):invalid,
+    textarea:invalid,
+    select:invalid {
+      border-color: var(--errorColor);
+      box-shadow: 0 0 0 1px var(--errorColor);
+    }
+  }
+
+  // Choice groups + required consent rows flagged invalid via Alpine.
+  .field-error {
+    border-radius: 2px;
+    outline: 2px solid var(--errorColor);
+    outline-offset: 6px;
+  }
+
+  .form-message--error {
+    border: 1px solid var(--errorColor);
+    color: var(--errorColor);
+  }
+}
