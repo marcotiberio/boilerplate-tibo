@@ -121,7 +121,7 @@
               <input type="file" required x-ref="orgLogo" accept=".jpg,.jpeg,.png,.svg">
             </label>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-sm">
+            <div class="grid grid-cols-1 md:grid-cols-1 md:grid-cols-3 gap-sm">
               <label class="flex flex-col gap-xs">
                 <span class="font-bodySmall">{{ __('Website', 'flynt') }}</span>
                 <input type="url" x-model="form.website" class="rounded border border-black p-xs bg-white">
@@ -144,10 +144,10 @@
 
             <fieldset class="flex flex-col gap-xs">
               <legend class="font-bodySmall mb-xs">{{ __('Thema — Welche Ziele verfolgt euer Programm?', 'flynt') }} *</legend>
-              <div class="flex flex-col gap-min" :class="attempted && !form.goals.length ? 'field-error' : ''">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-min" :class="attempted && !form.goals.length ? 'field-error' : ''">
                 {% for value, label in config.goals %}
                   <label class="flex items-start gap-xs">
-                    <input type="checkbox" value="{{ value }}" x-model="form.goals" class="mt-1"><span>{{ label }}</span>
+                    <input type="checkbox" value="{{ value }}" x-model="form.goals" class="mt-1"><span class="whitespace-pre">{{ label }}</span>
                   </label>
                 {% endfor %}
               </div>
@@ -155,7 +155,7 @@
 
             <fieldset class="flex flex-col gap-xs">
               <legend class="font-bodySmall mb-xs">{{ __('Sektor', 'flynt') }} *</legend>
-              <div class="flex flex-col gap-min" :class="attempted && !form.sectors.length ? 'field-error' : ''">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-min" :class="attempted && !form.sectors.length ? 'field-error' : ''">
                 {% for value, label in config.sectors %}
                   <label class="flex items-start gap-xs">
                     <input type="checkbox" value="{{ value }}" x-model="form.sectors" class="mt-1"><span>{{ label }}</span>
@@ -166,7 +166,7 @@
 
             <fieldset class="flex flex-col gap-xs">
               <legend class="font-bodySmall mb-xs">{{ __('Ist eine Anmeldung erforderlich?', 'flynt') }} *</legend>
-              <div class="flex flex-wrap gap-sm" :class="attempted && !form.registration ? 'field-error' : ''">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-min" :class="attempted && !form.registration ? 'field-error' : ''">
                 {% for value, label in config.registration %}
                   <label class="flex items-center gap-xs">
                     <input type="radio" name="registration" value="{{ value }}" required x-model="form.registration"><span>{{ label }}</span>
@@ -181,7 +181,7 @@
 
             <fieldset class="flex flex-col gap-xs">
               <legend class="font-bodySmall mb-xs">{{ __('Fallen für die Teilnahme Kosten an?', 'flynt') }} *</legend>
-              <div class="flex flex-wrap gap-sm" :class="attempted && !form.costs ? 'field-error' : ''">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-min" :class="attempted && !form.costs ? 'field-error' : ''">
                 {% for value, label in config.costs %}
                   <label class="flex items-center gap-xs">
                     <input type="radio" name="costs" value="{{ value }}" required x-model="form.costs"><span>{{ label }}</span>
@@ -218,7 +218,7 @@
 
             <fieldset class="flex flex-col gap-xs">
               <legend class="font-bodySmall mb-xs">{{ __('Art des Programmpunkts', 'flynt') }} *</legend>
-              <div class="flex flex-col gap-min" :class="attempted && !form.programTypes.length ? 'field-error' : ''">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-min" :class="attempted && !form.programTypes.length ? 'field-error' : ''">
                 {% for value, label in config.programTypes %}
                   <label class="flex items-start gap-xs">
                     <input type="checkbox" value="{{ value }}" x-model="form.programTypes" class="mt-1"><span>{{ label }}</span>
@@ -229,7 +229,7 @@
 
             <fieldset class="flex flex-col gap-xs">
               <legend class="font-bodySmall mb-xs">{{ __('Format', 'flynt') }} *</legend>
-              <div class="flex flex-wrap gap-sm" :class="attempted && !form.format ? 'field-error' : ''">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-min" :class="attempted && !form.format ? 'field-error' : ''">
                 {% for value, label in config.format %}
                   <label class="flex items-center gap-xs">
                     <input type="radio" name="format" value="{{ value }}" required x-model="form.format"><span>{{ label }}</span>
@@ -240,7 +240,7 @@
 
             <fieldset class="flex flex-col gap-xs">
               <legend class="font-bodySmall mb-xs">{{ __('Zielgruppe', 'flynt') }}</legend>
-              <div class="flex flex-col gap-min">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-min">
                 {% for value, label in config.audiences %}
                   <label class="flex items-start gap-xs">
                     <input type="checkbox" value="{{ value }}" x-model="form.audiences" class="mt-1"><span>{{ label }}</span>
@@ -284,7 +284,7 @@
             {# When #}
             <fieldset class="flex flex-col gap-xs">
               <legend class="font-bodySmall mb-xs">{{ __('Wann soll eure Veranstaltung stattfinden?', 'flynt') }} *</legend>
-              <div class="flex flex-col gap-min" :class="attempted && !form.dateMode ? 'field-error' : ''">
+              <div class="grid grid-cols-1 gap-min" :class="attempted && !form.dateMode ? 'field-error' : ''">
                 {% for value, label in config.dateMode %}
                   <label class="flex items-start gap-xs">
                     <input type="radio" name="dateMode" value="{{ value }}" required x-model="form.dateMode" class="mt-1"><span>{{ label }}</span>
@@ -314,7 +314,7 @@
             {# Where #}
             <fieldset class="flex flex-col gap-xs">
               <legend class="font-bodySmall mb-xs">{{ __('Wo soll euer Angebot stattfinden?', 'flynt') }} *</legend>
-              <div class="flex flex-col gap-min" :class="attempted && !form.locationMode ? 'field-error' : ''">
+              <div class="grid grid-cols-1 gap-min" :class="attempted && !form.locationMode ? 'field-error' : ''">
                 {% for value, label in config.locationMode %}
                   <label class="flex items-start gap-xs">
                     <input type="radio" name="locationMode" value="{{ value }}" required x-model="form.locationMode" class="mt-1"><span>{{ label }}</span>
@@ -345,7 +345,7 @@
 
             <fieldset class="flex flex-col gap-xs">
               <legend class="font-bodySmall mb-xs">{{ __('Info über Barrierefreiheit', 'flynt') }} *</legend>
-              <div class="flex flex-col gap-min" :class="attempted && !form.accessibility.length ? 'field-error' : ''">
+              <div class="grid grid-cols-4 gap-min" :class="attempted && !form.accessibility.length ? 'field-error' : ''">
                 {% for value, label in config.accessibility %}
                   <label class="flex items-start gap-xs">
                     <input type="checkbox" value="{{ value }}" x-model="form.accessibility" class="mt-1"><span>{{ label }}</span>
@@ -356,7 +356,7 @@
           </fieldset>
 
           {# ============ 5. Zustimmung ============ #}
-          <fieldset class="flex flex-col gap-sm">
+          <fieldset class="flex flex-col gap-min">
             <legend class="font-h3 mb-xs">{{ __('Anmeldeformular absenden', 'flynt') }}</legend>
 
             <label class="flex items-start gap-xs">

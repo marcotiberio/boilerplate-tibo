@@ -1,6 +1,6 @@
 {
   "Components/BlockGalleryMedia/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -40,7 +40,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -126,7 +126,7 @@
   },
   "Components/NavigationMainLogo/Assets/logo.svg": {
     "file": "assets/logo-eeb7436e.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/logo.svg"
+    "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/SliderBox/script.js": {
     "file": "assets/script-f8e40592.js",
@@ -171,7 +171,7 @@
   },
   "Components/ZZZ/BlockCta/Assets/logo.svg": {
     "file": "assets/logo-eeb7436e.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/logo.svg"
+    "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/BlockCta/Assets/twitter.svg": {
     "file": "assets/twitter-bc2ba69f.svg",
@@ -238,7 +238,7 @@
   },
   "Components/ZZZ/NavigationMainLogo/Assets/logo.svg": {
     "file": "assets/logo-eeb7436e.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/logo.svg"
+    "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
     "file": "assets/script-7a94de00.js",
@@ -420,7 +420,7 @@
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-34084213.css",
+    "file": "assets/main-9f58afd8.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
