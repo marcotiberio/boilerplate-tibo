@@ -5,9 +5,9 @@
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
   <div class="wrapper boxed max-w-screen-max mx-auto">
-    <div class="boxed panel bg-greenFaded rounded flex flex-col gap-md">
+    <div class="boxed panel bg-greenFaded rounded flex flex-col gap-sm">
       {% if title %}
-        <div class="font-h2">{{ title }}</div>
+        <div class="font-body">{{ title }}</div>
       {% endif %}
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-sm">

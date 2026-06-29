@@ -45,23 +45,31 @@
         {% endfor %}
       </div> #}
       {% if menu %}
-      <div class="w-full flex flex-col md:flex-row justify-between items-center gap-sm sm:gap-lg">
+      <div class="w-full flex flex-col md:flex-row justify-between md:items-center gap-sm sm:gap-lg">
         <nav class="navigation w-full flex justify-between items-end" aria-label="{{ labels.ariaLabel }}">
           {% include 'Partials/_menu.twig' with { 'items': menu.get_items, 'level': '0', 'maxLevel': maxLevel } only %}
         </nav>
-        <div class="w-1/3 flex flex-col justify-start items-start gap-sm">
-          <div class="wysiwyg">{{ copyrightsHtml|e('wp_kses_post') }}</div>
-          {% if fundersLogos %}
-            <div class="funders flex flex-row items-center gap-sm">
-              {% for funder in fundersLogos %}
-                {% if funder.logo %}
-                  {% if funder.link %}
-                    <a class="funders__item block" href="{{ funder.link.url }}"{% if funder.link.target %} target="{{ funder.link.target }}" rel="noreferrer noopener"{% endif %}>
-                      <img class="lazyload h-auto w-auto max-h-[40px]" src="{{ funder.logo.src }}" alt="{{ funder.logo.alt|e | default('') }}" loading="lazy">
-                    </a>
-                  {% else %}
-                    <img class="funders__item lazyload h-auto w-auto max-h-[40px]" src="{{ funder.logo.src }}" alt="{{ funder.logo.alt|e | default('') }}" loading="lazy">
-                  {% endif %}
+        <div class="md:w-[40%] flex flex-col justify-start items-start gap-sm">
+          {% if funders.logos or funders2.logos %}
+            <div class="funders flex flex-row items-start gap-sm">
+              {% for group in [funders, funders2] %}
+                {% if group.logos %}
+                  <div class="flex flex-col items-start gap-xs">
+                    {% if group.label %}<span class="font-menu !mb-0 text-sm">{{ group.label }}</span>{% endif %}
+                    <div class="flex flex-row items-center gap-sm">
+                      {% for funder in group.logos %}
+                        {% if funder.logo %}
+                          {% if funder.link %}
+                            <a class="funders__item block" href="{{ funder.link.url }}"{% if funder.link.target %} target="{{ funder.link.target }}" rel="noreferrer noopener"{% endif %}>
+                              <img class="lazyload h-auto w-auto max-h-[40px]" src="{{ funder.logo.src }}" alt="{{ funder.logo.alt|e | default('') }}" loading="lazy">
+                            </a>
+                          {% else %}
+                            <img class="funders__item lazyload h-auto w-auto max-h-[40px]" src="{{ funder.logo.src }}" alt="{{ funder.logo.alt|e | default('') }}" loading="lazy">
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  </div>
                 {% endif %}
               {% endfor %}
             </div>
@@ -72,18 +80,6 @@
       {# Brand wordmark #}
       <div class="flex items-center">
         <img class="w-full h-auto" src="{{ wordmarkUrl }}" alt="LOOPTOPIA">
-      </div>
-      <div class="w-full grid grid-cols-1 md:grid-cols-2 justify-start items-center gap-sm">
-        <div x-data="themeSwitcher" class="flex items-center gap-xs">
-          <button
-            @click="setTheme('light')"
-            class="font-body bg-grei text-black py-min px-xs transition-opacity duration-300"
-          >{{ labels.themeLight }}</button>
-          <button
-            @click="setTheme('dark')"
-            class="font-body bg-black text-white py-min px-xs transition-opacity duration-300"
-          >{{ labels.themeDark }}</button>
-        </div>
       </div>
       {# Col 5 #}
       {# <div class="w-full lg:w-1/5 flex flex-col gap-sm sm:gap-lg justify-start sm:justify-end items-start sm:items-end mb-[1.2rem]">

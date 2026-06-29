@@ -52,7 +52,7 @@ function getACFLayout()
                 'required' => 0,
             ],
             [
-                'label' => __('Funders', 'flynt'),
+                'label' => __('Funders (left)', 'flynt'),
                 'name' => 'funders',
                 'type' => 'group',
                 'layout' => 'block',
@@ -62,6 +62,38 @@ function getACFLayout()
                         'name' => 'label',
                         'type' => 'text',
                         'instructions' => __('e.g. "Gefördert durch".', 'flynt'),
+                        'required' => 0,
+                    ],
+                    [
+                        'label' => __('Logos', 'flynt'),
+                        'name' => 'logos',
+                        'type' => 'repeater',
+                        'layout' => 'block',
+                        'button_label' => __('Add Logo', 'flynt'),
+                        'sub_fields' => [
+                            [
+                                'label' => __('Logo', 'flynt'),
+                                'name' => 'logo',
+                                'type' => 'image',
+                                'preview_size' => 'small',
+                                'mime_types' => 'svg,png,jpg,jpeg',
+                                'required' => 0,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'label' => __('Funders (right)', 'flynt'),
+                'name' => 'funders2',
+                'type' => 'group',
+                'layout' => 'block',
+                'sub_fields' => [
+                    [
+                        'label' => __('Label', 'flynt'),
+                        'name' => 'label',
+                        'type' => 'text',
+                        'instructions' => __('e.g. "Organisiert von".', 'flynt'),
                         'required' => 0,
                     ],
                     [

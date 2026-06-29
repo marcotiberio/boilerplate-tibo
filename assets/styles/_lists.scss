@@ -1,18 +1,18 @@
 .wysiwyg {
   ul {
     list-style-type: none;
-    margin: 0 0 1.2rem;
+    margin: 1.2rem 0;
     // padding-left: 1rem;
   
     ul {
-      margin-bottom: 0;
+      margin: 1.2rem 0;
   
       li {
         font-size: inherit;
         line-height: var(--body-line-height, 1.2) !important;
         margin-bottom: 0;
-        margin-left: 1rem;
-        // text-indent: -1.65rem;
+        margin-left: 1.65rem;
+        text-indent: -1.65rem;
 
         &.font-body {
           font-size: var(--body-size-mobile, 1.25rem);
@@ -38,8 +38,9 @@
       font-size: var(--body-size-mobile, 1.25rem);
       line-height: var(--body-line-height, 1.2) !important;
       margin-bottom: 0;
-      margin-left: 1rem;
-      // text-indent: -1.65rem;
+      margin-left: 2rem;
+      text-indent: -1.15rem;
+      margin-bottom: 0.15rem;
 
       @screen desktop {
         font-size: var(--body-size-desktop, 1.25rem);
@@ -67,7 +68,7 @@
 
   ol {
     list-style-type: decimal;
-    margin: 0 0 1.2rem;
+    margin: 1.2rem 0;
     // padding-left: 1rem;
   
     ol {
@@ -88,8 +89,9 @@
     li {
       font-size: var(--body-size-mobile, 1.25rem);
       line-height: var(--body-line-height, 1.2) !important;
-      margin-left: 1.65rem;
-      // text-indent: -1.65rem;
+      margin-left: 2rem;
+      margin-bottom: 0.15rem;
+      // text-indent: -2rem;
 
       @screen desktop {
         font-size: var(--body-size-desktop, 1.25rem);

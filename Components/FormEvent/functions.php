@@ -3,6 +3,7 @@
 namespace Flynt\Components\FormEvent;
 
 use Flynt\Event;
+use Flynt\Utils\Asset;
 
 function getACFLayout()
 {
@@ -17,41 +18,49 @@ function getACFLayout()
                 'placement' => 'top',
                 'endpoint' => 0,
             ],
+            // [
+            //     'label' => __('Intro', 'flynt'),
+            //     'name' => 'preContentHtml',
+            //     'type' => 'wysiwyg',
+            //     'tabs' => 'visual',
+            //     'media_upload' => 0,
+            //     'delay' => 1,
+            // ],
+            // [
+            //     'label' => __('Section intro — Organisation', 'flynt'),
+            //     'name' => 'introOrg',
+            //     'type' => 'wysiwyg',
+            //     'tabs' => 'visual',
+            //     'media_upload' => 0,
+            //     'delay' => 1,
+            // ],
+            // [
+            //     'label' => __('Section intro — Angebot', 'flynt'),
+            //     'name' => 'introOffer',
+            //     'type' => 'wysiwyg',
+            //     'tabs' => 'visual',
+            //     'media_upload' => 0,
+            //     'delay' => 1,
+            // ],
+            // [
+            //     'label' => __('Section intro — Details', 'flynt'),
+            //     'name' => 'introDetails',
+            //     'type' => 'wysiwyg',
+            //     'tabs' => 'visual',
+            //     'media_upload' => 0,
+            //     'delay' => 1,
+            // ],
+            // [
+            //     'label' => __('Section intro — Veranstaltung', 'flynt'),
+            //     'name' => 'introEvent',
+            //     'type' => 'wysiwyg',
+            //     'tabs' => 'visual',
+            //     'media_upload' => 0,
+            //     'delay' => 1,
+            // ],
             [
-                'label' => __('Intro', 'flynt'),
-                'name' => 'preContentHtml',
-                'type' => 'wysiwyg',
-                'tabs' => 'visual',
-                'media_upload' => 0,
-                'delay' => 1,
-            ],
-            [
-                'label' => __('Section intro — Organisation', 'flynt'),
-                'name' => 'introOrg',
-                'type' => 'wysiwyg',
-                'tabs' => 'visual',
-                'media_upload' => 0,
-                'delay' => 1,
-            ],
-            [
-                'label' => __('Section intro — Angebot', 'flynt'),
-                'name' => 'introOffer',
-                'type' => 'wysiwyg',
-                'tabs' => 'visual',
-                'media_upload' => 0,
-                'delay' => 1,
-            ],
-            [
-                'label' => __('Section intro — Details', 'flynt'),
-                'name' => 'introDetails',
-                'type' => 'wysiwyg',
-                'tabs' => 'visual',
-                'media_upload' => 0,
-                'delay' => 1,
-            ],
-            [
-                'label' => __('Section intro — Veranstaltung', 'flynt'),
-                'name' => 'introEvent',
+                'label' => __('Success message', 'flynt'),
+                'name' => 'successHtml',
                 'type' => 'wysiwyg',
                 'tabs' => 'visual',
                 'media_upload' => 0,
@@ -63,14 +72,6 @@ function getACFLayout()
                 'type' => 'text',
                 'default_value' => __('Anmeldeformular absenden', 'flynt'),
                 'wrapper' => ['width' => 50],
-            ],
-            [
-                'label' => __('Success message', 'flynt'),
-                'name' => 'successHtml',
-                'type' => 'wysiwyg',
-                'tabs' => 'visual',
-                'media_upload' => 0,
-                'delay' => 1,
             ],
             [
                 'label' => __('Consent & links', 'flynt'),
@@ -113,5 +114,10 @@ add_filter('Flynt/addComponentData?name=FormEvent', function ($data) {
     // created for. Without it WordPress runs the request as user 0 when a login
     // cookie is present, breaking our user-bound nonce check.
     $data['restNonce'] = wp_create_nonce('wp_rest');
+    // Local-only: exposes a button to preview the success popup + confetti
+    // without submitting the form. True when the Vite dev server is running
+    // (npm run serve) or the env is explicitly 'local' — never on the
+    // deployed site, which ships a built dist/ with no hot file.
+    $data['isLocal'] = Asset::isHotModuleReplacement() || wp_get_environment_type() === 'local';
     return $data;
 });

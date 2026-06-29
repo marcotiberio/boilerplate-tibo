@@ -47,7 +47,12 @@
       "Bash(php -l inc/fieldGroups/pageComponents.php)",
       "Bash(php -l single-program_entry.php)",
       "Bash(./vendor/bin/phpcs single-program_entry.php)",
-      "mcp__claude_ai_Google_Drive__read_file_content"
+      "mcp__claude_ai_Google_Drive__read_file_content",
+      "Bash(grep -E '\\\\.\\(php|js\\)$')",
+      "Bash(php -l /Users/marco/Sites/looptopia/wp-content/themes/looptopia/inc/restApi/eventSubmission.php)",
+      "Bash(grep -iE \"#[0-9a-f]{3,6}|:root|var\\\\\\(\")",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\('./package.json'\\).scripts,null,2\\)\\)\")",
+      "Bash(php -l Components/FormEvent/functions.php)"
     ]
   }
 }

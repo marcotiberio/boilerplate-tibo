@@ -23,6 +23,7 @@
         },
         state: 'idle',
         message: '',
+        showModal: false,
         validate() {
           if (!this.form.goals.length) return '{{ __('Bitte wähle mindestens ein Thema.', 'flynt') }}';
           if (!this.form.sectors.length) return '{{ __('Bitte wähle mindestens einen Sektor.', 'flynt') }}';
@@ -68,6 +69,8 @@
               throw new Error(data.message || '{{ __('Etwas ist schiefgelaufen. Bitte versuche es erneut.', 'flynt') }}');
             }
             this.state = 'success';
+            this.showModal = true;
+            this.$el.dispatchEvent(new CustomEvent('formevent:success', { bubbles: true }));
             window.scrollTo({ top: this.$el.offsetTop - 80, behavior: 'smooth' });
           } catch (e) {
             this.state = 'error';
@@ -77,13 +80,47 @@
       }"
       x-on:submit.prevent="submit()"
     >
-      {# Success state replaces the form #}
+      {# Success state replaces the form (persists behind the popup once it's closed) #}
       <div x-show="state === 'success'" x-cloak x-transition class="wysiwyg rounded bg-green p-sm">
         {% if successHtml %}
           {{ successHtml|e('wp_kses_post') }}
         {% else %}
           <p>{{ __('Danke! Dein Eintrag wurde zur Prüfung eingereicht.', 'flynt') }}</p>
         {% endif %}
+      </div>
+
+      {# Success popup — confetti fires on open (see script.js) #}
+      <div
+        x-show="showModal"
+        x-cloak
+        x-transition.opacity
+        class="event-form__overlay fixed inset-0 z-[3001] flex items-center justify-center p-sm"
+        x-on:keydown.escape.window="showModal = false"
+      >
+        <div class="absolute inset-0 bg-green/50" x-on:click="showModal = false"></div>
+        <div
+          x-show="showModal"
+          x-transition:enter="transition ease-out duration-300 delay-100"
+          x-transition:enter-start="opacity-0 scale-90"
+          x-transition:enter-end="opacity-100 scale-100"
+          class="event-form__modal wysiwyg relative z-[3001] w-full max-w-screen-desktop rounded bg-white p-md text-center"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="event-form-success-title"
+        >
+          <button
+            type="button"
+            class="event-form__close absolute right-sm top-xs leading-none"
+            x-on:click="showModal = false"
+            aria-label="{{ __('Schließen', 'flynt') }}"
+          >&times;</button>
+          {% if successHtml %}
+            {{ successHtml|e('wp_kses_post') }}
+          {% else %}
+            <p id="event-form-success-title" class="font-h3 mb-xs">{{ __('Geschafft! 🎉', 'flynt') }}</p>
+            <p>{{ __('Danke! Dein Eintrag wurde zur Prüfung eingereicht.', 'flynt') }}</p>
+          {% endif %}
+        </div>
       </div>
 
       <template x-if="state !== 'success'">
@@ -402,6 +439,15 @@
           </button>
         </div>
       </template>
+
+      {% if isLocal %}
+        {# Local-only preview trigger for the success popup + confetti. #}
+        <button
+          type="button"
+          class="button w-fit border border-dashed border-black opacity-70"
+          x-on:click="showModal = true; $el.dispatchEvent(new CustomEvent('formevent:success', { bubbles: true }))"
+        >🎉 {{ __('Test: Erfolgs-Popup (nur lokal)', 'flynt') }}</button>
+      {% endif %}
     </form>
   </div>
 </flynt-component>

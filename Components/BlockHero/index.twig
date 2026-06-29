@@ -1,7 +1,7 @@
 <flynt-component
   load:on="visible" name="BlockHero"
   id="hero"
-  class="relative w-full min-h-screen overflow-hidden flex flex-col"
+  class="relative w-full min-h-[calc(100vh-72px)] overflow-hidden flex flex-col"
   style="
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}var(--white){% endif %};">
@@ -41,16 +41,22 @@
         {% endif %}
       </div>
       {# Funders #}
-      {% if funders.logos %}
-        <div class="flex flex-col items-end gap-xs ml-auto">
-          {% if funders.label %}<span class="font-body !mb-0 text-sm">{{ funders.label }}</span>{% endif %}
-          <div class="flex flex-row flex-wrap items-center gap-sm">
-            {% for item in funders.logos %}
-              {% if item.logo %}
-                <img class="h-12 w-auto object-contain" src="{{ item.logo.src }}" alt="{{ item.logo.alt|e | default('') }}">
-              {% endif %}
-            {% endfor %}
-          </div>
+      {% if funders.logos or funders2.logos %}
+        <div class="flex flex-row flex-wrap items-start gap-sm ml-auto">
+          {% for group in [funders, funders2] %}
+            {% if group.logos %}
+              <div class="flex flex-col items-end gap-xs">
+                {% if group.label %}<span class="font-body !mb-0 text-sm">{{ group.label }}</span>{% endif %}
+                <div class="flex flex-row flex-wrap items-center gap-sm">
+                  {% for item in group.logos %}
+                    {% if item.logo %}
+                      <img class="h-12 w-auto object-contain" src="{{ item.logo.src }}" alt="{{ item.logo.alt|e | default('') }}">
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
         </div>
       {% endif %}
     </div>
