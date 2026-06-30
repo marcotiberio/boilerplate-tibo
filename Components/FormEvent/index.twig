@@ -154,7 +154,7 @@
             </div>
 
             <label class="flex flex-col gap-xs">
-              <span class="font-bodySmall">{{ __('Logo der Organisation', 'flynt') }} * <small>(.jpg, .png, .svg)</small></span>
+              <span class="font-bodySmall">{{ __('Logo der Organisation', 'flynt') }} * <small>(.jpg, .jpeg, .png, .svg)</small></span>
               <input type="file" required x-ref="orgLogo" accept=".jpg,.jpeg,.png,.svg">
             </label>
 
@@ -320,11 +320,11 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
               <label class="flex flex-col gap-xs">
-                <span class="font-bodySmall">{{ __('Titelbild', 'flynt') }} * <small>(.jpg, .png)</small></span>
+                <span class="font-bodySmall">{{ __('Titelbild', 'flynt') }} * <small>(.jpg, .jpeg, .png)</small></span>
                 <input type="file" required x-ref="featuredImage" accept=".jpg,.jpeg,.png">
               </label>
               <label class="flex flex-col gap-xs">
-                <span class="font-bodySmall">{{ __('Weitere Fotos (optional)', 'flynt') }} <small>(.jpg, .png)</small></span>
+                <span class="font-bodySmall">{{ __('Weitere Fotos (optional)', 'flynt') }} <small>(.jpg, .jpeg, .png)</small></span>
                 <input type="file" multiple x-ref="gallery" accept=".jpg,.jpeg,.png">
               </label>
             </div>
