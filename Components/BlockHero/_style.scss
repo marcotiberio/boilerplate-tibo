@@ -4,4 +4,9 @@ flynt-component[name='BlockHero'] {
     max-width: 100%;
     overflow: hidden;
   }
+
+  // Soft green glow to lift text off the background image.
+  .hero-text-shadow {
+    text-shadow: 0 0 12px var(--green);
+  }
 }

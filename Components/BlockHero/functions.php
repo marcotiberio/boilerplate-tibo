@@ -39,17 +39,19 @@ function getACFLayout()
                 'wrapper' => ['width' => 50],
             ],
             [
+                'label' => __('Wordmark', 'flynt'),
+                'name' => 'wordmark',
+                'type' => 'image',
+                'instructions' => __('Brand wordmark shown below the kicker/date. Leave empty to use the default LOOPTOPIA wordmark.', 'flynt'),
+                'preview_size' => 'medium',
+                'required' => 0,
+                'mime_types' => 'svg,png,webp',
+            ],
+            [
                 'label' => __('Headline', 'flynt'),
                 'name' => 'headline',
                 'type' => 'text',
                 'instructions' => __('Main hero headline, e.g. "48 Stunden Berlin neu entdecken".', 'flynt'),
-            ],
-            [
-                'label' => __('Scroll Target', 'flynt'),
-                'name' => 'scrollAnchor',
-                'type' => 'text',
-                'instructions' => __('Anchor the scroll chevron jumps to, e.g. "#intro". Leave empty to hide.', 'flynt'),
-                'required' => 0,
             ],
             [
                 'label' => __('Funders (left)', 'flynt'),

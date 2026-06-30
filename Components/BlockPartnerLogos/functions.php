@@ -114,6 +114,12 @@ function getACFLayout()
                 'mime_types' => 'svg,png,jpg,jpeg',
             ],
             [
+                'label' => __('Badge Link', 'flynt'),
+                'name' => 'badgeLink',
+                'type' => 'url',
+                'required' => 0,
+            ],
+            [
                 'label' => __('Badge Caption', 'flynt'),
                 'name' => 'badgeCaption',
                 'type' => 'text',
