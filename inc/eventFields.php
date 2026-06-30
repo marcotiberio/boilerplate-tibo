@@ -22,19 +22,10 @@ const NONCE_ACTION = 'looptopia_event';
 function getConfig()
 {
     return [
-        // Thema / Ziele — multiple choice
-        'goals' => [
-            'werterhalt'      => __('Werterhalt in der Praxis', 'flynt'),
-            'instrumente'     => __('Instrumente & Hilfsmittel für die Transformation', 'flynt'),
-            'geschaeftsmodelle' => __('Zirkuläre Geschäftsmodelle & Innovation', 'flynt'),
-            'finanzierung'    => __('Finanzierung & Skalierung', 'flynt'),
-            'spielregeln'     => __('Neue Spielregeln für eine kreislauffähige Zukunft', 'flynt'),
-            'politik'         => __('Politische Hebel & Rahmenbedingungen für Circular Economy', 'flynt'),
-            'kooperation'     => __('Kooperation, Beteiligung & Wissensaufbau', 'flynt'),
-            'lifestyle'       => __('Circular Lifestyle', 'flynt'),
-            'orte'            => __('Alltägliche Orte, um zirkuläre Lösungen auszuprobieren', 'flynt'),
-            'nachbarschaft'   => __('Nachbarschaft, Teilhabe & soziale Innovation', 'flynt'),
-        ],
+        // Thema / Ziele — multiple choice, grouped under non-selectable
+        // category headings. Flat key=>label map for ACF + REST validation.
+        'goalGroups' => getGoalGroups(),
+        'goals' => flattenGroups(getGoalGroups()),
         // Sektor — multiple choice
         'sectors' => [
             'ernaehrung'    => __('Ernährung', 'flynt'),
@@ -57,18 +48,10 @@ function getConfig()
             'openhouse'  => __('Open House / Behind the Scene', 'flynt'),
             'tour'       => __('Tour / Walk / Stadt-Erlebnis', 'flynt'),
         ],
-        // Zielgruppe — multiple choice
-        'audiences' => [
-            'fach'        => __('Fachveranstaltung', 'flynt'),
-            'unternehmen' => __('Unternehmen', 'flynt'),
-            'wissenschaft' => __('Wissenschaft & Bildung', 'flynt'),
-            'politik'     => __('Politik & Verwaltung', 'flynt'),
-            'freizeit'    => __('Freizeit', 'flynt'),
-            'erwachsene'  => __('Erwachsene', 'flynt'),
-            'senioren'    => __('Senior:innen', 'flynt'),
-            'jugend'      => __('Jugendliche', 'flynt'),
-            'familien'    => __('Familien & Kinder', 'flynt'),
-        ],
+        // Zielgruppe — multiple choice, grouped under non-selectable
+        // category headings. Flat key=>label map for ACF + REST validation.
+        'audienceGroups' => getAudienceGroups(),
+        'audiences' => flattenGroups(getAudienceGroups()),
         // Barrierefreiheit — multiple choice
         'accessibility' => [
             'eingang'   => __('Eingang barrierefrei', 'flynt'),
@@ -80,12 +63,44 @@ function getConfig()
         'format' => [
             'vorort' => __('Vor Ort', 'flynt'),
             'hybrid' => __('Hybrid', 'flynt'),
-            'online' => __('Online', 'flynt'),
         ],
         // Anmeldung erforderlich? — single choice (conditional link)
         'registration' => [
             'offen'      => __('Offenes Format', 'flynt'),
             'anmeldung'  => __('Mit Anmeldung', 'flynt'),
+        ],
+        // Sprache der Veranstaltung — single choice (German language names)
+        'languages' => [
+            'Deutsch'        => __('Deutsch', 'flynt'),
+            'Englisch'       => __('Englisch', 'flynt'),
+            'Türkisch'       => __('Türkisch', 'flynt'),
+            'Arabisch'       => __('Arabisch', 'flynt'),
+            'Französisch'    => __('Französisch', 'flynt'),
+            'Spanisch'       => __('Spanisch', 'flynt'),
+            'Italienisch'    => __('Italienisch', 'flynt'),
+            'Portugiesisch'  => __('Portugiesisch', 'flynt'),
+            'Polnisch'       => __('Polnisch', 'flynt'),
+            'Russisch'       => __('Russisch', 'flynt'),
+            'Ukrainisch'     => __('Ukrainisch', 'flynt'),
+            'Niederländisch' => __('Niederländisch', 'flynt'),
+            'Griechisch'     => __('Griechisch', 'flynt'),
+            'Chinesisch'     => __('Chinesisch', 'flynt'),
+            'Japanisch'      => __('Japanisch', 'flynt'),
+            'Koreanisch'     => __('Koreanisch', 'flynt'),
+            'Vietnamesisch'  => __('Vietnamesisch', 'flynt'),
+            'Hindi'          => __('Hindi', 'flynt'),
+            'Persisch'       => __('Persisch', 'flynt'),
+            'Hebräisch'      => __('Hebräisch', 'flynt'),
+            'Schwedisch'     => __('Schwedisch', 'flynt'),
+            'Dänisch'        => __('Dänisch', 'flynt'),
+            'Norwegisch'     => __('Norwegisch', 'flynt'),
+            'Finnisch'       => __('Finnisch', 'flynt'),
+            'Tschechisch'    => __('Tschechisch', 'flynt'),
+            'Rumänisch'      => __('Rumänisch', 'flynt'),
+            'Ungarisch'      => __('Ungarisch', 'flynt'),
+            'Bulgarisch'     => __('Bulgarisch', 'flynt'),
+            'Kroatisch'      => __('Kroatisch', 'flynt'),
+            'Serbisch'       => __('Serbisch', 'flynt'),
         ],
         // Kosten? — single choice (conditional price + link)
         'costs' => [
@@ -94,8 +109,8 @@ function getConfig()
         ],
         // Wann? — either/or radio
         'dateMode' => [
-            'flexibel' => __('Wir sind zeitlich flexibel, macht uns gerne ein Angebot', 'flynt'),
-            'wunsch'   => __('Wir haben einen Wunschtermin', 'flynt'),
+            '14.11.26' => __('14.11.26', 'flynt'),
+            '15.11.26'   => __('15.11.26', 'flynt'),
         ],
         // Wo? — either/or radio
         'locationMode' => [
@@ -103,6 +118,77 @@ function getConfig()
             'eigen' => __('Wir haben einen passenden Veranstaltungsort', 'flynt'),
         ],
     ];
+}
+
+/**
+ * Thema / Ziele grouped under non-selectable category headings.
+ * Only the choices are selectable; the group labels are display-only.
+ */
+function getGoalGroups()
+{
+    return [
+        [
+            'label' => __('Kreislaufwirtschaft, die erlebbar ist', 'flynt'),
+            'choices' => [
+                'orte'          => __('Alltägliche Orte, um zirkuläre Lösungen auszuprobieren', 'flynt'),
+                'nachbarschaft' => __('Nachbarschaft, Teilhabe & soziale Innovation', 'flynt'),
+            ],
+        ],
+        [
+            'label' => __('Kreislaufwirtschaft, die sich lohnt', 'flynt'),
+            'choices' => [
+                'instrumente'       => __('Instrumente & Hilfsmittel für die Transformation', 'flynt'),
+                'geschaeftsmodelle' => __('Zirkuläre Geschäftsmodelle & Innovation', 'flynt'),
+                'finanzierung'      => __('Finanzierung & Skalierung', 'flynt'),
+            ],
+        ],
+        [
+            'label' => __('Kreislaufwirtschaft, die Zukunft gestaltet', 'flynt'),
+            'choices' => [
+                'politik'     => __('Politische Hebel & Rahmenbedingungen für Circular Economy', 'flynt'),
+                'kooperation' => __('Kooperation, Beteiligung & Wissensaufbau', 'flynt'),
+            ],
+        ],
+    ];
+}
+
+/**
+ * Zielgruppe grouped under non-selectable category headings.
+ * Only the choices are selectable; the group labels are display-only.
+ */
+function getAudienceGroups()
+{
+    return [
+        [
+            'label' => __('Fachveranstaltung', 'flynt'),
+            'choices' => [
+                'unternehmen'  => __('Unternehmen', 'flynt'),
+                'wissenschaft' => __('Wissenschaft & Bildung', 'flynt'),
+                'politik'      => __('Politik & Verwaltung', 'flynt'),
+            ],
+        ],
+        [
+            'label' => __('Freizeit', 'flynt'),
+            'choices' => [
+                'erwachsene' => __('Erwachsene', 'flynt'),
+                'senioren'   => __('Senior:innen', 'flynt'),
+                'jugend'     => __('Jugendliche', 'flynt'),
+                'familien'   => __('Familien & Kinder', 'flynt'),
+            ],
+        ],
+    ];
+}
+
+/**
+ * Merge a grouped choice structure into a single flat key=>label map.
+ */
+function flattenGroups(array $groups)
+{
+    $flat = [];
+    foreach ($groups as $group) {
+        $flat += $group['choices'];
+    }
+    return $flat;
 }
 
 /**

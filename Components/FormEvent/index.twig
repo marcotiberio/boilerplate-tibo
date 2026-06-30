@@ -181,11 +181,16 @@
 
             <fieldset class="flex flex-col gap-xs">
               <legend class="font-bodySmall mb-xs">{{ __('Thema — Welche Ziele verfolgt euer Programm?', 'flynt') }} *</legend>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-min" :class="attempted && !form.goals.length ? 'field-error' : ''">
-                {% for value, label in config.goals %}
-                  <label class="flex items-start gap-xs">
-                    <input type="checkbox" value="{{ value }}" x-model="form.goals" class="mt-1"><span class="whitespace-pre">{{ label }}</span>
-                  </label>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-sm" :class="attempted && !form.goals.length ? 'field-error' : ''">
+                {% for group in config.goalGroups %}
+                  <fieldset class="flex flex-col gap-xs">
+                    <legend class="font-bodySmall font-bold mb-xs">{{ group.label }}</legend>
+                    {% for value, label in group.choices %}
+                      <label class="flex items-start gap-xs">
+                        <input type="checkbox" value="{{ value }}" x-model="form.goals" class="mt-1"><span>{{ label }}</span>
+                      </label>
+                    {% endfor %}
+                  </fieldset>
                 {% endfor %}
               </div>
             </fieldset>
@@ -244,13 +249,19 @@
             {% if introDetails %}<div class="wysiwyg">{{ introDetails|e('wp_kses_post') }}</div>{% endif %}
 
             <label class="flex flex-col gap-xs">
-              <span class="font-bodySmall">{{ __('Beschreibungstext des Angebots', 'flynt') }} *</span>
+              <span class="font-bodySmall">{{ __('Beschreibungstext des Angebots (max. 1.000 Zeichen)', 'flynt') }} *</span>
               <textarea required rows="6" x-model="form.description" class="rounded border border-black p-xs bg-white"></textarea>
             </label>
 
-            <label class="flex flex-col gap-xs md:w-1/2">
+            {# Hidden for now — re-enable by removing the `hidden` class and restoring `required`. #}
+            <label class="hidden flex-col gap-xs md:w-1/2">
               <span class="font-bodySmall">{{ __('Sprache der Veranstaltung', 'flynt') }} *</span>
-              <input type="text" required x-model="form.language" class="rounded border border-black p-xs bg-white">
+              <select x-model="form.language" class="rounded border border-black p-xs bg-white">
+                <option value="">{{ __('Bitte wählen', 'flynt') }}</option>
+                {% for value, label in config.languages %}
+                  <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+              </select>
             </label>
 
             <fieldset class="flex flex-col gap-xs">
@@ -276,12 +287,17 @@
             </fieldset>
 
             <fieldset class="flex flex-col gap-xs">
-              <legend class="font-bodySmall mb-xs">{{ __('Zielgruppe', 'flynt') }}</legend>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-min">
-                {% for value, label in config.audiences %}
-                  <label class="flex items-start gap-xs">
-                    <input type="checkbox" value="{{ value }}" x-model="form.audiences" class="mt-1"><span>{{ label }}</span>
-                  </label>
+              <legend class="hidden font-bodySmall mb-xs">{{ __('Zielgruppe', 'flynt') }}</legend>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
+                {% for group in config.audienceGroups %}
+                  <fieldset class="flex flex-col gap-xs">
+                    <legend class="font-bodySmall font-bold mb-xs">{{ group.label }}</legend>
+                    {% for value, label in group.choices %}
+                      <label class="flex items-start gap-xs">
+                        <input type="checkbox" value="{{ value }}" x-model="form.audiences" class="mt-1"><span>{{ label }}</span>
+                      </label>
+                    {% endfor %}
+                  </fieldset>
                 {% endfor %}
               </div>
             </fieldset>
@@ -320,7 +336,7 @@
 
             {# When #}
             <fieldset class="flex flex-col gap-xs">
-              <legend class="font-bodySmall mb-xs">{{ __('Wann soll eure Veranstaltung stattfinden?', 'flynt') }} *</legend>
+              <legend class="font-bodySmall mb-xs">{{ __('Wann soll eure Veranstaltung am 14. oder 15.11.26 stattfinden?', 'flynt') }} *</legend>
               <div class="grid grid-cols-1 gap-min" :class="attempted && !form.dateMode ? 'field-error' : ''">
                 {% for value, label in config.dateMode %}
                   <label class="flex items-start gap-xs">
@@ -371,7 +387,7 @@
             </div>
 
             <label class="flex flex-col gap-xs">
-              <span class="font-bodySmall">{{ __('Hinweise zur klimafreundlichen Anreise', 'flynt') }}</span>
+              <span class="font-bodySmall">{{ __('Hinweise zur klimafreundlichen Anreise mit ÖNPV oder Fahrrad', 'flynt') }}</span>
               <textarea rows="3" x-model="form.mobilityInfo" class="rounded border border-black p-xs bg-white"></textarea>
             </label>
 
@@ -398,7 +414,7 @@
 
             <label class="flex items-start gap-xs">
               <input type="checkbox" x-model="form.fundingInterest" class="mt-1">
-              <span>{{ __('Ja, wir möchten uns für eine Programmförderung bewerben.', 'flynt') }}</span>
+              <span>{{ __('Ja, wir möchten uns für eine Programmförderung in Höhe von 100 € netto bewerben.', 'flynt') }}</span>
             </label>
 
             <label class="flex items-start gap-xs" :class="attempted && !form.acceptCriteria ? 'field-error' : ''">
