@@ -163,12 +163,10 @@
 
             {# Info Box #}
             <div class="flex flex-col">
-              <div class="flex flex-row justify-between items-center gap-xs">
-                <div class="">
-                  {% if project.dateProject %}
-                    <span class="font-h3Regular !mb-0">{{ project.dateProject }}</span>
-                  {% endif %}
-                </div>
+              <div class="flex flex-row justify-between items-center gap-xs mb-xs">
+                {% if project.dateProject %}
+                  <span class="font-h3Regular !mb-0">{{ project.dateProject }}</span>
+                {% endif %}
                 {% if project.postLocation %}
                   <div class="font-h3Regular !mb-0">{{ project.postLocation }}</div>
                 {% endif %}
