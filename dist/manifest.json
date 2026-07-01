@@ -1,11 +1,20 @@
 {
   "Components/BlockGalleryMedia/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-ecbf5980.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
     "isDynamicEntry": true,
     "src": "Components/BlockGalleryMedia/script.js"
+  },
+  "Components/BlockNewsSlider/script.js": {
+    "file": "assets/script-8fa1e923.js",
+    "imports": [
+      "_swiper-bundle-917ff535.js",
+      "_helpers-0bb72b7a.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "Components/BlockNewsSlider/script.js"
   },
   "Components/BlockSliderLogos/script.js": {
     "file": "assets/script-e6269e81.js",
@@ -16,7 +25,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-48bc6e8a.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -24,7 +33,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-ecbf5980.js",
+    "file": "assets/script-48bc6e8a.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -39,7 +48,7 @@
     "css": [
       "assets/script-b3ce9496.css"
     ],
-    "file": "assets/script-ebe7751e.js",
+    "file": "assets/script-bc1d8c7c.js",
     "imports": [
       "assets/main.js"
     ],
@@ -127,7 +136,7 @@
   },
   "Components/ZZZ/BlockCta/Assets/facebook.svg": {
     "file": "assets/facebook-8975c208.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/facebook.svg"
+    "src": "Components/ZZZ/BlockCta/Assets/linkedin.svg"
   },
   "Components/ZZZ/BlockCta/Assets/instagram.svg": {
     "file": "assets/instagram-5bab2c82.svg",
@@ -135,7 +144,7 @@
   },
   "Components/ZZZ/BlockCta/Assets/linkedin.svg": {
     "file": "assets/facebook-8975c208.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/facebook.svg"
+    "src": "Components/ZZZ/BlockCta/Assets/linkedin.svg"
   },
   "Components/ZZZ/BlockCta/Assets/logo.svg": {
     "file": "assets/logo-eeb7436e.svg",
@@ -209,7 +218,7 @@
     "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
-    "file": "assets/script-c4d6d777.js",
+    "file": "assets/script-5672918d.js",
     "imports": [
       "assets/main.js"
     ],
@@ -349,6 +358,7 @@
     "dynamicImports": [
       "node_modules/@webreflection/custom-elements-builtin/esm/index.js",
       "Components/BlockGalleryMedia/script.js",
+      "Components/BlockNewsSlider/script.js",
       "Components/BlockSliderLogos/script.js",
       "Components/BlockVideoOembed/script.js",
       "Components/BlockVideoText/script.js",
@@ -378,12 +388,12 @@
       "Components/ZZZ/SliderLogos/script.js",
       "Components/ZZZ/SliderQuotes/script.js"
     ],
-    "file": "assets/main-defbc25b.js",
+    "file": "assets/main-c88664a8.js",
     "isEntry": true,
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-41df3274.css",
+    "file": "assets/main-7a6184b3.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
@@ -393,7 +403,7 @@
     "src": "assets/print.scss"
   },
   "assets/tinyMce.scss": {
-    "file": "assets/tinyMce-a91fd4b4.css",
+    "file": "assets/tinyMce-ea380e05.css",
     "isEntry": true,
     "src": "assets/tinyMce.scss"
   },
