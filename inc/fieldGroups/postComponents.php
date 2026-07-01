@@ -40,6 +40,15 @@ add_action('Flynt/afterRegisterComponents', function () {
                 ],
             ],
             [
+                'label' => __('Ticket Link', 'flynt'),
+                'name' => 'postTicketLink',
+                'type' => 'link',
+                'return_format' => 'array',
+                'wrapper' => [
+                    'width' => 100,
+                ],
+            ],
+            [
                 'label' => __('Description', 'flynt'),
                 'name' => 'postDescription',
                 'type' => 'wysiwyg',

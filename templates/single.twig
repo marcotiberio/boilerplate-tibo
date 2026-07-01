@@ -83,9 +83,21 @@
               </div>
             </div>
             <div class="flex flex-col pt-md">
-              {% if post.postDescription %}
-                <div class="flex flex-col w-full lg:w-[calc(66%_-_12.5px)] mr-auto">
-                  <p class="font-bodySans">{{ post.postDescription }}</p>
+              {% set ticketLink = post.postTicketLink %}
+              {% if post.postDescription or ticketLink %}
+                <div class="flex flex-col lg:flex-row gap-lg w-full">
+                  {% if post.postDescription %}
+                    <div class="flex flex-col w-full lg:w-[calc(80%_-_12.5px)] mr-auto">
+                      <p class="font-bodySans">{{ post.postDescription }}</p>
+                    </div>
+                  {% endif %}
+                  {% if ticketLink %}
+                    <div class="flex flex-col w-full lg:w-[calc(20%_-_12.5px)] lg:items-end">
+                      <a class="button button--outline no-underline !w-full" href="{{ ticketLink.url }}"{% if ticketLink.target %} target="{{ ticketLink.target }}" rel="noreferrer noopener"{% endif %}>
+                        {{ ticketLink.title|default('Buy tickets') }}
+                      </a>
+                    </div>
+                  {% endif %}
                 </div>
               {% endif %}
               <section class="post-main">
