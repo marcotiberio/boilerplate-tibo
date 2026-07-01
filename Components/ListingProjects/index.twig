@@ -163,14 +163,12 @@
 
             {# Info Box #}
             <div class="flex flex-col gap-min">
-              <div class="flex flex-row justify-between items-center gap-xs">
-                {% if project.dateProject %}
-                  <span class="font-h3Regular !mb-0">{{ project.dateProject }}</span>
-                {% endif %}
-                {% if project.postLocation %}
-                  <div class="font-h3Regular !mb-0">{{ project.postLocation }}</div>
-                {% endif %}
+              {% if project.dateProject or project.postLocation %}
+              <div class="flex flex-row {% if project.dateProject and project.postLocation %}justify-between {% else %}justify-start {% endif %} items-center {% if project.dateProject and project.postLocation %}gap-xs{% else %}gap-0 {% endif %}">
+                <span class="font-h3Regular !mb-0">{{ project.dateProject }}</span>
+                <span class="font-h3Regular !mb-0">{{ project.postLocation }}</span>
               </div>
+              {% endif %}
               <div class="mb-min transition-colors duration-200 group-hover:text-[var(--cat-color)]">
                 <span class="!mb-0 font-h2">{{ project.postArtist }} – </span>
                 <span class="!mb-0 font-h2Regular">{{ project.title }}</span>
