@@ -178,7 +178,8 @@
                 <span class="!mb-0 font-h2Regular">{{ project.title }}</span>
               </div>
               {% if project.postDescription %}
-                <span class="font-bodySmall !mb-0">{{ project.postDescription|length > 130 ? project.postDescription|slice(0, 130) ~ '…' : project.postDescription }}</span>
+                {% set excerpt = project.postDescription|striptags|trim %}
+                <span class="font-bodySmall !mb-0">{{ excerpt|length > 130 ? excerpt|slice(0, 130) ~ '…' : excerpt }}</span>
               {% endif %}
             </div>
 
