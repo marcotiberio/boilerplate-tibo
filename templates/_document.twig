@@ -15,7 +15,17 @@
         class="pageWrapper">
         <header class="w-full">
           {% block header %}
-            <div class="wrapper wrapper--menu flex justify-center items-center w-full h-auto fixed top-0 left-0 z-[3000] transition ease-in-out delay-300 bg-white">
+            <div
+              x-cloak
+              x-data="{ revealed: false }"
+              x-init="
+                const hero = document.getElementById('hero');
+                const past = () => !hero || window.scrollY > (hero.offsetHeight - 1);
+                revealed = past();
+                window.addEventListener('scroll', () => { revealed = past() }, { passive: true });
+              "
+              :class="revealed ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'"
+              class="wrapper wrapper--menu flex justify-center items-center w-full h-auto fixed top-0 left-0 z-[3000] transition ease-in-out delay-300 bg-white">
               {# <div class="hidden lg:block w-full boxed !max-w-screen-box mx-aut bg-white">
                 <div class="boxed !p-0 flex flex-row justify-between gap-sm">
                   {{ renderComponent('NavigationMainLeft') }}
@@ -32,7 +42,7 @@
             </div>
           {% endblock %}
         </header>
-        <main id="mainContent" class="mainContent min-h-[calc(100vh-44px)] lg:min-h-[calc(100vh-72px)] mt-[44px] lg:mt-[72px]" aria-label="{{ __('Content', 'flynt') }}">
+        <main id="mainContent" class="mainContent" aria-label="{{ __('Content', 'flynt') }}">
           <a href="#mainContent" class="skipLink">
             {{ __("Skip to main content", "flynt") }}
           </a>
