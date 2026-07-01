@@ -17,18 +17,18 @@
   <div class="relative z-10 boxed flex flex-col justify-between flex-1 gap-lg py-sm">
     <div class="flex flex-col gap-xs md:gap-0">
       {# Top row: kicker + date #}
-      <div class="flex flex-row justify-between items-start gap-sm">
+      <div class="flex flex-row justify-between items-start gap-sm hero-fade hero-fade--2">
         {% if kicker %}<span class="font-h1Hero hero-text-shadow">{{ kicker }}</span>{% endif %}
         {% if dateText %}<span class="font-h1Hero hero-text-shadow">{{ dateText }}</span>{% endif %}
       </div>
 
       {# Brand wordmark #}
-      <div class="flex items-center">
+      <div class="flex items-center hero-fade hero-fade--1">
         <img class="w-full h-auto" src="{{ wordmark.src | default(wordmarkUrl) }}" alt="{{ wordmark.alt | default('LOOPTOPIA') }}">
       </div>
     </div>
 
-    <div class="flex flex-row justify-between items-start gap-sm flex-wrap">
+    <div class="flex flex-row justify-between items-start gap-sm flex-wrap hero-fade hero-fade--3">
       {# Headline #}
       <div class="flex flex-col gap-md w-fit">
         {% if headline %}<h1 class="font-bodyLarge hero-text-shadow">{{ headline }}</h1>{% endif %}

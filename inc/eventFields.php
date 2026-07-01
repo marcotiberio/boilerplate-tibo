@@ -107,10 +107,11 @@ function getConfig()
             'nein' => __('Nein', 'flynt'),
             'ja'   => __('Ja', 'flynt'),
         ],
-        // Wann? — either/or radio
-        'dateMode' => [
-            '14.11.26' => __('14.11.26', 'flynt'),
-            '15.11.26'   => __('15.11.26', 'flynt'),
+        // Wann? — event runs on 14. and/or 15.11.26, both selectable.
+        // Keys are ISO dates (stable for storage); labels are display-only.
+        'dates' => [
+            '2026-11-14' => __('14.11.26', 'flynt'),
+            '2026-11-15' => __('15.11.26', 'flynt'),
         ],
         // Wo? — either/or radio
         'locationMode' => [

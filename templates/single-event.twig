@@ -51,12 +51,17 @@
       {% if post.meta('intro') %}<dt>{{ __('Introtext', 'flynt') }}</dt><dd>{{ post.meta('intro') }}</dd>{% endif %}
       {% if post.meta('credits') %}<dt>{{ __('Bildnachweise / Credits', 'flynt') }}</dt><dd>{{ post.meta('credits') }}</dd>{% endif %}
 
-      {% if labels.dateMode %}<dt>{{ __('Termin', 'flynt') }}</dt><dd>{{ labels.dateMode }}</dd>{% endif %}
-      {% if post.meta('dateFrom') %}
-        <dt>{{ __('Datum', 'flynt') }}</dt>
-        <dd>{{ post.meta('dateFrom') }}{% if post.meta('dateTo') %} – {{ post.meta('dateTo') }}{% endif %}</dd>
+      {% set schedule = post.meta('eventSchedule') %}
+      {% if schedule %}
+        <dt>{{ __('Termine & Zeiten', 'flynt') }}</dt>
+        <dd>
+          {% for row in schedule %}
+            {{ row.date }}{% if row.timeStart %}, {{ row.timeStart }}{% if row.timeEnd %}–{{ row.timeEnd }}{% endif %}{% endif %}{% if not loop.last %}<br>{% endif %}
+          {% endfor %}
+        </dd>
+      {% elseif labels.dates %}
+        <dt>{{ __('Termin', 'flynt') }}</dt><dd>{{ labels.dates|join(', ') }}</dd>
       {% endif %}
-      {% if post.meta('timeStart') %}<dt>{{ __('Zeit', 'flynt') }}</dt><dd>{{ post.meta('timeStart') }}{% if post.meta('timeEnd') %}–{{ post.meta('timeEnd') }}{% endif %}</dd>{% endif %}
 
       {% if labels.locationMode %}<dt>{{ __('Ort', 'flynt') }}</dt><dd>{{ labels.locationMode }}</dd>{% endif %}
       {% if post.meta('street') %}<dt>{{ __('Straße + Hausnummer', 'flynt') }}</dt><dd>{{ post.meta('street') }}</dd>{% endif %}

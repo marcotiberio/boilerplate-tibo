@@ -240,62 +240,41 @@ add_action('Flynt/afterRegisterComponents', function () {
             ],
             [
                 'label' => __('Wann soll eure Veranstaltung stattfinden?', 'flynt'),
-                'name' => 'dateMode',
-                'type' => 'radio',
-                'choices' => $config['dateMode'],
+                'name' => 'dates',
+                'type' => 'checkbox',
+                'choices' => $config['dates'],
                 'required' => 1,
             ],
             [
-                'label' => __('Datum von', 'flynt'),
-                'name' => 'dateFrom',
-                'type' => 'date_picker',
-                'display_format' => 'd.m.Y',
-                'return_format' => 'Y-m-d',
-                'conditional_logic' => [
+                'label' => __('Termine & Zeiten', 'flynt'),
+                'name' => 'eventSchedule',
+                'type' => 'repeater',
+                'instructions' => __('Pro gewähltem Tag Start- und Endzeit.', 'flynt'),
+                'layout' => 'table',
+                'sub_fields' => [
                     [
-                        ['fieldPath' => 'dateMode', 'operator' => '==', 'value' => 'wunsch'],
+                        'label' => __('Tag', 'flynt'),
+                        'name' => 'date',
+                        'type' => 'text',
+                        'wrapper' => ['width' => 34],
+                    ],
+                    [
+                        'label' => __('Startzeit', 'flynt'),
+                        'name' => 'timeStart',
+                        'type' => 'time_picker',
+                        'display_format' => 'H:i',
+                        'return_format' => 'H:i',
+                        'wrapper' => ['width' => 33],
+                    ],
+                    [
+                        'label' => __('Ende', 'flynt'),
+                        'name' => 'timeEnd',
+                        'type' => 'time_picker',
+                        'display_format' => 'H:i',
+                        'return_format' => 'H:i',
+                        'wrapper' => ['width' => 33],
                     ],
                 ],
-                'wrapper' => ['width' => 25],
-            ],
-            [
-                'label' => __('Datum bis', 'flynt'),
-                'name' => 'dateTo',
-                'type' => 'date_picker',
-                'display_format' => 'd.m.Y',
-                'return_format' => 'Y-m-d',
-                'conditional_logic' => [
-                    [
-                        ['fieldPath' => 'dateMode', 'operator' => '==', 'value' => 'wunsch'],
-                    ],
-                ],
-                'wrapper' => ['width' => 25],
-            ],
-            [
-                'label' => __('Startzeit', 'flynt'),
-                'name' => 'timeStart',
-                'type' => 'time_picker',
-                'display_format' => 'H:i',
-                'return_format' => 'H:i',
-                'conditional_logic' => [
-                    [
-                        ['fieldPath' => 'dateMode', 'operator' => '==', 'value' => 'wunsch'],
-                    ],
-                ],
-                'wrapper' => ['width' => 25],
-            ],
-            [
-                'label' => __('Ende', 'flynt'),
-                'name' => 'timeEnd',
-                'type' => 'time_picker',
-                'display_format' => 'H:i',
-                'return_format' => 'H:i',
-                'conditional_logic' => [
-                    [
-                        ['fieldPath' => 'dateMode', 'operator' => '==', 'value' => 'wunsch'],
-                    ],
-                ],
-                'wrapper' => ['width' => 25],
             ],
             [
                 'label' => __('Wo soll euer Angebot stattfinden?', 'flynt'),

@@ -63,11 +63,6 @@ function handleSubmission(\WP_REST_Request $request)
         'eventTitle'     => sanitize_text_field($params['eventTitle'] ?? ''),
         'intro'          => sanitize_text_field($params['intro'] ?? ''),
         'credits'        => sanitize_text_field($params['credits'] ?? ''),
-        'dateMode'       => sanitize_key($params['dateMode'] ?? ''),
-        'dateFrom'       => sanitize_text_field($params['dateFrom'] ?? ''),
-        'dateTo'         => sanitize_text_field($params['dateTo'] ?? ''),
-        'timeStart'      => sanitize_text_field($params['timeStart'] ?? ''),
-        'timeEnd'        => sanitize_text_field($params['timeEnd'] ?? ''),
         'locationMode'   => sanitize_key($params['locationMode'] ?? ''),
         'street'         => sanitize_text_field($params['street'] ?? ''),
         'postalCode'     => sanitize_text_field($params['postalCode'] ?? ''),
@@ -80,6 +75,19 @@ function handleSubmission(\WP_REST_Request $request)
     $programTypes = allowedKeys($params['programTypes'] ?? [], $config['programTypes']);
     $audiences    = allowedKeys($params['audiences'] ?? [], $config['audiences']);
     $accessibility = allowedKeys($params['accessibility'] ?? [], $config['accessibility']);
+
+    // Event day(s) + per-day times. `dates` is the set of selected day keys;
+    // `times` is a map keyed by the same day → { start, end } (HH:MM).
+    $dates = allowedKeys($params['dates'] ?? [], $config['dates']);
+    $rawTimes = (array) ($params['times'] ?? []);
+    $schedule = [];
+    foreach ($dates as $dateKey) {
+        $schedule[] = [
+            'date'      => $config['dates'][$dateKey],
+            'timeStart' => sanitizeTime($rawTimes[$dateKey]['start'] ?? ''),
+            'timeEnd'   => sanitizeTime($rawTimes[$dateKey]['end'] ?? ''),
+        ];
+    }
 
     // Booleans.
     $venueOpenForOthers = !empty($params['venueOpenForOthers']);
@@ -119,10 +127,15 @@ function handleSubmission(\WP_REST_Request $request)
     if (!isset($config['format'][$data['format']])) {
         $errors[] = __('Bitte wähle ein Format.', 'flynt');
     }
-    if (!isset($config['dateMode'][$data['dateMode']])) {
-        $errors[] = __('Bitte wähle eine Terminoption.', 'flynt');
-    } elseif ($data['dateMode'] === 'wunsch' && $data['dateFrom'] === '') {
-        $errors[] = __('Bitte gib ein Datum an.', 'flynt');
+    if (!$dates) {
+        $errors[] = __('Bitte wähle mindestens einen Veranstaltungstag.', 'flynt');
+    } else {
+        foreach ($schedule as $row) {
+            if ($row['timeStart'] === '') {
+                $errors[] = __('Bitte gib für jeden gewählten Tag eine Startzeit an.', 'flynt');
+                break;
+            }
+        }
     }
     if (!isset($config['locationMode'][$data['locationMode']])) {
         $errors[] = __('Bitte wähle eine Ortsoption.', 'flynt');
@@ -184,6 +197,8 @@ function handleSubmission(\WP_REST_Request $request)
     foreach ($data as $key => $value) {
         update_field($key, $value, $postId);
     }
+    update_field('dates', $dates, $postId);
+    update_field('eventSchedule', $schedule, $postId);
     update_field('goals', $goals, $postId);
     update_field('sectors', $sectors, $postId);
     update_field('programTypes', $programTypes, $postId);
@@ -240,6 +255,15 @@ function allowedKeys($values, $allowed)
 {
     $values = array_map('sanitize_key', (array) $values);
     return array_values(array_filter($values, fn ($v) => isset($allowed[$v])));
+}
+
+/**
+ * Normalise a submitted time to HH:MM, or '' if it isn't a valid 24h time.
+ */
+function sanitizeTime($value)
+{
+    $value = sanitize_text_field((string) $value);
+    return preg_match('/^([01]\d|2[0-3]):[0-5]\d$/', $value) ? $value : '';
 }
 
 /**
