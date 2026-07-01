@@ -84,8 +84,8 @@ function getConfig()
         ],
         // Wo? — either/or radio
         'locationMode' => [
-            'suche' => __('Wir haben keinen passenden Veranstaltungsort und freuen uns über Tipps und/oder Vernetzung', 'flynt'),
-            'eigen' => __('Wir haben einen passenden Veranstaltungsort', 'flynt'),
+            'suche' => __('Ich habe keinen  passenden Veranstaltungsort und freue mich über Tipps und/oder Vernetzung', 'flynt'),
+            'eigen' => __('Ich habe einen passenden Veranstaltungsort', 'flynt'),
         ],
     ];
 }

@@ -382,13 +382,13 @@
             </div>
 
             <label class="flex flex-col gap-xs">
-              <span class="font-bodySmall">{{ __('Hinweise zur klimafreundlichen Anreise mit ÖNPV oder Fahrrad', 'flynt') }}</span>
+              <span class="font-bodySmall">{{ __('Hinweise zur klimafreundlichen Anreise mit ÖPNV oder Fahrrad', 'flynt') }}</span>
               <textarea rows="3" x-model="form.mobilityInfo" class="rounded border border-black p-xs bg-white"></textarea>
             </label>
 
             <label class="flex items-start gap-xs">
               <input type="checkbox" x-model="form.venueOpenForOthers" class="mt-1">
-              <span>{{ __('Unser Veranstaltungsort bietet Möglichkeiten für weitere Programmpunkte oder Kooperationen.', 'flynt') }}</span>
+              <span>{{ __('Mein Veranstaltungsort bietet Möglichkeiten für weitere Programmpunkte oder Kooperationen.', 'flynt') }}</span>
             </label>
 
             <fieldset class="flex flex-col gap-xs">
@@ -409,13 +409,13 @@
 
             <label class="flex items-start gap-xs">
               <input type="checkbox" x-model="form.fundingInterest" class="mt-1">
-              <span>{{ __('Ja, wir möchten uns für eine Programmförderung in Höhe von 100 € netto bewerben', 'flynt') }}</span>
+              <span>{{ __('Ja, ich möchte mich für eine Programmförderung in Höhe von 100 € netto bewerben.', 'flynt') }}</span>
             </label>
 
             <label class="flex items-start gap-xs" :class="attempted && !form.acceptCriteria ? 'field-error' : ''">
               <input type="checkbox" required x-model="form.acceptCriteria" class="mt-1">
               <span>
-                {{ __('Ja, wir stimmen den Teilnahmekriterien zu', 'flynt') }}
+                {{ __('Ja, ich stimme den Teilnahmekriterien zu', 'flynt') }}
                 {% if criteriaLink %}
                   (<a href="{{ criteriaLink.url }}" target="_blank" rel="noopener" class="underline">{{ criteriaLink.title ?: __('öffnen', 'flynt') }}</a>)
                 {% endif %} *
@@ -425,7 +425,7 @@
             <label class="flex items-start gap-xs" :class="attempted && !form.acceptTerms ? 'field-error' : ''">
               <input type="checkbox" required x-model="form.acceptTerms" class="mt-1">
               <span>
-                {{ __('Ja, wir stimmen den Nutzungsbedingungen zu', 'flynt') }}
+                {{ __('Ja, ich stimme den Nutzungsbedingungen zu', 'flynt') }}
                 {% if termsLink %}
                   (<a href="{{ termsLink.url }}" target="_blank" rel="noopener" class="underline">{{ termsLink.title ?: __('öffnen', 'flynt') }}</a>)
                 {% endif %} *
