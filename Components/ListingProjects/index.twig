@@ -52,7 +52,7 @@
                 :aria-expanded="open"
                 @click="open = !open"
               >
-                <span>Pillars</span>
+                <span>Programs</span>
                 <svg class="w-auto h-auto transition-transform duration-200 shrink-0" :class="open ? 'rotate-180' : ''" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M4 6L8 10L12 6" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -165,11 +165,8 @@
             <div class="flex flex-col">
               <div class="flex flex-row justify-between items-center gap-xs">
                 <div class="">
-                  {% if project.dateStart %}
-                    <span class="font-h3Regular !mb-0">{{ project.dateStart('d.m.Y') }} - </span>
-                  {% endif %}
-                  {% if project.dateEnd %}
-                    <span class="font-h3Regular !mb-0">{{ project.dateEnd('d.m.Y') }}</span>
+                  {% if project.dateProject %}
+                    <span class="font-h3Regular !mb-0">{{ project.dateProject }}</span>
                   {% endif %}
                 </div>
                 {% if project.postLocation %}

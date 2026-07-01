@@ -15,8 +15,7 @@ add_filter('Flynt/addComponentData?name=ListingProjects', function ($data) {
         'post_type'           => 'post',
         'ignore_sticky_posts' => 1,
         'posts_per_page'      => $postsPerPage,
-        'orderby'             => 'date',
-        'order'               => 'DESC',
+        'orderby'             => 'menu',
     ];
 
     $posts = Timber::get_posts($queryArgs);

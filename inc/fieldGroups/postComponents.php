@@ -19,28 +19,9 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'endpoint' => 0
             ],
             [
-                'label' => __('Date Start', 'flynt'),
-                'name' => 'dateStart',
-                'type' => 'date_picker',
-                'display_format' => 'd.m.Y',
-                'return_format' => 'd.m.Y',
-                'first_day' => 1,
-                'required' => 0,
-                'wrapper' => [
-                    'width' => 50,
-                ],
-            ],
-            [
-                'label' => __('Date End', 'flynt'),
-                'name' => 'dateEnd',
-                'type' => 'date_picker',
-                'display_format' => 'd.m.Y',
-                'return_format' => 'd.m.Y',
-                'first_day' => 1,
-                'required' => 1,
-                'wrapper' => [
-                    'width' => 50,
-                ],
+                'label' => __('Date', 'flynt'),
+                'name' => 'dateProject',
+                'type' => 'text',
             ],
             [
                 'label' => __('Artist', 'flynt'),
@@ -114,6 +95,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockSpacer\getACFLayout(),
                     Components\BlockSliderImages\getACFLayout(),
                     Components\SliderBoxText\getACFLayout(),
+                    Components\BlockVideoOembed\getACFLayout(),
                 ],
             ],
         ],

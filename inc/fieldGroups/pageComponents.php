@@ -74,6 +74,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\ListingProjects\getACFLayout(),
                     Components\BlockSpacer\getACFLayout(),
                     Components\BlockSliderImages\getACFLayout(),
+                    Components\BlockVideoOembed\getACFLayout(),
                 ],
             ],
         ],

@@ -10,6 +10,14 @@
     "isDynamicEntry": true,
     "src": "Components/BlockSliderImages/script.js"
   },
+  "Components/BlockVideoOembed/script.js": {
+    "file": "assets/script-ecbf5980.js",
+    "imports": [
+      "_helpers-0bb72b7a.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "Components/BlockVideoOembed/script.js"
+  },
   "Components/ListComponents/script.js": {
     "file": "assets/script-6fca4744.js",
     "imports": [
@@ -72,7 +80,7 @@
     "src": "assets/icons/youtube.svg"
   },
   "Components/ZZZ/BlockGalleryMedia/script.js": {
-    "file": "assets/script-80eb5179.js",
+    "file": "assets/script-9c1467d8.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -102,16 +110,8 @@
     "isDynamicEntry": true,
     "src": "Components/ZZZ/BlockSliderLogos/script.js"
   },
-  "Components/ZZZ/BlockVideoOembed/script.js": {
-    "file": "assets/script-ecbf5980.js",
-    "imports": [
-      "_helpers-0bb72b7a.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "Components/ZZZ/BlockVideoOembed/script.js"
-  },
   "Components/ZZZ/BlockVideoText/script.js": {
-    "file": "assets/script-9c1467d8.js",
+    "file": "assets/script-80eb5179.js",
     "imports": [
       "_helpers-0bb72b7a.js"
     ],
@@ -126,7 +126,7 @@
     "css": [
       "assets/script-b3ce9496.css"
     ],
-    "file": "assets/script-2a376389.js",
+    "file": "assets/script-4344b10c.js",
     "imports": [
       "assets/main.js"
     ],
@@ -212,7 +212,7 @@
     "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
-    "file": "assets/script-f2144b62.js",
+    "file": "assets/script-de798bbe.js",
     "imports": [
       "assets/main.js"
     ],
@@ -367,6 +367,7 @@
     "dynamicImports": [
       "node_modules/@webreflection/custom-elements-builtin/esm/index.js",
       "Components/BlockSliderImages/script.js",
+      "Components/BlockVideoOembed/script.js",
       "Components/ListComponents/script.js",
       "Components/NavigationBurger/script.js",
       "_script-9ba1850d.js",
@@ -378,7 +379,6 @@
       "Components/ZZZ/BlockProductSpecs/script.js",
       "_script-9ba1850d.js",
       "Components/ZZZ/BlockSliderLogos/script.js",
-      "Components/ZZZ/BlockVideoOembed/script.js",
       "Components/ZZZ/BlockVideoText/script.js",
       "Components/ZZZ/GridImages/script.js",
       "Components/ZZZ/GridPostsArchive/script.js",
@@ -396,12 +396,12 @@
       "Components/ZZZ/SliderLogos/script.js",
       "Components/ZZZ/SliderQuotes/script.js"
     ],
-    "file": "assets/main-d35015ce.js",
+    "file": "assets/main-f6f71905.js",
     "isEntry": true,
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-a308894f.css",
+    "file": "assets/main-0395a59d.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },

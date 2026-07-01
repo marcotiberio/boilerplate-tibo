@@ -73,11 +73,8 @@
                   {% endfor %}
                 </div> #}
                 <div class="">
-                  {% if post.dateStart %}
-                    <span class="font-h2 !mb-0">{{ post.dateStart('d.m.Y') }} - </span>
-                  {% endif %}
-                  {% if post.dateEnd %}
-                    <span class="font-h2 !mb-0">{{ post.dateEnd('d.m.Y') }}</span>
+                  {% if post.dateProject %}
+                    <span class="font-h2 !mb-0">{{ post.dateProject }}</span>
                   {% endif %}
                 </div>
                 {% if post.postLocation %}

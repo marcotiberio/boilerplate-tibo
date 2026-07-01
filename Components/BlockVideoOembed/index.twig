@@ -5,8 +5,8 @@
   style="
     color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
     background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
-  <div class="boxed md:!pt-0">
-    <div class="video w-full md:w-2/3 mx-auto" data-video-size="{{ options.size }}">
+  <div class="boxed">
+    <div class="video w-full mx-auto" data-video-size="{{ options.size }}">
       {# {% include 'Partials/_figure.twig' ignore missing with {image: posterImage} only %} #}
       <div data-ref="videoPlayer" class="video-player w-full mx-auto" data-state="isLoaded">
         {{ oembed }}
