@@ -1,0 +1,34 @@
+<flynt-component
+  load:on="visible" name="BlockFullscreenMedia"
+  class="w-full lgplus:w-screen relative overflow-hidden flex items-center {{ height|default('min-h-[70vh]') }}">
+  {# Full-bleed background. Falls back to jungle green until an image is set. #}
+  <div class="absolute inset-0 z-0 bg-jungle"></div>
+  {% if image %}
+    <img
+      class="hidden lgplus:block absolute inset-0 w-full h-full object-cover z-0"
+      src="{{ image.src }}"
+      alt="{{ image.alt|e | default('') }}"
+      loading="lazy">
+  {% endif %}
+  {% if imageMobile %}
+    <img
+      class="block lgplus:hidden absolute inset-0 w-full h-full object-cover z-0"
+      src="{{ imageMobile.src }}"
+      alt="{{ imageMobile.alt|e | default('') }}"
+      loading="lazy">
+  {% endif %}
+  <div class="absolute inset-0 z-[1] bg-dark-brown/25 pointer-events-none"></div>
+
+  {% if quoteHtml or attribution %}
+    <div class="relative z-10 boxed w-full flex">
+      <blockquote class="w-full max-w-md lg:ml-auto bg-dark-green/90 text-off-white rounded-card p-md flex flex-col gap-sm">
+        {% if quoteHtml %}
+          <div class="wysiwyg font-h3">{{ quoteHtml|e('wp_kses_post') }}</div>
+        {% endif %}
+        {% if attribution %}
+          <cite class="not-italic text-sm text-moss">{{ attribution }}</cite>
+        {% endif %}
+      </blockquote>
+    </div>
+  {% endif %}
+</flynt-component>

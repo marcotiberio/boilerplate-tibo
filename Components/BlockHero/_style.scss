@@ -1,0 +1,12 @@
+flynt-component[name='BlockHero'] {
+  .wysiwyg {
+    h1,
+    h2 {
+      font-family: var(--primary-font-family);
+    }
+  }
+
+  .shadow-lg {
+    box-shadow: 0 10px 30px rgb(0 0 0 / 15%);
+  }
+}

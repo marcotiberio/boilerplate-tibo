@@ -1,0 +1,29 @@
+flynt-component[name='BlockNewsletter'] {
+  // Screen-reader-only label helper (in case the global utility is unavailable).
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .jgi-newsletter__input {
+    background-color: theme('colors.white');
+    color: theme('colors.dark-green');
+
+    &::placeholder {
+      color: theme('colors.dark-green');
+      opacity: 0.5;
+    }
+
+    &:focus {
+      outline: 2px solid theme('colors.dark-green');
+      outline-offset: 1px;
+    }
+  }
+}

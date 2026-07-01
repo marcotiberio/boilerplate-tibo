@@ -1,0 +1,34 @@
+<flynt-component
+  load:on="visible"
+  name="BlockNewsletter"
+  class="w-full {% if not options.colorBackground %}bg-moss{% endif %}"
+  {% if options.colorBackground or options.colorText %}
+  style="
+    {% if options.colorText %}color: {{ options.colorText }};{% endif %}
+    {% if options.colorBackground %}background-color: {{ options.colorBackground }};{% endif %}"
+  {% endif %}
+>
+  <div class="boxed py-xl">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg items-center">
+      <div>
+        {% if image %}
+          <img class="w-full h-full object-cover rounded-card" src="{{ image.src }}" alt="{{ image.alt|e|default('') }}">
+        {% endif %}
+      </div>
+      <div class="flex flex-col gap-sm">
+        {% if title %}
+          <h2 class="font-h2 text-dark-green">{{ title }}</h2>
+        {% endif %}
+        {% if contentHtml %}
+          <div class="wysiwyg">{{ contentHtml|e('wp_kses_post') }}</div>
+        {% endif %}
+        {# NOTE: markup only — no ESP wired yet. onsubmit prevented so nothing is sent. #}
+        <form class="jgi-newsletter flex flex-col sm:flex-row gap-xs w-full" onsubmit="return false;" aria-label="{{ title|e|default('Newsletter') }}">
+          <label class="sr-only" for="jgi-nl-email">{{ placeholder|e }}</label>
+          <input id="jgi-nl-email" type="email" name="email" class="jgi-newsletter__input flex-1 px-sm py-xs rounded-cta border border-dark-green/20" placeholder="{{ placeholder|e }}">
+          <button type="submit" class="button button--fullOrange">{{ buttonLabel|e }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</flynt-component>

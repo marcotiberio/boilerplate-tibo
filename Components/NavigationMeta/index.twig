@@ -1,0 +1,29 @@
+<flynt-component load:on="idle" name="NavigationMeta" class="w-full bg-dark-green text-off-white">
+  <div class="boxed !py-min !max-w-screen-box flex flex-row justify-between items-center gap-sm text-sm">
+    <div class="flex items-center gap-xs min-w-0">
+      {% if highlightText %}
+        <span class="truncate">{{ highlightText }}</span>
+      {% endif %}
+      {% if highlightLink %}
+        <a class="button button--link !p-0 !text-off-white whitespace-nowrap"
+          href="{{ highlightLink.url }}"
+          {% if highlightLink.target %}target="{{ highlightLink.target }}" rel="noreferrer noopener"{% endif %}>
+          {{ highlightLink.title }}
+        </a>
+      {% endif %}
+    </div>
+    {% if links %}
+      <nav class="hidden md:flex items-center gap-sm" aria-label="{{ __('Meta', 'flynt') }}">
+        {% for l in links %}
+          {% if l.link %}
+            <a class="hover:underline underline-offset-4 whitespace-nowrap"
+              href="{{ l.link.url }}"
+              {% if l.link.target %}target="{{ l.link.target }}" rel="noreferrer noopener"{% endif %}>
+              {{ l.link.title }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </nav>
+    {% endif %}
+  </div>
+</flynt-component>

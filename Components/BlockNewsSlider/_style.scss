@@ -1,0 +1,23 @@
+flynt-component[name='BlockNewsSlider'] {
+  .slider-button {
+    align-items: center;
+    border: 1px solid currentColor;
+    border-radius: 9999px;
+    cursor: pointer;
+    display: flex;
+    height: 44px;
+    justify-content: center;
+    width: 44px;
+
+    &--prev,
+    &--next {
+      flex: none;
+    }
+
+    &.swiper-button-disabled {
+      cursor: default;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+}

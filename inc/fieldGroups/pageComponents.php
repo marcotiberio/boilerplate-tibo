@@ -64,6 +64,14 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'type' => 'flexible_content',
                 'button_label' => __('Add Component', 'flynt'),
                 'layouts' => [
+                    // JGI homepage components
+                    Components\BlockHero\getACFLayout(),
+                    Components\BlockStats\getACFLayout(),
+                    Components\BlockNewsSlider\getACFLayout(),
+                    Components\BlockFullscreenMedia\getACFLayout(),
+                    Components\BlockNewsletter\getACFLayout(),
+                    Components\BlockWysiwygColumns\getACFLayout(),
+                    // Boilerplate components
                     Components\BlockAnchor\getACFLayout(),
                     Components\BlockBannerCta\getACFLayout(),
                     Components\BlockDivider\getACFLayout(),

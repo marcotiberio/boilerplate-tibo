@@ -13,11 +13,10 @@
         <header class="w-full">
           {% block header %}
             <div class="wrapper wrapper--menu flex justify-center items-center w-full h-[87px] lg:h-auto fixed top-0 left-0 z-[3000] transition ease-in-out delay-300">
-              <div class="hidden lg:block w-full boxed !max-w-screen-box mx-aut bg-white">
-                <div class="boxed !p-0 flex flex-row justify-between gap-sm">
-                  {{ renderComponent('NavigationMainLeft') }}
-                  {{ renderComponent('NavigationMainLogo') }}
-                  {{ renderComponent('NavigationMainRight') }}
+              <div class="hidden lg:block w-full bg-white">
+                {{ renderComponent('NavigationMeta') }}
+                <div class="w-full boxed !max-w-screen-box !py-0 mx-auto">
+                  {{ renderComponent('NavigationMain') }}
                 </div>
               </div>
               <div class="block lg:hidden w-screen fixed top-0 left-0">

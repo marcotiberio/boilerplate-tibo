@@ -17,6 +17,8 @@ module.exports = {
       DEFAULT: '8px',
       image: '8px',
       button: '50px',
+      cta: '12px',    // JGI rounded-[12px] buttons
+      card: '16px',   // JGI cards
       full: '9999px'
     },
     colors: {
@@ -24,6 +26,15 @@ module.exports = {
       black: '#000000',
       current: 'currentColor',
       transparent: 'transparent',
+      // JGI palette (Figma wFPGQZAbPBLbmaZX1FMn6f) — see .build-agent/tailwind.tokens.js
+      'dark-green': '#113328',
+      jungle: '#294a3e',
+      moss: '#d2e8c3',
+      beige: '#f2e3d3',
+      'off-white': '#fcfbfa',
+      'dark-brown': '#1c1918',
+      'muted-black': '#45423f',
+      cta: '#d67416',
       // Project colors
       grei: '#f1f1f1',
       grey: {

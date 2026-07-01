@@ -1,0 +1,25 @@
+<flynt-component
+  load:on="visible"
+  name="BlockStats"
+  class="w-full bg-beige"
+  style="
+    {% if options.colorText %}color: {{ options.colorText }};{% endif %}
+    {% if options.colorBackground %}background-color: {{ options.colorBackground }};{% endif %}"
+  >
+  <div class="boxed py-xl">
+    {% if title %}
+      <h2 class="font-h2 text-dark-green mb-xl">{{ title }}</h2>
+    {% endif %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-sm">
+      {% for stat in stats %}
+        <div class="flex flex-col gap-sm p-sm">
+          {% if stat.icon %}
+            <img class="w-[68px] h-[68px] object-contain" src="{{ stat.icon.src }}" alt="{{ stat.icon.alt|e|default('') }}">
+          {% endif %}
+          <div class="font-h2 text-dark-green">{{ stat.value }}</div>
+          <p class="text-muted-black">{{ stat.label }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</flynt-component>

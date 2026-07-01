@@ -1,0 +1,51 @@
+<flynt-component
+  load:on="idle" name="BlockNewsSlider"
+  class="w-full overflow-hidden py-xl">
+  <script type="application/json">{{ jsonData|json_encode }}</script>
+  <div class="boxed">
+    <div class="flex justify-between items-center mb-lg">
+      {% if title %}
+        <h2 class="font-h2 text-dark-green">{{ title }}</h2>
+      {% endif %}
+      <div class="flex gap-xs">
+        <button type="button" data-ref="prev" class="slider-button slider-button--prev" aria-label="{{ __('Vorherige', 'flynt') }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button type="button" data-ref="next" class="slider-button slider-button--next" aria-label="{{ __('Nächste', 'flynt') }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    {% if cards %}
+      <div data-ref="slider" class="swiper-container">
+        <div class="swiper-wrapper">
+          {% for card in cards %}
+            <div class="swiper-slide h-auto">
+              <article class="flex flex-col h-full bg-white rounded-card overflow-hidden">
+                {% if card.image and card.image.src %}
+                  <img class="w-full h-[181px] object-cover" src="{{ card.image.src }}" alt="{{ card.image.alt|e|default('') }}">
+                {% endif %}
+                <div class="flex flex-col gap-xs p-sm flex-1">
+                  {% if card.title %}
+                    <h3 class="font-h3 text-dark-brown">{{ card.title }}</h3>
+                  {% endif %}
+                  {% if card.excerpt %}
+                    <p class="text-sm text-muted-black flex-1">{{ card.excerpt }}</p>
+                  {% endif %}
+                  {% if card.link %}
+                    <a class="button button--fullOrange mt-sm" href="{{ card.link.url }}" {% if card.link.target %}target="_blank" rel="noopener"{% endif %}>{{ card.link.title|default('Mehr lesen') }}</a>
+                  {% endif %}
+                </div>
+              </article>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</flynt-component>
