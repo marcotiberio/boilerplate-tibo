@@ -1161,6 +1161,26 @@ add_action('wp_head', function () {
         ? esc_attr($buttonColors['hoverTextColor'])
         : '';
     
+    // Keep list typography (<ul>/<ol>) in sync with the "body" custom font style,
+    // so lists follow the same size & line-height the editor applies to <p>/.font-body.
+    // The --body-* fields below have no dedicated ACF controls, so without this they
+    // would stay pinned to their defaults while paragraphs drift to the body style.
+    foreach (($typographyOptions['customFontStyles'] ?? []) as $style) {
+        $cn = $style['className'] ?? '';
+        if ($cn === 'body' || $cn === 'font-body') {
+            if (!empty($style['lineHeight'])) {
+                $bodyLineHeight = floatval($style['lineHeight']);
+            }
+            if (!empty($style['sizeMobile'])) {
+                $bodySizeMobile = floatval($style['sizeMobile']);
+            }
+            if (!empty($style['sizeDesktop'])) {
+                $bodySizeDesktop = floatval($style['sizeDesktop']);
+            }
+            break;
+        }
+    }
+
     // Build CSS variables
     $css = ":root {\n";
     $css .= "  --primary-font-family: '{$headingFont}', {$headingFontFallback};\n";
