@@ -167,13 +167,6 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'required' => 1,
             ],
             [
-                'label' => __('Sprache der Veranstaltung', 'flynt'),
-                'name' => 'language',
-                'type' => 'text',
-                'required' => 1,
-                'wrapper' => ['width' => 50],
-            ],
-            [
                 'label' => __('Art des Programmpunkts', 'flynt'),
                 'name' => 'programTypes',
                 'type' => 'checkbox',
