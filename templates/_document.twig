@@ -12,7 +12,7 @@
         class="pageWrapper">
         <header class="w-full">
           {% block header %}
-            <div class="wrapper wrapper--menu flex justify-center items-center w-full h-[87px] lg:h-auto fixed top-0 lg:top-sm left-0 z-[3000] transition ease-in-out delay-300">
+            <div class="wrapper wrapper--menu flex justify-center items-center w-full h-[87px] lg:h-auto fixed top-0 lg:top-sm left-0 lg:left-sm lg:w-[calc(100%-2*20px)] z-[3000] transition ease-in-out delay-300">
               <div class="hidden lg:block w-full boxed !max-w-screen-box mx-auto bg-white rounded-full">
                 <div class="boxed !p-0 flex flex-row justify-between gap-sm">
                   {{ renderComponent('NavigationMain') }}
@@ -27,7 +27,7 @@
             </div>
           {% endblock %}
         </header>
-        <main id="mainContent" class="mainContent {% if not function('is_front_page') %}mt-[100px] lg:mt-[190px] min-h-[calc(100vh-100px)] lg:min-h-[calc(100vh-190px)]{% else %}mt-[100px] lg:mt-0{% endif %}" aria-label="{{ __('Content', 'flynt') }}">
+        <main id="mainContent" class="mainContent mt-[100px] lg:mt-0" aria-label="{{ __('Content', 'flynt') }}">
           <a href="#mainContent" class="skipLink">
             {{ __("Skip to main content", "flynt") }}
           </a>
