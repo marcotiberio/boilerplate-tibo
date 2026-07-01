@@ -16,7 +16,6 @@
         <header class="w-full">
           {% block header %}
             <div
-              x-cloak
               x-data="{ revealed: false }"
               x-init="
                 const hero = document.getElementById('hero');
@@ -42,7 +41,7 @@
             </div>
           {% endblock %}
         </header>
-        <main id="mainContent" class="mainContent" aria-label="{{ __('Content', 'flynt') }}">
+        <main id="mainContent" class="mainContent{% if not function('is_front_page') %} min-h-[calc(100vh-44px)] lg:min-h-[calc(100vh-72px)] mt-[44px] lg:mt-[72px]{% endif %}" aria-label="{{ __('Content', 'flynt') }}">
           <a href="#mainContent" class="skipLink">
             {{ __("Skip to main content", "flynt") }}
           </a>
