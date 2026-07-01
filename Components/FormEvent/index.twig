@@ -13,7 +13,7 @@
         form: {
           orgName: '', contactPerson: '', contactEmail: '', website: '', instagram: '', linkedin: '',
           goals: [], sectors: [], registration: '', registrationLink: '', costs: '', price: '', paymentLink: '',
-          description: '', language: '', programTypes: [], format: '', audiences: [],
+          description: '', programTypes: [], format: '', audiences: [],
           eventTitle: '', intro: '', credits: '',
           dates: [],
           times: { {% for value, label in config.dates %}'{{ value }}': { start: '', end: '' }{% if not loop.last %}, {% endif %}{% endfor %} },
@@ -262,17 +262,6 @@
             <label class="flex flex-col gap-xs">
               <span class="font-bodySmall">{{ __('Beschreibungstext des Angebots (max. 1.000 Zeichen)', 'flynt') }} *</span>
               <textarea required rows="6" x-model="form.description" class="rounded border border-black p-xs bg-white"></textarea>
-            </label>
-
-            {# Hidden for now — re-enable by removing the `hidden` class and restoring `required`. #}
-            <label class="hidden flex-col gap-xs md:w-1/2">
-              <span class="font-bodySmall">{{ __('Sprache der Veranstaltung', 'flynt') }} *</span>
-              <select x-model="form.language" class="rounded border border-black p-xs bg-white">
-                <option value="">{{ __('Bitte wählen', 'flynt') }}</option>
-                {% for value, label in config.languages %}
-                  <option value="{{ value }}">{{ label }}</option>
-                {% endfor %}
-              </select>
             </label>
 
             <fieldset class="flex flex-col gap-xs">

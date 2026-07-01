@@ -58,7 +58,6 @@ function handleSubmission(\WP_REST_Request $request)
         'price'          => sanitize_text_field($params['price'] ?? ''),
         'paymentLink'    => esc_url_raw($params['paymentLink'] ?? ''),
         'description'    => sanitize_textarea_field($params['description'] ?? ''),
-        'language'       => sanitize_text_field($params['language'] ?? ''),
         'format'         => sanitize_key($params['format'] ?? ''),
         'eventTitle'     => sanitize_text_field($params['eventTitle'] ?? ''),
         'intro'          => sanitize_text_field($params['intro'] ?? ''),
@@ -102,7 +101,6 @@ function handleSubmission(\WP_REST_Request $request)
         'orgName'       => __('Name der Organisation', 'flynt'),
         'contactPerson' => __('Kontaktperson', 'flynt'),
         'description'   => __('Beschreibungstext', 'flynt'),
-        'language'      => __('Sprache', 'flynt'),
         'eventTitle'    => __('Titel der Veranstaltung', 'flynt'),
         'intro'         => __('Introtext', 'flynt'),
     ];
