@@ -5,6 +5,11 @@ flynt-component[name='BlockHero'] {
     overflow: hidden;
   }
 
+  // Soft black glow to lift text off the background image.
+  .hero-text-shadow {
+    text-shadow: 0 0 16px #00000080;
+  }
+
   // Sequential fade-in: wordmark, then kicker/date row, then headline/funders row.
   .hero-fade {
     opacity: 0;

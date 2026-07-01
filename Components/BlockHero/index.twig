@@ -18,8 +18,8 @@
     <div class="flex flex-col gap-xs md:gap-0">
       {# Top row: kicker + date #}
       <div class="flex flex-row justify-between items-start gap-sm hero-fade hero-fade--2">
-        {% if kicker %}<span class="font-h1Hero">{{ kicker }}</span>{% endif %}
-        {% if dateText %}<span class="font-h1Hero">{{ dateText }}</span>{% endif %}
+        {% if kicker %}<span class="font-h1Hero hero-text-shadow">{{ kicker }}</span>{% endif %}
+        {% if dateText %}<span class="font-h1Hero hero-text-shadow">{{ dateText }}</span>{% endif %}
       </div>
 
       {# Brand wordmark #}
@@ -31,7 +31,7 @@
     <div class="flex flex-row justify-between items-start gap-sm flex-wrap hero-fade hero-fade--3">
       {# Headline #}
       <div class="flex flex-col gap-md w-fit">
-        {% if headline %}<h1 class="font-bodyLarge">{{ headline }}</h1>{% endif %}
+        {% if headline %}<h1 class="font-bodyLarge hero-text-shadow">{{ headline }}</h1>{% endif %}
       </div>
       {# Funders #}
       {% if funders.logos or funders2.logos %}
@@ -39,7 +39,7 @@
           {% for group in [funders, funders2] %}
             {% if group.logos %}
               <div class="flex flex-col items-end gap-xs">
-                {% if group.label %}<span class="font-body !mb-0 text-sm">{{ group.label }}</span>{% endif %}
+                {% if group.label %}<span class="font-body !mb-0 text-sm hero-text-shadow">{{ group.label }}</span>{% endif %}
                 <div class="flex flex-row flex-wrap items-center gap-sm">
                   {% for item in group.logos %}
                     {% if item.logo %}
