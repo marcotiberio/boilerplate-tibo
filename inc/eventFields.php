@@ -6,6 +6,10 @@
  * Single source of truth for the submission fields so the public form,
  * the ACF field group and the REST handler never drift apart.
  * Field spec mirrors the client's intake sheet (German labels).
+ *
+ * Choice labels are client-editable under "Global Options → Event";
+ * the stored keys are hardcoded here and must never change so that
+ * already-sent submissions stay compatible.
  */
 
 namespace Flynt\Event;
@@ -14,18 +18,44 @@ use Flynt\Utils\Options;
 
 const POST_TYPE = 'event';
 const NONCE_ACTION = 'looptopia_event';
+const LABEL_OPTIONS_SCOPE = 'EventChoiceLabels';
 
 /**
  * Choice lists for every select/checkbox/radio field. Keys are stored,
  * labels are displayed. Single source for form, ACF and REST validation.
+ *
+ * Labels can be renamed by the client under "Global Options → Event";
+ * the keys are fixed here and never change, so submissions sent with
+ * the old wording stay fully compatible.
  */
 function getConfig()
+{
+    static $config = null;
+    if ($config !== null) {
+        return $config;
+    }
+
+    $resolved = applyLabelOverrides(getDefaultConfig(), getLabelOverrides());
+
+    // Options are only readable once ACF is initialised. Cache after that;
+    // earlier callers just get the built-in default labels (same keys).
+    if (did_action('acf/init')) {
+        $config = $resolved;
+    }
+
+    return $resolved;
+}
+
+/**
+ * Built-in defaults: the full set of stored keys with their original labels.
+ */
+function getDefaultConfig()
 {
     return [
         // Thema / Ziele — multiple choice, grouped under non-selectable
         // category headings. Flat key=>label map for ACF + REST validation.
-        'goalGroups' => getGoalGroups(),
-        'goals' => flattenGroups(getGoalGroups()),
+        'goalGroups' => getDefaultGoalGroups(),
+        'goals' => flattenGroups(getDefaultGoalGroups()),
         // Sektor — multiple choice
         'sectors' => [
             'ernaehrung'    => __('Ernährung', 'flynt'),
@@ -50,8 +80,8 @@ function getConfig()
         ],
         // Zielgruppe — multiple choice, grouped under non-selectable
         // category headings. Flat key=>label map for ACF + REST validation.
-        'audienceGroups' => getAudienceGroups(),
-        'audiences' => flattenGroups(getAudienceGroups()),
+        'audienceGroups' => getDefaultAudienceGroups(),
+        'audiences' => flattenGroups(getDefaultAudienceGroups()),
         // Barrierefreiheit — multiple choice
         'accessibility' => [
             'eingang'   => __('Eingang barrierefrei', 'flynt'),
@@ -93,18 +123,19 @@ function getConfig()
 /**
  * Thema / Ziele grouped under non-selectable category headings.
  * Only the choices are selectable; the group labels are display-only.
+ * Array keys are the stable group slugs used for the label options.
  */
-function getGoalGroups()
+function getDefaultGoalGroups()
 {
     return [
-        [
+        'erlebbar' => [
             'label' => __('Kreislaufwirtschaft, die erlebbar ist', 'flynt'),
             'choices' => [
                 'orte'          => __('Alltägliche Orte, um zirkuläre Lösungen auszuprobieren', 'flynt'),
                 'nachbarschaft' => __('Nachbarschaft, Teilhabe & soziale Innovation', 'flynt'),
             ],
         ],
-        [
+        'lohnt' => [
             'label' => __('Kreislaufwirtschaft, die sich lohnt', 'flynt'),
             'choices' => [
                 'instrumente'       => __('Instrumente & Hilfsmittel für die Transformation', 'flynt'),
@@ -112,7 +143,7 @@ function getGoalGroups()
                 'finanzierung'      => __('Finanzierung & Skalierung', 'flynt'),
             ],
         ],
-        [
+        'zukunft' => [
             'label' => __('Kreislaufwirtschaft, die Zukunft gestaltet', 'flynt'),
             'choices' => [
                 'politik'     => __('Politische Hebel & Rahmenbedingungen für Circular Economy', 'flynt'),
@@ -125,11 +156,12 @@ function getGoalGroups()
 /**
  * Zielgruppe grouped under non-selectable category headings.
  * Only the choices are selectable; the group labels are display-only.
+ * Array keys are the stable group slugs used for the label options.
  */
-function getAudienceGroups()
+function getDefaultAudienceGroups()
 {
     return [
-        [
+        'fach' => [
             'label' => __('Fachveranstaltung', 'flynt'),
             'choices' => [
                 'unternehmen'  => __('Unternehmen', 'flynt'),
@@ -137,7 +169,7 @@ function getAudienceGroups()
                 'politik'      => __('Politik & Verwaltung', 'flynt'),
             ],
         ],
-        [
+        'freizeit' => [
             'label' => __('Freizeit', 'flynt'),
             'choices' => [
                 'erwachsene' => __('Erwachsene', 'flynt'),
@@ -160,6 +192,148 @@ function flattenGroups(array $groups)
     }
     return $flat;
 }
+
+/**
+ * Flat choice lists whose labels are client-editable (grouped lists are
+ * handled separately). Shared by the option fields and the overlay.
+ */
+const FLAT_LABEL_LISTS = ['sectors', 'programTypes', 'accessibility', 'registration', 'costs', 'format', 'dates', 'locationMode'];
+
+/**
+ * Option field name for a choice key, e.g. sectors/ernaehrung →
+ * `sectors_ernaehrung`. Hyphens are stripped so ISO date keys stay valid
+ * ACF field names ('2026-11-14' → `dates_20261114`).
+ */
+function labelOptionName($list, $key)
+{
+    return $list . '_' . str_replace('-', '', $key);
+}
+
+/**
+ * Client-saved label texts, keyed by option field name. Empty fields fall
+ * back to the defaults. Returns [] before ACF is ready.
+ */
+function getLabelOverrides()
+{
+    if (!did_action('acf/init')) {
+        return [];
+    }
+
+    $saved = Options::getGlobal(LABEL_OPTIONS_SCOPE);
+    if (!is_array($saved)) {
+        return [];
+    }
+
+    return array_filter($saved, fn ($value) => is_string($value) && trim($value) !== '');
+}
+
+/**
+ * Replace default labels with the client-edited ones. Keys are never
+ * touched — only the display text changes.
+ */
+function applyLabelOverrides(array $config, array $overrides)
+{
+    if (!$overrides) {
+        return $config;
+    }
+
+    foreach (FLAT_LABEL_LISTS as $list) {
+        foreach ($config[$list] as $key => $label) {
+            $option = labelOptionName($list, $key);
+            if (isset($overrides[$option])) {
+                $config[$list][$key] = $overrides[$option];
+            }
+        }
+    }
+
+    foreach (['goalGroups' => 'goals', 'audienceGroups' => 'audiences'] as $groupList => $flatList) {
+        foreach ($config[$groupList] as $slug => $group) {
+            $groupOption = $flatList . 'Group_' . $slug;
+            if (isset($overrides[$groupOption])) {
+                $config[$groupList][$slug]['label'] = $overrides[$groupOption];
+            }
+            foreach ($group['choices'] as $key => $label) {
+                $option = labelOptionName($flatList, $key);
+                if (isset($overrides[$option])) {
+                    $config[$groupList][$slug]['choices'][$key] = $overrides[$option];
+                }
+            }
+        }
+        $config[$flatList] = flattenGroups($config[$groupList]);
+    }
+
+    return $config;
+}
+
+/**
+ * One text field per choice label for the "Global Options → Event" page.
+ * Fields are generated from the defaults so the two can never drift; the
+ * default label doubles as field label and placeholder.
+ */
+function getLabelOptionFields()
+{
+    $config = getDefaultConfig();
+
+    $tab = fn ($label, $name) => [
+        'label' => $label,
+        'name' => $name,
+        'type' => 'tab',
+        'placement' => 'top',
+        'endpoint' => 0,
+    ];
+    $text = fn ($name, $default, $width = 50, $instructions = '') => [
+        'label' => $default,
+        'name' => $name,
+        'type' => 'text',
+        'instructions' => $instructions,
+        'placeholder' => $default,
+        'wrapper' => ['width' => $width],
+    ];
+
+    $fields = [
+        [
+            'label' => __('Hinweis', 'flynt'),
+            'name' => 'labelsInfo',
+            'type' => 'message',
+            'message' => __('Beschriftungen der Auswahlfelder — sichtbar im Anmeldeformular, im Backend und auf der Karte. Leere Felder verwenden die Standard-Beschriftung (grau angezeigt). Die intern gespeicherten Werte ändern sich nicht, bereits eingegangene Einsendungen bleiben vollständig kompatibel.', 'flynt'),
+        ],
+    ];
+
+    $groupedTabs = [
+        'goalGroups' => ['goals', __('Thema / Ziele', 'flynt')],
+        'audienceGroups' => ['audiences', __('Zielgruppe', 'flynt')],
+    ];
+    foreach ($groupedTabs as $groupList => [$flatList, $tabLabel]) {
+        $fields[] = $tab($tabLabel, $flatList . 'Tab');
+        foreach ($config[$groupList] as $slug => $group) {
+            $fields[] = $text($flatList . 'Group_' . $slug, $group['label'], 100, __('Gruppenüberschrift', 'flynt'));
+            foreach ($group['choices'] as $key => $label) {
+                $fields[] = $text(labelOptionName($flatList, $key), $label);
+            }
+        }
+    }
+
+    $flatTabs = [
+        'sectors' => __('Sektor', 'flynt'),
+        'programTypes' => __('Art des Programmpunkts', 'flynt'),
+        'accessibility' => __('Barrierefreiheit', 'flynt'),
+        'registration' => __('Anmeldung', 'flynt'),
+        'costs' => __('Kosten', 'flynt'),
+        'format' => __('Format', 'flynt'),
+        'dates' => __('Termine', 'flynt'),
+        'locationMode' => __('Veranstaltungsort', 'flynt'),
+    ];
+    foreach ($flatTabs as $list => $tabLabel) {
+        $fields[] = $tab($tabLabel, $list . 'Tab');
+        foreach ($config[$list] as $key => $label) {
+            $fields[] = $text(labelOptionName($list, $key), $label, mb_strlen($label) > 60 ? 100 : 50);
+        }
+    }
+
+    return $fields;
+}
+
+Options::addGlobal(LABEL_OPTIONS_SCOPE, getLabelOptionFields(), 'Event');
 
 /**
  * Geocode a free-text address into coordinates via the Google Geocoding API.

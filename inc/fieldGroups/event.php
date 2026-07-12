@@ -6,12 +6,16 @@
  * Fields the client reviews/edits in wp-admin before publishing. Mirrors the
  * public form (Components/FormEvent) and the intake sheet, grouped into
  * the same sections. Choice lists come from Event\getConfig().
+ *
+ * Registered on `acf/init` (not `Flynt/afterRegisterComponents`) because the
+ * client-editable choice labels live on an ACF options page, which is only
+ * readable once ACF is initialised.
  */
 
 use ACFComposer\ACFComposer;
 use Flynt\Event;
 
-add_action('Flynt/afterRegisterComponents', function () {
+add_action('acf/init', function () {
     $config = Event\getConfig();
 
     ACFComposer::registerFieldGroup([
