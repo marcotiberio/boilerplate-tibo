@@ -68,7 +68,7 @@ function getBlockFormats($blockFormats)
     if (!empty($blockFormats)) {
         $blockFormatStrings = array_map(
             function ($tag, $label) {
-                return "${label}=${tag}";
+                return "{$label}={$tag}";
             },
             $blockFormats,
             array_keys($blockFormats)
