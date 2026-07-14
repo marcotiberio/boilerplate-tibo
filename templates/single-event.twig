@@ -28,7 +28,17 @@
       {% if labels.goals %}<dt>{{ __('Thema / Ziele', 'flynt') }}</dt><dd>{{ labels.goals|join(', ') }}</dd>{% endif %}
       {% if labels.sectors %}<dt>{{ __('Sektor', 'flynt') }}</dt><dd>{{ labels.sectors|join(', ') }}</dd>{% endif %}
       {% if labels.registration %}<dt>{{ __('Anmeldung erforderlich?', 'flynt') }}</dt><dd>{{ labels.registration }}</dd>{% endif %}
-      {% if post.meta('registrationLink') %}<dt>{{ __('Anmeldelink', 'flynt') }}</dt><dd><a href="{{ post.meta('registrationLink') }}" target="_blank" rel="noopener">{{ post.meta('registrationLink') }}</a></dd>{% endif %}
+      {# Link only when it's an actual URL — the field also accepts free text (e.g. e-mail instructions) #}
+      {% if post.meta('registrationLink') %}
+        <dt>{{ __('Anmeldelink', 'flynt') }}</dt>
+        <dd>
+          {% if post.meta('registrationLink') starts with 'http' %}
+            <a href="{{ post.meta('registrationLink') }}" target="_blank" rel="noopener">{{ post.meta('registrationLink') }}</a>
+          {% else %}
+            {{ post.meta('registrationLink') }}
+          {% endif %}
+        </dd>
+      {% endif %}
       {% if labels.costs %}<dt>{{ __('Kosten?', 'flynt') }}</dt><dd>{{ labels.costs }}</dd>{% endif %}
       {% if post.meta('price') %}<dt>{{ __('Preis', 'flynt') }}</dt><dd>{{ post.meta('price') }}</dd>{% endif %}
       {% if post.meta('paymentLink') %}<dt>{{ __('Bezahllink', 'flynt') }}</dt><dd><a href="{{ post.meta('paymentLink') }}" target="_blank" rel="noopener">{{ post.meta('paymentLink') }}</a></dd>{% endif %}

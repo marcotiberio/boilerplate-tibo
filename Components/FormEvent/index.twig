@@ -229,7 +229,7 @@
             </fieldset>
             <label class="flex flex-col gap-xs" x-show="form.registration === 'anmeldung'" x-cloak>
               <span class="font-bodySmall">{{ __('Anmeldelink', 'flynt') }} *</span>
-              <input type="url" x-model="form.registrationLink" :required="form.registration === 'anmeldung'" class="rounded border border-black p-xs bg-white">
+              <input type="text" x-model="form.registrationLink" :required="form.registration === 'anmeldung'" class="rounded border border-black p-xs bg-white">
             </label>
 
             <fieldset class="flex flex-col gap-xs">

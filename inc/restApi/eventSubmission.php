@@ -53,7 +53,8 @@ function handleSubmission(\WP_REST_Request $request)
         'instagram'      => esc_url_raw($params['instagram'] ?? ''),
         'linkedin'       => esc_url_raw($params['linkedin'] ?? ''),
         'registration'   => sanitize_key($params['registration'] ?? ''),
-        'registrationLink' => esc_url_raw($params['registrationLink'] ?? ''),
+        // Free text: can be a URL or e.g. an e-mail instruction.
+        'registrationLink' => sanitize_text_field($params['registrationLink'] ?? ''),
         'costs'          => sanitize_key($params['costs'] ?? ''),
         'price'          => sanitize_text_field($params['price'] ?? ''),
         'paymentLink'    => esc_url_raw($params['paymentLink'] ?? ''),
