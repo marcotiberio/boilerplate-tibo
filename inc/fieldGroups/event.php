@@ -112,7 +112,7 @@ add_action('Flynt/afterRegisterComponents', function () {
             [
                 'label' => __('Anmeldelink', 'flynt'),
                 'name' => 'registrationLink',
-                'type' => 'url',
+                'type' => 'text',
                 'conditional_logic' => [
                     [
                         ['fieldPath' => 'registration', 'operator' => '==', 'value' => 'anmeldung'],
