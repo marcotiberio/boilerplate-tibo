@@ -30,8 +30,11 @@
 
     <div class="flex flex-row justify-between items-start gap-sm flex-wrap hero-fade hero-fade--3">
       {# Headline #}
-      <div class="flex flex-col gap-md w-fit">
+      <div class="flex flex-col gap-sm w-fit">
         {% if headline %}<h1 class="font-bodyLarge hero-text-shadow">{{ headline }}</h1>{% endif %}
+        {% if buttonLink %}
+          <a class="button button--green w-fit" href="{{ buttonLink.url }}" {% if buttonLink.target %} target="{{ buttonLink.target }}" rel="noreferrer noopener"{% endif %}>{{ buttonLink.title }}</a>
+        {% endif %}
       </div>
       {# Funders #}
       {% if funders.logos or funders2.logos %}
