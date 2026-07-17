@@ -22,6 +22,15 @@ add_filter('Flynt/addComponentData?name=ListingAuthors', function ($data) {
         ],
     ];
 
+    // Limit to a single role-category term when one is selected in the backend.
+    if (!empty($data['roleCategory'])) {
+        $queryArgs['tax_query'][] = [
+            'taxonomy' => 'role-category',
+            'field'    => 'term_id',
+            'terms'    => [$data['roleCategory']->term_id],
+        ];
+    }
+
     $posts = Timber::get_posts($queryArgs);
 
     $themeUri = trailingslashit(get_template_directory_uri());
@@ -71,6 +80,20 @@ function getACFLayout()
                 'type' => 'link',
                 'return_format' => 'array',
                 'required' => 0,
+            ],
+            [
+                'label' => __('Role', 'flynt'),
+                'instructions' => __('Select a role to only show authors with that term, or leave empty to show all authors.', 'flynt'),
+                'name' => 'roleCategory',
+                'type' => 'taxonomy',
+                'taxonomy' => 'role-category',
+                'field_type' => 'select',
+                'allow_null' => 1,
+                'multiple' => 0,
+                'add_term' => 0,
+                'save_terms' => 0,
+                'load_terms' => 0,
+                'return_format' => 'object',
             ],
             [
                 'label' => __('Options', 'flynt'),
