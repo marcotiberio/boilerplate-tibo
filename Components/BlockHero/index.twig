@@ -1,85 +1,94 @@
-<flynt-component load:on="visible" name="BlockHero" class="relative w-full overflow-hidden">
-  {# Background image #}
+<flynt-component
+  load:on="idle"
+  name="BlockHero"
+  class="relative w-full overflow-hidden bg-dark-green"
+  x-data="{ playing: true }">
+
+  {# Background media #}
   <div class="absolute inset-0 w-full h-full z-0">
-    {% if image %}
-      <img
-        data-ref="backgroundImageDesktop"
-        class="hidden lgplus:block w-full h-full object-cover"
-        src="{{ image.src }}"
-        alt="{{ image.alt|e | default('') }}"
-        loading="eager"
-      />
-    {% endif %}
-    {% if imageMobile %}
-      <img
-        data-ref="backgroundImageMobile"
-        class="block lgplus:hidden w-full h-full object-cover"
-        src="{{ imageMobile.src }}"
-        alt="{{ image.alt|e | default('') }}"
-        loading="eager"
-      />
+    {% if video.url %}
+      <video
+        x-ref="video"
+        class="w-full h-full object-cover"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="{{ image.src|default('') }}">
+        <source src="{{ video.url }}" type="{{ video.mime_type|default('video/mp4') }}" />
+      </video>
+    {% else %}
+      {% if image %}
+        <img
+          data-ref="backgroundImageDesktop"
+          class="hidden lgplus:block w-full h-full object-cover"
+          src="{{ image.src }}"
+          alt="{{ image.alt|e | default('') }}"
+          loading="eager"
+        />
+      {% endif %}
+      {% if imageMobile %}
+        <img
+          data-ref="backgroundImageMobile"
+          class="block lgplus:hidden w-full h-full object-cover"
+          src="{{ imageMobile.src }}"
+          alt="{{ image.alt|e | default('') }}"
+          loading="eager"
+        />
+      {% endif %}
     {% endif %}
   </div>
 
-  {# Dark overlay for legibility #}
-  <div class="absolute inset-0 z-0 bg-black/20 pointer-events-none"></div>
+  {# Legibility scrim over the media (both image and video) — 40% black over
+     the dark-green base set on the component (Figma hero overlay fill). #}
+  <div class="absolute inset-0 z-0 bg-black/40 pointer-events-none"></div>
+
+  {# Play / pause control (only when a video is set) #}
+  {% if video.url %}
+    <button
+      type="button"
+      class="absolute right-sm top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-14 h-11 rounded-cta bg-off-white/20 backdrop-blur-sm text-off-white transition-colors hover:bg-off-white/30"
+      @click="playing ? $refs.video.pause() : $refs.video.play(); playing = !playing"
+      :aria-label="playing ? '{{ __('Pause video', 'flynt') }}' : '{{ __('Play video', 'flynt') }}'">
+      {# Pause icon #}
+      <svg x-show="playing" class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+        <rect x="2.2" y="0.2" width="3" height="14" rx="1" />
+        <rect x="9.2" y="0.2" width="3" height="14" rx="1" />
+      </svg>
+      {# Play icon #}
+      <svg x-show="!playing" x-cloak class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+        <path d="M2 1.2 12.5 7 2 12.8Z" />
+      </svg>
+    </button>
+  {% endif %}
 
   {# Content #}
-  <div class="relative z-10 boxed min-h-[80vh] flex flex-col justify-center items-center text-center gap-sm">
-    {% if titleHtml %}
-      <div class="wysiwyg text-white">{{ titleHtml|e('wp_kses_post') }}</div>
+  <div class="relative z-10 boxed min-h-[85vh] flex flex-col justify-center items-center text-center gap-sm">
+    {% if title %}
+      <h1 class="font-h1 text-off-white max-w-[722px]">{{ title }}</h1>
     {% endif %}
+
     <div class="flex flex-wrap gap-xs justify-center">
       {% if primaryButton %}
         <a
-          class="button button--fullOrange"
+          class="button button--primary"
           href="{{ primaryButton.url }}"
           {% if primaryButton.target %} target="{{ primaryButton.target }}" rel="noreferrer noopener"{% endif %}>
-          {{ primaryButton.title }}
+          <span>{{ primaryButton.title }}</span>
         </a>
       {% endif %}
       {% if secondaryButton %}
         <a
-          class="button button--muted"
+          class="button button--glass"
           href="{{ secondaryButton.url }}"
           {% if secondaryButton.target %} target="{{ secondaryButton.target }}" rel="noreferrer noopener"{% endif %}>
-          {{ secondaryButton.title }}
+          <span>{{ secondaryButton.title }}</span>
         </a>
       {% endif %}
     </div>
   </div>
 
-  {# Floating highlight card (desktop only) #}
-  {% if highlight.title %}
-    <div
-      x-data="{ show: true }"
-      x-show="show"
-      class="hidden lg:block absolute right-sm top-1/3 z-20 w-[306px] bg-white rounded-card p-xs shadow-lg">
-      <button
-        @click="show=false"
-        aria-label="Schließen"
-        class="absolute top-xs right-xs z-10 text-dark-brown leading-none">×</button>
-      {% if highlight.image %}
-        <img
-          class="rounded-card object-cover w-full h-[181px]"
-          src="{{ highlight.image.src }}"
-          alt="{{ highlight.image.alt|e | default('') }}"
-          loading="lazy"
-        />
-      {% endif %}
-      <div class="font-h3 text-dark-brown">{{ highlight.title }}</div>
-      {% if highlight.link %}
-        <a
-          class="button button--link"
-          href="{{ highlight.link.url }}"
-          {% if highlight.link.target %} target="{{ highlight.link.target }}" rel="noreferrer noopener"{% endif %}>
-          {{ highlight.link.title }}
-        </a>
-      {% endif %}
-    </div>
-  {% endif %}
-
-  {# Bottom wave divider #}
+  {# Bottom wave divider — transitions the media into the off-white page #}
   <svg
     class="absolute bottom-0 left-0 w-full h-[60px] lg:h-[120px] z-10 pointer-events-none"
     viewBox="0 0 1440 120"

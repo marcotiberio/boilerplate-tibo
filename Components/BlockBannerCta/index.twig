@@ -1,31 +1,94 @@
-<flynt-component
-  load:on="idle" 
-  name="BlockBannerCta" 
-  class="w-full relative" 
-  style="
-    color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--black){% endif %};
-    background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};"
-  >
-  {% if backgroundImage %}
-    <div 
-      class="absolute inset-0 w-full h-full z-0 brightness-[0.35]"
-      style="background-image: url('{{ backgroundImage.src }}'); background-size: cover; background-position: center;"
-    ></div>
+{% macro ctaButton(link, cls) %}
+  {% if link %}
+    <a
+      class="button {{ cls }}"
+      href="{{ link.url }}"
+      {% if link.target %} target="{{ link.target }}" rel="noreferrer noopener"{% endif %}>
+      {{ link.title }}
+    </a>
   {% endif %}
-  <div class="relative z-10 w-full max-w-screen-max mx-auto boxed flex flex-col gap-sm">
-    {% if title %}
-      <div class="h2 w-full">{{ title }}</div>
-    {% endif %}
-    {% if contentHtml %}
-      <div class="wysiwyg w-full">{{ contentHtml|e('wp_kses_post') }}</div>
-    {% endif %}
-    {% if buttonLink %}
-      <a
-        class="button button--fullOrange"
-        href="{{ buttonLink.url }}"
-        {% if buttonLink.target %} target="{{ buttonLink.target }}" rel="noreferrer noopener"{% endif %}>
-        {{ buttonLink.title }}
-      </a>
+{% endmacro %}
+
+{% import _self as ui %}
+
+{% set theme = options.theme|default('beige') %}
+{% set layout = options.layout|default('centered') %}
+{% set isDark = theme in ['terracotta', 'darkGreen'] %}
+{% set surfaceClass = {
+  'beige': 'bg-beige text-black',
+  'offWhite': 'bg-off-white text-black',
+  'terracotta': 'bg-terracotta text-off-white',
+  'darkGreen': 'bg-dark-green text-off-white'
+}[theme] %}
+{% set primaryClass = isDark ? 'button--cta-moss' : 'button--cta-terracotta' %}
+{% set secondaryClass = isDark ? 'button--cta-glass' : 'button--cta-muted' %}
+
+<flynt-component
+  load:on="idle"
+  name="BlockBannerCta"
+  class="w-full">
+  <div class="boxed">
+    {% if layout == 'split' %}
+
+      {# Split — title and body side by side on desktop, icon badge top-right #}
+      <div class="relative {{ surfaceClass }} rounded-banner overflow-hidden p-sm lg:p-md">
+        {% if image %}
+          <div class="cta-badge absolute top-sm right-sm lg:top-md lg:right-md flex items-center justify-center w-[72px] h-[72px] rounded-cta {{ isDark ? 'bg-white/[0.08]' : 'bg-dark-brown/[0.05]' }}">
+            <img class="w-11 h-11 object-contain" src="{{ image.src }}" alt="{{ image.alt|e | default('') }}" loading="lazy" />
+          </div>
+        {% endif %}
+
+        {% if eyebrow %}
+          <p class="font-body opacity-90 {{ image ? 'pr-[88px]' : '' }}">{{ eyebrow }}</p>
+        {% endif %}
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-sm lg:gap-sm {% if eyebrow %}mt-sm{% endif %}">
+          {% if title %}
+            <h2 class="font-h2 lg:w-[358px] lg:shrink-0">{{ title }}</h2>
+          {% endif %}
+          <div class="flex-1 flex flex-col gap-sm lg:pt-xs">
+            {% if contentHtml %}
+              <div class="wysiwyg">{{ contentHtml|e('wp_kses_post') }}</div>
+            {% endif %}
+            {% if primaryButton or secondaryButton %}
+              <div class="flex flex-wrap gap-xs">
+                {{ ui.ctaButton(primaryButton, primaryClass) }}
+                {{ ui.ctaButton(secondaryButton, secondaryClass) }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+    {% else %}
+
+      {# Centered — logo, eyebrow, title, body and buttons stacked and centered #}
+      <div class="{{ surfaceClass }} rounded-banner overflow-hidden flex flex-col items-center text-center gap-sm px-sm py-lg lg:px-xl lg:py-xl">
+        {% if image %}
+          <img
+            class="w-[86px] h-auto {{ isDark ? '' : 'mix-blend-multiply opacity-80' }}"
+            src="{{ image.src }}"
+            alt="{{ image.alt|e | default('') }}"
+            loading="lazy"
+          />
+        {% endif %}
+        {% if eyebrow %}
+          <p class="font-body opacity-90">{{ eyebrow }}</p>
+        {% endif %}
+        {% if title %}
+          <h2 class="font-h2 max-w-[800px]">{{ title }}</h2>
+        {% endif %}
+        {% if contentHtml %}
+          <div class="wysiwyg max-w-[588px]">{{ contentHtml|e('wp_kses_post') }}</div>
+        {% endif %}
+        {% if primaryButton or secondaryButton %}
+          <div class="flex flex-wrap gap-xs justify-center mt-xs">
+            {{ ui.ctaButton(primaryButton, primaryClass) }}
+            {{ ui.ctaButton(secondaryButton, secondaryClass) }}
+          </div>
+        {% endif %}
+      </div>
+
     {% endif %}
   </div>
 </flynt-component>

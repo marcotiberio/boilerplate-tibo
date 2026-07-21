@@ -1,0 +1,164 @@
+{# ---------------------------------------------------------------------------
+   FundraisingBox donation form.
+
+   The form itself (fields + styling) is built and configured on the
+   FundraisingBox platform. Here we only render the surrounding JGI chrome and
+   drop in the embed, referenced by its form hash (Forms → Embed code → hash=…).
+   The internal form lives in a cross-origin iframe and cannot be styled from
+   this page — set its look up once in FundraisingBox's design settings.
+--------------------------------------------------------------------------- #}
+
+{% set theme = options.theme|default('white') %}
+{% set layout = options.layout|default('text') %}
+{% set isDark = theme == 'darkGreen' %}
+{% set surfaceClass = {
+  'white': 'bg-white text-dark-brown',
+  'beige': 'bg-beige text-dark-brown',
+  'moss': 'bg-moss text-dark-green',
+  'darkGreen': 'bg-dark-green text-off-white'
+}[theme] %}
+{% set headingClass = isDark ? 'text-off-white' : 'text-dark-green' %}
+
+{# Build the paymentJS embed URL from the hash + optional prepopulation. #}
+{% set embedUrl = 'https://secure.fundraisingbox.com/app/paymentJS?hash=' ~ formHash|url_encode %}
+{% if prepopulation.amount %}{% set embedUrl = embedUrl ~ '&amount=' ~ prepopulation.amount %}{% endif %}
+{% if prepopulation.interval is not null and prepopulation.interval != '' %}{% set embedUrl = embedUrl ~ '&interval_fix=' ~ prepopulation.interval %}{% endif %}
+{% if prepopulation.itemId %}{% set embedUrl = embedUrl ~ '&fb_item_id=' ~ prepopulation.itemId|url_encode %}{% endif %}
+
+{% macro embed(embedCode, embedUrl, hash, height) %}
+  <div class="fbox-embed" style="min-height: {{ height|default(640) }}px">
+    {% if embedCode %}
+      {{ embedCode|raw }}
+    {% elseif hash %}
+      <script type="text/javascript" src="{{ embedUrl }}"></script>
+      <noscript>
+        <p class="font-small">{{ __('Please enable JavaScript to view the donation form.', 'flynt') }}</p>
+      </noscript>
+    {% else %}
+      {# No form configured yet — visible only to editors. #}
+      <p class="fbox-embed__placeholder font-small">{{ __('No FundraisingBox form set. Add a form hash in the block settings.', 'flynt') }}</p>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% import _self as ui %}
+
+<flynt-component
+  load:on="idle"
+  name="BlockDonationForm"
+  class="w-full {{ surfaceClass }}">
+  <div class="boxed py-xl">
+
+    {% if layout == 'media' %}
+
+      {# ---- Media + Form (e.g. sponsorship / membership) ---- #}
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-md items-start">
+
+        {# Media card #}
+        {% if image %}
+          <div class="fbox-media relative rounded-card overflow-hidden">
+            <img
+              class="w-full h-full object-cover"
+              src="{{ image.src }}"
+              alt="{{ image.alt|e | default(mediaTitle|e | default('')) }}"
+              loading="lazy" />
+
+            {% if mediaTitle or mediaMeta %}
+              <div class="fbox-media__meta absolute inset-x-0 bottom-0 p-sm text-off-white">
+                {% if mediaTitle %}
+                  <h3 class="font-h3">{{ mediaTitle }}</h3>
+                {% endif %}
+                {% if mediaMeta %}
+                  <dl class="mt-xs grid grid-cols-2 gap-x-sm gap-y-min font-small">
+                    {% for row in mediaMeta %}
+                      <dt class="opacity-70">{{ row.label }}</dt>
+                      <dd class="text-right">{{ row.value }}</dd>
+                    {% endfor %}
+                  </dl>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {# Heading + checklist + form #}
+        <div class="flex flex-col gap-sm">
+          {% if title %}
+            <h2 class="font-h2 {{ headingClass }}">{{ title }}</h2>
+          {% endif %}
+          {% if bullets %}
+            <ul class="fbox-checklist flex flex-col gap-xs">
+              {% for item in bullets %}
+                <li class="flex items-start gap-xs font-body">
+                  <svg class="fbox-check w-5 h-5 shrink-0 mt-[2px]" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                    <path d="M4 10.5 8 14.5 16 6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span>{{ item.text }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          {% if intro %}
+            <div class="wysiwyg">{{ intro|e('wp_kses_post') }}</div>
+          {% endif %}
+          {% if mediaDescription %}
+            <div class="wysiwyg font-small opacity-80">{{ mediaDescription|e('wp_kses_post') }}</div>
+          {% endif %}
+
+          {{ ui.embed(embedCode, embedUrl, formHash, formHeight) }}
+        </div>
+      </div>
+
+    {% else %}
+
+      {# ---- Text + Form (general project donation) ---- #}
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-md items-start">
+
+        {# Heading + intro #}
+        <div class="flex flex-col gap-sm">
+          {% if title %}
+            <h2 class="font-h2 {{ headingClass }}">{{ title }}</h2>
+          {% endif %}
+          {% if intro %}
+            <div class="wysiwyg">{{ intro|e('wp_kses_post') }}</div>
+          {% endif %}
+        </div>
+
+        {# Form — jungle card; the FundraisingBox form background is made
+           transparent (allowtransparency) so this dark surface shows through
+           behind its translucent fields. #}
+        <div>
+          <div class="fbox-card bg-jungle text-off-white rounded-banner p-sm lg:p-md">
+            {{ ui.embed(embedCode, embedUrl, formHash, formHeight) }}
+          </div>
+
+          {# Info block (e.g. bank transfer details) #}
+          {% if info.title or info.description or info.details %}
+            <div class="fbox-info pt-lg">
+              {% if info.title %}
+                <h3 class="font-h3 {{ headingClass }}">{{ info.title }}</h3>
+              {% endif %}
+              <div class="flex flex-col gap-md mt-sm items-start">
+                {% if info.description %}
+                  <div class="wysiwyg">{{ info.description|e('wp_kses_post') }}</div>
+                {% endif %}
+                {% if info.details %}
+                  <dl class="w-full grid grid-cols-1 md:grid-cols-2 gap-x-md gap-y-xs font-body">
+                    {% for row in info.details %}
+                      <div>
+                        <dt class="opacity-60">{{ row.label }}</dt>
+                        <dd class="font-medium break-words">{{ row.value }}</dd>
+                      </div>
+                    {% endfor %}
+                  </dl>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+    {% endif %}
+
+  </div>
+</flynt-component>

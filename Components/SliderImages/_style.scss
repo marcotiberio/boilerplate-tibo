@@ -1,0 +1,38 @@
+flynt-component[name='SliderImages'] {
+  .slider-button {
+    @apply flex h-11 w-14 items-center justify-center rounded-cta bg-beige text-dark-green transition-opacity;
+
+    &.swiper-button-disabled {
+      cursor: default;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+
+  // Each slide shrinks to its image: fixed height, width follows the image aspect ratio.
+  .swiper-slide.slide-media {
+    height: 300px;
+    width: auto;
+
+    @screen md {
+      height: 374px;
+    }
+  }
+
+  .slider-pagination {
+    @apply mt-md flex justify-center gap-min;
+
+    .swiper-pagination-bullet {
+      @apply bg-dark-green;
+
+      height: 8px;
+      opacity: 0.25;
+      transition: opacity 0.3s ease;
+      width: 8px;
+
+      &.swiper-pagination-bullet-active {
+        opacity: 1;
+      }
+    }
+  }
+}

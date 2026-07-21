@@ -6,6 +6,51 @@ use Flynt\Utils\Options;
 
 Options::addTranslatable('NavigationFooter', [
     [
+        'label' => __('Newsletter', 'flynt'),
+        'name' => 'newsletterTab',
+        'type' => 'tab',
+        'placement' => 'top',
+        'endpoint' => 0
+    ],
+    [
+        'label' => __('Newsletter Heading', 'flynt'),
+        'name' => 'newsletterHeading',
+        'type' => 'text',
+        'default_value' => __('Immer auf dem Laufenden bleiben! Newsletter abonnieren.', 'flynt'),
+        'wrapper' => [
+            'width' => '100',
+        ],
+    ],
+    [
+        'label' => __('Newsletter Image', 'flynt'),
+        'instructions' => __('Image-Format: JPG, PNG, WEBP.', 'flynt'),
+        'name' => 'newsletterImage',
+        'type' => 'image',
+        'preview_size' => 'medium',
+        'mime_types' => 'jpg,jpeg,png,webp',
+        'wrapper' => [
+            'width' => '100',
+        ],
+    ],
+    [
+        'label' => __('Input Placeholder', 'flynt'),
+        'name' => 'newsletterPlaceholder',
+        'type' => 'text',
+        'default_value' => 'E-Mail Adresse',
+        'wrapper' => [
+            'width' => '50',
+        ],
+    ],
+    [
+        'label' => __('Submit Button Label', 'flynt'),
+        'name' => 'newsletterButtonLabel',
+        'type' => 'text',
+        'default_value' => 'Anmelden',
+        'wrapper' => [
+            'width' => '50',
+        ],
+    ],
+    [
         'label' => __('Brand', 'flynt'),
         'name' => 'brandTab',
         'type' => 'tab',
@@ -61,14 +106,30 @@ Options::addTranslatable('NavigationFooter', [
         'button_label' => __('Add Social', 'flynt'),
         'sub_fields' => [
             [
-                'label' => __('Label', 'flynt'),
-                'name' => 'label',
-                'type' => 'text',
+                'label' => __('Platform', 'flynt'),
+                'name' => 'platform',
+                'type' => 'select',
+                'choices' => [
+                    'linkedin' => 'LinkedIn',
+                    'instagram' => 'Instagram',
+                    'youtube' => 'YouTube',
+                    'facebook' => 'Facebook',
+                    'x' => 'X',
+                    'tiktok' => 'TikTok',
+                    'website' => 'Website',
+                    'email' => 'Email',
+                ],
+                'wrapper' => [
+                    'width' => '40',
+                ],
             ],
             [
                 'label' => __('URL', 'flynt'),
                 'name' => 'url',
                 'type' => 'url',
+                'wrapper' => [
+                    'width' => '60',
+                ],
             ],
         ],
     ],
@@ -79,6 +140,25 @@ Options::addTranslatable('NavigationFooter', [
         'return_format' => 'array',
         'wrapper' => [
             'width' => '100',
+        ],
+    ],
+    [
+        'label' => __('Transparency Badge', 'flynt'),
+        'instructions' => __('White logo shown bottom-right (e.g. Initiative Transparente Zivilgesellschaft). PNG or SVG.', 'flynt'),
+        'name' => 'transparencyBadge',
+        'type' => 'image',
+        'preview_size' => 'medium',
+        'mime_types' => 'png,svg,webp',
+        'wrapper' => [
+            'width' => '60',
+        ],
+    ],
+    [
+        'label' => __('Transparency Badge Link', 'flynt'),
+        'name' => 'transparencyBadgeLink',
+        'type' => 'url',
+        'wrapper' => [
+            'width' => '40',
         ],
     ],
     [

@@ -1,33 +1,51 @@
-<div class="menu list-none w-full gap-sm flex flex-row justify-center items-center">
+<div class="menu flex flex-row items-center gap-sm list-none">
   {% for item in items %}
     {# regular menu item #}
     {% if not item.children %}
-      <div class="item font-menu flex align-middle items-center hover:underline underline-offset-4 no-underline {{ item.classes|join(' ') }} {{- item.current ? ' underline underline-offset-4' }} {{- item.target == '_blank' ? ' external-link' }} {{- item.object == 'page' ? ' page-item' }} {{- item.object == 'post' ? ' post-item' }}">
-        <a class="link flex align-middle items-center no-underline transition-transform duration-200 ease-in-out" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
-          {{ item.title }}
+      <div class="item font-menu {{ item.classes|join(' ') }}{{ item.current ? ' current-menu-item' }}">
+        <a
+          class="link group inline-flex items-center gap-[4px] whitespace-nowrap"
+          href="{{ item.link }}"
+          {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+          <span>{{ item.title }}</span>
+          <svg class="chevron h-[12px] w-[12px] shrink-0 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M4.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </a>
       </div>
     {% endif %}
-    {# menu with submenu item #}
+    {# menu item with dropdown submenu #}
     {% if item.children %}
-      <div x-data="{ showDropdown: false }" class="item font-menu flex align-middle items-center open-submenu hover:underline {{ item.classes|join(' ') }} {{- item.current ? ' underline underline-offset-4' }} {{- item.target == '_blank' ? ' external-link' }} {{- item.object == 'page' ? ' page-item' }} {{- item.object == 'post' ? ' post-item' }}" >
-        <a 
-          @mouseover="showDropdown = true"
-          @mouseleave="showDropdown = false"
-          @click="showDropdown = !showDropdown" 
-          class="link flex align-middle items-center no-underline transition-transform duration-200 ease-in-out cursor-pointer z-[100]" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
-            {{ item.title }}
+      <div
+        x-data="{ open: false }"
+        @mouseenter="open = true"
+        @mouseleave="open = false"
+        class="item font-menu relative {{ item.classes|join(' ') }}{{ item.current ? ' current-menu-item' }}">
+        <a
+          class="link group inline-flex items-center gap-[4px] whitespace-nowrap cursor-pointer"
+          href="{{ item.link }}"
+          @click="open = !open"
+          :aria-expanded="open ? 'true' : 'false'"
+          {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+          <span>{{ item.title }}</span>
+          <svg class="chevron h-[12px] w-[12px] shrink-0 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M4.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </a>
-        <div 
-          class="menu submenu" x-cloak
-          x-show="showDropdown"
-          @mouseover="showDropdown = true"
-          @mouseleave="showDropdown = false">
-            {% for subitem in item.children %}
-              <div class="item font-menu hover:underline underline-offset-4 {{ subitem.classes|join(' ') }} {{- subitem.current ? ' underline underline-offset-4' }} {{- subitem.target == '_blank' ? ' external-link' }} {{- subitem.object == 'page' ? ' page-item' }} {{- subitem.object == 'post' ? ' post-item' }}">
-                <a class="link flex align-middle items-center no-underline transition-transform duration-200 ease-in-out" href="{{ subitem.link }}">{{ subitem.title }}</a>
-              </div>
-            {% endfor %}
+        <div class="submenu " x-cloak x-show="open" x-transition>
+          {% for subitem in item.children %}
+            <div class="item {{ subitem.classes|join(' ') }}{{ subitem.current ? ' current-menu-item' }}">
+              <a
+                class="link group inline-flex items-center gap-[4px] whitespace-nowrap"
+                href="{{ subitem.link }}"
+                {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+                <span>{{ subitem.title }}</span>
+                <svg class="chevron h-[12px] w-[12px] shrink-0 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M4.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          {% endfor %}
         </div>
       </div>
     {% endif %}

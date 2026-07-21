@@ -2,18 +2,11 @@
 
 namespace Flynt\Components\BlockBannerCta;
 
-use Flynt\Utils\Asset;
-use Flynt\Utils\Options;
-use Flynt\FieldVariables;
-use Flynt\Shortcodes;
-use Flynt\ComponentManager;
-use Timber\Timber;
-
 function getACFLayout()
 {
     return [
         'name' => 'BlockBannerCta',
-        'label' => __('Block: Banner Cta', 'flynt'),
+        'label' => __('Block: Banner CTA', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Content', 'flynt'),
@@ -23,9 +16,17 @@ function getACFLayout()
                 'endpoint' => 0,
             ],
             [
+                'label' => __('Eyebrow', 'flynt'),
+                'instructions' => __('Small label shown above the title.', 'flynt'),
+                'name' => 'eyebrow',
+                'type' => 'text',
+                'required' => 0,
+            ],
+            [
                 'label' => __('Title', 'flynt'),
                 'name' => 'title',
-                'type' => 'text'
+                'type' => 'text',
+                'required' => 0,
             ],
             [
                 'label' => __('Content', 'flynt'),
@@ -37,25 +38,28 @@ function getACFLayout()
                 'required' => 0,
             ],
             [
-                'label' => __('Button', 'flynt'),
-                'name' => 'buttonLink',
+                'label' => __('Primary Button', 'flynt'),
+                'name' => 'primaryButton',
                 'type' => 'link',
                 'required' => 0,
-                'wrapper' => [
-                    'width' => 100
-                ],
             ],
             [
-                'label' => __('Image', 'flynt'),
-                'name' => 'imageTab',
+                'label' => __('Secondary Button', 'flynt'),
+                'name' => 'secondaryButton',
+                'type' => 'link',
+                'required' => 0,
+            ],
+            [
+                'label' => __('Media', 'flynt'),
+                'name' => 'mediaTab',
                 'type' => 'tab',
                 'placement' => 'top',
                 'endpoint' => 0,
             ],
             [
-                'label' => __('Background Image', 'flynt'),
-                'instructions' => __('Image-Format: JPG, PNG, SVG, WEBP.', 'flynt'),
-                'name' => 'backgroundImage',
+                'label' => __('Logo / Icon', 'flynt'),
+                'instructions' => __('Centered layout: shown as a logo above the title. Split layout: shown as an icon in the top-right badge. Image-Format: JPG, PNG, SVG, WEBP.', 'flynt'),
+                'name' => 'image',
                 'type' => 'image',
                 'preview_size' => 'medium',
                 'required' => 0,
@@ -66,7 +70,7 @@ function getACFLayout()
                 'name' => 'optionsTab',
                 'type' => 'tab',
                 'placement' => 'top',
-                'endpoint' => 0
+                'endpoint' => 0,
             ],
             [
                 'label' => '',
@@ -74,10 +78,32 @@ function getACFLayout()
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => [
-                    FieldVariables\getColorBackground(),
-                    FieldVariables\getColorText(),
-                ]
-            ]
-        ]
+                    [
+                        'label' => __('Layout', 'flynt'),
+                        'name' => 'layout',
+                        'type' => 'select',
+                        'default_value' => 'centered',
+                        'choices' => [
+                            'centered' => __('Centered', 'flynt'),
+                            'split' => __('Split (title / text side by side)', 'flynt'),
+                        ],
+                        'wrapper' => ['width' => 50],
+                    ],
+                    [
+                        'label' => __('Theme', 'flynt'),
+                        'name' => 'theme',
+                        'type' => 'select',
+                        'default_value' => 'beige',
+                        'choices' => [
+                            'beige' => __('Beige', 'flynt'),
+                            'offWhite' => __('Off White', 'flynt'),
+                            'terracotta' => __('Terracotta', 'flynt'),
+                            'darkGreen' => __('Dark Green', 'flynt'),
+                        ],
+                        'wrapper' => ['width' => 50],
+                    ],
+                ],
+            ],
+        ],
     ];
 }

@@ -1,0 +1,85 @@
+{% extends 'templates/_document.twig' %}
+
+{# FundraisingBox embed — same integration as the BlockDonationForm component.
+   The form (fields + styling) is built on the FundraisingBox platform; here we
+   only reference it by its form hash and inject the paymentJS script. #}
+{% macro fboxEmbed(hash, itemId, embedCode, height) %}
+  {% set embedUrl = 'https://secure.fundraisingbox.com/app/paymentJS?hash=' ~ hash|url_encode %}
+  {% if itemId %}{% set embedUrl = embedUrl ~ '&fb_item_id=' ~ itemId|url_encode %}{% endif %}
+  <div class="fbox-embed" style="min-height: {{ height|default(640) }}px">
+    {% if embedCode %}
+      {{ embedCode|raw }}
+    {% elseif hash %}
+      <script type="text/javascript" src="{{ embedUrl }}"></script>
+      <noscript>
+        <p class="font-small">{{ __('Please enable JavaScript to view the donation form.', 'flynt') }}</p>
+      </noscript>
+    {% else %}
+      <p class="fbox-embed__placeholder font-small">{{ __('No FundraisingBox form set for this chimpanzee.', 'flynt') }}</p>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% import _self as fbox %}
+
+{% block content %}
+  <article class="single-chimpanzee">
+    <div class="boxed">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-sm items-start">
+
+        {# ---- Left: chimpanzee info card ---- #}
+        <div class="lg:sticky lg:top-[120px] self-start rounded-card overflow-hidden">
+          {% if post.thumbnail %}
+            <img
+              class="w-full aspect-[624/360] object-cover"
+              src="{{ post.thumbnail.src }}"
+              alt="{{ post.thumbnail.alt|e | default(post.title) }}"
+              loading="eager" />
+          {% endif %}
+
+          <div class="bg-jungle text-off-white p-sm lg:p-md">
+            <div class="flex flex-wrap items-baseline gap-x-xs gap-y-min">
+              <h1 class="font-h2">{{ post.title }}</h1>
+              {% if post.meta('sex') %}
+                <span class="font-body text-off-white/50">{{ post.meta('sex') }}</span>
+              {% endif %}
+            </div>
+
+            {% if post.meta('sanctuary') or post.meta('born') or post.meta('arrival') %}
+              <dl class="mt-sm grid grid-cols-2 gap-y-xs font-body">
+                {% if post.meta('sanctuary') %}
+                  <dt class="text-off-white/50">{{ __('Auffangstation', 'flynt') }}</dt>
+                  <dd>{{ post.meta('sanctuary') }}</dd>
+                {% endif %}
+                {% if post.meta('born') %}
+                  <dt class="text-off-white/50">{{ __('Geboren', 'flynt') }}</dt>
+                  <dd>{{ post.meta('born') }}</dd>
+                {% endif %}
+                {% if post.meta('arrival') %}
+                  <dt class="text-off-white/50">{{ __('Ankunft', 'flynt') }}</dt>
+                  <dd>{{ post.meta('arrival') }}</dd>
+                {% endif %}
+              </dl>
+            {% endif %}
+
+            {% if post.meta('description') %}
+              <div class="mt-sm font-body text-off-white/80">
+                {{ post.meta('description')|nl2br }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        {# ---- Right: sponsorship donation form ---- #}
+        <div class="bg-warmer-beige rounded-card p-sm lg:p-md">
+          <h2 class="font-h2 text-dark-green">{{ post.title }}{{ __('’s Patenschaft', 'flynt') }}</h2>
+
+          <div class="mt-sm">
+            {{ fbox.fboxEmbed(post.meta('formHash'), post.meta('fbItemId'), post.meta('formEmbedCode'), 900) }}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </article>
+{% endblock %}

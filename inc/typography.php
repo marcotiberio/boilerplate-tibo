@@ -740,10 +740,91 @@ add_filter('acf/load_field/name=fontVariant', function ($field) {
     }
     $loading = true;
 
-    $typographyOptions = Options::getGlobal('Typography');
+    $typographyOptions = Options::getGlobal('Typography') ?: [];
     $choices = [];
 
-    // Get font family names
+    // Human-readable label for each weight on the 100–900 scale
+    $weightLabels = [
+        '100' => 'Thin',
+        '200' => 'Extra Light',
+        '300' => 'Light',
+        '400' => 'Regular',
+        '500' => 'Medium',
+        '600' => 'Semibold',
+        '700' => 'Bold',
+        '800' => 'Extrabold',
+        '900' => 'Heavy',
+    ];
+
+    // Parse the weight/style pairs actually loaded by a Google Fonts CSS2 URL.
+    // Handles both `wght@400;500;700` and `ital,wght@0,400;1,700` formats.
+    $parseGoogleVariants = function ($url) {
+        $variants = [];
+        if (empty($url) || strpos($url, 'wght@') === false) {
+            return $variants;
+        }
+        $after = substr($url, strpos($url, 'wght@') + 5);
+        // Stop at the next query param or family segment
+        $after = preg_split('/[&|]/', $after)[0];
+        foreach (explode(';', $after) as $tuple) {
+            $tuple = trim($tuple);
+            if ($tuple === '') {
+                continue;
+            }
+            if (strpos($tuple, ',') !== false) {
+                // ital,wght pair: "0,400" (roman) or "1,400" (italic)
+                [$ital, $weight] = array_pad(explode(',', $tuple), 2, '');
+                $style = ($ital === '1') ? 'italic' : 'normal';
+            } else {
+                $weight = $tuple;
+                $style = 'normal';
+            }
+            $weight = preg_replace('/[^0-9]/', '', $weight);
+            if ($weight === '') {
+                continue;
+            }
+            $variants[] = ['weight' => $weight, 'style' => $style];
+        }
+        return $variants;
+    };
+
+    // Append a choice per weight for one font (heading|body), covering both
+    // custom-uploaded variants and Google-loaded weights.
+    $addFontChoices = function ($fontKey, $fontName, $source, $variants, $googleUrl) use (&$choices, $weightLabels, $parseGoogleVariants) {
+        if ($source === 'custom' && !empty($variants)) {
+            foreach ($variants as $variant) {
+                if (empty($variant['fontFile'])) {
+                    continue;
+                }
+                $weight = $variant['fontWeight'] ?? '400';
+                $style = $variant['fontStyle'] ?? 'normal';
+                $name = trim(($weightLabels[$weight] ?? '') . ($style === 'italic' ? ' Italic' : ''));
+                $label = !empty($variant['variantLabel'])
+                    ? "{$variant['variantLabel']} ({$weight})"
+                    : trim("{$weight} {$name}");
+                $choices["{$fontKey}|{$weight}|{$style}"] = "{$fontName} — {$label}";
+            }
+            return;
+        }
+
+        // Google Fonts: offer exactly the weights loaded by the URL, or the
+        // full 100–900 range if no URL is configured yet.
+        $googleVariants = $parseGoogleVariants($googleUrl);
+        if (empty($googleVariants)) {
+            foreach (array_keys($weightLabels) as $weight) {
+                $googleVariants[] = ['weight' => $weight, 'style' => 'normal'];
+            }
+        }
+        foreach ($googleVariants as $gv) {
+            $weight = $gv['weight'];
+            $style = $gv['style'];
+            $name = trim(($weightLabels[$weight] ?? '') . ($style === 'italic' ? ' Italic' : ''));
+            $label = trim("{$weight} {$name}");
+            $choices["{$fontKey}|{$weight}|{$style}"] = "{$fontName} — {$label}";
+        }
+    };
+
+    // Font family display names
     $headingFontName = !empty($typographyOptions['headingFontFamily'])
         ? $typographyOptions['headingFontFamily']
         : (!empty($typographyOptions['primaryFontFamily'])
@@ -753,41 +834,33 @@ add_filter('acf/load_field/name=fontVariant', function ($field) {
         ? $typographyOptions['bodyFontFamily']
         : 'Secondary';
 
-    // Add heading font variants
+    // Font sources (backward compatible with the old global fontSource)
+    $headingFontSource = !empty($typographyOptions['headingFontSource'])
+        ? $typographyOptions['headingFontSource']
+        : (!empty($typographyOptions['fontSource']) ? $typographyOptions['fontSource'] : 'google');
+    $bodyFontSource = !empty($typographyOptions['bodyFontSource'])
+        ? $typographyOptions['bodyFontSource']
+        : (!empty($typographyOptions['fontSource']) ? $typographyOptions['fontSource'] : 'google');
+
+    // Google Fonts URLs (backward compatible with the old global googleFontsUrl)
+    $headingGoogleUrl = !empty($typographyOptions['headingGoogleFontsUrl'])
+        ? $typographyOptions['headingGoogleFontsUrl']
+        : ($typographyOptions['googleFontsUrl'] ?? '');
+    $bodyGoogleUrl = !empty($typographyOptions['bodyGoogleFontsUrl'])
+        ? $typographyOptions['bodyGoogleFontsUrl']
+        : ($typographyOptions['googleFontsUrl'] ?? '');
+
     $headingVariants = !empty($typographyOptions['headingFontVariants'])
         ? $typographyOptions['headingFontVariants']
         : [];
-    foreach ($headingVariants as $variant) {
-        if (empty($variant['fontFile'])) {
-            continue;
-        }
-        $weight = $variant['fontWeight'] ?? '400';
-        $style = $variant['fontStyle'] ?? 'normal';
-        $label = !empty($variant['variantLabel'])
-            ? $variant['variantLabel']
-            : "{$weight} {$style}";
-        $value = "heading|{$weight}|{$style}";
-        $choices[$value] = "{$headingFontName} — {$label}";
-    }
-
-    // Add body font variants
     $bodyVariants = !empty($typographyOptions['bodyFontVariants'])
         ? $typographyOptions['bodyFontVariants']
         : [];
-    foreach ($bodyVariants as $variant) {
-        if (empty($variant['fontFile'])) {
-            continue;
-        }
-        $weight = $variant['fontWeight'] ?? '400';
-        $style = $variant['fontStyle'] ?? 'normal';
-        $label = !empty($variant['variantLabel'])
-            ? $variant['variantLabel']
-            : "{$weight} {$style}";
-        $value = "body|{$weight}|{$style}";
-        $choices[$value] = "{$bodyFontName} — {$label}";
-    }
 
-    // If no custom variants, offer Google Fonts fallback choices
+    $addFontChoices('heading', $headingFontName, $headingFontSource, $headingVariants, $headingGoogleUrl);
+    $addFontChoices('body', $bodyFontName, $bodyFontSource, $bodyVariants, $bodyGoogleUrl);
+
+    // Safety net: never render an empty dropdown
     if (empty($choices)) {
         $choices['heading|400|normal'] = "{$headingFontName} — Regular";
         $choices['heading|700|normal'] = "{$headingFontName} — Bold";

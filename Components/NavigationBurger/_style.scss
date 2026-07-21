@@ -1,52 +1,131 @@
 flynt-component[name='NavigationBurger'] {
-  transition: all 0.3s ease-in-out;
+  [x-cloak] {
+    display: none !important;
+  }
 
-  &.scrolled {
-    transition: all 0.3s ease-in-out;
-    @apply translate-y-[-50px];
-    @apply bg-white;
-}
+  // Current page — underline the top-level label.
+  .item.current-menu-item > .link {
+    @apply underline underline-offset-4;
+  }
 
-  .wrapper {
-    align-items: center;
-    background-color: var(--black);
-    display: flex;
-    inset-block-start: 0;
-    inset-inline: 0;
-    justify-content: space-between;
-    padding-block: 12px;
-    position: fixed;
-    width: 100%;
-    z-index: 99;
-    // @apply h-[66px];
-    // @apply sm:h-[85px];
-
-    .left {
-      width: 48px;
+  // Submenu links — dark-brown, dark-green on hover, current gets an underline.
+  .sublink {
+    &:hover {
+      @apply text-dark-green;
     }
 
-    .admin-bar & {
-      inset-block-start: var(--wp-admin--admin-bar--height);
+    &.current-menu-item {
+      @apply text-dark-green underline underline-offset-4;
     }
   }
 
-  .button {
-    font-size: 1rem;
-    padding: 5px 10px;
+  // Hamburger → X toggle. Three dark-green bars; the middle fades and the
+  // outer two rotate into a cross when the menu is open.
+  .burger {
+    --line-width: 18px;
+    --line-height: 2px;
+
+    &-box {
+      height: 16px;
+      position: relative;
+      width: var(--line-width);
+    }
+
+    &-line {
+      @apply bg-dark-green;
+      border-radius: 2px;
+      display: block;
+      height: var(--line-height);
+      left: 0;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: background-color 0.3s ease-in-out;
+      width: var(--line-width);
+
+      &::before,
+      &::after {
+        @apply bg-dark-green;
+        border-radius: 2px;
+        content: '';
+        display: block;
+        height: var(--line-height);
+        left: 0;
+        position: absolute;
+        transition: transform 0.3s ease-in-out;
+        width: var(--line-width);
+      }
+
+      &::before {
+        top: -6px;
+      }
+
+      &::after {
+        bottom: -6px;
+      }
+    }
+
+    &.is-open .burger-line {
+      // Hide only the middle bar's fill — NOT opacity, which would also zero
+      // out the ::before/::after pseudo-elements that form the X.
+      background-color: transparent;
+
+      &::before {
+        top: 0;
+        transform: translateY(0) rotate(45deg);
+      }
+
+      &::after {
+        bottom: 0;
+        transform: translateY(0) rotate(-45deg);
+      }
+    }
   }
 
-  .current-language-menu-item {
-    @apply text-black;
+  // CTA buttons — shared with NavigationMain: rotating chip rises behind the
+  // label on hover. Typography inherits from the global `.button`.
+  .button--donate,
+  .button--shop {
+    @apply px-sm py-xs rounded-cta font-semibold overflow-hidden;
+    isolation: isolate;
+
+    span {
+      position: relative;
+      z-index: 1;
+    }
+
+    &::before {
+      border-radius: var(--radius-cta, 12px);
+      bottom: -120%;
+      content: '';
+      height: 80%;
+      left: 8%;
+      position: absolute;
+      right: 8%;
+      transform: rotate(-4deg);
+      transition: bottom 0.3s ease;
+      z-index: 0;
+    }
+
+    &:hover::before,
+    &:focus-visible::before {
+      bottom: 12%;
+    }
   }
 
-  @import 'Partials/hamburger';
-  @import 'Partials/menu';
-}
+  .button--donate {
+    @apply bg-dark-green text-off-white;
 
-// Overwriting wp defaults to keep admin bar fixed
-@media screen and (max-width: 600px) {
-  // stylelint-disable-next-line selector-max-id
-  #wpadminbar {
-    position: fixed;
+    &::before {
+      background-color: theme('colors.jungle');
+    }
+  }
+
+  .button--shop {
+    @apply bg-moss text-dark-green;
+
+    &::before {
+      background-color: #a1be8d; // darker moss chip (matches BlockHero)
+    }
   }
 }

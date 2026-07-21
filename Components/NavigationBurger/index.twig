@@ -1,67 +1,128 @@
-<flynt-component 
+<flynt-component
   load:on="idle"
-  {# client:media="(max-width: 1023px)" #}
   name="NavigationBurger"
-  class="block lg:hidden fixed top-0 left-0 w-screen z-50 flex-row justify-between mx-auto">
-  <nav aria-label="{{ labels.ariaLabel|e }}" class="h-auto w-full">
-    <div class="w-full h-auto max-w-screen-max mx-auto !px-xs md:!px-sm !min-h-fit grid grid-cols-2 lg:gap-sm align-middle items-center z-[3001] relative">
-      {% include 'Partials/_logo.twig' with { 'logo': logo, 'site': site } only %}
-      {% if menu %}
-        <div class="flex justify-end items-center">
-          {% include 'Partials/_hamburger.twig' with { 'labels': labels } only %}
-        </div>
-      {% endif %}
-    </div>
-    {% if menu %}
-      <div
-        data-ref="menu" 
-        class="menu w-full h-fit !pt-[50px] z-40 relative bg-white">
-        <div class="w-full h-full max-w-screen-max mx-auto flex flex-col justify-start items-start gap-xs px-xs py-xs">
+  x-data="{ open: false, sub: null }"
+  x-effect="document.body.style.overflow = open ? 'hidden' : ''"
+  @keydown.escape.window="open = false"
+  class="block lg:hidden">
+
+  {# Full-screen menu overlay — sits under the fixed bar, holds the scrolling
+     list and the pinned CTAs. Pale-green wash matches the NavigationMain pill. #}
+  {% if menu %}
+    <div
+      id="navigationBurger-menu"
+      x-cloak
+      x-show="open"
+      x-transition.opacity.duration.300ms
+      class="fixed inset-0 z-[3000] overflow-y-auto bg-off-white">
+      <span aria-hidden="true" class="pointer-events-none fixed inset-0 bg-moss/30"></span>
+
+      <div class="relative flex min-h-full flex-col">
+        {# clears the fixed bar #}
+        <div class="h-[84px] shrink-0" aria-hidden="true"></div>
+
+        <nav aria-label="{{ labels.ariaLabel|e }}" class="flex flex-col gap-sm px-sm pb-sm pt-xs">
           {% for item in menu.items %}
-            {# regular menu item #}
-            {% if not item.children %}
-              <div class="item {{- item.current ? ' current-menu-item underline underline-offset-4' }}">
-                <a class="link font-menu" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
-                  {{ item.title }}
-                </a>
-              </div>
-            {% endif %}
-            {# menu with submenu item #}
+            {# menu item with children — accordion #}
             {% if item.children %}
-              <div class="item open-submenu {{- item.current ? ' current-menu-item underline underline-offset-4' }}" >
-                <a class="link font-menu" href="{{ item.link }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
-                  {{ item.title }}
-                </a>
-                <div class="submenu">
+              {% set subId = 'sub-' ~ loop.index %}
+              <div class="item{{ item.current ? ' current-menu-item' }}">
+                <button
+                  type="button"
+                  @click="sub = (sub === '{{ subId }}' ? null : '{{ subId }}')"
+                  :aria-expanded="sub === '{{ subId }}' ? 'true' : 'false'"
+                  aria-controls="{{ subId }}"
+                  class="link flex w-full items-center gap-xs text-left font-menu text-dark-green">
+                  <span>{{ item.title }}</span>
+                  <svg
+                    class="h-[14px] w-[14px] shrink-0 transition-transform duration-300"
+                    :class="{ '-rotate-180': sub === '{{ subId }}' }"
+                    viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M3.5 5.25L7 8.75l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <div
+                  id="{{ subId }}"
+                  x-show="sub === '{{ subId }}'"
+                  x-transition
+                  x-cloak
+                  class="submenu mt-xs flex flex-col gap-xs rounded-card bg-off-white p-sm">
                   {% for subitem in item.children %}
-                    <div class="item {{- subitem.current ? ' current-menu-item underline underline-offset-4' }}">
-                      <a class="link !p-0 font-menu" href="{{ subitem.link }}" {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ subitem.title }}</a>
-                    </div>
+                    <a
+                      class="sublink font-body text-dark-brown transition-colors{{ subitem.current ? ' current-menu-item' }}"
+                      href="{{ subitem.link }}"
+                      @click="open = false"
+                      {{ subitem.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+                      {{ subitem.title }}
+                    </a>
                   {% endfor %}
                 </div>
               </div>
+            {# regular menu item #}
+            {% else %}
+              <div class="item{{ item.current ? ' current-menu-item' }}">
+                <a
+                  class="link font-menu text-dark-green"
+                  href="{{ item.link }}"
+                  @click="open = false"
+                  {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
+                  {{ item.title }}
+                </a>
+              </div>
             {% endif %}
           {% endfor %}
-        </div>
+        </nav>
 
-        {# Footer Links Section #}
-        {# <div class="w-full px-xs">
-          <div class="flex !px-0 py-sm border-t justify-between items-start">
-            <div class="flex flex-col gap-xs">
-              {% for footerLink in footerLinks %}
-                {% if footerLink.menuLink %}
-                  <a 
-                    class="" 
-                    href="{{ footerLink.menuLink.url }}" 
-                    {% if footerLink.menuLink.target %} target="{{ footerLink.menuLink.target }}" rel="noreferrer noopener"{% endif %}>
-                    {{ footerLink.menuLink.title }}
-                  </a>
-                {% endif %}
-              {% endfor %}
-            </div>
+        {# CTAs pinned to the bottom #}
+        {% if ctaLink or secondaryLink %}
+          <div class="mt-auto flex items-center gap-xs px-sm pb-md pt-sm">
+            {% if ctaLink %}
+              <a
+                class="button button--donate flex-1"
+                href="{{ ctaLink.url }}"
+                {% if ctaLink.target %} target="{{ ctaLink.target }}" rel="noreferrer noopener"{% endif %}>
+                <span>{{ ctaLink.title }}</span>
+              </a>
+            {% endif %}
+            {% if secondaryLink %}
+              <a
+                class="button button--shop flex-1"
+                href="{{ secondaryLink.url }}"
+                {% if secondaryLink.target %} target="{{ secondaryLink.target }}" rel="noreferrer noopener"{% endif %}>
+                <span>{{ secondaryLink.title }}</span>
+              </a>
+            {% endif %}
           </div>
-        </div> #}
+        {% endif %}
       </div>
-    {% endif %}
-  </nav>
+    </div>
+  {% endif %}
+
+  {# Fixed top bar — floating pill when closed, blends into the overlay when open #}
+  <div class="fixed left-0 top-0 z-[3001] w-full px-xs pt-xs">
+    <nav
+      aria-label="{{ labels.ariaLabel|e }}"
+      class="relative mx-auto flex max-w-screen-max items-center justify-between rounded-banner px-xs py-min transition-[background-color,box-shadow] duration-300"
+      :class="open ? 'bg-transparent' : 'bg-white shadow-[0_18px_5.5px_rgba(0,0,0,0.02),0_8px_4px_rgba(0,0,0,0.03),0_2px_2px_rgba(0,0,0,0.03)]'">
+      {# Pale-green tint — only over the closed pill #}
+      <span aria-hidden="true" x-show="!open" class="pointer-events-none absolute inset-0 rounded-[inherit] bg-moss/30"></span>
+
+      {% include 'Partials/_logo.twig' with { 'logo': logo, 'site': site } only %}
+
+      {% if menu %}
+        <button
+          type="button"
+          @click="open = !open"
+          :aria-expanded="open ? 'true' : 'false'"
+          aria-controls="navigationBurger-menu"
+          class="burger relative z-10 flex h-[44px] w-[44px] shrink-0 items-center justify-center"
+          :class="{ 'is-open': open }">
+          <span class="visuallyHidden">{{ labels.toggleMenu }}</span>
+          <span class="burger-box" aria-hidden="true">
+            <span class="burger-line"></span>
+          </span>
+        </button>
+      {% endif %}
+    </nav>
+  </div>
 </flynt-component>

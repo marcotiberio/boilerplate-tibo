@@ -31,12 +31,21 @@ Options::addTranslatable('NavigationMain', [
         'endpoint' => 0
     ],
     [
-        'label' => __('CTA Link', 'flynt'),
+        'label' => __('Primary CTA (e.g. Jetzt spenden)', 'flynt'),
         'name' => 'ctaLink',
         'type' => 'link',
         'return_format' => 'array',
         'wrapper' =>  [
-            'width' => '100',
+            'width' => '50',
+        ]
+    ],
+    [
+        'label' => __('Secondary CTA (e.g. GoodShop)', 'flynt'),
+        'name' => 'secondaryLink',
+        'type' => 'link',
+        'return_format' => 'array',
+        'wrapper' =>  [
+            'width' => '50',
         ]
     ],
     [

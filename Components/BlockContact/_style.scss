@@ -1,0 +1,16 @@
+flynt-component[name='BlockContact'] {
+  .wysiwyg {
+    > :last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  // Phone / email — underline only on hover, colour stays inherited (dark-brown).
+  .contact-details a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

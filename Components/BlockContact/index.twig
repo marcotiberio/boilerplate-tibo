@@ -1,0 +1,58 @@
+{% set titleClass = { 'h3': 'font-h3', 'h5': 'font-h5' }[titleStyle]|default('font-h3') %}
+{% set hasContact = contact.name or contact.image or contact.phone or contact.email %}
+
+<flynt-component
+  load:on="visible"
+  name="BlockContact"
+  class="w-full"
+  style="{% if options.colorBackground %}background-color: {{ options.colorBackground }};{% endif %}">
+  <div class="boxed py-xl">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-lg gap-y-md">
+
+      {# Title #}
+      <div class="lg:col-span-4">
+        <h2 class="{{ titleClass }} text-dark-brown">{{ title }}</h2>
+      </div>
+
+      {# Optional body copy #}
+      {% if contentHtml %}
+        <div class="wysiwyg font-body text-dark-brown lg:col-span-4">{{ contentHtml|e('wp_kses_post') }}</div>
+      {% endif %}
+
+      {# Contact person card #}
+      {% if hasContact %}
+        <div class="lg:col-span-4 {{ not contentHtml ? 'lg:col-start-6' }}">
+          <div class="flex items-center gap-xs">
+            {% if contact.image %}
+              <img
+                class="w-[104px] shrink-0 aspect-[7/8] rounded-image object-cover"
+                src="{{ contact.image.src }}"
+                alt="{{ contact.image.alt|e|default(contact.name|default('')) }}"
+                loading="lazy"
+              />
+            {% endif %}
+
+            <div class="flex flex-col gap-min text-dark-brown">
+              {% if contact.name %}
+                <p class="font-body font-semibold">{{ contact.name }}</p>
+              {% endif %}
+
+              {% if contact.role or contact.phone or contact.email %}
+                <div class="contact-details font-body">
+                  {% if contact.role %}<p>{{ contact.role }}</p>{% endif %}
+                  {% if contact.phone %}
+                    <p><a href="tel:{{ contact.phone|replace({' ': '', '(': '', ')': '', '/': ''}) }}">{{ contact.phone }}</a></p>
+                  {% endif %}
+                  {% if contact.email %}
+                    <p><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></p>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+</flynt-component>

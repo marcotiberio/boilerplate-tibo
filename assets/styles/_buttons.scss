@@ -9,17 +9,12 @@ button {
   font-size: var(--button-size, 1rem);
   line-height: var(--button-line-height, 1.2);
   font-weight: var(--button-font-weight, 500);
-  @apply w-fit;
-  @apply px-xs;
-  @apply py-[7px];
-  @apply flex;
-  @apply justify-center;
-  @apply items-center;
-  @apply cursor-pointer;
   @apply relative;
-  @apply text-center;
-  @apply no-underline;
-  @apply whitespace-nowrap;
+  @apply px-md py-xs;
+  @apply flex justify-center items-center;
+  @apply cursor-pointer;
+  @apply text-center no-underline whitespace-nowrap;
+  @apply rounded-button;
 
   &:disabled {
     cursor: default;
@@ -32,86 +27,7 @@ button {
     @apply hover:no-underline !important;
     @apply focus:no-underline !important;
     @apply p-0 !important;
-
-    &::after {
-      content: '→';
-      @apply translate-x-2
-    }
   }
-
-  // JGI primary CTA — orange, rounded 12px (Figma button node). Referenced as
-  // `button--fullOrange` by NavigationMain and the page components.
-  &--fullOrange {
-    @apply px-sm;
-    @apply py-xs;
-    @apply bg-cta;
-    @apply text-white;
-    @apply rounded-cta;
-    @apply font-medium;
-
-    &:hover,
-    &:focus {
-      @apply bg-[#bd6414];
-      @apply text-white;
-    }
-  }
-
-  // JGI secondary — muted beige/moss, rounded 12px
-  &--muted {
-    @apply px-sm;
-    @apply py-xs;
-    @apply bg-beige;
-    @apply text-dark-green;
-    @apply rounded-cta;
-    @apply font-medium;
-
-    &:hover,
-    &:focus {
-      @apply bg-moss;
-      @apply text-dark-green;
-    }
-  }
-
-  // &--primary {
-  //   @apply text-white;
-  //   @apply bg-black;
-  //   @apply border;
-  //   @apply border-black;
-
-  //   &:hover,
-  //   &:focus {
-  //     @apply text-white;
-  //     @apply bg-grey-700;
-  //     @apply border-grey-700;
-  //   }
-  // }
-
-  // &--secondary {
-  //   @apply text-white;
-  //   @apply bg-grey-600;
-  //   @apply border;
-  //   @apply border-grey-600;
-
-  //   &:hover,
-  //   &:focus {
-  //     @apply text-white;
-  //     @apply bg-grey-800;
-  //     @apply border-grey-800;
-  //   }
-  // }
-
-  // &--outline {
-  //   @apply text-black;
-  //   @apply bg-transparent;
-  //   @apply border;
-  //   @apply border-black;
-
-  //   &:hover,
-  //   &:focus {
-  //     color: var(--white) !important;
-  //     @apply bg-black;
-  //   }
-  // }
 }
 
 .wpcf7-submit {
@@ -120,23 +36,16 @@ button {
   font-family: inherit;
   font-size: 1rem;
   line-height: 1;
-  @apply py-xs;
-  @apply px-sm;
+  @apply px-md py-xs;
   @apply text-white;
   @apply bg-black;
   @apply justify-center;
   @apply border;
   @apply border-black;
-  @apply rounded-button;
-  @apply whitespace-nowrap;
-  @apply w-full;
-  @apply flex;
-  @apply justify-center;
-  @apply items-center;
+  @apply flex justify-center items-center;
   @apply cursor-pointer;
-  @apply relative;
-  @apply text-center;
-  @apply no-underline;
+  @apply text-center no-underline whitespace-nowrap;
+  @apply rounded-button;
 
   &:hover,
   &:focus {

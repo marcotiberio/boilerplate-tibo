@@ -1,21 +1,54 @@
 flynt-component[name='BlockBannerCta'] {
-  .content {
-    > :last-child {
-      margin-block-end: 0;
-    }
+  // Trim trailing margin off the last WYSIWYG block so card padding stays even.
+  .wysiwyg > :last-child {
+    margin-block-end: 0;
+  }
 
-    @media (max-width: theme('screens.tablet')) {
-      br {
-        content: '\00a0';
-      }
+  // CTA buttons — padded pill base; typography is inherited from the global
+  // `.button` class (see assets/styles/_buttons.scss). Colours only here.
+  .button--cta-terracotta,
+  .button--cta-muted,
+  .button--cta-moss,
+  .button--cta-glass {
+    @apply px-sm py-xs rounded-cta font-medium transition-colors;
+  }
+
+  // Light-theme buttons (beige / off-white surfaces)
+  .button--cta-terracotta {
+    @apply bg-terracotta text-off-white;
+
+    &:hover,
+    &:focus-visible {
+      @apply bg-cta;
     }
   }
 
-  [data-text-align='left'] {
-    text-align: start;
+  .button--cta-muted {
+    @apply bg-off-white text-dark-green;
+
+    &:hover,
+    &:focus-visible {
+      @apply bg-moss;
+    }
   }
 
-  [data-text-align='center'] {
-    text-align: center;
+  // Dark-theme buttons (terracotta / dark-green surfaces)
+  .button--cta-moss {
+    @apply bg-moss text-dark-green;
+
+    &:hover,
+    &:focus-visible {
+      filter: brightness(0.95);
+    }
+  }
+
+  .button--cta-glass {
+    @apply text-off-white;
+    background-color: rgb(252 251 250 / 20%);
+
+    &:hover,
+    &:focus-visible {
+      background-color: rgb(252 251 250 / 30%);
+    }
   }
 }

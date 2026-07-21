@@ -1,0 +1,45 @@
+{% if active and title %}
+  <flynt-component
+    name="HighlightCard"
+    class="contents"
+    x-data="{ show: localStorage.getItem('jgi-highlight-dismissed') !== '1' }"
+    x-cloak>
+    {# Fixed, dismissible promo card — vertical on desktop, horizontal on mobile #}
+    <div
+      x-show="show"
+      x-transition
+      class="fixed z-[900] left-sm right-sm bottom-sm lg:left-auto lg:right-sm lg:w-[306px] bg-terracotta rounded-card p-min flex flex-row lg:flex-col gap-xs lg:gap-0 shadow-xl">
+      {% if image %}
+        <img
+          class="rounded-image object-cover shrink-0 w-16 h-16 lg:w-full lg:h-[181px] lg:mb-xs"
+          src="{{ image.url }}"
+          alt="{{ image.alt|e | default('') }}"
+          loading="lazy"
+        />
+      {% endif %}
+      <div class="min-w-0 lg:px-min lg:pb-min">
+        <div class="font-body text-off-white truncate lg:whitespace-normal">{{ title }}</div>
+        {% if link %}
+          <a
+            class="font-small inline-flex items-center gap-1 mt-1 text-off-white/50 hover:text-off-white transition-colors"
+            href="{{ link.url }}"
+            {% if link.target %} target="{{ link.target }}" rel="noreferrer noopener"{% endif %}>
+            {{ link.title | default(__('Mehr lesen', 'flynt')) }}
+            <svg class="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M4.5 2.5 8 6l-3.5 3.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+      <button
+        type="button"
+        @click="show = false; localStorage.setItem('jgi-highlight-dismissed', '1')"
+        aria-label="{{ __('Close', 'flynt') }}"
+        class="absolute top-min right-min z-10 flex items-center justify-center w-[34px] h-[31px] rounded-[8.5px] bg-black/10 text-off-white leading-none hover:bg-black/20 transition-colors">
+        <svg class="w-[10px] h-[10px]" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M1 1l8 8M9 1l-8 8" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+  </flynt-component>
+{% endif %}

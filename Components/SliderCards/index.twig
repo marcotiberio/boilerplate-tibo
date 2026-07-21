@@ -1,0 +1,57 @@
+<flynt-component
+  load:on="idle" name="SliderCards"
+  class="w-full overflow-hidden">
+  <script type="application/json">{{ jsonData|json_encode }}</script>
+  <div class="boxed">
+    <div class="flex justify-between items-center mb-lg">
+      {% if title %}
+        <h2 class="font-h2 text-dark-green">{{ title }}</h2>
+      {% endif %}
+      <div class="flex gap-min shrink-0 ml-auto">
+        <button type="button" data-ref="prev" class="slider-button" aria-label="{{ __('Vorherige', 'flynt') }}">
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true">
+            <path d="M5.5 1 1.5 5l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1.5 5H10a4.5 4.5 0 0 1 4.5 4.5V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button type="button" data-ref="next" class="slider-button" aria-label="{{ __('Nächste', 'flynt') }}">
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true">
+            <path d="M10.5 1 14.5 5l-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14.5 5H6a4.5 4.5 0 0 0-4.5 4.5V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    {% if cards %}
+      <div data-ref="slider" class="swiper-container">
+        <div class="swiper-wrapper">
+          {% for card in cards %}
+            <div class="swiper-slide h-auto">
+              <article class="group relative flex flex-col h-full p-min bg-moss hover:bg-jungle rounded-card overflow-hidden transition-colors duration-300 ease-in-out">
+                {% if card.image and card.image.src %}
+                  <img class="w-full h-[181px] object-cover aspect-video rounded-image" src="{{ card.image.src }}" alt="{{ card.image.alt|e|default('') }}">
+                {% endif %}
+                <div class="flex flex-col gap-xs p-sm flex-1">
+                  {% set titleFont = source in ['chimpanzee', 'projects'] ? 'font-h6' : 'font-body' %}
+                  {% if card.title %}
+                    <h3 class="{{ titleFont }} text-black group-hover:text-white transition-colors duration-300 ease-in-out">
+                      {{ card.title }}
+                      {% if card.subtitle %}<span class="ml-min text-sm text-muted-black group-hover:text-white/70">{{ card.subtitle }}</span>{% endif %}
+                    </h3>
+                  {% endif %}
+                  {% if card.excerpt %}
+                    <p class="text-sm text-muted-black group-hover:text-white transition-colors duration-300 ease-in-out flex-1">{{ card.excerpt }}</p>
+                  {% endif %}
+                </div>
+                {% if card.link %}
+                  <a class="button !static !bg-[#1C19180D] group-hover:!text-white transition-colors duration-300 ease-in-out after:absolute after:inset-0 after:content-['']" href="{{ card.link.url }}" {% if card.link.target %}target="_blank" rel="noopener"{% endif %}>{{ card.link.title|default('Mehr lesen') }}</a>
+                {% endif %}
+              </article>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</flynt-component>

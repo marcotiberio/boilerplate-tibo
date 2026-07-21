@@ -24,19 +24,28 @@ add_filter('Flynt/addComponentData?name=NavigationBurger', function ($data) {
 
 Options::addTranslatable('NavigationBurger', [
     [
-        'label' => __('CTA', 'flynt'),
+        'label' => __('Call to Action', 'flynt'),
         'name' => 'ctaTab',
         'type' => 'tab',
         'placement' => 'top',
         'endpoint' => 0
     ],
     [
-        'label' => __('CTA Link', 'flynt'),
-        'name' => 'ctaMenuItem',
+        'label' => __('Primary CTA (e.g. Jetzt spenden)', 'flynt'),
+        'name' => 'ctaLink',
         'type' => 'link',
         'return_format' => 'array',
         'wrapper' =>  [
-            'width' => '100',
+            'width' => '50',
+        ]
+    ],
+    [
+        'label' => __('Secondary CTA (e.g. GoodShop)', 'flynt'),
+        'name' => 'secondaryLink',
+        'type' => 'link',
+        'return_format' => 'array',
+        'wrapper' =>  [
+            'width' => '50',
         ]
     ],
     [
@@ -71,63 +80,6 @@ Options::addTranslatable('NavigationBurger', [
                     'width' => '50',
                 ],
             ],
-        ],
-    ],
-    [
-        'label' => __('Footer Links', 'flynt'),
-        'name' => 'footerLinksTab',
-        'type' => 'tab',
-        'placement' => 'top',
-        'endpoint' => 0
-    ],
-    [
-        'label' => __('Footer Links', 'flynt'),
-        'name' => 'footerLinks',
-        'type' => 'repeater',
-        'layout' => 'table',
-        'button_label' => __('Add Footer Link', 'flynt'),
-        'sub_fields' => [
-            [
-                'label' => __('Menu Link', 'flynt'),
-                'name' => 'menuLink',
-                'type' => 'link',
-                'required' => 0,
-                'wrapper' => [
-                    'width' => 100
-                ],
-            ],
-        ],
-    ],
-    [
-        'label' => __('Language Menu', 'flynt'),
-        'name' => 'languageMenuTab',
-        'type' => 'tab',
-        'placement' => 'top',
-        'endpoint' => 0
-    ],
-    [
-        'label' => __('Show Language Menu', 'flynt'),
-        'name' => 'showLanguageMenu',
-        'type' => 'true_false',
-        'default_value' => 1,
-        'ui' => 1,
-        'ui_on_text' => __('Show', 'flynt'),
-        'ui_off_text' => __('Hide', 'flynt'),
-        'wrapper' => [
-            'width' => 50
-        ],
-    ],
-    [
-        'label' => __('Language Menu Position', 'flynt'),
-        'name' => 'languageMenuPosition',
-        'type' => 'select',
-        'choices' => [
-            'footer' => __('Footer Area', 'flynt'),
-            'main' => __('Main Menu Area', 'flynt'),
-        ],
-        'default_value' => 'footer',
-        'wrapper' => [
-            'width' => 50
         ],
     ],
 ]);

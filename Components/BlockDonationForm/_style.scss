@@ -1,0 +1,39 @@
+// Shared FundraisingBox embed container (kept top-level so it also applies
+// outside this component — e.g. the chimpanzee sponsorship single template).
+// FundraisingBox injects its form as an iframe next to the embed script; let it
+// fill the available width. Height is managed by FundraisingBox.
+.fbox-embed {
+  width: 100%;
+
+  iframe {
+    border: 0;
+    max-width: 100%;
+    width: 100% !important;
+  }
+}
+
+.fbox-embed__placeholder {
+  @apply rounded-card;
+
+  border: 1px dashed currentColor;
+  opacity: 0.5;
+  padding: theme('spacing.sm');
+  text-align: center;
+}
+
+flynt-component[name='BlockDonationForm'] {
+  // Trim trailing margin off WYSIWYG blocks so spacing stays even.
+  .wysiwyg > :last-child {
+    margin-block-end: 0;
+  }
+
+  // Media card — gradient scrim keeps the overlaid title/meta legible.
+  .fbox-media__meta {
+    background: linear-gradient(to top, rgb(17 51 40 / 85%), rgb(17 51 40 / 0%));
+  }
+
+  // Checklist tick — JGI accent.
+  .fbox-check {
+    @apply text-terracotta;
+  }
+}

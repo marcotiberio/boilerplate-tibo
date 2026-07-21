@@ -32,7 +32,12 @@ export default defineConfig(({ mode }) => {
             cert: fs.readFileSync(env.VITE_DEV_SERVER_CERT)
           }
         : false,
-      host: 'localhost' // preserve conflicts with IpV6
+      host: 'localhost', // preserve conflicts with IpV6
+      // Allow the DDEV site to load assets from the Vite dev server cross-origin.
+      // Vite 4.5.14+ locks CORS down by default, blocking the theme's https origin.
+      cors: {
+        origin: [host, /https?:\/\/([a-z0-9-]+\.)*ddev\.site(:\d+)?$/]
+      }
     },
     build: {
       // generate manifest.json in outDir

@@ -6,38 +6,48 @@
       "palette": [
         {
           "slug": "white",
-          "color": "#ffffff",
+          "color": "#FCFBFA",
           "name": "White"
         },
         {
-          "slug": "black",
-          "color": "#000000",
-          "name": "Black"
+          "slug": "darkbrown",
+          "color": "#1C1918",
+          "name": "Dark Brown"
         },
         {
-          "slug": "red",
-          "color": "#FB8666",
-          "name": "Red"
+          "slug": "mutedblack80",
+          "color": "#45423F",
+          "name": "Muted Black 80"
         },
         {
-          "slug": "lightRed",
-          "color": "#FFC3A3",
-          "name": "Light Red"
+          "slug": "mutedblack50",
+          "color": "#868686",
+          "name": "Muted Black 50"
         },
         {
-          "slug": "lightBlue",
-          "color": "#BEE1FF",
-          "name": "Light Blue"
+          "slug": "beige",
+          "color": "#F0E6D9",
+          "name": "Beige"
         },
         {
-          "slug": "blue",
-          "color": "#7ABDEA",
-          "name": "Blue"
+          "slug": "darkgreen",
+          "color": "#113328",
+          "name": "Dark Green"
         },
         {
-          "slug": "grey",
-          "color": "#F1F1F1",
-          "name": "Grey"
+          "slug": "green",
+          "color": "#294A3E",
+          "name": "Green"
+        },
+        {
+          "slug": "moss",
+          "color": "#D2E8C3",
+          "name": "Moss"
+        },
+        {
+          "slug": "earthtone",
+          "color": "#B04F0B",
+          "name": "Earth Tone"
         }
       ]
     }

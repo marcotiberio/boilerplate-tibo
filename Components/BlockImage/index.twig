@@ -1,21 +1,70 @@
 <flynt-component load:on="visible" name="BlockImage">
-  <div class="w-screen h-full boxed !px-0">
-    <figure class="figure">
-      {% if image %}
-        <img 
-          class="igure-image lazyload object-cover"
+  {% set isFullscreen = variant == 'fullscreen' %}
+
+  <div class="{{ isFullscreen ? 'relative left-1/2 w-screen -translate-x-1/2' : 'boxed' }}">
+    <figure
+      class="group relative m-0 w-full overflow-hidden {{ isFullscreen ? '' : 'rounded-card' }}"
+      {% if video.url %}x-data="{ playing: true }"{% endif %}>
+
+      {# Media — video takes priority, image doubles as poster/fallback #}
+      {% if video.url %}
+        <video
+          x-ref="video"
+          class="block w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.03]"
+          autoplay
+          muted
+          loop
+          playsinline
+          poster="{{ image.src|default('') }}">
+          <source src="{{ video.url }}" type="{{ video.mime_type|default('video/mp4') }}" />
+        </video>
+      {% elseif image %}
+        <img
+          class="block w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.03]"
           src="{{ image.src }}"
-          alt="{{ image.alt|e | default('') }}"
+          alt="{{ image.alt|e|default('') }}"
           loading="lazy"
-          style="opacity: 0; transition: opacity 0.5s ease-in-out;"
-          onload="this.style.opacity='1'"
         />
       {% endif %}
-      {% if image.title or image.caption %}
-        <div class="mt-[5px]">
-          {# <figcaption class="font-bodySmall">{{ image.title|e }}</figcaption> #}
-          <figcaption class="font-bodySmall">{{ image.caption|e }}</figcaption>
-        </div>
+
+      {# Softly waved top/bottom edges (framed only) #}
+      {% if not isFullscreen %}
+        <svg class="absolute top-0 left-0 z-10 w-full h-[24px] text-white pointer-events-none" viewBox="0 0 1440 24" preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
+          <path d="M0,0 L1440,0 L1440,9 C1080,25 360,-3 0,13 Z" />
+        </svg>
+        <svg class="absolute bottom-0 left-0 z-10 w-full h-[24px] rotate-180 text-white pointer-events-none" viewBox="0 0 1440 24" preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
+          <path d="M0,0 L1440,0 L1440,9 C1080,25 360,-3 0,13 Z" />
+        </svg>
+      {% endif %}
+
+      {# Play / pause control (only when a video is set) #}
+      {% if video.url %}
+        <button
+          type="button"
+          class="absolute bottom-sm right-sm z-20 flex items-center justify-center w-14 h-11 rounded-cta bg-off-white/20 backdrop-blur-sm text-off-white transition-colors hover:bg-off-white/30"
+          @click="playing ? $refs.video.pause() : $refs.video.play(); playing = !playing"
+          :aria-label="playing ? '{{ __('Pause video', 'flynt') }}' : '{{ __('Play video', 'flynt') }}'">
+          <svg x-show="playing" class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+            <rect x="2.2" y="0.2" width="3" height="14" rx="1" />
+            <rect x="9.2" y="0.2" width="3" height="14" rx="1" />
+          </svg>
+          <svg x-show="!playing" x-cloak class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+            <path d="M2 1.2 12.5 7 2 12.8Z" />
+          </svg>
+        </button>
+      {% endif %}
+
+      {# Infotext pill — appears on hover (always visible on touch) #}
+      {% if text %}
+        <figcaption class="absolute bottom-sm z-20 rotate-2 opacity-100 transition-opacity duration-300 lgplus:opacity-0 lgplus:group-hover:opacity-100 {{ video.url ? 'left-sm' : 'right-sm' }}">
+          <span class="flex items-center gap-1.5 rounded-card bg-warmer-beige px-3.5 py-2.5 font-small text-dark-brown">
+            <svg class="w-3.5 h-3.5 shrink-0 -rotate-2" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+              <circle cx="7" cy="7" r="6" />
+              <path d="M7 6.2v3.4M7 4.2v.1" stroke-linecap="round" />
+            </svg>
+            {{ text }}
+          </span>
+        </figcaption>
       {% endif %}
     </figure>
   </div>

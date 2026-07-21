@@ -31336,7 +31336,7 @@ body {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 
-.ease-out {
+.ease-in-out {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 
@@ -62225,7 +62225,7 @@ body {
     transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
   }
 
-  .sm\:ease-out {
+  .sm\:ease-in-out {
     transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 
@@ -93084,7 +93084,7 @@ body {
     transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
   }
 
-  .md\:ease-out {
+  .md\:ease-in-out {
     transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 
@@ -123943,7 +123943,7 @@ body {
     transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
   }
 
-  .lg\:ease-out {
+  .lg\:ease-in-out {
     transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 
@@ -154802,7 +154802,7 @@ body {
     transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
   }
 
-  .xl\:ease-out {
+  .xl\:ease-in-out {
     transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 
@@ -185661,7 +185661,7 @@ body {
     transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
   }
 
-  .\32xl\:ease-out {
+  .\32xl\:ease-in-out {
     transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 

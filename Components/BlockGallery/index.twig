@@ -1,0 +1,85 @@
+<flynt-component
+  load:on="visible"
+  name="BlockGallery"
+  class="w-full"
+  style="
+    {% if options.colorText %}color: {{ options.colorText }};{% endif %}
+    {% if options.colorBackground %}background-color: {{ options.colorBackground }};{% endif %}">
+  <div class="boxed">
+    {% if title %}
+      {% set tag = titleTag|default('h2') %}
+      <{{ tag }} class="font-{{ titleSize|default('h2') }} text-black mb-md">{{ title }}</{{ tag }}>
+    {% endif %}
+
+    {% if cards or textCard.title %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 grid-flow-row-dense gap-sm auto-rows-[240px] sm:auto-rows-[300px] lg:auto-rows-[374px]">
+
+        {% for card in cards %}
+          {% set hasOverlay = card.title or card.icon %}
+          {% set Tag = card.link.url ? 'a' : 'div' %}
+          <{{ Tag }}
+            class="gallery-card group relative block h-full w-full overflow-hidden rounded-card bg-dark-green {{ card.width }}"
+            {% if card.link.url %}
+              href="{{ card.link.url }}"
+              {% if card.link.target %} target="{{ card.link.target }}" rel="noreferrer noopener"{% endif %}
+            {% endif %}>
+            {% if card.media %}
+              <img
+                class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                src="{{ card.media.src }}"
+                alt="{{ card.media.alt|e|default(card.title|default('')) }}"
+                loading="lazy">
+            {% endif %}
+
+            {% if hasOverlay %}
+              <div class="gallery-card__overlay absolute inset-0 bg-dark-green/40 opacity-100 transition-opacity duration-300 lg:opacity-0 lg:group-hover:opacity-100">
+                {% if card.icon %}
+                  <span class="absolute left-1/2 top-1/2 flex h-[72px] w-[72px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-cta bg-off-white/25">
+                    <img
+                      class="h-10 w-10 object-contain"
+                      src="{{ card.icon.src }}"
+                      alt=""
+                      loading="lazy">
+                  </span>
+                {% endif %}
+                {% if card.title %}
+                  <h3 class="font-h3 absolute inset-x-sm bottom-sm text-center text-off-white">{{ card.title }}</h3>
+                {% endif %}
+              </div>
+            {% endif %}
+          </{{ Tag }}>
+        {% endfor %}
+
+        {% if textCard.title or textCard.text %}
+          <div class="gallery-textcard relative flex h-full w-full flex-col justify-between overflow-hidden rounded-card bg-dark-green p-sm text-off-white">
+            {% if textCard.icon %}
+              <span class="flex h-[72px] w-[72px] items-center justify-center rounded-cta bg-off-white/[0.08]">
+                <img class="h-11 w-11 object-contain" src="{{ textCard.icon.src }}" alt="" loading="lazy">
+              </span>
+            {% endif %}
+
+            <div class="mt-auto flex flex-col gap-sm">
+              <div class="flex flex-col gap-xs">
+                {% if textCard.title %}
+                  <p class="font-body">{{ textCard.title }}</p>
+                {% endif %}
+                {% if textCard.text %}
+                  <p class="font-bodySmall text-off-white/50">{{ textCard.text }}</p>
+                {% endif %}
+              </div>
+              {% if textCard.button.url %}
+                <a
+                  class="button button--mutedWhite w-full"
+                  href="{{ textCard.button.url }}"
+                  {% if textCard.button.target %} target="{{ textCard.button.target }}" rel="noreferrer noopener"{% endif %}>
+                  <span>{{ textCard.button.title }}</span>
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+
+      </div>
+    {% endif %}
+  </div>
+</flynt-component>

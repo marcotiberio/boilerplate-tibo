@@ -1,0 +1,100 @@
+{# ---------------------------------------------------------------------------
+   Chimpanzee sponsorship ("Patenschaft").
+
+   Left: chimp info card (photo + details) pulled from the selected chimpanzee
+   post. Right: heading + FundraisingBox sponsorship form — the form hash lives
+   on the chimpanzee post (see inc/fieldGroups/chimpanzeeComponents.php). The
+   form renders in a cross-origin FundraisingBox iframe; its field styling is
+   configured on the FundraisingBox platform, not here.
+--------------------------------------------------------------------------- #}
+
+{% set theme = theme|default('offWhite') %}
+{% set surfaceClass = {
+  'offWhite': 'bg-off-white',
+  'beige': 'bg-beige'
+}[theme] %}
+
+{# Build the paymentJS embed URL from the chimp's hash + optional item id. #}
+{% set embedUrl = 'https://secure.fundraisingbox.com/app/paymentJS?hash=' ~ chimp.formHash|url_encode %}
+{% if chimp.fbItemId %}{% set embedUrl = embedUrl ~ '&fb_item_id=' ~ chimp.fbItemId|url_encode %}{% endif %}
+
+<flynt-component
+  load:on="idle"
+  name="BlockFormChimpanzeeSponsor"
+  class="w-full {{ surfaceClass }}">
+  <div class="boxed py-xl">
+
+    {% if chimp %}
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-sm items-start">
+
+        {# ---- Left: chimpanzee info card ---- #}
+        <div class="lg:sticky self-start rounded-card overflow-hidden">
+          {% if chimp.image.src %}
+            <img
+              class="w-full aspect-[624/360] object-cover"
+              src="{{ chimp.image.src }}"
+              alt="{{ chimp.image.alt|e | default(chimp.title) }}"
+              loading="lazy" />
+          {% endif %}
+
+          <div class="bg-jungle text-off-white p-sm lg:p-md">
+            <div class="flex flex-wrap items-baseline gap-x-xs gap-y-min">
+              <h2 class="font-h2">{{ chimp.title }}</h2>
+              {% if chimp.sex %}
+                <span class="font-body text-off-white/50">{{ chimp.sex }}</span>
+              {% endif %}
+            </div>
+
+            {% if chimp.sanctuary or chimp.born or chimp.arrival %}
+              <dl class="mt-sm grid grid-cols-2 gap-y-xs font-body">
+                {% if chimp.sanctuary %}
+                  <dt class="text-off-white/50">{{ __('Auffangstation', 'flynt') }}</dt>
+                  <dd>{{ chimp.sanctuary }}</dd>
+                {% endif %}
+                {% if chimp.born %}
+                  <dt class="text-off-white/50">{{ __('Geboren', 'flynt') }}</dt>
+                  <dd>{{ chimp.born }}</dd>
+                {% endif %}
+                {% if chimp.arrival %}
+                  <dt class="text-off-white/50">{{ __('Ankunft', 'flynt') }}</dt>
+                  <dd>{{ chimp.arrival }}</dd>
+                {% endif %}
+              </dl>
+            {% endif %}
+
+            {% if chimp.description %}
+              <div class="mt-sm font-body text-off-white/80">
+                {{ chimp.description|nl2br }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        {# ---- Right: sponsorship form ---- #}
+        <div class="bg-warmer-beige rounded-card p-sm lg:p-md">
+          <h2 class="font-h2 text-dark-green">
+            {{ title|default(chimp.title ~ __('’s Patenschaft', 'flynt')) }}
+          </h2>
+
+          <div class="fbox-embed mt-sm" style="min-height: {{ formHeight|default(900) }}px">
+            {% if chimp.formEmbedCode %}
+              {{ chimp.formEmbedCode|raw }}
+            {% elseif chimp.formHash %}
+              <script type="text/javascript" src="{{ embedUrl }}"></script>
+              <noscript>
+                <p class="font-small">{{ __('Please enable JavaScript to view the donation form.', 'flynt') }}</p>
+              </noscript>
+            {% else %}
+              <p class="fbox-embed__placeholder font-small">{{ __('No FundraisingBox form set for this chimpanzee. Add a form hash on the chimpanzee post.', 'flynt') }}</p>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+    {% else %}
+      {# Visible only to editors — no chimpanzee selected yet. #}
+      <p class="fbox-embed__placeholder font-small">{{ __('Select a chimpanzee in the block settings.', 'flynt') }}</p>
+    {% endif %}
+
+  </div>
+</flynt-component>

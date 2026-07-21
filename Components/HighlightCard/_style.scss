@@ -1,0 +1,5 @@
+flynt-component[name='HighlightCard'] {
+  &[x-cloak] {
+    display: none !important;
+  }
+}

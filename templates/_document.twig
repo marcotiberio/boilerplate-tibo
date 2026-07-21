@@ -13,9 +13,9 @@
         <header class="w-full">
           {% block header %}
             <div class="wrapper wrapper--menu flex justify-center items-center w-full h-[87px] lg:h-auto fixed top-0 left-0 z-[3000] transition ease-in-out delay-300">
-              <div class="hidden lg:block w-full bg-white">
-                {{ renderComponent('NavigationMeta') }}
-                <div class="w-full boxed !max-w-screen-box !py-0 mx-auto">
+              <div class="hidden lg:block w-full">
+                {# {{ renderComponent('NavigationMeta') }} #}
+                <div class="w-full boxed !py-0 mx-auto">
                   {{ renderComponent('NavigationMain') }}
                 </div>
               </div>
@@ -28,7 +28,7 @@
             </div>
           {% endblock %}
         </header>
-        <main id="mainContent" class="mainContent min-h-screen" aria-label="{{ __('Content', 'flynt') }}">
+        <main id="mainContent" class="mainContent min-h-screen{% if not function('is_front_page') %} mt-md{% endif %}" aria-label="{{ __('Content', 'flynt') }}">
           <a href="#mainContent" class="skipLink">
             {{ __("Skip to main content", "flynt") }}
           </a>
@@ -46,6 +46,7 @@
           {% endblock %}
         </footer>
       </div>
+      {{ renderComponent('HighlightCard') }}
     {% endblock %}
     <div class="wpFooter">
       {{ function('wp_footer') }}

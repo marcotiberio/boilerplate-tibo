@@ -2,8 +2,6 @@
 
 namespace Flynt\Components\BlockImage;
 
-use Flynt\FieldVariables;
-
 function getACFLayout()
 {
     return [
@@ -11,55 +9,53 @@ function getACFLayout()
         'label' => __('Block: Image', 'flynt'),
         'sub_fields' => [
             [
-                'label' => __('Image', 'flynt'),
-                'name' => 'generalTab',
+                'label' => __('Media', 'flynt'),
+                'name' => 'mediaTab',
                 'type' => 'tab',
                 'placement' => 'top',
                 'endpoint' => 0,
             ],
             [
+                'label' => __('Variant', 'flynt'),
+                'instructions' => __('Fullscreen spans the full width edge-to-edge. Framed sits inside the content width with rounded, softly waved edges.', 'flynt'),
+                'name' => 'variant',
+                'type' => 'select',
+                'choices' => [
+                    'framed' => __('Framed', 'flynt'),
+                    'fullscreen' => __('Fullscreen', 'flynt'),
+                ],
+                'default_value' => 'framed',
+                'required' => 1,
+                'wrapper' => ['width' => 100],
+            ],
+            [
                 'label' => __('Image', 'flynt'),
-                'instructions' => __('Image-Format: JPG, PNG, SVG.', 'flynt'),
+                'instructions' => __('JPG, PNG, SVG, WEBP. Also used as the poster/fallback when a video is set.', 'flynt'),
                 'name' => 'image',
                 'type' => 'image',
                 'preview_size' => 'medium',
                 'required' => 1,
-                'mime_types' => 'jpg,jpeg,png,svg,webp'
+                'mime_types' => 'jpg,jpeg,png,svg,webp',
+                'wrapper' => ['width' => 50],
             ],
-            // [
-            //     'label' => __('Options', 'flynt'),
-            //     'name' => 'optionsTab',
-            //     'type' => 'tab',
-            //     'placement' => 'top',
-            //     'endpoint' => 0
-            // ],
-            // [
-            //     'label' => '',
-            //     'name' => 'options',
-            //     'type' => 'group',
-            //     'layout' => 'row',
-            //     'sub_fields' => [
-            //         FieldVariables\getTheme(),
-            //         [
-            //             'label' => __('Size', 'flynt'),
-            //             'name' => 'size',
-            //             'type' => 'radio',
-            //             'other_choice' => 0,
-            //             'save_other_choice' => 0,
-            //             'layout' => 'horizontal',
-            //             'choices' => [
-            //                 'small' => __('Small', 'flynt'),
-            //                 'medium' => __('Medium', 'flynt'),
-            //                 'large' => __('Large (Default)', 'flynt)'),
-            //                 'full' => __('Full', 'flynt'),
-            //             ],
-            //             'default_value' => 'medium',
-            //             'wrapper' =>  [
-            //                 'width' => '100',
-            //             ],
-            //         ],
-            //     ]
-            // ]
+            [
+                'label' => __('Video', 'flynt'),
+                'instructions' => __('Optional. MP4/WebM. Plays muted and looped; the image above is used as poster/fallback. A play/pause control is shown when a video is set.', 'flynt'),
+                'name' => 'video',
+                'type' => 'file',
+                'return_format' => 'array',
+                'required' => 0,
+                'mime_types' => 'mp4,webm',
+                'wrapper' => ['width' => 50],
+            ],
+            [
+                'label' => __('Infotext', 'flynt'),
+                'instructions' => __('Optional caption shown on hover in the corner pill.', 'flynt'),
+                'name' => 'text',
+                'type' => 'text',
+                'required' => 0,
+                'wrapper' => ['width' => 100],
+            ],
         ]
     ];
 }

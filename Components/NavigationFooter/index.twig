@@ -1,111 +1,175 @@
-<flynt-component load:on="visible" name="NavigationFooter" class="relative bg-dark-green text-off-white mt-xl">
-  {# Decorative wave along the top edge #}
-  <svg class="absolute left-0 bottom-full w-full h-[60px] md:h-[120px] block pointer-events-none" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-    <path fill="#113328" d="M0,120 L0,64 C240,16 480,0 720,24 C960,48 1200,96 1440,64 L1440,120 Z"></path>
-  </svg>
+<flynt-component load:on="visible" name="NavigationFooter" class="relative block">
 
-  <div class="boxed">
-    {# Row 1 #}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
-      {# Col 1 — Brand & Contact #}
-      <div class="flex flex-col gap-sm">
-        {% if brandTitle %}
-          <p class="font-h3">{{ brandTitle }}</p>
-        {% endif %}
-        <div class="flex flex-col gap-xs text-sm">
-          {% if orgName %}
-            <span>{{ orgName }}</span>
-          {% endif %}
-          {% if address %}
-            <span>{{ address|nl2br }}</span>
-          {% endif %}
-          {% if phone %}
-            <span class="flex items-center gap-xs">
-              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
-              <span>{{ phone }}</span>
+  {# ───────────────────────── Newsletter ───────────────────────── #}
+  <section class="relative overflow-hidden min-h-[90vh] lg:min-h-[50vh]">
+    {# Decorative acacia silhouette bridging into the footer #}
+    <div class="block absolute right-0 bottom-[-55px] md:w-[40%] max-w-[375px] text-dark-green pointer-events-none select-none [&>svg]:w-full [&>svg]:h-auto" aria-hidden="true">
+      {% include 'assets/images/footer-forest.svg' ignore missing %}
+    </div>
+
+    <div class="boxed relative z-10 py-xl">
+      <div class="flex flex-col sm:flex-row items-start gap-sm lg:gap-md max-w-[900px]">
+        {# Image + mail badge #}
+        {% if newsletterImage %}
+          <div class="relative shrink-0">
+            <img
+              class="w-full aspect-video md:aspect-square md:max-w-[216px] object-cover rounded-card"
+              src="{{ newsletterImage.src }}" alt="{{ newsletterImage.alt|e|default('') }}" loading="lazy">
+            <span class="absolute -top-xs -right-xs w-14 h-14 rounded-cta bg-moss flex items-center justify-center text-dark-green [&_svg]:w-8 [&_svg]:h-8 [&_svg]:fill-current">
+              {% include 'assets/icons/email.svg' ignore missing %}
             </span>
+          </div>
+        {% endif %}
+
+        {# Heading + form #}
+        <div class="flex flex-col gap-sm w-full max-w-[539px]">
+          {% if newsletterHeading %}
+            <p class="font-h5 text-black">{{ newsletterHeading }}</p>
           {% endif %}
-          {% if email %}
-            <a class="flex items-center gap-xs hover:underline underline-offset-4" href="mailto:{{ email }}">
-              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                <path d="m2 6 10 7L22 6"></path>
-              </svg>
-              <span>{{ email }}</span>
+
+          {# NOTE: markup only — no ESP wired yet. onsubmit prevented so nothing is sent. #}
+          <form class="flex flex-col sm:flex-row gap-xs w-full" onsubmit="return false;"
+            aria-label="{{ newsletterHeading|e|default('Newsletter') }}">
+            <label class="sr-only" for="footer-nl-email">{{ newsletterPlaceholder|e }}</label>
+            <input
+              id="footer-nl-email" type="email" name="email"
+              class="flex-1 h-11 px-sm rounded-cta border-0 bg-beige/50 text-black placeholder:text-black/60 focus:outline-none focus:ring-2 focus:ring-jungle/40"
+              placeholder="{{ newsletterPlaceholder|e }}">
+            <button type="submit" class="button button--jungle w-full">{{ newsletterButtonLabel|e|default('Anmelden') }}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# ───────────────────────── Main footer (dark green) ───────────────────────── #}
+  <section class="relative bg-dark-green text-off-white">
+    {# Wave that lifts the dark-green panel into the off-white newsletter above #}
+    <svg class="absolute left-0 bottom-full w-full h-[60px] lg:h-[120px] block pointer-events-none" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path fill="#113328" d="M0,120 L0,64 C240,16 480,0 720,24 C960,48 1200,96 1440,64 L1440,120 Z"></path>
+    </svg>
+
+    <div class="boxed py-xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
+
+        {# Brand & Contact #}
+        <div class="flex flex-col gap-sm">
+          {% if brandTitle %}
+            <p class="font-h4 max-w-[509px]">{{ brandTitle }}</p>
+          {% endif %}
+
+          <div class="flex flex-col gap-xs font-small">
+            {% if orgName %}
+              <span class="font-semibold">{{ orgName }}</span>
+            {% endif %}
+            {% if address %}
+              <span class="text-off-white/80">{{ address|nl2br }}</span>
+            {% endif %}
+            {% if phone %}
+              <span class="flex items-center gap-xs text-off-white/80">
+                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                <span>{{ phone }}</span>
+              </span>
+            {% endif %}
+            {% if email %}
+              <a class="flex items-center gap-xs text-off-white/80 hover:text-off-white transition-colors" href="mailto:{{ email }}">
+                <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                  <path d="m2 6 10 7L22 6"></path>
+                </svg>
+                <span>{{ email }}</span>
+              </a>
+            {% endif %}
+          </div>
+
+          {% if socials %}
+            <div class="flex flex-row flex-wrap gap-xs">
+              {% for social in socials %}
+                {% if social.url and social.platform %}
+                  <a class="w-11 h-11 rounded-cta bg-black/25 flex items-center justify-center text-off-white transition-colors hover:bg-black/40 [&_svg]:w-[22px] [&_svg]:h-[22px] [&_svg]:fill-current"
+                    href="{{ social.platform == 'email' ? 'mailto:' ~ social.url : social.url }}"
+                    {% if social.platform != 'email' %} target="_blank" rel="noreferrer noopener"{% endif %}
+                    aria-label="{{ social.platform|capitalize }}" title="{{ social.platform|capitalize }}">
+                    {% include 'assets/icons/' ~ social.platform ~ '.svg' ignore missing %}
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% if donateLink %}
+            <a class="button button--primary mt-xs"
+              href="{{ donateLink.url }}"
+              {% if donateLink.target %} target="{{ donateLink.target }}" rel="noreferrer noopener"{% endif %}>
+              <span>{{ donateLink.title }}</span>
             </a>
           {% endif %}
         </div>
 
-        {% if socials %}
-          <div class="flex flex-row flex-wrap gap-xs">
-            {% for social in socials %}
-              {% if social.url %}
-                <a class="w-9 h-9 rounded-full bg-off-white/10 flex items-center justify-center hover:bg-off-white/20 transition-colors"
-                  href="{{ social.url }}" target="_blank" rel="noreferrer noopener"
-                  aria-label="{{ social.label }}" title="{{ social.label }}">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm0 12c-2.03 0-3.8-1.11-4.74-2.75.02-1.57 3.16-2.44 4.74-2.44s4.72.87 4.74 2.44A5.48 5.48 0 0 1 12 18z"></path>
-                  </svg>
+        {# Nav columns + transparency badge #}
+        <div class="flex flex-col gap-lg">
+          {% if columns %}
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-lg">
+              {% for column in columns %}
+                <div class="flex flex-col">
+                  {% if column.heading %}
+                    <p class="font-small font-semibold mb-sm">{{ column.heading }}</p>
+                  {% endif %}
+                  {% if column.links %}
+                    <ul class="flex flex-col gap-xs font-body">
+                      {% for item in column.links %}
+                        {% if item.link %}
+                          <li>
+                            <a class="text-off-white/90 hover:text-off-white hover:underline underline-offset-4"
+                              href="{{ item.link.url }}"
+                              {% if item.link.target %} target="{{ item.link.target }}" rel="noreferrer noopener"{% endif %}>
+                              {{ item.link.title }}
+                            </a>
+                          </li>
+                        {% endif %}
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% if transparencyBadge %}
+            <div class="mt-auto flex justify-start lg:justify-end">
+              {% if transparencyBadgeLink %}
+                <a href="{{ transparencyBadgeLink }}" target="_blank" rel="noreferrer noopener">
+              {% endif %}
+                <img class="h-[54px] w-auto" src="{{ transparencyBadge.src }}" alt="{{ transparencyBadge.alt|e|default('') }}" loading="lazy">
+              {% if transparencyBadgeLink %}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {# Bottom legal bar #}
+      <div class="border-t border-off-white/15 mt-xl pt-sm flex flex-col md:flex-row md:items-center justify-between gap-sm font-small">
+        {% if legalLinks %}
+          <div class="flex flex-row flex-wrap gap-x-sm gap-y-xs">
+            {% for l in legalLinks %}
+              {% if l.link %}
+                <a class="text-off-white/70 hover:text-off-white transition-colors"
+                  href="{{ l.link.url }}"
+                  {% if l.link.target %} target="{{ l.link.target }}" rel="noreferrer noopener"{% endif %}>
+                  {{ l.link.title }}
                 </a>
               {% endif %}
             {% endfor %}
           </div>
         {% endif %}
-
-        {% if donateLink %}
-          <a class="button button--fullOrange"
-            href="{{ donateLink.url }}"
-            {% if donateLink.target %} target="{{ donateLink.target }}" rel="noreferrer noopener"{% endif %}>
-            {{ donateLink.title }}
-          </a>
+        {% if copyrightText %}
+          <span class="text-off-white/50">{{ copyrightText }}</span>
         {% endif %}
       </div>
-
-      {# Cols 2–4 — Nav columns #}
-      {% for column in columns %}
-        <div class="flex flex-col">
-          {% if column.heading %}
-            <p class="font-menu mb-sm">{{ column.heading }}</p>
-          {% endif %}
-          {% if column.links %}
-            <ul class="flex flex-col gap-xs text-sm">
-              {% for item in column.links %}
-                {% if item.link %}
-                  <li>
-                    <a class="hover:underline underline-offset-4"
-                      href="{{ item.link.url }}"
-                      {% if item.link.target %} target="{{ item.link.target }}" rel="noreferrer noopener"{% endif %}>
-                      {{ item.link.title }}
-                    </a>
-                  </li>
-                {% endif %}
-              {% endfor %}
-            </ul>
-          {% endif %}
-        </div>
-      {% endfor %}
     </div>
-
-    {# Row 2 — bottom legal bar #}
-    <div class="border-t border-off-white/20 pt-sm mt-lg flex justify-between flex-wrap gap-sm text-sm">
-      {% if legalLinks %}
-        <div class="flex flex-row flex-wrap gap-sm">
-          {% for l in legalLinks %}
-            {% if l.link %}
-              <a class="hover:underline underline-offset-4"
-                href="{{ l.link.url }}"
-                {% if l.link.target %} target="{{ l.link.target }}" rel="noreferrer noopener"{% endif %}>
-                {{ l.link.title }}
-              </a>
-            {% endif %}
-          {% endfor %}
-        </div>
-      {% endif %}
-      {% if copyrightText %}
-        <span class="text-off-white/70">{{ copyrightText }}</span>
-      {% endif %}
-    </div>
-  </div>
+  </section>
 </flynt-component>

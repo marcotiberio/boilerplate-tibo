@@ -137,7 +137,6 @@ figcaption {
 
 blockquote,
 .blockquote {
-  border-inline-start: 5px solid var(--grey-300);
   display: block;
   font-size: 1.44rem;
   font-style: italic;
@@ -149,7 +148,6 @@ blockquote,
 
   footer {
     color: var(--color-text-muted);
-    margin-block-start: 0.25rem;
   }
 }
 

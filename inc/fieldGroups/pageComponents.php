@@ -67,10 +67,17 @@ add_action('Flynt/afterRegisterComponents', function () {
                     // JGI homepage components
                     Components\BlockHero\getACFLayout(),
                     Components\BlockStats\getACFLayout(),
-                    Components\BlockNewsSlider\getACFLayout(),
+                    Components\BlockIcons\getACFLayout(),
+                    Components\BlockGallery\getACFLayout(),
+                    Components\SliderCards\getACFLayout(),
+                    Components\SliderImages\getACFLayout(),
                     Components\BlockFullscreenMedia\getACFLayout(),
+                    Components\BlockMediaQuote\getACFLayout(),
                     Components\BlockNewsletter\getACFLayout(),
+                    Components\BlockDonationForm\getACFLayout(),
+                    Components\BlockFormChimpanzeeSponsor\getACFLayout(),
                     Components\BlockWysiwygColumns\getACFLayout(),
+                    Components\BlockContact\getACFLayout(),
                     // Boilerplate components
                     Components\BlockAnchor\getACFLayout(),
                     Components\BlockBannerCta\getACFLayout(),

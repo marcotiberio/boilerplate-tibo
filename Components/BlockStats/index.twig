@@ -1,12 +1,12 @@
 <flynt-component
   load:on="visible"
   name="BlockStats"
-  class="w-full bg-beige"
+  class="w-full"
   style="
     {% if options.colorText %}color: {{ options.colorText }};{% endif %}
     {% if options.colorBackground %}background-color: {{ options.colorBackground }};{% endif %}"
   >
-  <div class="boxed py-xl">
+  <div class="boxed">
     {% if title %}
       <h2 class="font-h2 text-dark-green mb-xl">{{ title }}</h2>
     {% endif %}

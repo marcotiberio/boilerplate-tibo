@@ -1,0 +1,10 @@
+flynt-component[name='BlockMediaQuote'] {
+  blockquote {
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  [x-cloak] {
+    display: none !important;
+  }
+}

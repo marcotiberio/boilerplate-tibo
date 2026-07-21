@@ -22,7 +22,7 @@
               class="slider-item swiper-slide post [&_.group]:hover:text-black hover:cursor-pointer" 
               x-show="(selectedCategories.length === 0 || selectedCategories.some(cat => {{ item.postType|default([])|json_encode }}.includes(cat))) &&
                      (searchQuery === '' || '{{ item.title|lower }}'.includes(searchQuery.toLowerCase()))"
-              x-transition:enter="transition ease-out duration-100"
+              x-transition:enter="transition ease-in-out duration-100"
               x-transition:enter-start="opacity-0 scale-95"
               x-transition:enter-end="opacity-100 scale-100"
               x-transition:leave="transition ease-in duration-100"

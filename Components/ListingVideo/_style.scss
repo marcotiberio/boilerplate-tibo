@@ -9,7 +9,7 @@ flynt-component[name='ListingVideo'] {
       bottom: 0;
       left: 0;
       background-color: var(--black);
-      transition: transform 0.25s ease-out;
+      transition: transform 0.25s ease-in-out;
     }
 
     &.text-red {
@@ -40,7 +40,7 @@ flynt-component[name='ListingVideo'] {
         bottom: 0;
         left: 0;
         background-color: var(--white);
-        transition: transform 0.25s ease-out;
+        transition: transform 0.25s ease-in-out;
       }
     }
   }

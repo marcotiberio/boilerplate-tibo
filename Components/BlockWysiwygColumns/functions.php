@@ -11,8 +11,8 @@ function getACFLayout()
         'label' => __('Text Editor (Columns)', 'flynt'),
         'sub_fields' => [
             [
-                'label' => __('Columns', 'flynt'),
-                'name' => 'columnsTab',
+                'label' => __('Content', 'flynt'),
+                'name' => 'contentTab',
                 'type' => 'tab',
                 'placement' => 'top',
                 'endpoint' => 0,
@@ -23,7 +23,7 @@ function getACFLayout()
                 'type' => 'repeater',
                 'layout' => 'block',
                 'min' => 1,
-                'max' => 4,
+                'max' => 3,
                 'button_label' => __('Add Column', 'flynt'),
                 'sub_fields' => [
                     [
@@ -35,38 +35,41 @@ function getACFLayout()
                         'media_upload' => 0,
                         'required' => 0,
                         'wrapper' => [
-                            'width' => 100
+                            'width' => 100,
                         ],
                     ],
                     [
-                        'label' => __('Image', 'flynt'),
-                        'instructions' => __('Image-Format: JPG, PNG, GIF.', 'flynt'),
-                        'name' => 'image',
-                        'type' => 'image',
-                        'preview_size' => 'medium',
-                        'required' => 0,
-                        'mime_types' => 'jpg,jpeg,png,gif',
+                        'label' => __('List Style', 'flynt'),
+                        'instructions' => __('Checklist renders bullet lists with check icons.', 'flynt'),
+                        'name' => 'listStyle',
+                        'type' => 'select',
+                        'choices' => [
+                            'default' => __('Default', 'flynt'),
+                            'checklist' => __('Checklist', 'flynt'),
+                        ],
+                        'default_value' => 'default',
+                        'allow_null' => 0,
                         'wrapper' => [
-                            'width' => 100
+                            'width' => 50,
                         ],
                     ],
                     [
                         'label' => __('Button', 'flynt'),
-                        'name' => 'buttonLink',
+                        'name' => 'button',
                         'type' => 'link',
                         'required' => 0,
                         'wrapper' => [
-                            'width' => 100
+                            'width' => 50,
                         ],
                     ],
-                ]
+                ],
             ],
             [
                 'label' => __('Options', 'flynt'),
                 'name' => 'optionsTab',
                 'type' => 'tab',
                 'placement' => 'top',
-                'endpoint' => 0
+                'endpoint' => 0,
             ],
             [
                 'label' => '',
@@ -74,9 +77,25 @@ function getACFLayout()
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => [
+                    [
+                        'label' => __('Columns', 'flynt'),
+                        'instructions' => __('Number of columns shown per row.', 'flynt'),
+                        'name' => 'columnCount',
+                        'type' => 'select',
+                        'choices' => [
+                            '1' => __('1', 'flynt'),
+                            '2' => __('2', 'flynt'),
+                            '3' => __('3', 'flynt'),
+                        ],
+                        'default_value' => '2',
+                        'allow_null' => 0,
+                        'wrapper' => [
+                            'width' => 100,
+                        ],
+                    ],
                     FieldVariables\getColorBackground(),
-                ]
-            ]
-        ]
+                ],
+            ],
+        ],
     ];
-} 
+}

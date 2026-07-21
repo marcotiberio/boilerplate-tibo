@@ -1,30 +1,33 @@
-<flynt-component 
-  load:on="visible" 
+{% set colCount = options.columnCount|default('2') %}
+{% set colGrid = {
+  '1': 'md:grid-cols-1',
+  '2': 'md:grid-cols-2',
+  '3': 'md:grid-cols-2 lg:grid-cols-3'
+}[colCount]|default('md:grid-cols-2') %}
+
+<flynt-component
+  load:on="visible"
   name="BlockWysiwygColumns"
-  class="{% if options.firstComponent %}pt-[10vw] md:pt-[160px]{% endif %}"
-  style="
-    background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};"
-  >
-  <div class="boxed w-full">
-    {# <div class="block lg:hidden">
-      <h2>{{ headlineTitle|e }}</h2>
-    </div> #}
-    <div class="flex flex-col md:flex-row gap-sm">
+  class="w-full"
+  style="{% if options.colorBackground %}background-color: {{ options.colorBackground }};{% endif %}">
+  <div class="boxed py-xl">
+    <div class="grid grid-cols-1 {{ colGrid }} gap-x-lg gap-y-md">
       {% for column in columns %}
-        <div class="flex flex-col w-full">
-          {% if column.image %}
-            <img 
-              class="figure-image lazyload w-full aspect-8/5 object-cover mb-xs"
-              src="{{ column.image.src }}"
-              alt="{{ column.image.alt|e | default('') }}"
-              loading="lazy"
-              style="opacity: 0; transition: opacity 0.5s ease-in-out;"
-              onload="this.style.opacity='1'"
-            />
+        <div class="flex flex-col items-start gap-sm">
+          {% if column.contentHtml %}
+            <div class="wysiwyg {% if column.listStyle == 'checklist' %}wysiwyg--checklist{% endif %} text-black">{{ column.contentHtml|e('wp_kses_post') }}</div>
           {% endif %}
-          <div class="wysiwyg">{{ column.contentHtml|e('wp_kses_post') }}</div>
+
+          {% if column.button %}
+            <a
+              class="button button--primary"
+              href="{{ column.button.url }}"
+              {% if column.button.target %} target="{{ column.button.target }}" rel="noreferrer noopener"{% endif %}>
+              <span>{{ column.button.title }}</span>
+            </a>
+          {% endif %}
         </div>
       {% endfor %}
     </div>
   </div>
-</flynt-component> 
+</flynt-component>

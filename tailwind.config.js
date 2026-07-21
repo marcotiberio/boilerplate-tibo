@@ -14,11 +14,12 @@ module.exports = {
     },
     borderRadius: {
       none: '0',
-      DEFAULT: '8px',
-      image: '8px',
-      button: '50px',
-      cta: '12px',    // JGI rounded-[12px] buttons
-      card: '16px',   // JGI cards
+      DEFAULT: '12px',
+      image: '12px',
+      button: '12px',
+      cta: '12px',      // JGI rounded-[12px] buttons
+      card: '12px',     // JGI cards
+      banner: '20px',   // JGI CTA banner cards (Figma rounded-[20px])
       full: '9999px'
     },
     colors: {
@@ -26,14 +27,18 @@ module.exports = {
       black: '#000000',
       current: 'currentColor',
       transparent: 'transparent',
-      // JGI palette (Figma wFPGQZAbPBLbmaZX1FMn6f) — see .build-agent/tailwind.tokens.js
-      'dark-green': '#113328',
-      jungle: '#294a3e',
-      moss: '#d2e8c3',
-      beige: '#f2e3d3',
-      'off-white': '#fcfbfa',
-      'dark-brown': '#1c1918',
-      'muted-black': '#45423f',
+      // JGI palette — source of truth: theme.json (WordPress editor palette).
+      // Format: tailwind name → value  // theme.json slug
+      'dark-green': '#113328',    // darkgreen
+      jungle: '#294a3e',          // green
+      moss: '#d2e8c3',            // moss
+      beige: '#f0e6d9',           // beige
+      'warmer-beige': '#f2e3d3',  // warmerbeige (info/caption pills)
+      'off-white': '#fcfbfa',     // white
+      'dark-brown': '#1c1918',    // darkbrown
+      'muted-black': '#45423f',   // mutedblack80
+      'muted-black-50': '#868686', // mutedblack50
+      terracotta: '#b04f0b',      // earthtone (JGI burnt-orange accent — CTA cards, hero highlight)
       cta: '#d67416',
       // Project colors
       grei: '#f1f1f1',

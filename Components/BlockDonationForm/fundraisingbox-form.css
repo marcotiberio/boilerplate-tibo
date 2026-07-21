@@ -1,0 +1,151 @@
+/* ============================================================================
+   Jane Goodall Institut — FundraisingBox form styling
+   ----------------------------------------------------------------------------
+   THIS FILE IS NOT PART OF THE THEME BUILD. The donation form renders inside a
+   cross-origin FundraisingBox iframe, so the site's CSS cannot reach it. Paste
+   the rules below into FundraisingBox instead:
+
+     FundraisingBox → Formulare → (this form) → Design/Layout → "Eigenes CSS"
+
+   It restyles the form INSIDE the iframe to match the Figma "Step 2" design
+   (node 1-3618). The website renders a dark-green (#294a3e "jungle") rounded
+   card around the iframe and the iframe is transparent, so here we keep the
+   form background transparent and lay translucent-white fields on top.
+
+   Selectors below were taken from the form's live markup
+   (hash o8a2ajp2efevf24x) — stable ids: #fbPaymentForm, #amountChoices,
+   #submitForm; field class .input; amount tiles label.choice.
+   ============================================================================ */
+
+:root {
+  --jgi-white: #fcfbfa;
+  --jgi-moss: #d2e8c3;
+  --jgi-dark-green: #113328;
+  --jgi-dark-brown: #1c1918;
+  --jgi-field-bg: rgba(252, 251, 250, 0.2); /* translucent white — Figma inputs */
+}
+
+/* --- Canvas: transparent so the site's jungle card shows through ----------- */
+html,
+body,
+#wrapper {
+  background: transparent !important;
+  color: var(--jgi-white);
+}
+
+/* Hide the JGI logo image + FundraisingBox footer badge (not in the design) */
+#wrapper > img,
+#wrapper img[src*="logo"],
+.powered-by,
+[class*="powered"] {
+  display: none !important;
+}
+
+/* --- Section headings (legends) & field labels ---------------------------- */
+#fbPaymentForm legend {
+  color: var(--jgi-white);
+  font-weight: 600;
+}
+
+#fbPaymentForm label,
+#fbPaymentForm .control-label {
+  color: var(--jgi-white);
+}
+
+/* --- Text inputs, selects & textareas: translucent-white pills ------------ */
+#fbPaymentForm .input,
+#fbPaymentForm input[type="text"],
+#fbPaymentForm input[type="email"],
+#fbPaymentForm input[type="tel"],
+#fbPaymentForm input[type="number"],
+#fbPaymentForm select,
+#fbPaymentForm textarea {
+  padding: 8px 12px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: var(--jgi-field-bg) !important;
+  box-shadow: none !important;
+  color: var(--jgi-white) !important;
+}
+
+#fbPaymentForm ::placeholder {
+  color: rgba(252, 251, 250, 0.6);
+}
+
+/* keep the native select chevron visible on the dark field */
+#fbPaymentForm select {
+  color-scheme: dark;
+}
+
+/* --- Amount choices: translucent tiles, moss when selected ---------------- */
+#amountChoices .choice {
+  border: 0;
+  border-radius: 8px;
+  background: var(--jgi-field-bg);
+  color: var(--jgi-white);
+}
+
+#amountChoices .choice .amount {
+  color: inherit;
+}
+
+/* selected tile — FB toggles a checked radio inside the label. :has() covers
+   modern browsers; .selected/.active are kept as fallbacks for FB's own class. */
+#amountChoices .choice:has(input:checked),
+#amountChoices .choice.selected,
+#amountChoices .choice.active {
+  background: var(--jgi-moss);
+  color: var(--jgi-dark-brown);
+}
+
+/* "Freier Betrag" custom-amount tile keeps its inner input transparent */
+#amountChoices .choice-custom .input-custom-amount input {
+  background: transparent !important;
+  color: var(--jgi-white) !important;
+}
+
+/* --- Payment-method tiles (PayPal / SEPA) -------------------------------- */
+#fbPaymentForm .paymentmethod {
+  border: 0;
+  border-radius: 8px;
+  background: var(--jgi-field-bg);
+  color: var(--jgi-white);
+}
+
+/* --- SSL / "Sicheres Spenden" notice box --------------------------------- */
+#fbPaymentForm [class*="secure"],
+#fbPaymentForm .alert {
+  border: 0;
+  border-radius: 8px;
+  background: var(--jgi-field-bg);
+  color: var(--jgi-white);
+}
+
+/* --- Radios & checkboxes ------------------------------------------------- */
+#fbPaymentForm input[type="radio"],
+#fbPaymentForm input[type="checkbox"] {
+  accent-color: var(--jgi-moss);
+}
+
+/* --- Submit button ------------------------------------------------------- */
+#submitForm,
+#fbPaymentForm .button,
+#fbPaymentForm input[type="submit"] {
+  padding: 10px 20px !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: var(--jgi-moss) !important;
+  color: var(--jgi-dark-green) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.16px;
+}
+
+#submitForm:hover {
+  filter: brightness(0.95);
+}
+
+/* --- Links (e.g. Widerruf / e-mail) -------------------------------------- */
+#fbPaymentForm a {
+  color: var(--jgi-white);
+  text-decoration: underline;
+}

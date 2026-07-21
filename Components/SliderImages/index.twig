@@ -1,0 +1,47 @@
+<flynt-component
+  load:on="idle"
+  name="SliderImages"
+  class="w-full overflow-hidden py-xl">
+  <script type="application/json">{{ jsonData|json_encode }}</script>
+  <div class="boxed">
+    <div class="flex justify-between items-start gap-sm mb-lg">
+      {% if title %}
+        <h2 class="font-h5 text-black max-w-[636px]">{{ title }}</h2>
+      {% endif %}
+      <div class="flex gap-min shrink-0 ml-auto">
+        <button type="button" data-ref="prev" class="slider-button" aria-label="{{ __('Vorherige', 'flynt') }}">
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true">
+            <path d="M5.5 1 1.5 5l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1.5 5H10a4.5 4.5 0 0 1 4.5 4.5V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button type="button" data-ref="next" class="slider-button" aria-label="{{ __('Nächste', 'flynt') }}">
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true">
+            <path d="M10.5 1 14.5 5l-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14.5 5H6a4.5 4.5 0 0 0-4.5 4.5V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    {% if images %}
+      <div data-ref="slider" class="swiper-container">
+        <div class="swiper-wrapper">
+          {% for image in images %}
+            <div class="swiper-slide slide-media">
+              <img
+                class="h-full w-auto max-w-none rounded-card object-cover"
+                src="{{ image.src }}"
+                alt="{{ image.alt|e|default('') }}"
+                loading="lazy">
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if caption %}
+      <div class="prose font-body text-black max-w-screen-mobile mt-md">{{ caption }}</div>
+    {% endif %}
+  </div>
+</flynt-component>
