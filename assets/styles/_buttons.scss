@@ -9,6 +9,7 @@ button {
   font-size: var(--button-size, 1rem);
   line-height: var(--button-line-height, 1.2);
   font-weight: var(--button-font-weight, 500);
+  @apply w-fit;
   @apply relative;
   @apply px-md py-xs;
   @apply flex justify-center items-center;
