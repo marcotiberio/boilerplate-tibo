@@ -282,3 +282,9 @@ add_action('acf/init', function () {
         ],
     ], 'Buttons');
 });
+
+// Keep the Buttons options accordion expanded by default
+add_filter('acf/load_field/name=global_Buttons_', function ($field) {
+    $field['open'] = 1;
+    return $field;
+});

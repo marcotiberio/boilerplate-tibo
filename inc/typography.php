@@ -453,6 +453,12 @@ add_action('acf/init', function () {
     ], 'Typography');
 });
 
+// Keep the Typography options accordion expanded by default
+add_filter('acf/load_field/name=global_Typography_', function ($field) {
+    $field['open'] = 1;
+    return $field;
+});
+
 // Dynamically populate fontVariant select with uploaded font variants
 add_filter('acf/load_field/name=fontVariant', function ($field) {
     // Prevent infinite recursion: loading this field triggers Options::getGlobal
