@@ -52,12 +52,7 @@
             
             
             <div class="post w-full flex flex-col gap-xs justify-between items-center">
-              {% set halftone_svg = post.meta('halftone_svg') %}
-              {% if halftone_svg %}
-                <div class="halftone-image relative w-full h-[250px] lg:h-[350px] overflow-hidden [&_svg]:absolute [&_svg]:inset-0 [&_svg]:w-full [&_svg]:h-full">
-                  {{ halftone_svg|raw }}
-                </div>
-              {% elseif post.thumbnail %}
+              {% if post.thumbnail %}
                 <img
                   class="lazyload transition duration-200 ease-in-out h-[250px] lg:h-[350px] object-cover"
                   src="{{ post.thumbnail.src }}"

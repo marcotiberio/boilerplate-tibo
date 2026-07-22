@@ -3,11 +3,7 @@
   class="w-full lgplus:w-screen {{ height|default('h-screen') }} mx-auto relative overflow-hidden">
   {% if post %}
     <a href="{{ post.link }}" class="block w-full h-full">
-      {% if halftoneSvg %}
-        <div class="halftone-image absolute inset-0 w-full h-full overflow-hidden [&_svg]:absolute [&_svg]:inset-0 [&_svg]:w-full [&_svg]:h-full">
-          {{ halftoneSvg|raw }}
-        </div>
-      {% elseif postImage %}
+      {% if postImage %}
         <img
           class="figure-image w-full h-full max-h-screen object-cover"
           src="{{ postImage.src }}"

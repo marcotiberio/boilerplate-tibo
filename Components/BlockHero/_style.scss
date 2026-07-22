@@ -3,54 +3,23 @@ flynt-component[name='BlockHero'] {
     @apply bg-terracotta;
   }
 
-  // Hero buttons share a padded, pill-radius base and a playful rotating chip
-  // that rises behind the label on hover (Figma `buttonHoverColor`). Typography
-  // is inherited from the global `.button` base — no font overrides here.
+  // Hero buttons — hover bloom lives on the global `.button` class; here we set
+  // the padded pill base plus each variant's reveal colour (--button-hover-fill).
   .button--primary,
   .button--glass {
-    @apply px-sm py-xs rounded-cta font-medium overflow-hidden;
-    isolation: isolate;
-
-    span {
-      position: relative;
-      z-index: 1;
-    }
-
-    &::before {
-      border-radius: var(--radius-cta, 12px);
-      bottom: -120%;
-      content: '';
-      height: 80%;
-      left: 8%;
-      position: absolute;
-      right: 8%;
-      transform: rotate(-4deg);
-      transition: bottom 0.3s ease;
-      z-index: 0;
-    }
-
-    &:hover::before,
-    &:focus-visible::before {
-      bottom: 12%;
-    }
+    @apply px-sm py-xs rounded-cta font-medium;
   }
 
   .button--primary {
     @apply bg-moss text-dark-green;
-
-    &::before {
-      background-color: #a1be8d; // darker moss chip
-    }
+    --button-hover-fill: #a1be8d; // darker moss chip
   }
 
   .button--glass {
     @apply text-off-white;
+    --button-hover-fill: rgb(252 251 250 / 90%);
     backdrop-filter: blur(2px);
     background-color: rgb(252 251 250 / 20%);
-
-    &::before {
-      background-color: rgb(252 251 250 / 90%);
-    }
 
     &:hover,
     &:focus-visible {

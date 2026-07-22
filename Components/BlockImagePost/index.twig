@@ -1,0 +1,44 @@
+<flynt-component load:on="visible" name="BlockImagePost">
+  <figure
+    class="group relative m-0 w-full overflow-hidden rounded-media"
+    {% if video.url %}x-data="{ playing: true }"{% endif %}>
+
+    {# Media — video takes priority, image doubles as poster/fallback #}
+    {% if video.url %}
+      <video
+        x-ref="video"
+        class="block w-full h-full object-cover"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="{{ image.src|default('') }}">
+        <source src="{{ video.url }}" type="{{ video.mime_type|default('video/mp4') }}" />
+      </video>
+    {% elseif image %}
+      <img
+        class="block w-full h-full object-cover"
+        src="{{ image.src }}"
+        alt="{{ image.alt|e|default('') }}"
+        loading="lazy"
+      />
+    {% endif %}
+
+    {# Play / pause control (only when a video is set) #}
+    {% if video.url %}
+      <button
+        type="button"
+        class="absolute bottom-sm right-sm z-20 flex items-center justify-center w-14 h-11 rounded-cta bg-off-white/20 backdrop-blur-sm text-off-white transition-colors hover:bg-off-white/30"
+        @click="playing ? $refs.video.pause() : $refs.video.play(); playing = !playing"
+        :aria-label="playing ? '{{ __('Pause video', 'flynt') }}' : '{{ __('Play video', 'flynt') }}'">
+        <svg x-show="playing" class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+          <rect x="2.2" y="0.2" width="3" height="14" rx="1" />
+          <rect x="9.2" y="0.2" width="3" height="14" rx="1" />
+        </svg>
+        <svg x-show="!playing" x-cloak class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+          <path d="M2 1.2 12.5 7 2 12.8Z" />
+        </svg>
+      </button>
+    {% endif %}
+  </figure>
+</flynt-component>

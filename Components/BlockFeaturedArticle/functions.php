@@ -10,7 +10,6 @@ add_filter('Flynt/addComponentData?name=BlockFeaturedArticle', function ($data) 
         if ($post) {
             $data['post'] = $post;
             $data['postImage'] = $post->thumbnail();
-            $data['halftoneSvg'] = get_post_meta($data['selectedPost'], 'halftone_svg', true);
         }
     }
 

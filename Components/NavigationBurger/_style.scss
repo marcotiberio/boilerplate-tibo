@@ -82,50 +82,20 @@ flynt-component[name='NavigationBurger'] {
     }
   }
 
-  // CTA buttons — shared with NavigationMain: rotating chip rises behind the
-  // label on hover. Typography inherits from the global `.button`.
+  // CTA buttons — hover bloom lives on the global `.button` class; set base
+  // colours and the per-variant reveal colour via --button-hover-fill.
   .button--donate,
   .button--shop {
-    @apply px-sm py-xs rounded-cta font-semibold overflow-hidden;
-    isolation: isolate;
-
-    span {
-      position: relative;
-      z-index: 1;
-    }
-
-    &::before {
-      border-radius: var(--radius-cta, 12px);
-      bottom: -120%;
-      content: '';
-      height: 80%;
-      left: 8%;
-      position: absolute;
-      right: 8%;
-      transform: rotate(-4deg);
-      transition: bottom 0.3s ease;
-      z-index: 0;
-    }
-
-    &:hover::before,
-    &:focus-visible::before {
-      bottom: 12%;
-    }
+    @apply px-sm py-xs rounded-cta font-semibold;
   }
 
   .button--donate {
     @apply bg-dark-green text-off-white;
-
-    &::before {
-      background-color: theme('colors.jungle');
-    }
+    --button-hover-fill: theme('colors.jungle');
   }
 
   .button--shop {
     @apply bg-moss text-dark-green;
-
-    &::before {
-      background-color: #a1be8d; // darker moss chip (matches BlockHero)
-    }
+    --button-hover-fill: #a1be8d; // darker moss chip
   }
 }

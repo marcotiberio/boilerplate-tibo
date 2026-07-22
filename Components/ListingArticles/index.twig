@@ -25,13 +25,9 @@
         {% for article in articles %}
           <a href="{{ article.post.link }}" class="group flex flex-col gap-xs no-underline" title="{{ article.post.title }}">
 
-            {# Halftone or Featured Image #}
+            {# Featured Image #}
             <div class="relative w-full aspect-4/3 overflow-hidden">
-              {% if article.halftoneSvg %}
-                <div class="halftone-image absolute inset-0 w-full h-full overflow-hidden [&_svg]:absolute [&_svg]:inset-0 [&_svg]:w-full [&_svg]:h-full">
-                  {{ article.halftoneSvg|raw }}
-                </div>
-              {% elseif article.postImage %}
+              {% if article.postImage %}
                 <img
                   class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   src="{{ article.postImage.src }}"

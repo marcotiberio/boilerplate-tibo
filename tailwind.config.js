@@ -19,6 +19,7 @@ module.exports = {
       button: '12px',
       cta: '12px',      // JGI rounded-[12px] buttons
       card: '12px',     // JGI cards
+      media: '16px',    // JGI in-article media (Figma rounded-[16px])
       banner: '20px',   // JGI CTA banner cards (Figma rounded-[20px])
       full: '9999px'
     },

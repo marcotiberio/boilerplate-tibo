@@ -21,7 +21,6 @@ add_filter('Flynt/addComponentData?name=ListingArticles', function ($data) {
         $data['articles'][] = [
             'post'        => $post,
             'postImage'   => $post->thumbnail(),
-            'halftoneSvg' => get_post_meta($post->ID, 'halftone_svg', true),
         ];
     }
 

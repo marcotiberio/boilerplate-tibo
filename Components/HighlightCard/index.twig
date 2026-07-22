@@ -12,7 +12,7 @@
       {% if image %}
         <img
           class="rounded-image object-cover shrink-0 w-16 h-16 lg:w-full lg:h-[181px] lg:mb-xs"
-          src="{{ image.url }}"
+          src="{{ image.src }}"
           alt="{{ image.alt|e | default('') }}"
           loading="lazy"
         />
@@ -35,7 +35,7 @@
         type="button"
         @click="show = false; localStorage.setItem('jgi-highlight-dismissed', '1')"
         aria-label="{{ __('Close', 'flynt') }}"
-        class="absolute top-min right-min z-10 flex items-center justify-center w-[34px] h-[31px] rounded-[8.5px] bg-black/10 text-off-white leading-none hover:bg-black/20 transition-colors">
+        class="absolute top-min right-min z-10 flex items-center justify-center w-[34px] h-[31px] rounded-[8.5px] text-off-white leading-none hover:bg-black/20 transition-colors">
         <svg class="w-[10px] h-[10px]" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <path d="M1 1l8 8M9 1l-8 8" stroke-linecap="round" />
         </svg>

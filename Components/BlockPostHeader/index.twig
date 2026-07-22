@@ -4,10 +4,7 @@
   <div class="wrapper max-w-screen-max mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-2 h-full relative">
       <div class="w-full">
-        {% set halftone_svg = post.meta('halftone_svg') %}
-        {% if halftone_svg %}
-          <div class="halftone-image relative h-screen overflow-hidden [&_svg]:absolute [&_svg]:inset-0 [&_svg]:w-full [&_svg]:h-full">{{ halftone_svg|raw }}</div>
-        {% elseif post.thumbnail %}
+        {% if post.thumbnail %}
           <img class="igure-image lazyload object-cover"
             src="{{ post.thumbnail.src }}"
             alt="{{ post.thumbnail.alt|e | default('') }}"
