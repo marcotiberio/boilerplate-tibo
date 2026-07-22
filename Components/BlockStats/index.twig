@@ -1,3 +1,16 @@
+{% macro ctaButton(link) %}
+  {% if link %}
+    <a
+      class="button button--cta-moss mt-auto"
+      href="{{ link.url }}"
+      {% if link.target %} target="{{ link.target }}" rel="noreferrer noopener"{% endif %}>
+      {{ link.title }}
+    </a>
+  {% endif %}
+{% endmacro %}
+
+{% import _self as ui %}
+
 <flynt-component
   load:on="visible"
   name="BlockStats"
@@ -8,7 +21,8 @@
   >
   <div class="boxed">
     {% if title %}
-      <h2 class="font-h2 text-dark-green mb-xl">{{ title }}</h2>
+      {% set tag = titleTag|default('h2') %}
+      <{{ tag }} class="font-{{ titleSize|default('h2') }} text-dark-green mb-xl">{{ title }}</{{ tag }}>
     {% endif %}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-sm">
       {% for stat in stats %}
@@ -16,8 +30,12 @@
           {% if stat.icon %}
             <img class="w-[68px] h-[68px] object-contain" src="{{ stat.icon.src }}" alt="{{ stat.icon.alt|e|default('') }}">
           {% endif %}
-          <div class="font-h2 text-dark-green">{{ stat.value }}</div>
-          <p class="text-muted-black">{{ stat.label }}</p>
+          {# <div class="font-h2 text-dark-green">{{ stat.value }}</div> #}
+          <p class="font-{{ labelSize|default('h2') }} text-dark-brown">{{ stat.label }}</p>
+          {% if stat.text %}
+            <div class="wysiwyg text-dark-brown">{{ stat.text|e('wp_kses_post') }}</div>
+          {% endif %}
+          {{ ui.ctaButton(stat.button) }}
         </div>
       {% endfor %}
     </div>

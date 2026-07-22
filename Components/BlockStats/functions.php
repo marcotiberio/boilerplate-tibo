@@ -22,6 +22,58 @@ function getACFLayout()
                 'name' => 'title',
                 'type' => 'text',
                 'required' => 0,
+                'wrapper' => ['width' => 50],
+            ],
+            [
+                'label' => __('Title Size', 'flynt'),
+                'instructions' => __('Visual size of the headline.', 'flynt'),
+                'name' => 'titleSize',
+                'type' => 'select',
+                'choices' => [
+                    'h1' => 'H1',
+                    'h2' => 'H2',
+                    'h3' => 'H3',
+                    'h4' => 'H4',
+                    'h5' => 'H5',
+                    'h6' => 'H6',
+                ],
+                'default_value' => 'h2',
+                'allow_null' => 0,
+                'wrapper' => ['width' => 25],
+            ],
+            [
+                'label' => __('Title Tag', 'flynt'),
+                'instructions' => __('HTML tag used for the headline (accessibility / SEO).', 'flynt'),
+                'name' => 'titleTag',
+                'type' => 'select',
+                'choices' => [
+                    'h1' => 'H1',
+                    'h2' => 'H2',
+                    'h3' => 'H3',
+                    'h4' => 'H4',
+                    'h5' => 'H5',
+                    'h6' => 'H6',
+                ],
+                'default_value' => 'h2',
+                'allow_null' => 0,
+                'wrapper' => ['width' => 25],
+            ],
+            [
+                'label' => __('Label Size', 'flynt'),
+                'instructions' => __('Visual size applied to every stat label.', 'flynt'),
+                'name' => 'labelSize',
+                'type' => 'select',
+                'choices' => [
+                    'h1' => 'H1',
+                    'h2' => 'H2',
+                    'h3' => 'H3',
+                    'h4' => 'H4',
+                    'h5' => 'H5',
+                    'h6' => 'H6',
+                ],
+                'default_value' => 'h2',
+                'allow_null' => 0,
+                'wrapper' => ['width' => 100],
             ],
             [
                 'label' => __('Stats', 'flynt'),
@@ -43,15 +95,15 @@ function getACFLayout()
                             'width' => 34
                         ],
                     ],
-                    [
-                        'label' => __('Value', 'flynt'),
-                        'instructions' => __('e.g. "600 Tsd."', 'flynt'),
-                        'name' => 'value',
-                        'type' => 'text',
-                        'wrapper' => [
-                            'width' => 33
-                        ],
-                    ],
+                    // [
+                    //     'label' => __('Value', 'flynt'),
+                    //     'instructions' => __('e.g. "600 Tsd."', 'flynt'),
+                    //     'name' => 'value',
+                    //     'type' => 'text',
+                    //     'wrapper' => [
+                    //         'width' => 33
+                    //     ],
+                    // ],
                     [
                         'label' => __('Label', 'flynt'),
                         'name' => 'label',
@@ -60,6 +112,23 @@ function getACFLayout()
                         'wrapper' => [
                             'width' => 33
                         ],
+                    ],
+                    [
+                        'label' => __('Text', 'flynt'),
+                        'instructions' => __('Optional longer description shown below the label.', 'flynt'),
+                        'name' => 'text',
+                        'type' => 'wysiwyg',
+                        'tabs' => 'visual',
+                        'media_upload' => 0,
+                        'delay' => 1,
+                        'required' => 0,
+                    ],
+                    [
+                        'label' => __('Button', 'flynt'),
+                        'instructions' => __('Optional link shown below the label.', 'flynt'),
+                        'name' => 'button',
+                        'type' => 'link',
+                        'required' => 0,
                     ],
                 ],
             ],

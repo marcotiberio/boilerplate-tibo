@@ -84,7 +84,8 @@
         {# Heading + checklist + form #}
         <div class="flex flex-col gap-sm">
           {% if title %}
-            <h2 class="font-h2 {{ headingClass }}">{{ title }}</h2>
+            {% set tag = titleTag|default('h2') %}
+            <{{ tag }} class="font-{{ titleSize|default('h2') }} {{ headingClass }}">{{ title }}</{{ tag }}>
           {% endif %}
           {% if bullets %}
             <ul class="fbox-checklist flex flex-col gap-xs">
@@ -117,7 +118,8 @@
         {# Heading + intro #}
         <div class="flex flex-col gap-sm">
           {% if title %}
-            <h2 class="font-h2 {{ headingClass }}">{{ title }}</h2>
+            {% set tag = titleTag|default('h2') %}
+            <{{ tag }} class="font-{{ titleSize|default('h2') }} {{ headingClass }}">{{ title }}</{{ tag }}>
           {% endif %}
           {% if intro %}
             <div class="wysiwyg">{{ intro|e('wp_kses_post') }}</div>

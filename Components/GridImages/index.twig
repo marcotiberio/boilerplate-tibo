@@ -4,7 +4,8 @@
   style="background-color:{% if options.colorBackground %}{{ options.colorBackground }}{% else %}var(--transparent){% endif %};">
   <div class="boxed max-w-screen-max mx-auto flex flex-col gap-sm">
     {% if title %}
-      <div class="font-h2">{{ title }}</div>
+      {% set tag = titleTag|default('h2') %}
+      <{{ tag }} class="font-{{ titleSize|default('h2') }}">{{ title }}</{{ tag }}>
     {% endif %}
     <div 
       class="w-full mx-auto grid gap-xs"

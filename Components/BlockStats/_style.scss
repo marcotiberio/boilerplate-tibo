@@ -1,2 +1,11 @@
 flynt-component[name='BlockStats'] {
+  // "Mehr erfahren" CTA — muted moss pill matching the Figma stat card button.
+  // Typography and the -4° hover bloom are inherited from the global `.button`
+  // class (assets/styles/_buttons.scss); colours and compact width only here.
+  .button--cta-moss {
+    @apply px-sm py-xs rounded-cta font-medium min-w-0 transition-colors;
+    @apply bg-moss text-dark-green;
+
+    --button-hover-fill: #a1be8d; // darker moss chip
+  }
 }

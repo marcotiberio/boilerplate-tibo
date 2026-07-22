@@ -14,12 +14,12 @@ add_filter('post_type_labels_post', 'post_rename_labels');
 function post_rename_labels($labels)
 {
     # Labels
-    $labels->name = 'Projects';
-    $labels->singular_name = 'Project';
+    $labels->name = 'Articles';
+    $labels->singular_name = 'Article';
 
     # Menu
-    $labels->menu_name = 'Projects';
-    $labels->name_admin_bar = 'Projects';
+    $labels->menu_name = 'Articles';
+    $labels->name_admin_bar = 'Articles';
 
     return $labels;
 }

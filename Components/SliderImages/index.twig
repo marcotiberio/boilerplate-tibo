@@ -6,7 +6,8 @@
   <div class="boxed">
     <div class="flex justify-between items-start gap-sm mb-lg">
       {% if title %}
-        <h2 class="font-h5 text-black max-w-[636px]">{{ title }}</h2>
+        {% set tag = titleTag|default('h2') %}
+        <{{ tag }} class="font-{{ titleSize|default('h5') }} text-black max-w-[636px]">{{ title }}</{{ tag }}>
       {% endif %}
       <div class="flex gap-min shrink-0 ml-auto">
         <button type="button" data-ref="prev" class="slider-button" aria-label="{{ __('Vorherige', 'flynt') }}">

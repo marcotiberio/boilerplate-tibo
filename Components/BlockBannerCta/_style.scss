@@ -6,34 +6,30 @@ flynt-component[name='BlockBannerCta'] {
 
   // CTA buttons — padded pill base; typography is inherited from the global
   // `.button` class (see assets/styles/_buttons.scss). Colours only here.
-  .button--cta-terracotta,
-  .button--cta-muted,
-  .button--cta-moss,
-  .button--cta-glass {
-    @apply px-sm py-xs rounded-cta font-medium transition-colors;
+  .button--primary,
+  .button--secondary,
+  .button--accent,
+  .button--mutedWhite {
+    @apply px-sm py-xs rounded-cta font-medium;
   }
 
   // Hover bloom lives on the global `.button` class; each variant sets its base
   // colours and the reveal colour via --button-hover-fill.
-
-  // Light-theme buttons (beige / off-white surfaces)
-  .button--cta-terracotta {
-    @apply bg-terracotta text-off-white;
-    --button-hover-fill: theme('colors.cta');
+  .button--primary {
+    --button-hover-fill: theme('colors.dark-green');
   }
 
-  .button--cta-muted {
+  .button--secondary {
     @apply bg-off-white text-dark-green;
     --button-hover-fill: theme('colors.moss');
   }
 
-  // Dark-theme buttons (terracotta / dark-green surfaces)
-  .button--cta-moss {
+  .button--accent {
     @apply bg-moss text-dark-green;
     --button-hover-fill: #a1be8d; // darker moss chip
   }
 
-  .button--cta-glass {
+  .button--mutedWhite {
     @apply text-off-white;
     --button-hover-fill: rgb(252 251 250 / 90%);
     background-color: rgb(252 251 250 / 20%);

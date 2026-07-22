@@ -20,7 +20,7 @@ document.addEventListener('mouseleave', (e) => {
 
 function showComponentScreenshot (layout, wrapper) {
   const componentName = firstToUpperCase(layout)
-  const image = `${FlyntData.templateDirectoryUri}/${FeatureFlexibleContentExtension.components[componentName]}/screenshot.png`
+  const image = `${FlyntData.templateDirectoryUri}/${FeatureFlexibleContentExtension.components[componentName]}/screenshot.png?v=${FeatureFlexibleContentExtension.version}`
   const wrapperContainer = document.createElement('div')
 
   wrapperContainer.classList.add('flyntComponentScreenshot-imageWrapper')

@@ -13,6 +13,7 @@ add_action('admin_enqueue_scripts', function (): void {
             'noResults' => __('No components found', 'flynt'),
         ],
         'templateDirectoryUri' => get_template_directory_uri(),
+        'version' => wp_get_theme()->get('Version'),
         'components' => array_map(function ($componentPath) use ($templateDirectory) {
             return str_replace($templateDirectory, '', $componentPath);
         }, $componentManager->getAll()),

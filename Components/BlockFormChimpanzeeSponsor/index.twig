@@ -72,9 +72,10 @@
 
         {# ---- Right: sponsorship form ---- #}
         <div class="bg-warmer-beige rounded-card p-sm lg:p-md">
-          <h2 class="font-h2 text-dark-green">
+          {% set tag = titleTag|default('h2') %}
+          <{{ tag }} class="font-{{ titleSize|default('h2') }} text-dark-green">
             {{ title|default(chimp.title ~ __('’s Patenschaft', 'flynt')) }}
-          </h2>
+          </{{ tag }}>
 
           <div class="fbox-embed mt-sm" style="min-height: {{ formHeight|default(900) }}px">
             {% if chimp.formEmbedCode %}

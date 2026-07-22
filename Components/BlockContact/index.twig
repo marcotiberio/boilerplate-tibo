@@ -11,7 +11,8 @@
 
       {# Title #}
       <div class="lg:col-span-4">
-        <h2 class="{{ titleClass }} text-dark-brown">{{ title }}</h2>
+        {% set tag = titleTag|default('h2') %}
+        <{{ tag }} class="{{ titleClass }} text-dark-brown">{{ title }}</{{ tag }}>
       </div>
 
       {# Optional body copy #}

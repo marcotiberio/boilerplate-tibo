@@ -65,7 +65,8 @@
   {# Content #}
   <div class="relative z-10 boxed min-h-[85vh] flex flex-col justify-center items-center text-center gap-sm">
     {% if title %}
-      <h1 class="font-h1 text-off-white max-w-[722px]">{{ title }}</h1>
+      {% set tag = titleTag|default('h1') %}
+      <{{ tag }} class="font-{{ titleSize|default('h1') }} text-off-white max-w-[722px]">{{ title }}</{{ tag }}>
     {% endif %}
 
     <div class="flex flex-col md:flex-row flex-wrap gap-xs justify-center">

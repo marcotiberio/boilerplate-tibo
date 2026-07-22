@@ -24,8 +24,8 @@ module.exports = {
       full: '9999px'
     },
     colors: {
-      white: '#ffffff',
-      black: '#000000',
+      white: '#fcfbfa',
+      black: '#1c1918',
       current: 'currentColor',
       transparent: 'transparent',
       // JGI palette — source of truth: theme.json (WordPress editor palette).

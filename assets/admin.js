@@ -39,4 +39,4 @@ if (typeof acf !== 'undefined' && typeof jQuery !== 'undefined') {
   }
 }
 
-import.meta.glob('../Components/**/admin.js', { eager: true })
+import.meta.glob('../Components/*/admin.js', { eager: true })
