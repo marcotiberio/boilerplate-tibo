@@ -10,12 +10,12 @@
 
 {% set theme = options.theme|default('white') %}
 {% set layout = options.layout|default('text') %}
-{% set isDark = theme == 'darkGreen' %}
+{% set isDark = theme == 'dark-green' %}
 {% set surfaceClass = {
   'white': 'bg-white text-dark-brown',
   'beige': 'bg-beige text-dark-brown',
   'moss': 'bg-moss text-dark-green',
-  'darkGreen': 'bg-dark-green text-off-white'
+  'dark-green': 'bg-dark-green text-off-white'
 }[theme] %}
 {% set headingClass = isDark ? 'text-off-white' : 'text-dark-green' %}
 

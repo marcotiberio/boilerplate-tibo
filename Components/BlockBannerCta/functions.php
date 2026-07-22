@@ -98,7 +98,7 @@ function getACFLayout()
                             'beige' => __('Beige', 'flynt'),
                             'offWhite' => __('Off White', 'flynt'),
                             'terracotta' => __('Terracotta', 'flynt'),
-                            'darkGreen' => __('Dark Green', 'flynt'),
+                            'dark-green' => __('Dark Green', 'flynt'),
                         ],
                         'wrapper' => ['width' => 50],
                     ],

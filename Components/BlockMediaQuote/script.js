@@ -42,11 +42,11 @@ export default function init (node) {
   const tween = gsap.to(words, {
     opacity: 1,
     ease: 'none',
-    stagger: 1,
+    stagger: 0.2,
     scrollTrigger: {
       trigger: node,
-      start: 'center center',
-      end: 'bottom center',
+      start: 'center center+=400',
+      end: 'bottom center+=300',
       scrub: true
     }
   })

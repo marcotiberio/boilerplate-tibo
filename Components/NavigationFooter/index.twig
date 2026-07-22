@@ -88,7 +88,7 @@
             <div class="flex flex-row flex-wrap gap-xs">
               {% for social in socials %}
                 {% if social.url and social.platform %}
-                  <a class="w-11 h-11 rounded-cta bg-black/25 flex items-center justify-center text-off-white transition-colors hover:bg-black/40 [&_svg]:w-[22px] [&_svg]:h-[22px] [&_svg]:fill-current"
+                  <a class="w-11 h-11 rounded-cta bg-white/20 flex items-center justify-center text-off-white transition-colors hover:bg-dark-green [&_svg]:w-[22px] [&_svg]:h-[22px] [&_svg]:fill-current"
                     href="{{ social.platform == 'email' ? 'mailto:' ~ social.url : social.url }}"
                     {% if social.platform != 'email' %} target="_blank" rel="noreferrer noopener"{% endif %}
                     aria-label="{{ social.platform|capitalize }}" title="{{ social.platform|capitalize }}">
@@ -111,18 +111,18 @@
         {# Nav columns + transparency badge #}
         <div class="flex flex-col gap-lg">
           {% if columns %}
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-lg">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-sm sm:gap-lg">
               {% for column in columns %}
                 <div class="flex flex-col">
                   {% if column.heading %}
-                    <p class="font-small font-semibold mb-sm">{{ column.heading }}</p>
+                    <p class="font-semibold mb-sm">{{ column.heading }}</p>
                   {% endif %}
                   {% if column.links %}
                     <ul class="flex flex-col gap-xs font-body">
                       {% for item in column.links %}
                         {% if item.link %}
                           <li>
-                            <a class="text-off-white/90 hover:text-off-white hover:underline underline-offset-4"
+                            <a class="text-off-white/70 hover:text-off-white"
                               href="{{ item.link.url }}"
                               {% if item.link.target %} target="{{ item.link.target }}" rel="noreferrer noopener"{% endif %}>
                               {{ item.link.title }}

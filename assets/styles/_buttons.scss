@@ -9,14 +9,16 @@ button {
   font-size: var(--button-size, 1rem);
   line-height: var(--button-line-height, 1.2);
   font-weight: var(--button-font-weight, 500);
+  isolation: isolate;
   @apply w-fit min-w-[200px];
   @apply relative overflow-hidden;
-  isolation: isolate;
   @apply px-md py-xs;
   @apply flex justify-center items-center;
   @apply cursor-pointer;
   @apply text-center no-underline whitespace-nowrap;
   @apply rounded-button;
+  @apply tracking-[0.01em];
+
 
   // Playful hover shared by every colour CTA: a small -4° chip blooms up and
   // scales ~2.2× to engulf the button, swapping the fill colour. The reveal

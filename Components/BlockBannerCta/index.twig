@@ -13,12 +13,12 @@
 
 {% set theme = options.theme|default('beige') %}
 {% set layout = options.layout|default('centered') %}
-{% set isDark = theme in ['terracotta', 'darkGreen'] %}
+{% set isDark = theme in ['terracotta', 'dark-green'] %}
 {% set surfaceClass = {
   'beige': 'bg-beige text-black',
   'offWhite': 'bg-off-white text-black',
   'terracotta': 'bg-terracotta text-off-white',
-  'darkGreen': 'bg-dark-green text-off-white'
+  'dark-green': 'bg-dark-green text-off-white'
 }[theme] %}
 {% set primaryClass = isDark ? 'button--cta-moss' : 'button--cta-terracotta' %}
 {% set secondaryClass = isDark ? 'button--cta-glass' : 'button--cta-muted' %}

@@ -30,7 +30,7 @@ module.exports = {
       transparent: 'transparent',
       // JGI palette — source of truth: theme.json (WordPress editor palette).
       // Format: tailwind name → value  // theme.json slug
-      'dark-green': '#113328',    // darkgreen
+      'dark-green': '#113328',    // dark-green
       jungle: '#294a3e',          // green
       moss: '#d2e8c3',            // moss
       beige: '#f0e6d9',           // beige

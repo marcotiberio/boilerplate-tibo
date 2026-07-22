@@ -1,9 +1,9 @@
 <flynt-component load:on="visible" name="BlockImage">
   {% set isFullscreen = variant == 'fullscreen' %}
 
-  <div class="{{ isFullscreen ? 'relative left-1/2 w-screen -translate-x-1/2' : 'boxed' }}">
+  <div class="group {{ isFullscreen ? 'relative left-1/2 w-screen -translate-x-1/2' : 'relative boxed' }}">
     <figure
-      class="group relative m-0 w-full overflow-hidden {{ isFullscreen ? '' : 'rounded-card' }}"
+      class="relative z-10 m-0 w-full overflow-hidden {{ isFullscreen ? '' : 'rounded-card' }}"
       {% if video.url %}x-data="{ playing: true }"{% endif %}>
 
       {# Media — video takes priority, image doubles as poster/fallback #}
@@ -53,19 +53,20 @@
           </svg>
         </button>
       {% endif %}
-
-      {# Infotext pill — appears on hover (always visible on touch) #}
-      {% if text %}
-        <figcaption class="absolute bottom-sm z-20 rotate-2 opacity-100 transition-opacity duration-300 lgplus:opacity-0 lgplus:group-hover:opacity-100 {{ video.url ? 'left-sm' : 'right-sm' }}">
-          <span class="flex items-center gap-1.5 rounded-card bg-warmer-beige px-3.5 py-2.5 font-small text-dark-brown">
-            <svg class="w-3.5 h-3.5 shrink-0 -rotate-2" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
-              <circle cx="7" cy="7" r="6" />
-              <path d="M7 6.2v3.4M7 4.2v.1" stroke-linecap="round" />
-            </svg>
-            {{ text }}
-          </span>
-        </figcaption>
-      {% endif %}
     </figure>
+
+    {# Caption pill (WP media caption) — sits behind the image and slides down into view on hover.
+       On touch (no hover) it stays visible over the image bottom-right. #}
+    {% if image.caption %}
+      <figcaption class="absolute bottom-[5px] right-sm z-20 rotate-2 translate-y-0 transition-transform duration-500 ease-out lgplus:z-0 lgplus:group-hover:translate-y-[calc(100%-20px)]">
+        <span class="flex items-center gap-1.5 rounded-card bg-warmer-beige px-[20px] pt-md pb-[20px] font-small text-dark-brown">
+          <svg class="w-3.5 h-3.5 shrink-0 -rotate-2" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+            <circle cx="7" cy="7" r="6" />
+            <path d="M7 6.2v3.4M7 4.2v.1" stroke-linecap="round" />
+          </svg>
+          {{ image.caption|e }}
+        </span>
+      </figcaption>
+    {% endif %}
   </div>
 </flynt-component>
