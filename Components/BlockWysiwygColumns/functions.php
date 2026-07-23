@@ -27,15 +27,20 @@ function getACFLayout()
                 'button_label' => __('Add Column', 'flynt'),
                 'sub_fields' => [
                     [
-                        'label' => __('Content', 'flynt'),
-                        'name' => 'contentHtml',
-                        'type' => 'wysiwyg',
-                        'tabs' => 'visual,text',
-                        'delay' => 1,
-                        'media_upload' => 0,
-                        'required' => 0,
+                        'label' => __('Width', 'flynt'),
+                        'instructions' => __('Column width. Inherit follows the Columns option in the Options tab.', 'flynt'),
+                        'name' => 'width',
+                        'type' => 'select',
+                        'choices' => [
+                            'default' => __('Inherit', 'flynt'),
+                            'third' => __('1/3', 'flynt'),
+                            'half' => __('1/2', 'flynt'),
+                            'full' => __('1/1', 'flynt'),
+                        ],
+                        'default_value' => 'default',
+                        'allow_null' => 0,
                         'wrapper' => [
-                            'width' => 100,
+                            'width' => 50,
                         ],
                     ],
                     [
@@ -54,12 +59,24 @@ function getACFLayout()
                         ],
                     ],
                     [
+                        'label' => __('Content', 'flynt'),
+                        'name' => 'contentHtml',
+                        'type' => 'wysiwyg',
+                        'tabs' => 'visual,text',
+                        'delay' => 1,
+                        'media_upload' => 0,
+                        'required' => 0,
+                        'wrapper' => [
+                            'width' => 100,
+                        ],
+                    ],
+                    [
                         'label' => __('Button', 'flynt'),
                         'name' => 'button',
                         'type' => 'link',
                         'required' => 0,
                         'wrapper' => [
-                            'width' => 50,
+                            'width' => 100,
                         ],
                     ],
                 ],

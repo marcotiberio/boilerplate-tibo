@@ -3,6 +3,11 @@ flynt-component[name='BlockImage'] {
     line-height: 0;
   }
 
+  // Framed variant: clip the media to the hand-drawn frame silhouette.
+  figure.is-framed {
+    clip-path: url(#blockImageFrameClip);
+  }
+
   figcaption {
     line-height: normal;
   }

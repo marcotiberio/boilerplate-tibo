@@ -25,7 +25,7 @@
             {% endif %}>
             {% if card.media %}
               <img
-                class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                class="absolute inset-0 h-full w-full object-cover rounded-image transition-transform duration-500 group-hover:scale-105"
                 src="{{ card.media.src }}"
                 alt="{{ card.media.alt|e|default(card.title|default('')) }}"
                 loading="lazy">

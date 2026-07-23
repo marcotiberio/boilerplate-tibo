@@ -1,9 +1,16 @@
 {% set colCount = options.columnCount|default('2') %}
-{% set colGrid = {
-  '1': 'md:grid-cols-1',
-  '2': 'md:grid-cols-2',
-  '3': 'md:grid-cols-2 lg:grid-cols-3'
-}[colCount]|default('md:grid-cols-2') %}
+{# Default span (out of 12) when a column's width is set to Inherit #}
+{% set defaultSpan = {
+  '1': 'md:col-span-12',
+  '2': 'md:col-span-6',
+  '3': 'md:col-span-4'
+}[colCount]|default('md:col-span-6') %}
+{# Per-column width override #}
+{% set spanMap = {
+  'third': 'md:col-span-4',
+  'half': 'md:col-span-6',
+  'full': 'md:col-span-12'
+} %}
 
 <flynt-component
   load:on="visible"
@@ -11,9 +18,9 @@
   class="w-full"
   style="{% if options.colorBackground %}background-color: {{ options.colorBackground }};{% endif %}">
   <div class="boxed py-xl">
-    <div class="grid grid-cols-1 {{ colGrid }} gap-x-lg gap-y-md">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-x-md gap-y-md">
       {% for column in columns %}
-        <div class="flex flex-col items-start gap-sm">
+        <div class="flex flex-col items-start gap-sm {{ spanMap[column.width]|default(defaultSpan) }}">
           {% if column.contentHtml %}
             <div class="wysiwyg {% if column.listStyle == 'checklist' %}wysiwyg--checklist{% endif %} text-black">{{ column.contentHtml|e('wp_kses_post') }}</div>
           {% endif %}

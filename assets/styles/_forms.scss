@@ -18,22 +18,32 @@ label {
   font-weight: 500 !important;
 }
 
+// Text inputs — JGI filled pill (Figma node 1:5325):
+// warmer-beige/50 over white, 12px radius, no border, dark-brown text.
+// !important beats Tailwind utility + plugin (WPCF7) markup, as before.
 #{$input-selectors} {
   appearance: none !important;
-  background-color: transparent !important;
-  border-bottom: 1px solid var(--black) !important;
-  border-radius: 0 !important;
+  background-color: rgba(242, 227, 211, 0.5) !important; // warmer-beige (#f2e3d3) @ 50%
+  border: 0 !important;
+  border-radius: 12px !important;                        // rounded-cta
   caret-color: var(--color-text) !important;
-  color: var(--color-text) !important;
-  margin-bottom: 15px;
+  color: #1c1918 !important;                             // dark-brown
+  font-size: 16px;
+  line-height: 1.5;
   max-width: 100%;
+  min-height: 44px;
   outline: none !important;
-  padding: 0;
-  transition: border-color 0.3s ease-in-out;
+  padding: 8px 20px;
+  transition: box-shadow 0.3s ease-in-out;
   width: 100%;
 
   &::placeholder {
-    color: var(--color-border-secondary);
+    color: rgba(28, 25, 24, 0.6); // dark-brown @ 60%
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px rgba(41, 74, 62, 0.4); // jungle/40
   }
 
   &:disabled {
@@ -42,8 +52,8 @@ label {
     pointer-events: none;
   }
 
-  &:invalid {
-    border-color: var(--color-error);
+  &:user-invalid {
+    box-shadow: 0 0 0 1px var(--color-error);
   }
 }
 

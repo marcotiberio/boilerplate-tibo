@@ -1,9 +1,21 @@
 <flynt-component load:on="visible" name="BlockImage">
   {% set isFullscreen = variant == 'fullscreen' %}
 
+  {# Frame silhouette — used as a clip-path on the framed variant.
+     Coordinates are normalised (objectBoundingBox) so the shape stretches to any aspect ratio. #}
+  {% if not isFullscreen %}
+    <svg class="absolute h-0 w-0" aria-hidden="true" focusable="false">
+      <defs>
+        <clipPath id="blockImageFrameClip" clipPathUnits="objectBoundingBox">
+          <path d="M0 0.03682C0 0.01875 0.00691 0.00409 0.01543 0.00409C0.01543 0.00409 0.06057 0 0.11265 0C0.16474 0 0.82485 0.01146 0.98457 0.00409C0.99344 0.00368 1 0.01875 1 0.03682V0.9599C1 0.97798 0.99309 0.99264 0.98457 0.99264C0.98457 0.99264 0.9213 0.99918 0.84221 0.99918C0.76312 0.99918 0.18056 0.98527 0.01543 0.99264C0.00617 0.99305 0 0.97798 0 0.9599V0.03682Z" />
+        </clipPath>
+      </defs>
+    </svg>
+  {% endif %}
+
   <div class="group {{ isFullscreen ? 'relative left-1/2 w-screen -translate-x-1/2' : 'relative boxed' }}">
     <figure
-      class="relative z-10 m-0 w-full overflow-hidden {{ isFullscreen ? '' : 'rounded-card' }}"
+      class="relative z-10 m-0 w-full overflow-hidden {{ isFullscreen ? '' : 'is-framed' }}"
       {% if video.url %}x-data="{ playing: true }"{% endif %}>
 
       {# Media — video takes priority, image doubles as poster/fallback #}
@@ -27,16 +39,6 @@
         />
       {% endif %}
 
-      {# Softly waved top/bottom edges (framed only) #}
-      {% if not isFullscreen %}
-        <svg class="absolute top-0 left-0 z-10 w-full h-[24px] text-white pointer-events-none" viewBox="0 0 1440 24" preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
-          <path d="M0,0 L1440,0 L1440,9 C1080,25 360,-3 0,13 Z" />
-        </svg>
-        <svg class="absolute bottom-0 left-0 z-10 w-full h-[24px] rotate-180 text-white pointer-events-none" viewBox="0 0 1440 24" preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
-          <path d="M0,0 L1440,0 L1440,9 C1080,25 360,-3 0,13 Z" />
-        </svg>
-      {% endif %}
-
       {# Play / pause control (only when a video is set) #}
       {% if video.url %}
         <button
@@ -58,7 +60,18 @@
     {# Caption pill (WP media caption) — sits behind the image and slides down into view on hover.
        On touch (no hover) it stays visible over the image bottom-right. #}
     {% if image.caption %}
-      <figcaption class="absolute bottom-[5px] right-sm z-20 rotate-2 translate-y-0 transition-transform duration-500 ease-out lgplus:z-0 lgplus:group-hover:translate-y-[calc(100%-20px)]">
+      {% if not isFullscreen %}
+        <figcaption class="hidden md:block absolute bottom-[100px] right-xxl z-20 rotate-2 translate-y-0 transition-transform duration-500 ease-out lgplus:z-0 lgplus:group-hover:translate-y-[calc(100%-0px)]">
+          <span class="flex items-center gap-1.5 rounded-card bg-warmer-beige px-[20px] pt-md pb-[20px] font-small text-dark-brown">
+            <svg class="w-3.5 h-3.5 shrink-0 -rotate-2" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+              <circle cx="7" cy="7" r="6" />
+              <path d="M7 6.2v3.4M7 4.2v.1" stroke-linecap="round" />
+            </svg>
+            {{ image.caption|e }}
+          </span>
+        </figcaption>
+      {% else %}
+      <figcaption class="hidden md:block absolute bottom-[5px] right-sm z-20 rotate-2 translate-y-0 transition-transform duration-500 ease-out lgplus:z-0 lgplus:group-hover:translate-y-[calc(100%-20px)]">
         <span class="flex items-center gap-1.5 rounded-card bg-warmer-beige px-[20px] pt-md pb-[20px] font-small text-dark-brown">
           <svg class="w-3.5 h-3.5 shrink-0 -rotate-2" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
             <circle cx="7" cy="7" r="6" />
@@ -67,6 +80,7 @@
           {{ image.caption|e }}
         </span>
       </figcaption>
+      {% endif %}
     {% endif %}
   </div>
 </flynt-component>
