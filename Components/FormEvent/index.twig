@@ -61,7 +61,6 @@
             }
             else { fd.append(key, value); }
           });
-          fd.append('nonce', '{{ nonce }}');
           ['orgLogo', 'featuredImage'].forEach(ref => {
             const el = this.$refs[ref];
             if (el && el.files[0]) fd.append(ref, el.files[0]);
@@ -72,7 +71,6 @@
           try {
             const res = await fetch('{{ restUrl }}', {
               method: 'POST',
-              headers: { 'X-WP-Nonce': '{{ restNonce }}' },
               body: fd
             });
             const data = await res.json();

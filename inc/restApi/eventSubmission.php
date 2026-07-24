@@ -24,17 +24,17 @@ function handleSubmission(\WP_REST_Request $request)
     $params = $request->get_body_params();
     $files = $request->get_file_params();
 
-    // 1. Nonce.
-    if (empty($params['nonce']) || !wp_verify_nonce($params['nonce'], NONCE_ACTION)) {
-        return reject(__('Deine Sitzung ist abgelaufen. Bitte lade die Seite neu.', 'flynt'), 403);
-    }
+    // No nonce check: this is a public, cacheable form. A nonce baked into
+    // (potentially CDN-cached) HTML goes stale and triggers WordPress core's
+    // "Cookie check failed". Abuse is contained instead by the honeypot, the
+    // per-IP rate limit, and posts only ever being created as `pending`.
 
-    // 2. Honeypot.
+    // 1. Honeypot.
     if (!empty($params['website_hp'])) {
         return new \WP_REST_Response(['success' => true], 200);
     }
 
-    // 3. Rate limit per IP.
+    // 2. Rate limit per IP.
     $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
     $rateKey = 'le_pe_' . md5($ip);
     $count = (int) get_transient($rateKey);
@@ -44,7 +44,7 @@ function handleSubmission(\WP_REST_Request $request)
 
     $config = getConfig();
 
-    // 4. Sanitise scalars.
+    // 3. Sanitise scalars.
     $data = [
         'orgName'        => sanitize_text_field($params['orgName'] ?? ''),
         'contactPerson'  => sanitize_text_field($params['contactPerson'] ?? ''),
@@ -96,7 +96,7 @@ function handleSubmission(\WP_REST_Request $request)
     $acceptTerms        = !empty($params['acceptTerms']);
     $newsletter         = !empty($params['newsletter']);
 
-    // 5. Validate.
+    // 4. Validate.
     $errors = [];
     $required = [
         'orgName'       => __('Name der Organisation', 'flynt'),
@@ -168,13 +168,13 @@ function handleSubmission(\WP_REST_Request $request)
         return reject(implode(' ', $errors), 422);
     }
 
-    // 6. Geocode (best-effort) for an own venue.
+    // 5. Geocode (best-effort) for an own venue.
     $geo = null;
     if ($data['locationMode'] === 'eigen') {
         $geo = geocodeAddress(composeAddress($data['street'], $data['postalCode']));
     }
 
-    // 7. Create the pending post.
+    // 6. Create the pending post.
     $postId = wp_insert_post([
         'post_type'    => POST_TYPE,
         'post_status'  => 'pending',
@@ -186,13 +186,13 @@ function handleSubmission(\WP_REST_Request $request)
         return reject(__('Beim Speichern ist etwas schiefgelaufen. Bitte versuche es erneut.', 'flynt'), 500);
     }
 
-    // 8. Uploads.
+    // 7. Uploads.
     requireMediaDeps();
     $logoId = uploadSingle('orgLogo', $postId);
     $featuredId = uploadSingle('featuredImage', $postId);
     $galleryIds = uploadMultiple('gallery', $postId);
 
-    // 9. Store ACF fields.
+    // 8. Store ACF fields.
     foreach ($data as $key => $value) {
         update_field($key, $value, $postId);
     }
@@ -227,7 +227,7 @@ function handleSubmission(\WP_REST_Request $request)
         ], $postId);
     }
 
-    // 10. Notify the editor.
+    // 9. Notify the editor.
     wp_mail(
         get_option('admin_email'),
         __('Neuer Programm-Eintrag zur Prüfung', 'flynt'),

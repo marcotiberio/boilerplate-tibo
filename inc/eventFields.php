@@ -13,7 +13,6 @@ namespace Flynt\Event;
 use Flynt\Utils\Options;
 
 const POST_TYPE = 'event';
-const NONCE_ACTION = 'looptopia_event';
 
 /**
  * Choice lists for every select/checkbox/radio field. Keys are stored,
