@@ -1,6 +1,10 @@
 flynt-component[name='SliderImages'] {
   .slider-button {
-    @apply flex h-11 w-14 items-center justify-center rounded-cta bg-beige text-dark-green transition-opacity;
+    @apply flex h-11 w-14 items-center justify-center rounded-cta bg-beige text-dark-green transition-colors;
+
+    &:hover:not(.swiper-button-disabled) {
+      @apply bg-[#DECBB7];
+    }
 
     &.swiper-button-disabled {
       cursor: default;
@@ -9,13 +13,22 @@ flynt-component[name='SliderImages'] {
     }
   }
 
-  // Each slide shrinks to its image: fixed height, width follows the image aspect ratio.
+  // Mobile: Swiper sizes the slide (slidesPerView 1.2) so the next image peeks;
+  // the image fills that width. From md up, width follows the image aspect ratio.
   .swiper-slide.slide-media {
     height: 300px;
-    width: auto;
+
+    img {
+      @apply w-full;
+    }
 
     @screen md {
       height: 374px;
+      width: auto;
+
+      img {
+        @apply w-auto;
+      }
     }
   }
 

@@ -23,10 +23,10 @@
       {# Contact person card #}
       {% if hasContact %}
         <div class="lg:col-span-4 {{ not contentHtml ? 'lg:col-start-6' }}">
-          <div class="flex items-center gap-xs">
+          <div class="flex flex-col items-start gap-xs">
             {% if contact.image %}
               <img
-                class="w-[104px] shrink-0 aspect-[7/8] rounded-image object-cover"
+                class="w-[120px] shrink-0 aspect-[7/8] rounded-image object-cover"
                 src="{{ contact.image.src }}"
                 alt="{{ contact.image.alt|e|default(contact.name|default('')) }}"
                 loading="lazy"
@@ -35,7 +35,7 @@
 
             <div class="flex flex-col gap-min text-dark-brown">
               {% if contact.name %}
-                <p class="font-body font-semibold">{{ contact.name }}</p>
+                <p class="font-body !font-semibold">{{ contact.name }}</p>
               {% endif %}
 
               {% if contact.role or contact.phone or contact.email %}

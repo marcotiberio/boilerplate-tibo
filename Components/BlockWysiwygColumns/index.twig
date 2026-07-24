@@ -18,7 +18,7 @@
   class="w-full"
   style="{% if options.colorBackground %}background-color: {{ options.colorBackground }};{% endif %}">
   <div class="boxed py-xl">
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-x-md gap-y-md">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-x-lg gap-y-md">
       {% for column in columns %}
         <div class="flex flex-col items-start gap-sm {{ spanMap[column.width]|default(defaultSpan) }}">
           {% if column.contentHtml %}

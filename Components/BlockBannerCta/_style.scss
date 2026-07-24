@@ -4,34 +4,20 @@ flynt-component[name='BlockBannerCta'] {
     margin-block-end: 0;
   }
 
-  // CTA buttons — padded pill base; typography is inherited from the global
-  // `.button` class (see assets/styles/_buttons.scss). Colours only here.
+  // CTA buttons — colours and hover bloom come from the global `.button--*`
+  // variants (see assets/styles/_buttons.scss). Only the padded pill base and
+  // the component-local `--glass` variant live here.
   .button--primary,
-  .button--secondary,
-  .button--accent,
-  .button--mutedWhite {
+  .button--glass {
     @apply px-sm py-xs rounded-cta font-medium;
   }
 
-  // Hover bloom lives on the global `.button` class; each variant sets its base
-  // colours and the reveal colour via --button-hover-fill.
-  .button--primary {
-    --button-hover-fill: theme('colors.dark-green');
-  }
-
-  .button--secondary {
-    @apply bg-off-white text-dark-green;
-    --button-hover-fill: theme('colors.moss');
-  }
-
-  .button--accent {
-    @apply bg-moss text-dark-green;
-    --button-hover-fill: #a1be8d; // darker moss chip
-  }
-
-  .button--mutedWhite {
+  // Glass — no global equivalent; translucent fill that reveals dark-green text
+  // as the shared bloom (see the global `.button::before`) fills in.
+  .button--glass {
     @apply text-off-white;
     --button-hover-fill: rgb(252 251 250 / 90%);
+    backdrop-filter: blur(2px);
     background-color: rgb(252 251 250 / 20%);
 
     &:hover,

@@ -84,43 +84,6 @@ function getACFLayout()
                 'layout' => 'row',
                 'sub_fields' => [
                     FieldVariables\getColorBackground(),
-                    [
-                        'label' => __('Enable Autoplay', 'flynt'),
-                        'instructions' => __('Enable for infinite loop autoplay.', 'flynt'),
-                        'name' => 'autoplay',
-                        'type' => 'true_false',
-                        'default_value' => 0,
-                        'ui' => 1
-                    ],
-                    [
-                        'label' => __('Autoplay Speed (in milliseconds)', 'flynt'),
-                        'instructions' => __('Default is 250, set to 20000 for infinite loop autoplay.', 'flynt'),
-                        'name' => 'autoplaySpeed',
-                        'type' => 'number',
-                        'min' => 0,
-                        'step' => 1,
-                        'default_value' => 250,
-                        'required' => 0,
-                    ],
-                    [
-                        'label' => __('Autoplay Delay (in milliseconds)', 'flynt'),
-                        'instructions' => __('Default is 0, set to 0 for infinite loop autoplay.', 'flynt'),
-                        'name' => 'autoplayDelay',
-                        'type' => 'number',
-                        'min' => 0,
-                        'step' => 1,
-                        'default_value' => 0,
-                        'required' => 0,
-                        'conditional_logic' => [
-                            [
-                                [
-                                    'fieldPath' => 'autoplay',
-                                    'operator' => '==',
-                                    'value' => 1
-                                ]
-                            ]
-                        ],
-                    ],
                 ]
             ]
         ]

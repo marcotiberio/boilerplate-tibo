@@ -81,6 +81,7 @@ function getACFLayout()
                 'type' => 'repeater',
                 'layout' => 'row',
                 'min' => 1,
+                'max' => 4,
                 'button_label' => __('Add Stat', 'flynt'),
                 'sub_fields' => [
                     [

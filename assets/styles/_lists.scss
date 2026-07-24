@@ -8,59 +8,53 @@
       margin-bottom: 0;
   
       li {
+        // Font size/line-height inherit from the parent (or a .font-* class if set).
         font-size: inherit;
-        line-height: var(--body-line-height, 1.2) !important;
-        margin-bottom: 0;
-        margin-left: 3rem;
-        text-indent: -1.2rem;
+        line-height: inherit;
+        margin-bottom: 1rem;
+        margin-left: 0;
+        padding-left: 2.125rem;
+        position: relative;
+        text-indent: 0;
 
-        &.font-body {
-          font-size: var(--body-size-mobile, 1.25rem);
-          line-height: var(--body-line-height, 1.2);
-          @screen desktop {
-            font-size: var(--body-size-desktop, 1.25rem);
-          }
-        }
-
-        &.font-bodySmall {
-          font-size: var(--body-small-size, 0.75rem);
-          line-height: var(--body-small-line-height, 1.2);
-        }
-
+        // Checklist marker — check-in-circle icon in place of the default bullet.
         &::before {
-          content: '-';
-          @apply mr-[8px];
+          background-color: theme('colors.dark-green');
+          content: '';
+          height: 1.375rem;
+          left: 0;
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8.5 12.5l2.5 2.5 4.5-5'/%3E%3C/svg%3E");
+          mask-repeat: no-repeat;
+          mask-size: contain;
+          position: absolute;
+          top: 0.05rem;
+          width: 1.375rem;
         }
       }
     }
   
     li {
-      font-size: var(--body-size-mobile, 1.25rem);
-      line-height: var(--body-line-height, 1.2) !important;
-      margin-bottom: 0;
-      margin-left: 3rem;
-      text-indent: -1.2rem;
+      // Font size/line-height inherit from the parent (or a .font-* class if set).
+      font-size: inherit;
+      line-height: inherit;
+      margin-bottom: 1rem;
+      margin-left: 0;
+      padding-left: 2.125rem;
+      position: relative;
+      text-indent: 0;
 
-      @screen desktop {
-        font-size: var(--body-size-desktop, 1.25rem);
-      }
-
-      &.font-body {
-        font-size: var(--body-size-mobile, 1.25rem);
-        line-height: var(--body-line-height, 1.2);
-        @screen desktop {
-          font-size: var(--body-size-desktop, 1.25rem);
-        }
-      }
-
-      &.font-bodySmall {
-        font-size: var(--body-small-size, 0.75rem);
-        line-height: var(--body-small-line-height, 1.2);
-      }
-
+      // Checklist marker — check-in-circle icon in place of the default bullet.
       &::before {
-        content: '-';
-        @apply mr-[8px];
+        background-color: theme('colors.dark-green');
+        content: '';
+        height: 1.375rem;
+        left: 0;
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8.5 12.5l2.5 2.5 4.5-5'/%3E%3C/svg%3E");
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        position: absolute;
+        top: 0.05rem;
+        width: 1.375rem;
       }
     }
   }

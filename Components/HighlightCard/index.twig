@@ -2,13 +2,13 @@
   <flynt-component
     name="HighlightCard"
     class="contents"
-    x-data="{ show: localStorage.getItem('jgi-highlight-dismissed') !== '1' }"
+    x-data="{ show: true }"
     x-cloak>
     {# Fixed, dismissible promo card — vertical on desktop, horizontal on mobile #}
     <div
       x-show="show"
       x-transition
-      class="fixed z-[900] left-sm right-sm bottom-sm lg:left-auto lg:right-sm lg:w-[306px] bg-terracotta rounded-card p-min flex flex-row lg:flex-col gap-xs lg:gap-0 shadow-xl">
+      class="fixed z-[900] left-sm right-sm bottom-sm lg:left-auto lg:right-sm lg:w-[306px] bg-terracotta hover:bg-[#823803] transition-colors rounded-card p-min flex flex-row lg:flex-col gap-xs lg:gap-0 shadow-xl">
       {% if image %}
         <img
           class="rounded-image object-cover shrink-0 w-16 h-16 lg:w-full lg:h-[181px] lg:mb-xs"
@@ -21,7 +21,7 @@
         <div class="font-body text-off-white truncate lg:whitespace-normal">{{ title }}</div>
         {% if link %}
           <a
-            class="font-small inline-flex items-center gap-1 mt-1 text-off-white/50 hover:text-off-white transition-colors"
+            class="font-small inline-flex items-center gap-1 mt-1 text-off-white/50 hover:text-off-white transition-colors after:absolute after:inset-0 after:content-['']"
             href="{{ link.url }}"
             {% if link.target %} target="{{ link.target }}" rel="noreferrer noopener"{% endif %}>
             {{ link.title | default(__('Mehr lesen', 'flynt')) }}
@@ -33,9 +33,9 @@
       </div>
       <button
         type="button"
-        @click="show = false; localStorage.setItem('jgi-highlight-dismissed', '1')"
+        @click="show = false"
         aria-label="{{ __('Close', 'flynt') }}"
-        class="absolute top-min right-min z-10 flex items-center justify-center w-[34px] h-[31px] rounded-[8.5px] text-off-white leading-none hover:bg-black/20 transition-colors">
+        class="absolute top-min right-min z-10 flex items-center justify-center w-[34px] h-[31px] rounded-[8.5px] text-off-white leading-none hover:bg-white/40 transition-colors">
         <svg class="w-[10px] h-[10px]" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <path d="M1 1l8 8M9 1l-8 8" stroke-linecap="round" />
         </svg>

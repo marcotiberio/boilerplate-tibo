@@ -8,15 +8,15 @@
     </div>
 
     <div class="boxed relative z-10 py-xl">
-      <div class="flex flex-col sm:flex-row items-start gap-sm lg:gap-md max-w-[900px]">
+      <div class="flex flex-col sm:flex-row items-start gap-sm lg:gap-xl max-w-[900px]">
         {# Image + mail badge #}
         {% if newsletterImage %}
           <div class="relative shrink-0">
             <img
-              class="w-full aspect-video md:aspect-square md:max-w-[216px] object-cover rounded-card"
+              class="w-full aspect-4/3 md:aspect-square md:max-w-[216px] object-cover rounded-card"
               src="{{ newsletterImage.src }}" alt="{{ newsletterImage.alt|e|default('') }}" loading="lazy">
-            <span class="absolute -top-xs -right-xs w-14 h-14 rounded-cta bg-moss flex items-center justify-center text-dark-green [&_svg]:w-8 [&_svg]:h-8 [&_svg]:fill-current">
-              {% include 'assets/icons/email.svg' ignore missing %}
+            <span class="absolute -top-xs -right-xs md:-top-sm md:-right-sm w-14 h-14 rounded-cta bg-moss flex items-center justify-center text-dark-green [&_svg]:w-8 [&_svg]:h-8 [&_svg]:fill-current">
+              {% include 'assets/icons/email-full.svg' ignore missing %}
             </span>
           </div>
         {% endif %}
@@ -35,7 +35,7 @@
               id="footer-nl-email" type="email" name="email"
               class="flex-1 h-auto px-sm rounded-cta border-0 bg-warmer-beige/50 text-dark-brown placeholder:text-dark-brown/60 focus:outline-none focus:ring-2 focus:ring-jungle/40"
               placeholder="{{ newsletterPlaceholder|e }}">
-            <button type="submit" class="button button--jungle w-full">{{ newsletterButtonLabel|e|default('Anmelden') }}</button>
+            <button type="submit" class="button button--jungle">{{ newsletterButtonLabel|e|default('Anmelden') }}</button>
           </form>
         </div>
       </div>
@@ -88,7 +88,7 @@
             <div class="flex flex-row flex-wrap gap-xs">
               {% for social in socials %}
                 {% if social.url and social.platform %}
-                  <a class="w-11 h-11 rounded-cta bg-white/20 flex items-center justify-center text-off-white transition-colors hover:bg-dark-green [&_svg]:w-[22px] [&_svg]:h-[22px] [&_svg]:fill-current"
+                  <a class="w-11 h-11 rounded-cta bg-white/20 flex items-center justify-center text-off-white transition-colors hover:bg-white/40 [&_svg]:w-[22px] [&_svg]:h-[22px] [&_svg]:fill-current"
                     href="{{ social.platform == 'email' ? 'mailto:' ~ social.url : social.url }}"
                     {% if social.platform != 'email' %} target="_blank" rel="noreferrer noopener"{% endif %}
                     aria-label="{{ social.platform|capitalize }}" title="{{ social.platform|capitalize }}">
@@ -111,7 +111,7 @@
         {# Nav columns + transparency badge #}
         <div class="flex flex-col gap-lg">
           {% if columns %}
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-sm sm:gap-lg">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-sm sm:gap-lg">
               {% for column in columns %}
                 <div class="flex flex-col">
                   {% if column.heading %}
@@ -122,7 +122,7 @@
                       {% for item in column.links %}
                         {% if item.link %}
                           <li>
-                            <a class="text-off-white/70 hover:text-off-white"
+                            <a class="text-off-white/70 hover:text-off-white transition-colors ease-in-out"
                               href="{{ item.link.url }}"
                               {% if item.link.target %} target="{{ item.link.target }}" rel="noreferrer noopener"{% endif %}>
                               {{ item.link.title }}
@@ -157,7 +157,7 @@
           <div class="flex flex-row flex-wrap gap-x-sm gap-y-xs">
             {% for l in legalLinks %}
               {% if l.link %}
-                <a class="text-off-white/70 hover:text-off-white transition-colors"
+                <a class="text-off-white/70 hover:text-off-white transition-colors ease-in-out"
                   href="{{ l.link.url }}"
                   {% if l.link.target %} target="{{ l.link.target }}" rel="noreferrer noopener"{% endif %}>
                   {{ l.link.title }}

@@ -96,13 +96,14 @@ function getACFLayout()
                 'sub_fields' => [
                     [
                         'label' => __('Columns', 'flynt'),
-                        'instructions' => __('Number of columns shown per row.', 'flynt'),
+                        'instructions' => __('Number of columns shown.', 'flynt'),
                         'name' => 'columnCount',
                         'type' => 'select',
                         'choices' => [
                             '1' => __('1', 'flynt'),
                             '2' => __('2', 'flynt'),
                             '3' => __('3', 'flynt'),
+                            '4' => __('4', 'flynt'),
                         ],
                         'default_value' => '2',
                         'allow_null' => 0,
@@ -110,7 +111,6 @@ function getACFLayout()
                             'width' => 100,
                         ],
                     ],
-                    FieldVariables\getColorBackground(),
                 ],
             ],
         ],

@@ -37,8 +37,8 @@
     {% endif %}
   </div>
 
-  {# Overlay for legibility #}
-  <div class="absolute inset-0 z-0 bg-dark-green/40 pointer-events-none"></div>
+  {# Overlay between media and text for legibility #}
+  <div class="absolute inset-0 z-[5] bg-dark-green/80 pointer-events-none"></div>
 
   {# Play / pause control (only when a video is set) #}
   {% if video.url %}
@@ -62,9 +62,9 @@
   {# Quote #}
   <div class="relative z-10 boxed min-h-[600px] lg:min-h-[742px] flex items-center justify-center text-center">
     {% if highlight or quote %}
-      <blockquote class="font-h2 max-w-screen-tablet">
+      <div class="font-h2 max-w-screen-tablet">
         {% if highlight %}<span class="text-off-white">{{ highlight }} </span>{% endif %}{% if quote %}<span data-ref="quoteFill" class="text-off-white/30">{{ quote }}</span>{% endif %}
-      </blockquote>
+      </div>
     {% endif %}
   </div>
 </flynt-component>

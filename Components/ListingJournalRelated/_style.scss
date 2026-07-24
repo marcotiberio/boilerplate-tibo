@@ -47,6 +47,8 @@ flynt-component[name='ListingJournalRelated'] {
   }
 
   .swiper-pagination-fraction {
-    @apply font-body;
+    font-family: var(--secondary-font-family, var(--body-font-family));
+    font-size: var(--body-size-mobile, 1.25rem);
+    line-height: var(--body-line-height, 1.2);
   }
 }

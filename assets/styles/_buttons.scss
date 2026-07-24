@@ -7,10 +7,10 @@ button {
   appearance: none;
   font-family: var(--primary-font-family, 'Inter', Arial, sans-serif);
   font-size: var(--button-size, 1rem);
-  line-height: var(--button-line-height, 1.2);
   font-weight: var(--button-font-weight, 500);
   isolation: isolate;
-  @apply w-fit min-w-[200px];
+  line-height: var(--button-line-height, 1.2);
+  @apply w-fit min-w-[160px];
   @apply relative overflow-hidden;
   @apply px-md py-xs;
   @apply flex justify-center items-center;
@@ -26,16 +26,16 @@ button {
   // stay inert (transparent chip). Motion + easing are lifted verbatim from
   // the Figma `buttonHoverColor` keyframes. Sits below the label via z-index.
   &::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 180%;
     aspect-ratio: 262 / 74; // chip proportions from the Figma component
-    border-radius: var(--radius-cta, 12px);
     background-color: var(--button-hover-fill, transparent);
+    border-radius: var(--radius-cta, 12px);
+    content: '';
+    left: 50%;
+    position: absolute;
+    top: 50%;
     transform: translate(-50%, 60%) rotate(-4deg) scale(0.45);
     transition: transform 1.25s linear(0, 0.0216, 0.0747, 0.1458, 0.2255, 0.3076, 0.3879, 0.4638, 0.5339, 0.5974, 0.6542, 0.7044, 0.7484, 0.7866, 0.8196, 0.8479, 0.8722, 0.8928, 0.9103, 0.9251, 0.9375, 0.948, 0.9568, 0.9642, 0.9703, 0.9754, 0.9797, 0.9832, 0.9862, 0.9886, 0.9906, 0.9923, 0.9936, 0.9948, 0.9957, 0.9965, 0.9971, 0.9976, 0.9981, 0.9984, 0.9987, 0.9989, 0.9991, 0.9993, 0.9994, 0.9995, 0.9996, 0.9997, 0.9997, 0.9998, 0.9998);
+    width: 180%;
     z-index: -1;
   }
 
@@ -63,6 +63,50 @@ button {
     @apply hover:no-underline !important;
     @apply focus:no-underline !important;
     @apply p-0 !important;
+  }
+
+  // Colour variants — ported from the Figma `buttonHoverColor` component.
+  // Each sets its resting fill/text plus --button-hover-fill: the colour the
+  // shared -4° chip (see ::before above) blooms to on hover. Variants whose
+  // label would lose contrast against the bloom also swap `color` on hover.
+  &--primary {
+    --button-hover-fill: #a1be8d; // muted moss — one-off bloom shade, no token
+    background-color: theme('colors.moss');
+    color: theme('colors.dark-green');
+  }
+
+  &--secondary {
+    --button-hover-fill: theme('colors.dark-green');
+    background-color: theme('colors.jungle');
+    color: theme('colors.white');
+  }
+
+  &--accent {
+    --button-hover-fill: #893b05; // deep terracotta — one-off bloom shade, no token
+    background-color: theme('colors.terracotta');
+    color: theme('colors.white');
+  }
+
+  &--mutedWhite {
+    --button-hover-fill: theme('colors.white');
+    background-color: rgba(252, 251, 250, 0.2); // off-white @ 20% — sits on dark backgrounds
+    color: theme('colors.white');
+
+    &:hover,
+    &:focus-visible {
+      color: theme('colors.dark-brown');
+    }
+  }
+
+  &--card {
+    --button-hover-fill: theme('colors.dark-brown');
+    background-color: rgba(28, 25, 24, 0.05); // dark-brown @ 5% — sits on light backgrounds
+    color: theme('colors.dark-brown');
+
+    &:hover,
+    &:focus-visible {
+      color: theme('colors.white');
+    }
   }
 }
 

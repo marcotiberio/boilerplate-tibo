@@ -8,7 +8,7 @@
   <div class="boxed">
     {% if title %}
       {% set tag = titleTag|default('h2') %}
-      <{{ tag }} class="font-{{ titleSize|default('h2') }} text-black mb-md">{{ title }}</{{ tag }}>
+      <{{ tag }} class="font-{{ titleSize|default('h2') }} text-black mb-md max-w-[960px]">{{ title }}</{{ tag }}>
     {% endif %}
 
     {% if cards or textCard.title %}
@@ -52,7 +52,13 @@
         {% endfor %}
 
         {% if textCard.title or textCard.text %}
-          <div class="gallery-textcard relative flex h-full w-full flex-col justify-between overflow-hidden rounded-card bg-dark-green p-sm text-off-white">
+          {% set TextCardTag = textCard.button.url ? 'a' : 'div' %}
+          <{{ TextCardTag }}
+            class="gallery-textcard relative flex h-full w-full flex-col justify-between overflow-hidden rounded-card bg-dark-green pt-sm p-xs text-off-white"
+            {% if textCard.button.url %}
+              href="{{ textCard.button.url }}"
+              {% if textCard.button.target %} target="{{ textCard.button.target }}" rel="noreferrer noopener"{% endif %}
+            {% endif %}>
             {% if textCard.icon %}
               <span class="flex h-[72px] w-[72px] items-center justify-center rounded-cta bg-off-white/[0.08]">
                 <img class="h-11 w-11 object-contain" src="{{ textCard.icon.src }}" alt="" loading="lazy">
@@ -68,16 +74,14 @@
                   <p class="font-bodySmall text-off-white/50">{{ textCard.text }}</p>
                 {% endif %}
               </div>
+              {# Visual button only — the whole card is the link, so this is a non-interactive span. #}
               {% if textCard.button.url %}
-                <a
-                  class="button button--mutedWhite w-full"
-                  href="{{ textCard.button.url }}"
-                  {% if textCard.button.target %} target="{{ textCard.button.target }}" rel="noreferrer noopener"{% endif %}>
+                <span class="button button--mutedWhite !w-full !min-w-0">
                   <span>{{ textCard.button.title }}</span>
-                </a>
+                </span>
               {% endif %}
             </div>
-          </div>
+          </{{ TextCardTag }}>
         {% endif %}
 
       </div>

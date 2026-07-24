@@ -1,6 +1,10 @@
 flynt-component[name='SliderCards'] {
   .slider-button {
-    @apply flex h-11 w-14 items-center justify-center rounded-cta bg-beige text-dark-green transition-opacity;
+    @apply flex h-11 w-14 items-center justify-center rounded-cta bg-beige text-dark-green transition-colors;
+
+    &:hover:not(.swiper-button-disabled) {
+      @apply bg-[#DECBB7];
+    }
 
     &.swiper-button-disabled {
       cursor: default;

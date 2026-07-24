@@ -63,7 +63,7 @@
   {% endif %}
 
   {# Content #}
-  <div class="relative z-10 boxed min-h-[85vh] flex flex-col justify-center items-center text-center gap-sm">
+  <div class="relative z-10 boxed !pb-[200px] min-h-[85vh] flex flex-col justify-end items-center text-center gap-sm">
     {% if title %}
       {% set tag = titleTag|default('h1') %}
       <{{ tag }} class="font-{{ titleSize|default('h1') }} text-off-white max-w-[722px]">{{ title }}</{{ tag }}>

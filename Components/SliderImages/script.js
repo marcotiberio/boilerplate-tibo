@@ -1,5 +1,5 @@
 import Swiper from 'swiper'
-import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules'
+import { Navigation, Pagination, A11y } from 'swiper/modules'
 import 'swiper/swiper-bundle.css'
 import { buildRefs, getJSON } from '@/assets/scripts/helpers.js'
 
@@ -13,10 +13,16 @@ export default function (el) {
 function initSlider (refs, data) {
   const { options = {} } = data
   const config = {
-    modules: [Navigation, Pagination, A11y, Autoplay],
-    slidesPerView: 'auto',
+    modules: [Navigation, Pagination, A11y],
+    slidesPerView: 1.2,
     spaceBetween: 24,
     watchOverflow: true,
+    breakpoints: {
+      780: {
+        slidesPerView: 'auto',
+        spaceBetween: 24
+      }
+    },
     navigation: {
       prevEl: refs.prev,
       nextEl: refs.next
@@ -24,12 +30,6 @@ function initSlider (refs, data) {
     pagination: {
       el: refs.pagination,
       clickable: true
-    }
-  }
-
-  if (options.autoplay && options.autoplaySpeed) {
-    config.autoplay = {
-      delay: options.autoplaySpeed
     }
   }
 

@@ -22,11 +22,11 @@
   <div class="boxed">
     {% if title %}
       {% set tag = titleTag|default('h2') %}
-      <{{ tag }} class="font-{{ titleSize|default('h2') }} text-dark-green mb-xl">{{ title }}</{{ tag }}>
+      <{{ tag }} class="font-{{ titleSize|default('h2') }} text-dark-green mb-lg">{{ title }}</{{ tag }}>
     {% endif %}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-sm">
       {% for stat in stats %}
-        <div class="flex flex-col gap-sm p-sm">
+        <div class="flex flex-col gap-sm">
           {% if stat.icon %}
             <img class="w-[68px] h-[68px] object-contain" src="{{ stat.icon.src }}" alt="{{ stat.icon.alt|e|default('') }}">
           {% endif %}
