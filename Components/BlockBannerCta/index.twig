@@ -56,8 +56,9 @@
 
     {% else %}
 
-      {# Centered — logo, eyebrow, title, body and buttons stacked and centered #}
-      <div class="{{ surfaceClass }} rounded-banner overflow-hidden flex flex-col items-center text-center gap-sm px-sm py-lg lg:px-xl lg:py-xl">
+      {# Stacked — logo, eyebrow, title, body and buttons stacked; centered or left aligned #}
+      {% set isLeft = layout == 'left' %}
+      <div class="{{ surfaceClass }} rounded-banner overflow-hidden flex flex-col gap-sm px-sm py-lg lg:px-xl lg:py-xl {{ isLeft ? 'items-start text-left' : 'items-center text-center' }}">
         {% if image %}
           <img
             class="w-[86px] h-auto {{ isDark ? '' : 'mix-blend-multiply opacity-100' }}"
@@ -77,7 +78,7 @@
           <div class="wysiwyg max-w-[588px]">{{ contentHtml|e('wp_kses_post') }}</div>
         {% endif %}
         {% if primaryButton or secondaryButton %}
-          <div class="flex flex-wrap gap-xs justify-center mt-xs">
+          <div class="flex flex-wrap gap-xs mt-xs {{ isLeft ? 'justify-start' : 'justify-center' }}">
             {% if primaryButton %}
               <a class="button button--primary" href="{{ primaryButton.url }}"{% if primaryButton.target %} target="{{ primaryButton.target }}" rel="noreferrer noopener"{% endif %}>
                 {{ primaryButton.title }}

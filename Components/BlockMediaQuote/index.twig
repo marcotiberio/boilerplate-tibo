@@ -38,7 +38,7 @@
   </div>
 
   {# Overlay between media and text for legibility #}
-  <div class="absolute inset-0 z-[5] bg-dark-green/80 pointer-events-none"></div>
+  <div class="absolute inset-0 z-[5] bg-[#000]/80 pointer-events-none"></div>
 
   {# Play / pause control (only when a video is set) #}
   {% if video.url %}
@@ -60,7 +60,7 @@
   {% endif %}
 
   {# Quote #}
-  <div class="relative z-10 boxed min-h-[600px] lg:min-h-[742px] flex items-center justify-center text-center">
+  <div class="relative z-10 boxed min-h-[600px] lg:min-h-screen flex items-center justify-center text-center">
     {% if highlight or quote %}
       <div class="font-h2 max-w-screen-tablet">
         {% if highlight %}<span class="text-off-white">{{ highlight }} </span>{% endif %}{% if quote %}<span data-ref="quoteFill" class="text-off-white/30">{{ quote }}</span>{% endif %}

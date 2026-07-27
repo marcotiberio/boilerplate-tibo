@@ -1,7 +1,7 @@
 .wysiwyg {
   ul {
     list-style-type: none;
-    margin: 0 0 1.2rem;
+    margin: 0.5rem 0 1.2rem;
     // padding-left: 1rem;
   
     ul {
@@ -37,7 +37,7 @@
       // Font size/line-height inherit from the parent (or a .font-* class if set).
       font-size: inherit;
       line-height: inherit;
-      margin-bottom: 1rem;
+      margin-bottom: 0;
       margin-left: 0;
       padding-left: 2.125rem;
       position: relative;

@@ -121,7 +121,8 @@ function getACFLayout()
                         'type' => 'select',
                         'default_value' => 'centered',
                         'choices' => [
-                            'centered' => __('Centered', 'flynt'),
+                            'centered' => __('Stacked — centered', 'flynt'),
+                            'left' => __('Stacked — left aligned', 'flynt'),
                             'split' => __('Split (title / text side by side)', 'flynt'),
                         ],
                         'wrapper' => ['width' => 50],
