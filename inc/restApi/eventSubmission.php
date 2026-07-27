@@ -4,12 +4,14 @@
  * REST endpoint that receives public submissions from the FormEvent
  * component and stores them as `pending` Event posts for review.
  *
- * Accepts multipart/form-data (file uploads). Security: nonce, honeypot,
- * per-IP rate limit, strict sanitisation, choice allow-listing, conditional
- * required validation. Anonymous callers can only ever create pending posts.
+ * Accepts multipart/form-data (file uploads). Security: honeypot, per-IP
+ * rate limit, strict sanitisation, choice allow-listing, conditional required
+ * validation. Anonymous callers can only ever create pending posts.
  */
 
 namespace Flynt\Event;
+
+const REST_ROUTE = '/looptopia/v1/event';
 
 add_action('rest_api_init', function () {
     register_rest_route('looptopia/v1', '/event', [
@@ -18,6 +20,25 @@ add_action('rest_api_init', function () {
         'permission_callback' => '__return_true',
     ]);
 });
+
+// Tolerate a stale wp_rest nonce on this public route. The form no longer
+// sends one, but pages cached in a visitor's browser from before that change
+// still attach an `X-WP-Nonce` header. Once it expires, WordPress core's
+// rest_cookie_check_errors() rejects the whole request with "Cookie check
+// failed" — before our handler ever runs. Stripping the nonce for this one
+// route (ahead of core's priority-100 check) makes core treat the caller as
+// an anonymous user, which is exactly what this endpoint expects. Abuse is
+// still contained by the honeypot, per-IP rate limit and pending-only posts.
+add_filter('rest_authentication_errors', function ($result) {
+    // Someone earlier in the chain already decided — don't override it.
+    if (null !== $result) {
+        return $result;
+    }
+    if (strpos($_SERVER['REQUEST_URI'] ?? '', REST_ROUTE) !== false) {
+        unset($_SERVER['HTTP_X_WP_NONCE'], $_REQUEST['_wpnonce'], $_GET['_wpnonce'], $_POST['_wpnonce']);
+    }
+    return $result;
+}, 5);
 
 function handleSubmission(\WP_REST_Request $request)
 {

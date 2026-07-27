@@ -35,7 +35,7 @@ This is a public, cacheable submission form, so nonces are fundamentally
 incompatible with full-page caching. Both nonce checks were removed and abuse
 is contained by the remaining server-side protections.
 
-### Changes
+### Changes — part 1: remove nonces
 
 - **`inc/restApi/eventSubmission.php`** — removed the server-side nonce check;
   renumbered step comments.
@@ -44,6 +44,40 @@ is contained by the remaining server-side protections.
 - **`Components/FormEvent/functions.php`** — stopped generating/injecting
   `nonce` and `restNonce`; updated the explaining comment.
 - **`inc/eventFields.php`** — removed the now-dead `NONCE_ACTION` constant.
+
+### Changes — part 2: tolerate stale cached pages (server guard)
+
+Removing the nonce fixes every **fresh** page load, but it can't un-deploy old
+HTML already sitting in visitors' browsers (open tabs, bfcache, browser cache).
+Those old pages still attach a now-expired `X-WP-Nonce` header, which core
+rejects with "Cookie check failed" *before* our handler runs.
+
+- **`inc/restApi/eventSubmission.php`** — added a `rest_authentication_errors`
+  filter (priority 5, ahead of core's priority-100 `rest_cookie_check_errors`)
+  that, for this one route (`/looptopia/v1/event`), strips any incoming
+  `X-WP-Nonce` / `_wpnonce`. Core then treats the caller as anonymous (exactly
+  what this endpoint expects) instead of failing the cookie-nonce check. This
+  makes even months-old cached pages submit successfully.
+
+### Live verification (production, LiteSpeed-cached)
+
+Site runs **LiteSpeed Cache** (`x-litespeed-cache: hit`, `server: LiteSpeed`).
+
+- Live `/bewerbung/` HTML confirmed to ship the fixed inline JS — `fetch()` with
+  no `headers` and no nonce anywhere on the page.
+- `POST /wp-json/looptopia/v1/event` with **no** nonce → `HTTP 422` + German
+  validation errors (reaches our handler ✅).
+- Same POST with a **stale** `X-WP-Nonce` → `HTTP 403`
+  `{"code":"rest_cookie_invalid_nonce","message":"Cookie check failed"}` —
+  reproduced the exact reported error, proving remaining failures come only
+  from clients still sending an old nonce (stale cached HTML). The part-2 server
+  guard neutralises this.
+
+### Immediate workaround for an affected user
+
+Hard-reload the page (Cmd/Ctrl+Shift+R) or close and reopen the tab, then
+resubmit — this loads the fixed code. (No longer necessary once the part-2
+guard is deployed.)
 
 ### Remaining protection
 
