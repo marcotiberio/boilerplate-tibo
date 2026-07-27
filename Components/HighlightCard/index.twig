@@ -17,7 +17,7 @@
           loading="lazy"
         />
       {% endif %}
-      <div class="min-w-0 lg:px-min lg:pb-min">
+      <div class="min-w-0 lg:px-xs lg:pb-min">
         <div class="font-body text-off-white truncate lg:whitespace-normal">{{ title }}</div>
         {% if link %}
           <a
@@ -35,7 +35,7 @@
         type="button"
         @click="show = false"
         aria-label="{{ __('Close', 'flynt') }}"
-        class="absolute top-min right-min z-10 flex items-center justify-center w-[34px] h-[31px] rounded-[8.5px] text-off-white leading-none hover:bg-white/40 transition-colors">
+        class="absolute top-xs right-xs z-10 flex items-center justify-center w-[34px] h-[31px] rounded-[8.5px] text-off-white leading-none hover:bg-white/40 transition-colors">
         <svg class="w-[10px] h-[10px]" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <path d="M1 1l8 8M9 1l-8 8" stroke-linecap="round" />
         </svg>

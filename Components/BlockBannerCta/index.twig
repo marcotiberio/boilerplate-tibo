@@ -30,7 +30,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-sm lg:gap-sm {% if eyebrow %}mt-sm{% endif %}">
           {% if title %}
             {% set tag = titleTag|default('h2') %}
-            <{{ tag }} class="font-{{ titleSize|default('h2') }} lg:w-[358px] lg:shrink-0">{{ title }}</{{ tag }}>
+            <{{ tag }} class="font-{{ titleSize|default('h2') }} w-[90%] lg:max-w-[358px] lg:shrink-0">{{ title }}</{{ tag }}>
           {% endif %}
           <div class="flex-1 flex flex-col gap-sm lg:pt-xs">
             {% if contentHtml %}
