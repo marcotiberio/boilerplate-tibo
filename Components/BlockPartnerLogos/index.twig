@@ -28,17 +28,17 @@
               {% if row.columns == '6' %}sm:grid-cols-3 lg:grid-cols-6{% endif %}">
             {% for item in row.logos %}
               {% if item.logo %}
-                <div class="item flex justify-center items-center w-full h-full">
+                <div class="item flex justify-center items-center w-full h-full bg-white rounded p-xs md:py-sm md:px-sm">
                   {% if item.logoLink %}
                     <a class="w-full h-full flex items-center justify-center" href="{{ item.logoLink }}" target="_blank" rel="noreferrer noopener">
-                      <img class="figure-image lazyload w-full h-full max-h-[95px] object-contain"
+                      <img class="figure-image lazyload w-full h-full max-h-[80px] object-contain"
                         src="{{ item.logo.src | resize(95) }}"
                         alt="{{ item.logo.alt|e | default('Partner logo') }}"
                         data-srcset="{{ function('wp_get_attachment_image_srcset', item.logo.id) }}"
                         data-sizes="auto">
                     </a>
                   {% else %}
-                    <img class="figure-image lazyload w-full h-full max-h-[95px] object-contain"
+                    <img class="figure-image lazyload w-full h-full max-h-[80px] object-contain"
                       src="{{ item.logo.src | resize(95) }}"
                       alt="{{ item.logo.alt|e | default('Partner logo') }}"
                       data-srcset="{{ function('wp_get_attachment_image_srcset', item.logo.id) }}"

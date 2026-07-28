@@ -4,12 +4,14 @@
  * REST endpoint that receives public submissions from the FormEvent
  * component and stores them as `pending` Event posts for review.
  *
- * Accepts multipart/form-data (file uploads). Security: nonce, honeypot,
- * per-IP rate limit, strict sanitisation, choice allow-listing, conditional
- * required validation. Anonymous callers can only ever create pending posts.
+ * Accepts multipart/form-data (file uploads). Security: honeypot, per-IP
+ * rate limit, strict sanitisation, choice allow-listing, conditional required
+ * validation. Anonymous callers can only ever create pending posts.
  */
 
 namespace Flynt\Event;
+
+const REST_ROUTE = '/looptopia/v1/event';
 
 add_action('rest_api_init', function () {
     register_rest_route('looptopia/v1', '/event', [
@@ -19,22 +21,41 @@ add_action('rest_api_init', function () {
     ]);
 });
 
+// Tolerate a stale wp_rest nonce on this public route. The form no longer
+// sends one, but pages cached in a visitor's browser from before that change
+// still attach an `X-WP-Nonce` header. Once it expires, WordPress core's
+// rest_cookie_check_errors() rejects the whole request with "Cookie check
+// failed" — before our handler ever runs. Stripping the nonce for this one
+// route (ahead of core's priority-100 check) makes core treat the caller as
+// an anonymous user, which is exactly what this endpoint expects. Abuse is
+// still contained by the honeypot, per-IP rate limit and pending-only posts.
+add_filter('rest_authentication_errors', function ($result) {
+    // Someone earlier in the chain already decided — don't override it.
+    if (null !== $result) {
+        return $result;
+    }
+    if (strpos($_SERVER['REQUEST_URI'] ?? '', REST_ROUTE) !== false) {
+        unset($_SERVER['HTTP_X_WP_NONCE'], $_REQUEST['_wpnonce'], $_GET['_wpnonce'], $_POST['_wpnonce']);
+    }
+    return $result;
+}, 5);
+
 function handleSubmission(\WP_REST_Request $request)
 {
     $params = $request->get_body_params();
     $files = $request->get_file_params();
 
-    // 1. Nonce.
-    if (empty($params['nonce']) || !wp_verify_nonce($params['nonce'], NONCE_ACTION)) {
-        return reject(__('Deine Sitzung ist abgelaufen. Bitte lade die Seite neu.', 'flynt'), 403);
-    }
+    // No nonce check: this is a public, cacheable form. A nonce baked into
+    // (potentially CDN-cached) HTML goes stale and triggers WordPress core's
+    // "Cookie check failed". Abuse is contained instead by the honeypot, the
+    // per-IP rate limit, and posts only ever being created as `pending`.
 
-    // 2. Honeypot.
+    // 1. Honeypot.
     if (!empty($params['website_hp'])) {
         return new \WP_REST_Response(['success' => true], 200);
     }
 
-    // 3. Rate limit per IP.
+    // 2. Rate limit per IP.
     $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
     $rateKey = 'le_pe_' . md5($ip);
     $count = (int) get_transient($rateKey);
@@ -44,7 +65,7 @@ function handleSubmission(\WP_REST_Request $request)
 
     $config = getConfig();
 
-    // 4. Sanitise scalars.
+    // 3. Sanitise scalars.
     $data = [
         'orgName'        => sanitize_text_field($params['orgName'] ?? ''),
         'contactPerson'  => sanitize_text_field($params['contactPerson'] ?? ''),
@@ -53,7 +74,8 @@ function handleSubmission(\WP_REST_Request $request)
         'instagram'      => esc_url_raw($params['instagram'] ?? ''),
         'linkedin'       => esc_url_raw($params['linkedin'] ?? ''),
         'registration'   => sanitize_key($params['registration'] ?? ''),
-        'registrationLink' => esc_url_raw($params['registrationLink'] ?? ''),
+        // Free text: can be a URL or e.g. an e-mail instruction.
+        'registrationLink' => sanitize_text_field($params['registrationLink'] ?? ''),
         'costs'          => sanitize_key($params['costs'] ?? ''),
         'price'          => sanitize_text_field($params['price'] ?? ''),
         'paymentLink'    => esc_url_raw($params['paymentLink'] ?? ''),
@@ -95,7 +117,7 @@ function handleSubmission(\WP_REST_Request $request)
     $acceptTerms        = !empty($params['acceptTerms']);
     $newsletter         = !empty($params['newsletter']);
 
-    // 5. Validate.
+    // 4. Validate.
     $errors = [];
     $required = [
         'orgName'       => __('Name der Organisation', 'flynt'),
@@ -167,13 +189,13 @@ function handleSubmission(\WP_REST_Request $request)
         return reject(implode(' ', $errors), 422);
     }
 
-    // 6. Geocode (best-effort) for an own venue.
+    // 5. Geocode (best-effort) for an own venue.
     $geo = null;
     if ($data['locationMode'] === 'eigen') {
         $geo = geocodeAddress(composeAddress($data['street'], $data['postalCode']));
     }
 
-    // 7. Create the pending post.
+    // 6. Create the pending post.
     $postId = wp_insert_post([
         'post_type'    => POST_TYPE,
         'post_status'  => 'pending',
@@ -185,13 +207,13 @@ function handleSubmission(\WP_REST_Request $request)
         return reject(__('Beim Speichern ist etwas schiefgelaufen. Bitte versuche es erneut.', 'flynt'), 500);
     }
 
-    // 8. Uploads.
+    // 7. Uploads.
     requireMediaDeps();
     $logoId = uploadSingle('orgLogo', $postId);
     $featuredId = uploadSingle('featuredImage', $postId);
     $galleryIds = uploadMultiple('gallery', $postId);
 
-    // 9. Store ACF fields.
+    // 8. Store ACF fields.
     foreach ($data as $key => $value) {
         update_field($key, $value, $postId);
     }
@@ -226,7 +248,7 @@ function handleSubmission(\WP_REST_Request $request)
         ], $postId);
     }
 
-    // 10. Notify the editor.
+    // 9. Notify the editor.
     wp_mail(
         get_option('admin_email'),
         __('Neuer Programm-Eintrag zur Prüfung', 'flynt'),

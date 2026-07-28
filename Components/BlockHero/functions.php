@@ -54,6 +54,14 @@ function getACFLayout()
                 'instructions' => __('Main hero headline, e.g. "48 Stunden Berlin neu entdecken".', 'flynt'),
             ],
             [
+                'label' => __('Button', 'flynt'),
+                'name' => 'buttonLink',
+                'type' => 'link',
+                'return_format' => 'array',
+                'instructions' => __('Optional green button below the headline.', 'flynt'),
+                'required' => 0,
+            ],
+            [
                 'label' => __('Funders (left)', 'flynt'),
                 'name' => 'funders',
                 'type' => 'group',

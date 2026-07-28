@@ -104,16 +104,14 @@ function getACFLayout()
     ];
 }
 
-// Inject the REST endpoint, fresh nonces and the shared choice lists so the
-// Alpine form can render and submit without a separate config request.
+// Inject the REST endpoint and the shared choice lists so the Alpine form can
+// render and submit without a separate config request. No nonce is passed: the
+// endpoint is public and cacheable, so a nonce frozen into (CDN-cached) HTML
+// would go stale and trip WordPress core's "Cookie check failed". Abuse is
+// handled server-side via honeypot, per-IP rate limit and pending-only posts.
 add_filter('Flynt/addComponentData?name=FormEvent', function ($data) {
     $data['config'] = Event\getConfig();
     $data['restUrl'] = esc_url_raw(rest_url('looptopia/v1/event'));
-    $data['nonce'] = wp_create_nonce(Event\NONCE_ACTION);
-    // Keeps the REST request authenticated as the same user the nonce above was
-    // created for. Without it WordPress runs the request as user 0 when a login
-    // cookie is present, breaking our user-bound nonce check.
-    $data['restNonce'] = wp_create_nonce('wp_rest');
     // Local-only: exposes a button to preview the success popup + confetti
     // without submitting the form. True when the Vite dev server is running
     // (npm run serve) or the env is explicitly 'local' — never on the

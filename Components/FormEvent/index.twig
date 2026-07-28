@@ -61,7 +61,6 @@
             }
             else { fd.append(key, value); }
           });
-          fd.append('nonce', '{{ nonce }}');
           ['orgLogo', 'featuredImage'].forEach(ref => {
             const el = this.$refs[ref];
             if (el && el.files[0]) fd.append(ref, el.files[0]);
@@ -72,7 +71,6 @@
           try {
             const res = await fetch('{{ restUrl }}', {
               method: 'POST',
-              headers: { 'X-WP-Nonce': '{{ restNonce }}' },
               body: fd
             });
             const data = await res.json();
@@ -229,7 +227,7 @@
             </fieldset>
             <label class="flex flex-col gap-xs" x-show="form.registration === 'anmeldung'" x-cloak>
               <span class="font-bodySmall">{{ __('Anmeldelink', 'flynt') }} *</span>
-              <input type="url" x-model="form.registrationLink" :required="form.registration === 'anmeldung'" class="rounded border border-black p-xs bg-white">
+              <input type="text" x-model="form.registrationLink" :required="form.registration === 'anmeldung'" class="rounded border border-black p-xs bg-white">
             </label>
 
             <fieldset class="flex flex-col gap-xs">
