@@ -28,16 +28,15 @@ function getACFLayout()
                 'sub_fields' => [
                     [
                         'label' => __('Width', 'flynt'),
-                        'instructions' => __('Column width. Inherit follows the Columns option in the Options tab.', 'flynt'),
+                        'instructions' => __('Column width. Columns flow inline and wrap based on their widths.', 'flynt'),
                         'name' => 'width',
                         'type' => 'select',
                         'choices' => [
-                            'default' => __('Inherit', 'flynt'),
                             'third' => __('1/3', 'flynt'),
                             'half' => __('1/2', 'flynt'),
                             'full' => __('1/1', 'flynt'),
                         ],
-                        'default_value' => 'default',
+                        'default_value' => 'half',
                         'allow_null' => 0,
                         'wrapper' => [
                             'width' => 50,
@@ -59,6 +58,54 @@ function getACFLayout()
                         ],
                     ],
                     [
+                        'label' => __('Headline', 'flynt'),
+                        'instructions' => __('Optional heading shown above the content.', 'flynt'),
+                        'name' => 'headline',
+                        'type' => 'text',
+                        'required' => 0,
+                        'wrapper' => [
+                            'width' => 50,
+                        ],
+                    ],
+                    [
+                        'label' => __('Headline Size', 'flynt'),
+                        'instructions' => __('Visual size of the headline.', 'flynt'),
+                        'name' => 'headlineSize',
+                        'type' => 'select',
+                        'choices' => [
+                            'h1' => 'H1',
+                            'h2' => 'H2',
+                            'h3' => 'H3',
+                            'h4' => 'H4',
+                            'h5' => 'H5',
+                            'h6' => 'H6',
+                        ],
+                        'default_value' => 'h3',
+                        'allow_null' => 0,
+                        'wrapper' => [
+                            'width' => 25,
+                        ],
+                    ],
+                    [
+                        'label' => __('Headline Tag', 'flynt'),
+                        'instructions' => __('HTML tag used for the headline (accessibility / SEO).', 'flynt'),
+                        'name' => 'headlineTag',
+                        'type' => 'select',
+                        'choices' => [
+                            'h1' => 'H1',
+                            'h2' => 'H2',
+                            'h3' => 'H3',
+                            'h4' => 'H4',
+                            'h5' => 'H5',
+                            'h6' => 'H6',
+                        ],
+                        'default_value' => 'h3',
+                        'allow_null' => 0,
+                        'wrapper' => [
+                            'width' => 25,
+                        ],
+                    ],
+                    [
                         'label' => __('Content', 'flynt'),
                         'name' => 'contentHtml',
                         'type' => 'wysiwyg',
@@ -76,7 +123,24 @@ function getACFLayout()
                         'type' => 'link',
                         'required' => 0,
                         'wrapper' => [
-                            'width' => 100,
+                            'width' => 50,
+                        ],
+                    ],
+                    [
+                        'label' => __('Button Color', 'flynt'),
+                        'instructions' => __('Colour variant of the button.', 'flynt'),
+                        'name' => 'buttonStyle',
+                        'type' => 'select',
+                        'choices' => [
+                            'primary' => __('Primary', 'flynt'),
+                            'secondary' => __('Secondary', 'flynt'),
+                            'accent' => __('Accent', 'flynt'),
+                            'mutedWhite' => __('Muted White', 'flynt'),
+                        ],
+                        'default_value' => 'primary',
+                        'allow_null' => 0,
+                        'wrapper' => [
+                            'width' => 50,
                         ],
                     ],
                 ],
@@ -93,25 +157,7 @@ function getACFLayout()
                 'name' => 'options',
                 'type' => 'group',
                 'layout' => 'row',
-                'sub_fields' => [
-                    [
-                        'label' => __('Columns', 'flynt'),
-                        'instructions' => __('Number of columns shown.', 'flynt'),
-                        'name' => 'columnCount',
-                        'type' => 'select',
-                        'choices' => [
-                            '1' => __('1', 'flynt'),
-                            '2' => __('2', 'flynt'),
-                            '3' => __('3', 'flynt'),
-                            '4' => __('4', 'flynt'),
-                        ],
-                        'default_value' => '2',
-                        'allow_null' => 0,
-                        'wrapper' => [
-                            'width' => 100,
-                        ],
-                    ],
-                ],
+                'sub_fields' => [],
             ],
         ],
     ];

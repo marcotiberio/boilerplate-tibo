@@ -1,11 +1,4 @@
-{% set colCount = options.columnCount|default('2') %}
-{# Default span (out of 12) when a column's width is set to Inherit #}
-{% set defaultSpan = {
-  '1': 'md:col-span-12',
-  '2': 'md:col-span-6',
-  '3': 'md:col-span-4'
-}[colCount]|default('md:col-span-6') %}
-{# Per-column width override #}
+{# Columns flow inline; each column's own width determines its span (out of 12). #}
 {% set spanMap = {
   'third': 'md:col-span-4',
   'half': 'md:col-span-6',
@@ -20,14 +13,19 @@
   <div class="boxed py-xl">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-x-lg gap-y-md">
       {% for column in columns %}
-        <div class="flex flex-col items-start gap-sm {{ spanMap[column.width]|default(defaultSpan) }}">
+        <div class="flex flex-col items-start gap-sm {{ spanMap[column.width]|default('md:col-span-6') }}">
+          {% if column.headline %}
+            {% set headlineTag = column.headlineTag|default('h3') %}
+            <{{ headlineTag }} class="font-{{ column.headlineSize|default('h3') }} text-black">{{ column.headline }}</{{ headlineTag }}>
+          {% endif %}
+
           {% if column.contentHtml %}
-            <div class="wysiwyg {% if column.listStyle == 'checklist' %}wysiwyg--checklist{% endif %} text-black">{{ column.contentHtml|e('wp_kses_post') }}</div>
+            <div class="wysiwyg {% if column.listStyle == 'checklist' %}wysiwyg--checklist{% endif %} {% if not column.headline %}pt-xs{% endif %} text-black">{{ column.contentHtml|e('wp_kses_post') }}</div>
           {% endif %}
 
           {% if column.button %}
             <a
-              class="button button--primary"
+              class="button button--{{ column.buttonStyle|default('primary') }}"
               href="{{ column.button.url }}"
               {% if column.button.target %} target="{{ column.button.target }}" rel="noreferrer noopener"{% endif %}>
               <span>{{ column.button.title }}</span>

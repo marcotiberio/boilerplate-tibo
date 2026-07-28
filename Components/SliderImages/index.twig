@@ -4,7 +4,7 @@
   class="w-full overflow-hidden py-xl">
   <script type="application/json">{{ jsonData|json_encode }}</script>
   <div class="boxed">
-    <div class="flex justify-between items-start gap-sm mb-lg">
+    <div class="flex justify-between items-start gap-sm mb-[32px]">
       {% if title %}
         {% set tag = titleTag|default('h2') %}
         <{{ tag }} class="font-{{ titleSize|default('h5') }} text-black max-w-[636px]">{{ title }}</{{ tag }}>

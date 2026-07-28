@@ -18,7 +18,7 @@
           {% set hasOverlay = card.title or card.icon %}
           {% set Tag = card.link.url ? 'a' : 'div' %}
           <{{ Tag }}
-            class="gallery-card group relative block h-full w-full overflow-hidden rounded-card bg-dark-green transition-transform duration-500 ease-out hover:rotate-2 {{ card.width }}"
+            class="gallery-card group relative block h-full w-full overflow-hidden rounded-card transition-transform duration-500 ease-out hover:rotate-2 {{ card.width }}"
             {% if card.link.url %}
               href="{{ card.link.url }}"
               {% if card.link.target %} target="{{ card.link.target }}" rel="noreferrer noopener"{% endif %}
@@ -54,7 +54,7 @@
         {% if textCard.title or textCard.text %}
           {% set TextCardTag = textCard.button.url ? 'a' : 'div' %}
           <{{ TextCardTag }}
-            class="gallery-textcard relative flex h-full w-full flex-col justify-between overflow-hidden rounded-card bg-dark-green pt-sm p-xs text-off-white"
+            class="gallery-textcard relative flex h-fit md:h-full w-full flex-col gap-md justify-between overflow-hidden rounded-card bg-dark-green pt-sm p-xs text-off-white"
             {% if textCard.button.url %}
               href="{{ textCard.button.url }}"
               {% if textCard.button.target %} target="{{ textCard.button.target }}" rel="noreferrer noopener"{% endif %}
@@ -66,7 +66,7 @@
             {% endif %}
 
             <div class="mt-auto flex flex-col gap-sm">
-              <div class="flex flex-col gap-xs">
+              <div class="flex flex-col gap-xs px-xs">
                 {% if textCard.title %}
                   <p class="font-body">{{ textCard.title }}</p>
                 {% endif %}

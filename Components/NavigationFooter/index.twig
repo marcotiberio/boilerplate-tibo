@@ -1,14 +1,14 @@
 <flynt-component load:on="visible" name="NavigationFooter" class="relative block">
 
   {# ───────────────────────── Newsletter ───────────────────────── #}
-  <section class="relative overflow-hidden min-h-[100vh] lg:min-h-[50vh]">
+  <section class="relative overflow-hidden min-h-[100vh] md:min-h-[50vh] lg:min-h-[50vh]">
     {# Decorative acacia silhouette bridging into the footer #}
     <div class="block absolute right-0 bottom-[-55px] md:w-[40%] max-w-[375px] text-dark-green pointer-events-none select-none [&>svg]:w-full [&>svg]:h-auto" aria-hidden="true">
       {% include 'assets/images/footer-forest.svg' ignore missing %}
     </div>
 
     <div class="boxed relative z-10 py-xl">
-      <div class="flex flex-col sm:flex-row items-start gap-sm lg:gap-xl max-w-[900px]">
+      <div class="flex flex-col md:flex-row items-start gap-sm sm:gap-md lg:gap-xl max-w-[900px]">
         {# Image + mail badge #}
         {% if newsletterImage %}
           <div class="relative shrink-0">
@@ -49,7 +49,7 @@
       <path fill="#113328" d="M0,120 L0,64 C240,16 480,0 720,24 C960,48 1200,96 1440,64 L1440,120 Z"></path>
     </svg>
 
-    <div class="boxed py-xl">
+    <div class="boxed pt-xl">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-lg">
 
         {# Brand & Contact #}
@@ -111,7 +111,7 @@
         {# Nav columns + transparency badge #}
         <div class="flex flex-col gap-lg">
           {% if columns %}
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-sm sm:gap-lg">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-sm sm:gap-md">
               {% for column in columns %}
                 <div class="flex flex-col">
                   {% if column.heading %}
@@ -150,25 +150,34 @@
           {% endif %}
         </div>
       </div>
+    </div>
 
-      {# Bottom legal bar #}
-      <div class="border-t border-off-white/15 mt-xl pt-sm flex flex-col md:flex-row md:items-center justify-between gap-sm font-small">
-        {% if legalLinks %}
-          <div class="flex flex-row flex-wrap gap-x-sm gap-y-xs">
-            {% for l in legalLinks %}
-              {% if l.link %}
-                <a class="text-off-white/70 hover:text-off-white transition-colors ease-in-out"
-                  href="{{ l.link.url }}"
-                  {% if l.link.target %} target="{{ l.link.target }}" rel="noreferrer noopener"{% endif %}>
-                  {{ l.link.title }}
-                </a>
-              {% endif %}
-            {% endfor %}
-          </div>
-        {% endif %}
-        {% if copyrightText %}
-          <span class="text-off-white/50">{{ copyrightText }}</span>
-        {% endif %}
+    {# ── Bottom legal bar — wave-backed full-width band (lighter green) ── #}
+    <div class="relative mt-xl">
+      {# Decorative wave lifting the lighter-green legal strip out of the footer #}
+      <div class="absolute inset-0 pointer-events-none select-none [&>svg]:h-full [&>svg]:w-full" aria-hidden="true">
+        {% include 'assets/images/bgWave.svg' ignore missing %}
+      </div>
+
+      <div class="boxed relative z-10 !py-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-sm font-small">
+          {% if legalLinks %}
+            <div class="flex flex-row flex-wrap gap-x-sm gap-y-xs">
+              {% for l in legalLinks %}
+                {% if l.link %}
+                  <a class="text-off-white/60 hover:text-off-white transition-colors ease-in-out"
+                    href="{{ l.link.url }}"
+                    {% if l.link.target %} target="{{ l.link.target }}" rel="noreferrer noopener"{% endif %}>
+                    {{ l.link.title }}
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+          {% if copyrightText %}
+            <span class="text-off-white/40">{{ copyrightText }}</span>
+          {% endif %}
+        </div>
       </div>
     </div>
   </section>

@@ -48,6 +48,15 @@ function getACFLayout()
                 'mime_types' => 'mp4,webm',
                 'wrapper' => ['width' => 50],
             ],
+            [
+                'label' => __('Show full image on mobile', 'flynt'),
+                'instructions' => __('By default the media is cropped to a 3:4 portrait on mobile. Enable to show the full media at its natural aspect ratio instead.', 'flynt'),
+                'name' => 'showFullImageMobile',
+                'type' => 'true_false',
+                'ui' => 1,
+                'default_value' => 0,
+                'wrapper' => ['width' => 100],
+            ],
         ]
     ];
 }
