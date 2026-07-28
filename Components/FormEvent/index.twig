@@ -147,37 +147,37 @@
             {% if sections.org.intro %}<div class="wysiwyg">{{ sections.org.intro|e('wp_kses_post') }}</div>{% endif %}
 
             <label class="flex flex-col gap-xs">
-              <span class="font-bodySmall">{{ __('Name der Organisation', 'flynt') }} *</span>
+              <span class="font-bodySmall">{{ fieldLabels.orgName }} *</span>
               <input type="text" required x-model="form.orgName" class="rounded border border-black p-xs bg-white">
             </label>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
               <label class="flex flex-col gap-xs">
-                <span class="font-bodySmall">{{ __('Kontaktperson', 'flynt') }} *</span>
+                <span class="font-bodySmall">{{ fieldLabels.contactPerson }} *</span>
                 <input type="text" required x-model="form.contactPerson" class="rounded border border-black p-xs bg-white">
               </label>
               <label class="flex flex-col gap-xs">
-                <span class="font-bodySmall">{{ __('Mailadresse', 'flynt') }} *</span>
+                <span class="font-bodySmall">{{ fieldLabels.contactEmail }} *</span>
                 <input type="email" required x-model="form.contactEmail" class="rounded border border-black p-xs bg-white">
               </label>
             </div>
 
             <label class="flex flex-col gap-xs">
-              <span class="font-bodySmall">{{ __('Logo der Organisation', 'flynt') }} * <small>(.jpg, .jpeg, .png, .svg)</small></span>
+              <span class="font-bodySmall">{{ fieldLabels.orgLogo }} * <small>(.jpg, .jpeg, .png, .svg)</small></span>
               <input type="file" required x-ref="orgLogo" accept=".jpg,.jpeg,.png,.svg">
             </label>
 
             <div class="grid grid-cols-1 md:grid-cols-1 md:grid-cols-3 gap-sm">
               <label class="flex flex-col gap-xs">
-                <span class="font-bodySmall">{{ __('Website', 'flynt') }}</span>
+                <span class="font-bodySmall">{{ fieldLabels.website }}</span>
                 <input type="url" x-model="form.website" class="rounded border border-black p-xs bg-white">
               </label>
               <label class="flex flex-col gap-xs">
-                <span class="font-bodySmall">{{ __('Instagram', 'flynt') }}</span>
+                <span class="font-bodySmall">{{ fieldLabels.instagram }}</span>
                 <input type="url" x-model="form.instagram" class="rounded border border-black p-xs bg-white">
               </label>
               <label class="flex flex-col gap-xs">
-                <span class="font-bodySmall">{{ __('LinkedIn', 'flynt') }}</span>
+                <span class="font-bodySmall">{{ fieldLabels.linkedin }}</span>
                 <input type="url" x-model="form.linkedin" class="rounded border border-black p-xs bg-white">
               </label>
             </div>
@@ -189,7 +189,7 @@
             {% if sections.offer.intro %}<div class="wysiwyg">{{ sections.offer.intro|e('wp_kses_post') }}</div>{% endif %}
 
             <fieldset class="flex flex-col gap-xs">
-              <legend class="font-bodySmall mb-xs">{{ __('Thema — Welche Ziele verfolgt dein Programm?', 'flynt') }} *</legend>
+              <legend class="font-bodySmall mb-xs">{{ fieldLabels.goalsQuestion }} *</legend>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-sm" :class="attempted && !form.goals.length ? 'field-error' : ''">
                 {% for group in config.goalGroups %}
                   <fieldset class="flex flex-col gap-xs">
@@ -205,7 +205,7 @@
             </fieldset>
 
             <fieldset class="flex flex-col gap-xs">
-              <legend class="font-bodySmall mb-xs">{{ __('Sektor', 'flynt') }} *</legend>
+              <legend class="font-bodySmall mb-xs">{{ fieldLabels.sectorsQuestion }} *</legend>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-min" :class="attempted && !form.sectors.length ? 'field-error' : ''">
                 {% for value, label in config.sectors %}
                   <label class="flex items-start gap-xs">
@@ -216,7 +216,7 @@
             </fieldset>
 
             <fieldset class="flex flex-col gap-xs">
-              <legend class="font-bodySmall mb-xs">{{ __('Ist eine Anmeldung erforderlich?', 'flynt') }} *</legend>
+              <legend class="font-bodySmall mb-xs">{{ fieldLabels.registrationQuestion }} *</legend>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-min" :class="attempted && !form.registration ? 'field-error' : ''">
                 {% for value, label in config.registration %}
                   <label class="flex items-center gap-xs">
@@ -226,12 +226,12 @@
               </div>
             </fieldset>
             <label class="flex flex-col gap-xs" x-show="form.registration === 'anmeldung'" x-cloak>
-              <span class="font-bodySmall">{{ __('Anmeldelink', 'flynt') }} *</span>
+              <span class="font-bodySmall">{{ fieldLabels.registrationLink }} *</span>
               <input type="text" x-model="form.registrationLink" :required="form.registration === 'anmeldung'" class="rounded border border-black p-xs bg-white">
             </label>
 
             <fieldset class="flex flex-col gap-xs">
-              <legend class="font-bodySmall mb-xs">{{ __('Fallen für die Teilnahme Kosten an?', 'flynt') }} *</legend>
+              <legend class="font-bodySmall mb-xs">{{ fieldLabels.costsQuestion }} *</legend>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-min" :class="attempted && !form.costs ? 'field-error' : ''">
                 {% for value, label in config.costs %}
                   <label class="flex items-center gap-xs">
@@ -242,11 +242,11 @@
             </fieldset>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-sm" x-show="form.costs === 'ja'" x-cloak>
               <label class="flex flex-col gap-xs">
-                <span class="font-bodySmall">{{ __('Preis', 'flynt') }} *</span>
+                <span class="font-bodySmall">{{ fieldLabels.price }} *</span>
                 <input type="text" x-model="form.price" :required="form.costs === 'ja'" class="rounded border border-black p-xs bg-white">
               </label>
               <label class="flex flex-col gap-xs">
-                <span class="font-bodySmall">{{ __('Link zur Bezahlung / Buchung', 'flynt') }}</span>
+                <span class="font-bodySmall">{{ fieldLabels.paymentLink }}</span>
                 <input type="url" x-model="form.paymentLink" class="rounded border border-black p-xs bg-white">
               </label>
             </div>
@@ -258,12 +258,12 @@
             {% if sections.details.intro %}<div class="wysiwyg">{{ sections.details.intro|e('wp_kses_post') }}</div>{% endif %}
 
             <label class="flex flex-col gap-xs">
-              <span class="font-bodySmall">{{ __('Beschreibungstext des Angebots (max. 1.000 Zeichen)', 'flynt') }} *</span>
+              <span class="font-bodySmall">{{ fieldLabels.description }} *</span>
               <textarea required rows="6" x-model="form.description" class="rounded border border-black p-xs bg-white"></textarea>
             </label>
 
             <fieldset class="flex flex-col gap-xs">
-              <legend class="font-bodySmall mb-xs">{{ __('Art des Programmpunkts', 'flynt') }} *</legend>
+              <legend class="font-bodySmall mb-xs">{{ fieldLabels.programTypesQuestion }} *</legend>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-min" :class="attempted && !form.programTypes.length ? 'field-error' : ''">
                 {% for value, label in config.programTypes %}
                   <label class="flex items-start gap-xs">
@@ -274,7 +274,7 @@
             </fieldset>
 
             <fieldset class="flex flex-col gap-xs">
-              <legend class="font-bodySmall mb-xs">{{ __('Format', 'flynt') }} *</legend>
+              <legend class="font-bodySmall mb-xs">{{ fieldLabels.formatQuestion }} *</legend>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-min" :class="attempted && !form.format ? 'field-error' : ''">
                 {% for value, label in config.format %}
                   <label class="flex items-center gap-xs">
@@ -309,34 +309,34 @@
             {% if sections.event.intro %}<div class="wysiwyg">{{ sections.event.intro|e('wp_kses_post') }}</div>{% endif %}
 
             <label class="flex flex-col gap-xs">
-              <span class="font-bodySmall">{{ __('Titel der Veranstaltung', 'flynt') }} *</span>
+              <span class="font-bodySmall">{{ fieldLabels.eventTitle }} *</span>
               <input type="text" required x-model="form.eventTitle" class="rounded border border-black p-xs bg-white">
             </label>
 
             <label class="flex flex-col gap-xs">
-              <span class="font-bodySmall">{{ __('Kurzer Introtext (1 Satz)', 'flynt') }} *</span>
+              <span class="font-bodySmall">{{ fieldLabels.intro }} *</span>
               <input type="text" required x-model="form.intro" class="rounded border border-black p-xs bg-white">
             </label>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
               <label class="flex flex-col gap-xs">
-                <span class="font-bodySmall">{{ __('Titelbild', 'flynt') }} * <small>(.jpg, .jpeg, .png)</small></span>
+                <span class="font-bodySmall">{{ fieldLabels.featuredImage }} * <small>(.jpg, .jpeg, .png)</small></span>
                 <input type="file" required x-ref="featuredImage" accept=".jpg,.jpeg,.png">
               </label>
               <label class="flex flex-col gap-xs">
-                <span class="font-bodySmall">{{ __('Weitere Fotos (optional)', 'flynt') }} <small>(.jpg, .jpeg, .png)</small></span>
+                <span class="font-bodySmall">{{ fieldLabels.gallery }} <small>(.jpg, .jpeg, .png)</small></span>
                 <input type="file" multiple x-ref="gallery" accept=".jpg,.jpeg,.png">
               </label>
             </div>
 
             <label class="flex flex-col gap-xs">
-              <span class="font-bodySmall">{{ __('Bildnachweise / Credits', 'flynt') }}</span>
+              <span class="font-bodySmall">{{ fieldLabels.credits }}</span>
               <input type="text" x-model="form.credits" class="rounded border border-black p-xs bg-white">
             </label>
 
             {# When — one or both event days, each with its own start/end time #}
             <fieldset class="flex flex-col gap-sm">
-              <legend class="font-bodySmall mb-xs">{{ __('Wann soll deine Veranstaltung am 14. oder 15.11.26 stattfinden?', 'flynt') }} *</legend>
+              <legend class="font-bodySmall mb-xs">{{ fieldLabels.datesQuestion }} *</legend>
               <div class="flex flex-col gap-min" :class="attempted && !form.dates.length ? 'field-error' : ''">
                 {% for value, label in config.dates %}
                   <div class="flex flex-col gap-xs">
@@ -345,11 +345,11 @@
                     </label>
                     <div class="grid grid-cols-2 gap-sm md:w-1/2" x-show="form.dates.includes('{{ value }}')" x-cloak>
                       <label class="flex flex-col gap-xs">
-                        <span class="font-bodySmall">{{ __('Startzeit', 'flynt') }} *</span>
+                        <span class="font-bodySmall">{{ fieldLabels.timeStart }} *</span>
                         <input type="time" x-model="form.times['{{ value }}'].start" :required="form.dates.includes('{{ value }}')" class="rounded border border-black p-xs bg-white">
                       </label>
                       <label class="flex flex-col gap-xs">
-                        <span class="font-bodySmall">{{ __('Ende', 'flynt') }}</span>
+                        <span class="font-bodySmall">{{ fieldLabels.timeEnd }}</span>
                         <input type="time" x-model="form.times['{{ value }}'].end" class="rounded border border-black p-xs bg-white">
                       </label>
                     </div>
@@ -360,7 +360,7 @@
 
             {# Where #}
             <fieldset class="flex flex-col gap-xs">
-              <legend class="font-bodySmall mb-xs">{{ __('Wo soll dein Angebot stattfinden?', 'flynt') }} *</legend>
+              <legend class="font-bodySmall mb-xs">{{ fieldLabels.locationQuestion }} *</legend>
               <div class="grid grid-cols-1 gap-min" :class="attempted && !form.locationMode ? 'field-error' : ''">
                 {% for value, label in config.locationMode %}
                   <label class="flex items-start gap-xs">
@@ -371,17 +371,17 @@
             </fieldset>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-sm" x-show="form.locationMode === 'eigen'" x-cloak>
               <label class="flex flex-col gap-xs">
-                <span class="font-bodySmall">{{ __('Straße + Hausnummer', 'flynt') }} *</span>
+                <span class="font-bodySmall">{{ fieldLabels.street }} *</span>
                 <input type="text" x-model="form.street" :required="form.locationMode === 'eigen'" autocomplete="street-address" class="rounded border border-black p-xs bg-white">
               </label>
               <label class="flex flex-col gap-xs">
-                <span class="font-bodySmall">{{ __('Postleitzahl', 'flynt') }} *</span>
+                <span class="font-bodySmall">{{ fieldLabels.postalCode }} *</span>
                 <input type="text" x-model="form.postalCode" :required="form.locationMode === 'eigen'" autocomplete="postal-code" class="rounded border border-black p-xs bg-white">
               </label>
             </div>
 
             <label class="flex flex-col gap-xs">
-              <span class="font-bodySmall">{{ __('Hinweise zur klimafreundlichen Anreise mit ÖPNV oder Fahrrad', 'flynt') }}</span>
+              <span class="font-bodySmall">{{ fieldLabels.mobilityInfo }}</span>
               <textarea rows="3" x-model="form.mobilityInfo" class="rounded border border-black p-xs bg-white"></textarea>
             </label>
 
@@ -391,7 +391,7 @@
             </label>
 
             <fieldset class="flex flex-col gap-xs">
-              <legend class="font-bodySmall mb-xs">{{ __('Info über Barrierefreiheit', 'flynt') }} *</legend>
+              <legend class="font-bodySmall mb-xs">{{ fieldLabels.accessibilityQuestion }} *</legend>
               <div class="grid grid-cols-1 md:grid-cols-4 gap-min" :class="attempted && !form.accessibility.length ? 'field-error' : ''">
                 {% for value, label in config.accessibility %}
                   <label class="flex items-start gap-xs">

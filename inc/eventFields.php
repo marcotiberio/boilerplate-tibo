@@ -314,6 +314,80 @@ function getSections()
 }
 
 /**
+ * Labels for the form's free-text fields and its question legends — every
+ * `font-bodySmall` label in Components/FormEvent/index.twig that isn't a choice
+ * option. Keys are fixed and map to the template; the text is client-editable
+ * under "Global Options → Event". Listed in form order. The trailing " *" and
+ * file-type hints stay in the template, so only the wording lives here.
+ */
+function getDefaultFieldLabels()
+{
+    return [
+        // 1. Organisation
+        'orgName'        => __('Name der Organisation', 'flynt'),
+        'contactPerson'  => __('Kontaktperson', 'flynt'),
+        'contactEmail'   => __('Mailadresse', 'flynt'),
+        'orgLogo'        => __('Logo der Organisation', 'flynt'),
+        'website'        => __('Website', 'flynt'),
+        'instagram'      => __('Instagram', 'flynt'),
+        'linkedin'       => __('LinkedIn', 'flynt'),
+        // 2. Angebot
+        'goalsQuestion'        => __('Thema — Welche Ziele verfolgt dein Programm?', 'flynt'),
+        'sectorsQuestion'      => __('Sektor', 'flynt'),
+        'registrationQuestion' => __('Ist eine Anmeldung erforderlich?', 'flynt'),
+        'registrationLink'     => __('Anmeldelink', 'flynt'),
+        'costsQuestion'        => __('Fallen für die Teilnahme Kosten an?', 'flynt'),
+        'price'                => __('Preis', 'flynt'),
+        'paymentLink'          => __('Link zur Bezahlung / Buchung', 'flynt'),
+        // 3. Details
+        'description'          => __('Beschreibungstext des Angebots (max. 1.000 Zeichen)', 'flynt'),
+        'programTypesQuestion' => __('Art des Programmpunkts', 'flynt'),
+        'formatQuestion'       => __('Format', 'flynt'),
+        // 4. Veranstaltung
+        'eventTitle'       => __('Titel der Veranstaltung', 'flynt'),
+        'intro'            => __('Kurzer Introtext (1 Satz)', 'flynt'),
+        'featuredImage'    => __('Titelbild', 'flynt'),
+        'gallery'          => __('Weitere Fotos (optional)', 'flynt'),
+        'credits'          => __('Bildnachweise / Credits', 'flynt'),
+        'datesQuestion'    => __('Wann soll deine Veranstaltung am 14. oder 15.11.26 stattfinden?', 'flynt'),
+        'timeStart'        => __('Startzeit', 'flynt'),
+        'timeEnd'          => __('Ende', 'flynt'),
+        'locationQuestion' => __('Wo soll dein Angebot stattfinden?', 'flynt'),
+        'street'           => __('Straße + Hausnummer', 'flynt'),
+        'postalCode'       => __('Postleitzahl', 'flynt'),
+        'mobilityInfo'     => __('Hinweise zur klimafreundlichen Anreise mit ÖPNV oder Fahrrad', 'flynt'),
+        'accessibilityQuestion' => __('Info über Barrierefreiheit', 'flynt'),
+    ];
+}
+
+/**
+ * Option field name for a field label, e.g. orgName → `field_orgName`.
+ */
+function fieldLabelOptionName($key)
+{
+    return 'field_' . $key;
+}
+
+/**
+ * Field + legend labels with the client-edited text applied, falling back to
+ * the defaults for any blank field. Shares the label-override scope.
+ */
+function getFieldLabels()
+{
+    $overrides = getLabelOverrides();
+    $labels = getDefaultFieldLabels();
+
+    foreach ($labels as $key => $default) {
+        $option = fieldLabelOptionName($key);
+        if (isset($overrides[$option])) {
+            $labels[$key] = $overrides[$option];
+        }
+    }
+
+    return $labels;
+}
+
+/**
  * One text field per choice label for the "Global Options → Event" page.
  * Fields are generated from the defaults so the two can never drift; the
  * default label doubles as field label and placeholder.
@@ -360,6 +434,12 @@ function getLabelOptionFields()
             'delay' => 1,
             'instructions' => __('Optional intro text shown below the heading.', 'flynt'),
         ];
+    }
+
+    // Field labels tab — every free-text field label + question legend.
+    $fields[] = $tab(__('Field labels', 'flynt'), 'fieldLabelsTab');
+    foreach (getDefaultFieldLabels() as $key => $default) {
+        $fields[] = $text(fieldLabelOptionName($key), $default, mb_strlen($default) > 60 ? 100 : 50);
     }
 
     $groupedTabs = [

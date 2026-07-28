@@ -73,6 +73,8 @@ add_filter('Flynt/addComponentData?name=FormEvent', function ($data) {
     $data['config'] = Event\getConfig();
     // Section titles + intros, client-editable under "Global Options → Event".
     $data['sections'] = Event\getSections();
+    // Free-text field labels + question legends, same options page.
+    $data['fieldLabels'] = Event\getFieldLabels();
     $data['restUrl'] = esc_url_raw(rest_url('looptopia/v1/event'));
     // Local-only: exposes a button to preview the success popup + confetti
     // without submitting the form. True when the Vite dev server is running
