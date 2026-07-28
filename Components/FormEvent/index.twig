@@ -143,8 +143,8 @@
 
           {# ============ 1. Organisation ============ #}
           <fieldset class="flex flex-col gap-sm">
-            <legend class="font-h3 mb-xs">{{ __('Organisation', 'flynt') }}</legend>
-            {% if introOrg %}<div class="wysiwyg">{{ introOrg|e('wp_kses_post') }}</div>{% endif %}
+            <legend class="font-h3 mb-xs">{{ sections.org.title }}</legend>
+            {% if sections.org.intro %}<div class="wysiwyg">{{ sections.org.intro|e('wp_kses_post') }}</div>{% endif %}
 
             <label class="flex flex-col gap-xs">
               <span class="font-bodySmall">{{ __('Name der Organisation', 'flynt') }} *</span>
@@ -185,8 +185,8 @@
 
           {# ============ 2. Angebot ============ #}
           <fieldset class="flex flex-col gap-sm">
-            <legend class="font-h3 mb-xs">{{ __('Angebot', 'flynt') }}</legend>
-            {% if introOffer %}<div class="wysiwyg">{{ introOffer|e('wp_kses_post') }}</div>{% endif %}
+            <legend class="font-h3 mb-xs">{{ sections.offer.title }}</legend>
+            {% if sections.offer.intro %}<div class="wysiwyg">{{ sections.offer.intro|e('wp_kses_post') }}</div>{% endif %}
 
             <fieldset class="flex flex-col gap-xs">
               <legend class="font-bodySmall mb-xs">{{ __('Thema — Welche Ziele verfolgt dein Programm?', 'flynt') }} *</legend>
@@ -254,8 +254,8 @@
 
           {# ============ 3. Details ============ #}
           <fieldset class="flex flex-col gap-sm">
-            <legend class="font-h3 mb-xs">{{ __('Details zum Angebot', 'flynt') }}</legend>
-            {% if introDetails %}<div class="wysiwyg">{{ introDetails|e('wp_kses_post') }}</div>{% endif %}
+            <legend class="font-h3 mb-xs">{{ sections.details.title }}</legend>
+            {% if sections.details.intro %}<div class="wysiwyg">{{ sections.details.intro|e('wp_kses_post') }}</div>{% endif %}
 
             <label class="flex flex-col gap-xs">
               <span class="font-bodySmall">{{ __('Beschreibungstext des Angebots (max. 1.000 Zeichen)', 'flynt') }} *</span>
@@ -287,7 +287,8 @@
 
           {# ============ 3.1. Zielgruppe ============ #}
           <fieldset class="flex flex-col gap-xs">
-            <legend class="font-h3 mb-xs">{{ __('Zielgruppe', 'flynt') }}</legend>
+            <legend class="font-h3 mb-xs">{{ sections.audience.title }}</legend>
+            {% if sections.audience.intro %}<div class="wysiwyg">{{ sections.audience.intro|e('wp_kses_post') }}</div>{% endif %}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
               {% for group in config.audienceGroups %}
                 <fieldset class="flex flex-col gap-xs">
@@ -304,8 +305,8 @@
 
           {# ============ 4. Veranstaltung ============ #}
           <fieldset class="flex flex-col gap-sm">
-            <legend class="font-h3 mb-xs">{{ __('Veranstaltung', 'flynt') }}</legend>
-            {% if introEvent %}<div class="wysiwyg">{{ introEvent|e('wp_kses_post') }}</div>{% endif %}
+            <legend class="font-h3 mb-xs">{{ sections.event.title }}</legend>
+            {% if sections.event.intro %}<div class="wysiwyg">{{ sections.event.intro|e('wp_kses_post') }}</div>{% endif %}
 
             <label class="flex flex-col gap-xs">
               <span class="font-bodySmall">{{ __('Titel der Veranstaltung', 'flynt') }} *</span>
@@ -403,7 +404,8 @@
 
           {# ============ 5. Zustimmung ============ #}
           <fieldset class="flex flex-col gap-min">
-            <legend class="font-h3 mb-xs">{{ __('Anmeldeformular absenden', 'flynt') }}</legend>
+            <legend class="font-h3 mb-xs">{{ sections.consent.title }}</legend>
+            {% if sections.consent.intro %}<div class="wysiwyg">{{ sections.consent.intro|e('wp_kses_post') }}</div>{% endif %}
 
             <label class="flex items-start gap-xs">
               <input type="checkbox" x-model="form.fundingInterest" class="mt-1">

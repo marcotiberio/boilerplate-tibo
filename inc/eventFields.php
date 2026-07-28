@@ -266,6 +266,54 @@ function applyLabelOverrides(array $config, array $overrides)
 }
 
 /**
+ * Section headings for the public form. Keys are fixed and map to the
+ * `<fieldset>` blocks in Components/FormEvent/index.twig; the title and intro
+ * are client-editable under "Global Options → Event". Intros default to empty,
+ * so no intro is shown until one is entered.
+ */
+function getDefaultSections()
+{
+    return [
+        'org'      => ['title' => __('Organisation', 'flynt'), 'intro' => ''],
+        'offer'    => ['title' => __('Angebot', 'flynt'), 'intro' => ''],
+        'details'  => ['title' => __('Details zum Angebot', 'flynt'), 'intro' => ''],
+        'audience' => ['title' => __('Zielgruppe', 'flynt'), 'intro' => ''],
+        'event'    => ['title' => __('Veranstaltung', 'flynt'), 'intro' => ''],
+        'consent'  => ['title' => __('Anmeldeformular absenden', 'flynt'), 'intro' => ''],
+    ];
+}
+
+/**
+ * Option field name for a section part, e.g. org/title → `section_org_title`.
+ */
+function sectionOptionName($key, $part)
+{
+    return 'section_' . $key . '_' . $part;
+}
+
+/**
+ * Section headings with the client-edited title/intro applied, falling back to
+ * the defaults for any blank field. Shares the label-override scope, so the
+ * single "Global Options → Event" page drives both choice labels and headings.
+ */
+function getSections()
+{
+    $overrides = getLabelOverrides();
+    $sections = getDefaultSections();
+
+    foreach ($sections as $key => $section) {
+        foreach (['title', 'intro'] as $part) {
+            $option = sectionOptionName($key, $part);
+            if (isset($overrides[$option])) {
+                $sections[$key][$part] = $overrides[$option];
+            }
+        }
+    }
+
+    return $sections;
+}
+
+/**
  * One text field per choice label for the "Global Options → Event" page.
  * Fields are generated from the defaults so the two can never drift; the
  * default label doubles as field label and placeholder.
@@ -298,6 +346,21 @@ function getLabelOptionFields()
             'message' => __('Beschriftungen der Auswahlfelder — sichtbar im Anmeldeformular, im Backend und auf der Karte. Leere Felder verwenden die Standard-Beschriftung (grau angezeigt). Die intern gespeicherten Werte ändern sich nicht, bereits eingegangene Einsendungen bleiben vollständig kompatibel.', 'flynt'),
         ],
     ];
+
+    // Section headings tab — title + optional intro for each form section.
+    $fields[] = $tab(__('Sections', 'flynt'), 'sectionsTab');
+    foreach (getDefaultSections() as $key => $section) {
+        $fields[] = $text(sectionOptionName($key, 'title'), $section['title'], 100, __('Section heading', 'flynt'));
+        $fields[] = [
+            'label' => sprintf(__('%s — Intro', 'flynt'), $section['title']),
+            'name' => sectionOptionName($key, 'intro'),
+            'type' => 'wysiwyg',
+            'tabs' => 'visual',
+            'media_upload' => 0,
+            'delay' => 1,
+            'instructions' => __('Optional intro text shown below the heading.', 'flynt'),
+        ];
+    }
 
     $groupedTabs = [
         'goalGroups' => ['goals', __('Thema / Ziele', 'flynt')],
