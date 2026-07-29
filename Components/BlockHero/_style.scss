@@ -5,27 +5,27 @@ flynt-component[name='BlockHero'] {
 
   // Hero buttons — hover bloom lives on the global `.button` class; here we set
   // the padded pill base plus each variant's reveal colour (--button-hover-fill).
-  .button--primary,
-  .button--glass {
-    @apply px-sm py-xs rounded-cta font-medium;
-  }
+  // .button--primary,
+  // .button--glass {
+  //   @apply px-sm py-xs rounded-cta font-medium;
+  // }
 
-  .button--primary {
-    @apply bg-moss text-dark-green;
-    --button-hover-fill: #a1be8d; // darker moss chip
-  }
+  // .button--primary {
+  //   @apply bg-moss text-dark-green;
+  //   --button-hover-fill: #a1be8d; // darker moss chip
+  // }
 
-  .button--glass {
-    @apply text-off-white;
-    --button-hover-fill: rgb(252 251 250 / 90%);
-    backdrop-filter: blur(2px);
-    background-color: rgb(252 251 250 / 20%);
+  // .button--glass {
+  //   @apply text-off-white;
+  //   --button-hover-fill: rgb(252 251 250 / 90%);
+  //   backdrop-filter: blur(2px);
+  //   background-color: rgb(252 251 250 / 20%);
 
-    &:hover,
-    &:focus-visible {
-      @apply text-dark-green;
-    }
-  }
+  //   &:hover,
+  //   &:focus-visible {
+  //     @apply text-dark-green;
+  //   }
+  // }
 
   [x-cloak] {
     display: none !important;

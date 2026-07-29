@@ -87,19 +87,19 @@ button {
     color: theme('colors.white');
   }
 
-  &--mutedWhite {
-    --button-hover-fill: theme('colors.white');
+  &--glass {
+    --button-hover-fill: rgba(252, 251, 250, 0.05); // off-white @ 5% — sits on dark backgrounds
     background-color: rgba(252, 251, 250, 0.2); // off-white @ 20% — sits on dark backgrounds
-    color: theme('colors.white');
+    color: theme('colors.dark-brown');
 
     &:hover,
     &:focus-visible {
-      color: theme('colors.dark-brown');
+      color: theme('colors.white');
     }
   }
 
   &--card {
-    --button-hover-fill: theme('colors.dark-brown');
+    --button-hover-fill: rgba(252, 251, 250, 0.05); // off-white @ 5% — sits on dark backgrounds
     background-color: rgba(28, 25, 24, 0.05); // dark-brown @ 5% — sits on light backgrounds
     color: theme('colors.dark-brown');
 

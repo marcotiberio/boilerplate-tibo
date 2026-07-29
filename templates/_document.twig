@@ -13,13 +13,13 @@
         <header class="w-full">
           {% block header %}
             <div class="wrapper wrapper--menu flex justify-center items-center w-full h-[87px] lg:h-auto fixed top-0 left-0 z-[3000] transition ease-in-out delay-300">
-              <div class="hidden lg:block w-full">
+              <div class="hidden lgplus:block w-full">
                 {# {{ renderComponent('NavigationMeta') }} #}
                 <div class="w-full boxed !py-0 mx-auto">
                   {{ renderComponent('NavigationMain') }}
                 </div>
               </div>
-              <div class="block lg:hidden w-screen fixed top-0 left-0">
+              <div class="block lgplus:hidden w-screen fixed top-0 left-0">
                 {{ renderComponent('NavigationBurger') }}
               </div>
               {# <div class="boxed flex flex-row justify-between gap-sm">

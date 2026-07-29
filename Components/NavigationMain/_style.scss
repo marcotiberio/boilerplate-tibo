@@ -12,17 +12,13 @@ flynt-component[name='NavigationMain'] {
     @apply text-dark-green underline underline-offset-4;
   }
 
-  // Dropdown submenu — floating white card (Figma nav dropdown). Anchored below
-  // the pill; the gap clears the item's centre position within the bar.
   .submenu {
     --submenu-gap: 1.75rem; // visual offset below the bar (was mt-7)
     @apply absolute left-0 top-full z-50 flex flex-col gap-4 p-sm min-w-[254px] rounded-banner bg-white;
     margin-top: var(--submenu-gap);
     box-shadow: 0 18px 40px rgb(17 51 40 / 12%);
 
-    // Invisible bridge spanning the gap up to the parent item, so the pointer
-    // never leaves the item's hover subtree while travelling to the dropdown
-    // (otherwise crossing the margin fires mouseleave and closes it).
+    // Invisible bridge spanning the gap up to the parent item
     &::before {
       content: '';
       position: absolute;
@@ -41,9 +37,7 @@ flynt-component[name='NavigationMain'] {
     }
   }
 
-  // CTA buttons — the hover bloom now lives on the global `.button` class
-  // (assets/styles/_buttons.scss); here we only set the base colours and the
-  // per-variant reveal colour via --button-hover-fill.
+  // CTA buttons
   .button--donate,
   .button--shop {
     @apply px-sm py-xs rounded-cta font-semibold;
