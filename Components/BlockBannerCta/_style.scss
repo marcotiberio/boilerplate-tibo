@@ -29,15 +29,15 @@ flynt-component[name='BlockBannerCta'] {
 
   // Glass — no global equivalent; translucent fill that reveals dark-green text
   // as the shared bloom (see the global `.button::before`) fills in.
-  // .button--glass {
-  //   @apply text-off-white;
-  //   --button-hover-fill: rgb(252 251 250 / 90%);
-  //   backdrop-filter: blur(2px);
-  //   background-color: rgb(252 251 250 / 20%);
+  .button--glass {
+    @apply text-off-white;
+    --button-hover-fill: rgb(252 251 250 / 90%);
+    backdrop-filter: blur(2px);
+    background-color: rgb(252 251 250 / 20%);
 
-  //   &:hover,
-  //   &:focus-visible {
-  //     @apply text-dark-green;
-  //   }
-  // }
+    &:hover,
+    &:focus-visible {
+      @apply text-dark-green;
+    }
+  }
 }

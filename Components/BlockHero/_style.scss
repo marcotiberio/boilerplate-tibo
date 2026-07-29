@@ -15,17 +15,16 @@ flynt-component[name='BlockHero'] {
   //   --button-hover-fill: #a1be8d; // darker moss chip
   // }
 
-  // .button--glass {
-  //   @apply text-off-white;
-  //   --button-hover-fill: rgb(252 251 250 / 90%);
-  //   backdrop-filter: blur(2px);
-  //   background-color: rgb(252 251 250 / 20%);
+  .button--glass {
+    @apply text-off-white;
+    --button-hover-fill: rgb(252 251 250 / 50%);
+    background-color: rgb(252 251 250 / 20%);
 
-  //   &:hover,
-  //   &:focus-visible {
-  //     @apply text-dark-green;
-  //   }
-  // }
+    &:hover,
+    &:focus-visible {
+      @apply text-dark-green;
+    }
+  }
 
   [x-cloak] {
     display: none !important;
