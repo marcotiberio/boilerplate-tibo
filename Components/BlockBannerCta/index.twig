@@ -7,6 +7,9 @@
   'terracotta': 'bg-terracotta text-off-white',
   'dark-green': 'bg-dark-green text-off-white'
 }[theme] %}
+{% set primaryButtonClass = 'button--' ~ primaryButtonStyle|default('primary') %}
+{# Secondary falls back to the layout's original default so existing banners keep their look #}
+{% set secondaryButtonClass = 'button--' ~ secondaryButtonStyle|default(layout == 'split' ? 'glass' : 'secondary') %}
 
 <flynt-component
   load:on="idle"
@@ -18,7 +21,7 @@
       {# Split — title and body side by side on desktop, icon badge top-right #}
       <div class="relative {{ surfaceClass }} rounded-banner overflow-hidden p-sm lg:p-md">
         {% if image %}
-          <div class="cta-badge absolute top-sm right-sm lg:top-md lg:right-md flex items-center justify-center w-[72px] h-[72px] rounded-cta {{ isDark ? 'bg-white/[0.08]' : 'bg-dark-brown/[0.05]' }}">
+          <div class="cta-badge lg:absolute mb-sm lg:mb-0 top-sm right-sm lg:top-md lg:right-md flex items-center gap-sm justify-center w-[72px] h-[72px] rounded-cta {{ isDark ? 'bg-white/[0.08]' : 'bg-dark-brown/[0.05]' }}">
             <img class="w-11 h-11 object-contain" src="{{ image.src }}" alt="{{ image.alt|e | default('') }}" loading="lazy" />
           </div>
         {% endif %}
@@ -39,12 +42,12 @@
             {% if primaryButton or secondaryButton %}
               <div class="flex flex-wrap gap-xs">
                 {% if primaryButton %}
-                  <a class="button button--primary" href="{{ primaryButton.url }}"{% if primaryButton.target %} target="{{ primaryButton.target }}" rel="noreferrer noopener"{% endif %}>
+                  <a class="button {{ primaryButtonClass }}" href="{{ primaryButton.url }}"{% if primaryButton.target %} target="{{ primaryButton.target }}" rel="noreferrer noopener"{% endif %}>
                     {{ primaryButton.title }}
                   </a>
                 {% endif %}
                 {% if secondaryButton %}
-                  <a class="button button--glass" href="{{ secondaryButton.url }}"{% if secondaryButton.target %} target="{{ secondaryButton.target }}" rel="noreferrer noopener"{% endif %}>
+                  <a class="button {{ secondaryButtonClass }}" href="{{ secondaryButton.url }}"{% if secondaryButton.target %} target="{{ secondaryButton.target }}" rel="noreferrer noopener"{% endif %}>
                     {{ secondaryButton.title }}
                   </a>
                 {% endif %}
@@ -79,12 +82,12 @@
         {% if primaryButton or secondaryButton %}
           <div class="flex flex-wrap gap-xs mt-xs justify-center">
             {% if primaryButton %}
-              <a class="button button--primary" href="{{ primaryButton.url }}"{% if primaryButton.target %} target="{{ primaryButton.target }}" rel="noreferrer noopener"{% endif %}>
+              <a class="button {{ primaryButtonClass }}" href="{{ primaryButton.url }}"{% if primaryButton.target %} target="{{ primaryButton.target }}" rel="noreferrer noopener"{% endif %}>
                 {{ primaryButton.title }}
               </a>
             {% endif %}
             {% if secondaryButton %}
-              <a class="button button--secondary" href="{{ secondaryButton.url }}"{% if secondaryButton.target %} target="{{ secondaryButton.target }}" rel="noreferrer noopener"{% endif %}>
+              <a class="button {{ secondaryButtonClass }}" href="{{ secondaryButton.url }}"{% if secondaryButton.target %} target="{{ secondaryButton.target }}" rel="noreferrer noopener"{% endif %}>
                 {{ secondaryButton.title }}
               </a>
             {% endif %}

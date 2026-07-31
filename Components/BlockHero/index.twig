@@ -89,12 +89,13 @@
     </div>
   </div>
 
-  {# Bottom wave divider — transitions the media into the off-white page #}
+  {# Bottom curve divider — Figma hero bottom edge, transitions the media into
+     the off-white page. Scales with width so the curve stays true to the design. #}
   <svg
-    class="absolute bottom-0 left-0 w-full h-[60px] lg:h-[120px] z-10 pointer-events-none"
-    viewBox="0 0 1440 120"
-    preserveAspectRatio="none"
-    xmlns="http://www.w3.org/2000/svg">
-    <path fill="#fcfbfa" d="M0,40 C360,120 1080,0 1440,60 L1440,120 L0,120 Z"/>
+    class="absolute bottom-0 left-0 w-full h-auto z-10 pointer-events-none text-off-white"
+    viewBox="0 0 1440 48.34"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true">
+    <path fill="currentColor" d="M1440,48.33 C958.077,48.33 576.135,0 0,48.33 L0,48.34 L1440,48.34 Z"/>
   </svg>
 </flynt-component>

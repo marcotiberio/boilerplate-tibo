@@ -2,6 +2,10 @@ button {
   border: inherit;
 }
 
+// Motion of the Figma `buttonHoverColor` bloom — shared by the chip transform
+// and the label colour so the two never drift apart.
+$button-bloom-motion: 1.25s linear(0, 0.0216, 0.0747, 0.1458, 0.2255, 0.3076, 0.3879, 0.4638, 0.5339, 0.5974, 0.6542, 0.7044, 0.7484, 0.7866, 0.8196, 0.8479, 0.8722, 0.8928, 0.9103, 0.9251, 0.9375, 0.948, 0.9568, 0.9642, 0.9703, 0.9754, 0.9797, 0.9832, 0.9862, 0.9886, 0.9906, 0.9923, 0.9936, 0.9948, 0.9957, 0.9965, 0.9971, 0.9976, 0.9981, 0.9984, 0.9987, 0.9989, 0.9991, 0.9993, 0.9994, 0.9995, 0.9996, 0.9997, 0.9997, 0.9998, 0.9998);
+
 .button {
   @include reset-link;
   appearance: none;
@@ -10,6 +14,9 @@ button {
   font-weight: var(--button-font-weight, 500);
   isolation: isolate;
   line-height: var(--button-line-height, 1.2);
+  // Label colour rides the same curve as the chip, so variants that swap
+  // `color` on hover fade in step with the fill instead of flipping instantly.
+  transition: color $button-bloom-motion;
   @apply w-fit min-w-[160px];
   @apply relative overflow-hidden;
   @apply px-md py-xs;
@@ -20,11 +27,6 @@ button {
   @apply tracking-[0.01em];
 
 
-  // Playful hover shared by every colour CTA: a small -4° chip blooms up and
-  // scales ~2.2× to engulf the button, swapping the fill colour. The reveal
-  // colour is per-variant via --button-hover-fill; buttons that don't set it
-  // stay inert (transparent chip). Motion + easing are lifted verbatim from
-  // the Figma `buttonHoverColor` keyframes. Sits below the label via z-index.
   &::before {
     aspect-ratio: 262 / 74; // chip proportions from the Figma component
     background-color: var(--button-hover-fill, transparent);
@@ -34,7 +36,7 @@ button {
     position: absolute;
     top: 50%;
     transform: translate(-50%, 60%) rotate(-4deg) scale(0.45);
-    transition: transform 1.25s linear(0, 0.0216, 0.0747, 0.1458, 0.2255, 0.3076, 0.3879, 0.4638, 0.5339, 0.5974, 0.6542, 0.7044, 0.7484, 0.7866, 0.8196, 0.8479, 0.8722, 0.8928, 0.9103, 0.9251, 0.9375, 0.948, 0.9568, 0.9642, 0.9703, 0.9754, 0.9797, 0.9832, 0.9862, 0.9886, 0.9906, 0.9923, 0.9936, 0.9948, 0.9957, 0.9965, 0.9971, 0.9976, 0.9981, 0.9984, 0.9987, 0.9989, 0.9991, 0.9993, 0.9994, 0.9995, 0.9996, 0.9997, 0.9997, 0.9998, 0.9998);
+    transition: transform $button-bloom-motion;
     width: 180%;
     z-index: -1;
   }

@@ -34,6 +34,7 @@ function getACFLayout()
                         'choices' => [
                             'third' => __('1/3', 'flynt'),
                             'half' => __('1/2', 'flynt'),
+                            'twoThirds' => __('2/3', 'flynt'),
                             'full' => __('1/1', 'flynt'),
                         ],
                         'default_value' => 'half',
@@ -110,6 +111,7 @@ function getACFLayout()
                         'name' => 'contentHtml',
                         'type' => 'wysiwyg',
                         'tabs' => 'visual,text',
+                        'toolbar' => 'simple',
                         'delay' => 1,
                         'media_upload' => 0,
                         'required' => 0,
@@ -144,20 +146,6 @@ function getACFLayout()
                         ],
                     ],
                 ],
-            ],
-            [
-                'label' => __('Options', 'flynt'),
-                'name' => 'optionsTab',
-                'type' => 'tab',
-                'placement' => 'top',
-                'endpoint' => 0,
-            ],
-            [
-                'label' => '',
-                'name' => 'options',
-                'type' => 'group',
-                'layout' => 'row',
-                'sub_fields' => [],
             ],
         ],
     ];

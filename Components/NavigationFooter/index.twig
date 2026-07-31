@@ -13,7 +13,7 @@
         {% if newsletterImage %}
           <div class="relative shrink-0">
             <img
-              class="w-full aspect-4/3 md:aspect-square md:max-w-[216px] object-cover rounded-card"
+              class="w-full aspect-[16/7] md:aspect-square md:max-w-[216px] object-cover rounded-card"
               src="{{ newsletterImage.src }}" alt="{{ newsletterImage.alt|e|default('') }}" loading="lazy">
             <span class="absolute -top-xs -right-xs md:-top-sm md:-right-sm w-14 h-14 rounded-cta bg-moss flex items-center justify-center text-dark-green [&_svg]:w-8 [&_svg]:h-8 [&_svg]:fill-current">
               {% include 'assets/icons/email-full.svg' ignore missing %}
@@ -35,7 +35,7 @@
               id="footer-nl-email" type="email" name="email"
               class="flex-1 h-auto px-sm rounded-cta border-0 bg-warmer-beige/50 text-dark-brown placeholder:text-dark-brown/60 focus:outline-none focus:ring-2 focus:ring-jungle/40"
               placeholder="{{ newsletterPlaceholder|e }}">
-            <button type="submit" class="button button--jungle">{{ newsletterButtonLabel|e|default('Anmelden') }}</button>
+            <button type="submit" class="button button--jungle !w-full sm:!w-auto">{{ newsletterButtonLabel|e|default('Anmelden') }}</button>
           </form>
         </div>
       </div>

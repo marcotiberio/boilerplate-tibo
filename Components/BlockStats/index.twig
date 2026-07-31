@@ -24,7 +24,7 @@
       {% set tag = titleTag|default('h2') %}
       <{{ tag }} class="font-{{ titleSize|default('h2') }} text-black mb-lg">{{ title }}</{{ tag }}>
     {% endif %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-sm">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-sm sm:gap-md">
       {% for stat in stats %}
         <div class="flex flex-col gap-md">
           {% if stat.icon %}

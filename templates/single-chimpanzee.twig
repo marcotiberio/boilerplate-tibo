@@ -28,10 +28,10 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-sm items-start">
 
         {# ---- Left: chimpanzee info card ---- #}
-        <div class="lg:sticky lg:top-[120px] self-start rounded-card overflow-hidden">
+        <div class="lg:sticky lg:top-[120px] self-start rounded-card overflow-hidden bg-jungle">
           {% if post.thumbnail %}
             <img
-              class="w-full aspect-[624/360] object-cover"
+              class="w-full aspect-[624/360] object-cover rounded-card"
               src="{{ post.thumbnail.src }}"
               alt="{{ post.thumbnail.alt|e | default(post.title) }}"
               loading="eager" />

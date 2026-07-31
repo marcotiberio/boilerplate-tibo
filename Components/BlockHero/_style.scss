@@ -17,7 +17,7 @@ flynt-component[name='BlockHero'] {
 
   .button--glass {
     @apply text-off-white;
-    --button-hover-fill: rgb(252 251 250 / 50%);
+    --button-hover-fill: rgb(252 251 250 / 100%);
     background-color: rgb(252 251 250 / 20%);
 
     &:hover,

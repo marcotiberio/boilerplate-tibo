@@ -179,9 +179,26 @@ function getConfig()
                 ]
             ],
             'basic' => [
-                ['formatselect',
+                [   'formatselect',
                     'styleselect',
                     'bold',
+                    '|',
+                    'bullist',
+                    'numlist',
+                    '|',
+                    'link',
+                    'unlink',
+                    '|',
+                    'removeformat'
+                ]
+            ],
+            // No block format dropdown: markup stays as <p>, editor can only
+            // emphasise, list and link. Opt in per field with 'toolbar' => 'simple'.
+            'simple' => [
+                [
+                    'styleselect',
+                    'bold',
+                    'italic',
                     '|',
                     'bullist',
                     'numlist',

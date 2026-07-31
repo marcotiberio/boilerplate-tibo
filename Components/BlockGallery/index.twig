@@ -12,7 +12,8 @@
     {% endif %}
 
     {% if cards or textCard.title %}
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 grid-flow-row-dense gap-sm auto-rows-[240px] sm:auto-rows-[300px] lg:auto-rows-[374px]">
+      {# Rows use minmax() so a row can grow when the text card needs more height than the track (mobile). #}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 grid-flow-row-dense gap-sm auto-rows-[minmax(240px,auto)] sm:auto-rows-[minmax(300px,auto)] lg:auto-rows-[minmax(374px,auto)]">
 
         {% for card in cards %}
           {% set hasOverlay = card.title or card.icon %}
@@ -54,15 +55,17 @@
         {% if textCard.title or textCard.text %}
           {% set TextCardTag = textCard.button.url ? 'a' : 'div' %}
           <{{ TextCardTag }}
-            class="gallery-textcard relative flex h-fit md:h-full w-full flex-col gap-md justify-between overflow-hidden rounded-card bg-dark-green pt-sm p-xs text-off-white"
+            class="gallery-textcard pt-sm p-xs relative flex h-full w-full flex-col gap-md justify-between overflow-hidden rounded-card bg-dark-green text-off-white"
             {% if textCard.button.url %}
               href="{{ textCard.button.url }}"
               {% if textCard.button.target %} target="{{ textCard.button.target }}" rel="noreferrer noopener"{% endif %}
             {% endif %}>
             {% if textCard.icon %}
-              <span class="flex h-[72px] w-[72px] items-center justify-center rounded-cta bg-off-white/[0.08]">
-                <img class="h-11 w-11 object-contain" src="{{ textCard.icon.src }}" alt="" loading="lazy">
-              </span>
+              <div class="px-xs">
+                <span class="flex h-[72px] w-[72px] items-center justify-center rounded-cta bg-off-white/[0.08]">
+                  <img class="h-11 w-11 object-contain" src="{{ textCard.icon.src }}" alt="" loading="lazy">
+                </span>
+              </div>
             {% endif %}
 
             <div class="mt-auto flex flex-col gap-sm">
