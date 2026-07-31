@@ -34,7 +34,7 @@ flynt-component {
 
 .boxed {
   @apply w-full;
-  @apply max-w-screen-xl;
+  @apply max-w-screen-box;
   @apply mx-auto;
   @apply px-sm py-md;
   @apply box:px-lg box:py-xl;

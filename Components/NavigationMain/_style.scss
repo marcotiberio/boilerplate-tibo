@@ -1,6 +1,7 @@
 flynt-component[name='NavigationMain'] {
   // Nav links — muted at rest, full dark-green on hover / current page.
-  .menu > .item > .link {
+  // Same treatment for top-level items and submenu children.
+  .item > .link {
     @apply text-dark-green/60 transition-colors;
 
     &:hover {
@@ -14,7 +15,10 @@ flynt-component[name='NavigationMain'] {
 
   .submenu {
     --submenu-gap: 1.75rem; // visual offset below the bar (was mt-7)
-    @apply absolute left-0 top-full z-50 flex flex-col gap-4 p-sm min-w-[254px] rounded-banner bg-white;
+    @apply absolute left-1/2 top-full z-50 flex flex-col gap-4 p-sm min-w-[254px] rounded-banner bg-white;
+    // Standalone `translate` — Alpine's x-transition writes an inline `transform`
+    // even in .opacity mode, which would override a translate-x utility.
+    translate: -50%;
     margin-top: var(--submenu-gap);
     box-shadow: 0 18px 40px rgb(17 51 40 / 12%);
 
@@ -26,14 +30,6 @@ flynt-component[name='NavigationMain'] {
       left: 0;
       right: 0;
       height: var(--submenu-gap);
-    }
-
-    .item .link {
-      @apply text-dark-green/60 transition-colors;
-
-      &:hover {
-        @apply text-dark-green;
-      }
     }
   }
 

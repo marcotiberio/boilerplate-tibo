@@ -138,21 +138,27 @@
           {% if info.title or info.description or info.details %}
             <div class="fbox-info pt-lg">
               {% if info.title %}
-                <h3 class="font-h3 {{ headingClass }}">{{ info.title }}</h3>
+                {% set infoTag = info.titleTag|default('h3') %}
+                <{{ infoTag }} class="font-{{ info.titleSize|default('h3') }} {{ headingClass }}">{{ info.title }}</{{ infoTag }}>
               {% endif %}
-              <div class="flex flex-col gap-md mt-sm items-start">
+              <div class="flex flex-col gap-md mt-sm items-start max-w-[720px]">
                 {% if info.description %}
                   <div class="wysiwyg">{{ info.description|e('wp_kses_post') }}</div>
                 {% endif %}
                 {% if info.details %}
-                  <dl class="w-full grid grid-cols-1 md:grid-cols-2 gap-x-md gap-y-xs font-body">
-                    {% for row in info.details %}
-                      <div>
-                        <dt class="opacity-60">{{ row.label }}</dt>
-                        <dd class="font-medium break-words">{{ row.value }}</dd>
-                      </div>
-                    {% endfor %}
-                  </dl>
+                  <div class="w-full flex flex-col gap-[28px]">
+                    {% if info.detailsTitle %}
+                      <h6 class="fbox-info__details-title font-h6 {{ headingClass }}">{{ info.detailsTitle }}</h6>
+                    {% endif %}
+                    <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-[32px] gap-y-[32px] font-body">
+                      {% for row in info.details %}
+                        <div>
+                          <dt class="opacity-60 font-small">{{ row.label }}</dt>
+                          <dd class="font-medium break-words font-body">{{ row.value }}</dd>
+                        </div>
+                      {% endfor %}
+                    </dl>
+                  </div>
                 {% endif %}
               </div>
             </div>

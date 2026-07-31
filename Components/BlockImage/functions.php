@@ -30,7 +30,7 @@ function getACFLayout()
             ],
             [
                 'label' => __('Image', 'flynt'),
-                'instructions' => __('JPG, PNG, SVG, WEBP. Also used as the poster/fallback when a video is set. The media Caption (set on the file) is shown on hover.', 'flynt'),
+                'instructions' => __('JPG, PNG, SVG, WEBP. Also used as the poster/fallback when a video is set. The media Caption (set on the file in the WP library) is shown on hover.', 'flynt'),
                 'name' => 'image',
                 'type' => 'image',
                 'preview_size' => 'medium',

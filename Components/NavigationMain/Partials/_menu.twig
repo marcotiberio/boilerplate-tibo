@@ -34,7 +34,7 @@
         </a>
         <div class="submenu " x-cloak x-show="open" x-transition.opacity.duration.200ms>
           {% for subitem in item.children %}
-            <div class="item {{ subitem.classes|join(' ') }}{{ subitem.current ? ' current-menu-item' }}">
+            <div class="item font-menu {{ subitem.classes|join(' ') }}{{ subitem.current ? ' current-menu-item' }}">
               <a
                 class="link group inline-flex items-center gap-[4px] whitespace-nowrap"
                 href="{{ subitem.link }}"

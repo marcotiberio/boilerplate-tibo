@@ -6,10 +6,18 @@ flynt-component[name='BlockGallery'] {
     @apply rounded-cta px-sm py-xs font-medium text-off-white;
     --button-hover-fill: rgb(252 251 250 / 90%);
     background-color: rgb(252 251 250 / 20%);
+  }
 
-    &:hover,
-    &:focus-visible {
+  // The whole card is the link and the button is only a visual span, so the
+  // bloom and the label colour flip are driven by hovering the card.
+  .gallery-textcard:hover,
+  .gallery-textcard:focus-visible {
+    .button--mutedWhite {
       @apply text-dark-green;
+
+      &::before {
+        @include button-bloom-revealed;
+      }
     }
   }
 }

@@ -36,4 +36,9 @@ flynt-component[name='BlockDonationForm'] {
   .fbox-check {
     @apply text-terracotta;
   }
+
+  // Details headline — fixed H6 tag, but a size that sits just above the rows.
+  .fbox-info__details-title {
+    font-size: 1.25rem;
+  }
 }

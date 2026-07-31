@@ -53,7 +53,7 @@
                 <div
                   id="{{ subId }}"
                   x-show="sub === '{{ subId }}'"
-                  x-transition
+                  x-transition.opacity.duration.200ms
                   x-cloak
                   class="submenu w-[calc(100%+48px)] ml-[-24px] mt-xs flex flex-col gap-xs rounded-card bg-off-white p-sm">
                   {% for subitem in item.children %}
@@ -84,7 +84,7 @@
 
         {# CTAs pinned to the bottom #}
         {% if ctaLink or secondaryLink %}
-          <div class="mt-auto flex items-center gap-xs px-sm pb-md pt-sm">
+          <div class="mt-auto flex items-center gap-xs p-xs">
             {% if ctaLink %}
               <a
                 class="button button--donate flex-1"

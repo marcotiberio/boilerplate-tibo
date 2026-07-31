@@ -8,14 +8,23 @@
   </head>
   <body>
     {% block layout %}
-      <div 
+      {# Fixed background grid lines — 5 on mobile, 7 on desktop, aligned to the .boxed container #}
+      <div class="backgroundLines" aria-hidden="true">
+        <div class="boxed !py-0 h-full flex justify-between lg:hidden">
+          {% for i in 1..5 %}<span class="w-px h-full bg-dark-brown/[0.035]"></span>{% endfor %}
+        </div>
+        <div class="boxed !py-0 h-full hidden lg:flex justify-between">
+          {% for i in 1..7 %}<span class="w-px h-full bg-dark-brown/[0.035]"></span>{% endfor %}
+        </div>
+      </div>
+      <div
         class="pageWrapper">
         <header class="w-full">
           {% block header %}
             <div class="wrapper wrapper--menu flex justify-center items-center w-full h-[87px] lg:h-auto fixed top-0 left-0 z-[3000] transition ease-in-out delay-300">
               <div class="hidden lgplus:block w-full">
                 {# {{ renderComponent('NavigationMeta') }} #}
-                <div class="w-full boxed !py-0 mx-auto">
+                <div class="w-full boxed !max-w-screen-xl !py-0 mx-auto">
                   {{ renderComponent('NavigationMain') }}
                 </div>
               </div>

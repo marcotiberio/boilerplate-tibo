@@ -34,9 +34,11 @@ Options::addTranslatable('HighlightCard', [
     ],
     [
         'label' => __('Title', 'flynt'),
+        'instructions' => __('Maximum 75 characters.', 'flynt'),
         'name' => 'title',
         'type' => 'text',
         'required' => 0,
+        'maxlength' => 25,
     ],
     [
         'label' => __('Link', 'flynt'),

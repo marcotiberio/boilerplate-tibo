@@ -47,7 +47,7 @@
   {% if video.url %}
     <button
       type="button"
-      class="absolute right-sm top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-14 h-11 rounded-cta bg-off-white/20 backdrop-blur-sm text-off-white transition-colors hover:bg-off-white/30"
+      class="absolute right-sm bottom-sm md:bottom-auto md:top-1/2 md:-translate-y-1/2 z-20 flex items-center justify-center w-14 h-11 rounded-cta bg-off-white/20 backdrop-blur-sm text-off-white transition-colors hover:bg-off-white/30"
       @click="playing ? $refs.video.pause() : $refs.video.play(); playing = !playing"
       :aria-label="playing ? '{{ __('Pause video', 'flynt') }}' : '{{ __('Play video', 'flynt') }}'">
       {# Pause icon #}
@@ -63,16 +63,16 @@
   {% endif %}
 
   {# Content #}
-  <div class="relative z-10 boxed !pb-[200px] min-h-[85vh] flex flex-col justify-end items-center text-center gap-sm">
+  <div class="relative z-10 boxed !pb-xl min-h-[85vh] flex flex-col justify-end items-center text-center gap-sm">
     {% if title %}
       {% set tag = titleTag|default('h1') %}
       <{{ tag }} class="font-{{ titleSize|default('h1') }} text-off-white max-w-[722px]">{{ title }}</{{ tag }}>
     {% endif %}
 
-    <div class="flex flex-col md:flex-row flex-wrap gap-xs justify-center">
+    <div class="flex flex-col md:flex-row flex-wrap gap-xs justify-center items-center">
       {% if primaryButton %}
         <a
-          class="button button--primary"
+          class="button button--primary !w-full !md:w-auto"
           href="{{ primaryButton.url }}"
           {% if primaryButton.target %} target="{{ primaryButton.target }}" rel="noreferrer noopener"{% endif %}>
           <span>{{ primaryButton.title }}</span>
@@ -80,7 +80,7 @@
       {% endif %}
       {% if secondaryButton %}
         <a
-          class="button button--glass"
+          class="button button--glass !w-full !md:w-auto"
           href="{{ secondaryButton.url }}"
           {% if secondaryButton.target %} target="{{ secondaryButton.target }}" rel="noreferrer noopener"{% endif %}>
           <span>{{ secondaryButton.title }}</span>

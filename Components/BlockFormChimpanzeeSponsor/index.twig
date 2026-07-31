@@ -28,7 +28,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-sm items-start">
 
         {# ---- Left: chimpanzee info card ---- #}
-        <div class="lg:sticky self-start rounded-card overflow-hidden bg-jungle">
+        <div class="lg:sticky lg:top-[120px] self-start rounded-card overflow-hidden bg-jungle">
           {% if chimp.image.src %}
             <img
               class="w-full aspect-[624/360] object-cover rounded-card"
@@ -37,16 +37,16 @@
               loading="lazy" />
           {% endif %}
 
-          <div class="bg-jungle text-off-white p-sm lg:p-md">
+          <div class="bg-jungle text-off-white p-sm">
             <div class="flex flex-wrap items-baseline gap-x-xs gap-y-min">
-              <h2 class="font-h2">{{ chimp.title }}</h2>
+              <h2 class="font-h4Sans">{{ chimp.title }}</h2>
               {% if chimp.sex %}
                 <span class="font-body text-off-white/50">{{ chimp.sex }}</span>
               {% endif %}
             </div>
 
             {% if chimp.sanctuary or chimp.born or chimp.arrival %}
-              <dl class="mt-sm grid grid-cols-2 gap-y-xs font-body">
+              <dl class="mt-xs grid grid-cols-2 gap-y-min font-body">
                 {% if chimp.sanctuary %}
                   <dt class="text-off-white/50">{{ __('Auffangstation', 'flynt') }}</dt>
                   <dd>{{ chimp.sanctuary }}</dd>

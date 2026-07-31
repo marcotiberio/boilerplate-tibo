@@ -37,16 +37,16 @@
               loading="eager" />
           {% endif %}
 
-          <div class="bg-jungle text-off-white p-sm lg:p-md">
+          <div class="bg-jungle text-off-white p-sm">
             <div class="flex flex-wrap items-baseline gap-x-xs gap-y-min">
-              <h1 class="font-h2">{{ post.title }}</h1>
+              <h1 class="font-h4Sans">{{ post.title }}</h1>
               {% if post.meta('sex') %}
                 <span class="font-body text-off-white/50">{{ post.meta('sex') }}</span>
               {% endif %}
             </div>
 
             {% if post.meta('sanctuary') or post.meta('born') or post.meta('arrival') %}
-              <dl class="mt-sm grid grid-cols-2 gap-y-xs font-body">
+              <dl class="mt-sm grid grid-cols-2 gap-y-min font-body">
                 {% if post.meta('sanctuary') %}
                   <dt class="text-off-white/50">{{ __('Auffangstation', 'flynt') }}</dt>
                   <dd>{{ post.meta('sanctuary') }}</dd>
