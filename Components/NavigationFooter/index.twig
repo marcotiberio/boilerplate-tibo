@@ -3,17 +3,17 @@
   {# ───────────────────────── Newsletter ───────────────────────── #}
   <section class="relative overflow-hidden min-h-[100vh] md:min-h-[50vh] lg:min-h-[50vh]">
     {# Decorative acacia silhouette bridging into the footer #}
-    <div class="block absolute right-0 bottom-[-55px] md:w-[40%] max-w-[375px] text-dark-green pointer-events-none select-none [&>svg]:w-full [&>svg]:h-auto" aria-hidden="true">
+    <div class="block absolute right-0 bottom-[-40px] w-[75vw] sm:w-[50vw] sm:bottom-[-60px] md:bottom-[-40px] md:max-w-[325px] text-dark-green pointer-events-none select-none [&>svg]:w-full [&>svg]:h-auto" aria-hidden="true">
       {% include 'assets/images/footer-forest.svg' ignore missing %}
     </div>
 
     <div class="boxed relative z-10 py-xl">
-      <div class="flex flex-col md:flex-row items-start gap-sm sm:gap-md lg:gap-xl max-w-[900px]">
+      <div class="flex flex-col md:flex-row items-start lg:items-center gap-sm sm:gap-md lg:gap-xxl max-w-[900px]">
         {# Image + mail badge #}
         {% if newsletterImage %}
           <div class="relative shrink-0">
             <img
-              class="w-full aspect-[16/7] md:aspect-square md:max-w-[216px] object-cover rounded-card"
+              class="w-full aspect-[16/7] md:aspect-square md:max-w-[235px] object-cover rounded-card"
               src="{{ newsletterImage.src }}" alt="{{ newsletterImage.alt|e|default('') }}" loading="lazy">
             <span class="absolute -top-xs -right-xs md:-top-sm md:-right-sm w-14 h-14 rounded-cta bg-moss flex items-center justify-center text-dark-green [&_svg]:w-8 [&_svg]:h-8 [&_svg]:fill-current">
               {% include 'assets/icons/email-full.svg' ignore missing %}
@@ -111,7 +111,7 @@
         {# Nav columns + transparency badge #}
         <div class="flex flex-col gap-lg">
           {% if columns %}
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-sm sm:gap-md">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-lg sm:gap-md">
               {% for column in columns %}
                 <div class="flex flex-col">
                   {% if column.heading %}

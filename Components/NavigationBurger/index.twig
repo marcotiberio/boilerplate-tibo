@@ -53,7 +53,12 @@
                 <div
                   id="{{ subId }}"
                   x-show="sub === '{{ subId }}'"
-                  x-transition.opacity.duration.200ms
+                  x-transition:enter="transition-opacity duration-200 ease-out"
+                  x-transition:enter-start="opacity-0"
+                  x-transition:enter-end="opacity-100"
+                  x-transition:leave="transition-opacity duration-200 ease-in"
+                  x-transition:leave-start="opacity-100"
+                  x-transition:leave-end="opacity-0"
                   x-cloak
                   class="submenu w-[calc(100%+48px)] ml-[-24px] mt-xs flex flex-col gap-xs rounded-card bg-off-white p-sm">
                   {% for subitem in item.children %}

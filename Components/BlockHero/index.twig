@@ -69,10 +69,10 @@
       <{{ tag }} class="font-{{ titleSize|default('h1') }} text-off-white max-w-[722px]">{{ title }}</{{ tag }}>
     {% endif %}
 
-    <div class="flex flex-col md:flex-row flex-wrap gap-xs justify-center items-center">
+    <div class="flex flex-col md:flex-row gap-xs justify-center items-center">
       {% if primaryButton %}
         <a
-          class="button button--primary !w-full !md:w-auto"
+          class="button button--primary !w-full md:!w-fit"
           href="{{ primaryButton.url }}"
           {% if primaryButton.target %} target="{{ primaryButton.target }}" rel="noreferrer noopener"{% endif %}>
           <span>{{ primaryButton.title }}</span>
@@ -80,7 +80,7 @@
       {% endif %}
       {% if secondaryButton %}
         <a
-          class="button button--glass !w-full !md:w-auto"
+          class="button button--glass !w-full md:!w-fit"
           href="{{ secondaryButton.url }}"
           {% if secondaryButton.target %} target="{{ secondaryButton.target }}" rel="noreferrer noopener"{% endif %}>
           <span>{{ secondaryButton.title }}</span>
