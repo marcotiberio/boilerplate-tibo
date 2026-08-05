@@ -99,8 +99,14 @@ function getDefaultConfig()
             'offen'      => __('Offenes Format', 'flynt'),
             'anmeldung'  => __('Mit Anmeldung', 'flynt'),
         ],
-        // Sprache der Veranstaltung — single choice (German language names)
-        
+        // Sprache der Veranstaltung — single choice (German language names).
+        // Set by the editor in wp-admin (not part of the public form); shown on
+        // the map card and used by the language filter.
+        'languages' => [
+            'de'    => __('Deutsch', 'flynt'),
+            'en'    => __('Englisch', 'flynt'),
+            'de-en' => __('Deutsch & Englisch', 'flynt'),
+        ],
         // Kosten? — single choice (conditional price + link)
         'costs' => [
             'nein' => __('Nein', 'flynt'),
@@ -111,6 +117,22 @@ function getDefaultConfig()
         'dates' => [
             '2026-11-14' => __('14.11.26', 'flynt'),
             '2026-11-15' => __('15.11.26', 'flynt'),
+        ],
+        // Bezirk — single choice, set by the editor in wp-admin (not part of
+        // the public form). Drives the district filter on the program list.
+        'districts' => [
+            'mitte'          => __('Mitte', 'flynt'),
+            'friedrichshain' => __('Friedrichshain-Kreuzberg', 'flynt'),
+            'pankow'         => __('Pankow', 'flynt'),
+            'charlottenburg' => __('Charlottenburg-Wilmersdorf', 'flynt'),
+            'spandau'        => __('Spandau', 'flynt'),
+            'steglitz'       => __('Steglitz-Zehlendorf', 'flynt'),
+            'tempelhof'      => __('Tempelhof-Schöneberg', 'flynt'),
+            'neukoelln'      => __('Neukölln', 'flynt'),
+            'treptow'        => __('Treptow-Köpenick', 'flynt'),
+            'marzahn'        => __('Marzahn-Hellersdorf', 'flynt'),
+            'lichtenberg'    => __('Lichtenberg', 'flynt'),
+            'reinickendorf'  => __('Reinickendorf', 'flynt'),
         ],
         // Wo? — either/or radio
         'locationMode' => [
@@ -197,7 +219,7 @@ function flattenGroups(array $groups)
  * Flat choice lists whose labels are client-editable (grouped lists are
  * handled separately). Shared by the option fields and the overlay.
  */
-const FLAT_LABEL_LISTS = ['sectors', 'programTypes', 'accessibility', 'registration', 'costs', 'format', 'dates', 'locationMode'];
+const FLAT_LABEL_LISTS = ['sectors', 'programTypes', 'accessibility', 'registration', 'costs', 'format', 'dates', 'locationMode', 'languages', 'districts'];
 
 /**
  * Option field name for a choice key, e.g. sectors/ernaehrung →
@@ -465,6 +487,8 @@ function getLabelOptionFields()
         'format' => __('Format', 'flynt'),
         'dates' => __('Termine', 'flynt'),
         'locationMode' => __('Veranstaltungsort', 'flynt'),
+        'languages' => __('Sprache', 'flynt'),
+        'districts' => __('Bezirk', 'flynt'),
     ];
     foreach ($flatTabs as $list => $tabLabel) {
         $fields[] = $tab($tabLabel, $list . 'Tab');
@@ -477,6 +501,99 @@ function getLabelOptionFields()
 }
 
 Options::addGlobal(LABEL_OPTIONS_SCOPE, getLabelOptionFields(), 'Event');
+
+/**
+ * Pin icon per "Art des Programmpunkts", used by the map markers.
+ * Values are file names inside assets/icons/event/.
+ *
+ * The design ships three glyphs (team assignment / person / hammer-wrench);
+ * the remaining program types reuse the closest match until dedicated icons
+ * exist. The first selected program type of an entry decides its pin.
+ */
+function getProgramTypeIcons()
+{
+    return [
+        'workshop'  => 'hammer-wrench.png',
+        'reparatur' => 'hammer-wrench.png',
+        'panel'     => 'person.png',
+        'kunst'     => 'person.png',
+        'community' => 'team-assignment.png',
+        'openhouse' => 'team-assignment.png',
+        'tour'      => 'team-assignment.png',
+    ];
+}
+
+/**
+ * Day rows of a single entry: `{ key, date, time, start, end }` per event day.
+ *
+ * The `eventSchedule` repeater stores the day's *label* (as it read at
+ * submission time), so rows are matched back to their stable date key by
+ * label first and by position as a fallback — labels are client-editable.
+ */
+function getScheduleRows($postId)
+{
+    $config = getConfig();
+    $dates = array_values((array) (get_field('dates', $postId) ?: []));
+    $rows = (array) (get_field('eventSchedule', $postId) ?: []);
+    $keyByLabel = array_flip($config['dates']);
+
+    return array_values(array_map(function ($row, $index) use ($dates, $keyByLabel) {
+        $label = (string) ($row['date'] ?? '');
+        $start = (string) ($row['timeStart'] ?? '');
+        $end = (string) ($row['timeEnd'] ?? '');
+
+        return [
+            'key'   => $keyByLabel[$label] ?? ($dates[$index] ?? ''),
+            'date'  => $label,
+            'time'  => $end ? $start . '–' . $end : $start,
+            'start' => $start,
+            'end'   => $end,
+        ];
+    }, $rows, array_keys($rows)));
+}
+
+/**
+ * Selectable days for the filter bars: the configured event days as day number
+ * plus short weekday, e.g. "SA / 14".
+ *
+ * Weekdays are the German abbreviations that go with this feature's German
+ * source copy — wp_date() would follow the site language instead. The date
+ * key is read as a plain calendar date, so no timezone can shift the day.
+ */
+function getDays()
+{
+    $weekdays = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+
+    $days = [];
+    foreach (getConfig()['dates'] as $key => $label) {
+        $date = \DateTimeImmutable::createFromFormat('!Y-m-d', $key);
+        $days[] = [
+            'key'     => $key,
+            'label'   => $label,
+            'day'     => $date ? $date->format('j') : $label,
+            'weekday' => $date ? $weekdays[(int) $date->format('N') - 1] : '',
+        ];
+    }
+    return $days;
+}
+
+/**
+ * Short code shown on the map's language filter, e.g. `de-en` → "DE/EN".
+ */
+function languageShortLabel($key)
+{
+    return strtoupper(str_replace('-', '/', (string) $key));
+}
+
+/**
+ * Accessibility keys that mean "at least partly barrier-free" — everything
+ * except the explicit "Nicht barrierefrei". Drives the wheelchair icon on the
+ * map card and the wheelchair filter.
+ */
+function isAccessible(array $keys)
+{
+    return (bool) array_diff($keys, ['keine']);
+}
 
 /**
  * Geocode a free-text address into coordinates via the Google Geocoding API.

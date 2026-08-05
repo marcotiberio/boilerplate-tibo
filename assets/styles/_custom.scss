@@ -32,10 +32,6 @@ body {
 // Scopes
 
 .single {
-  header {
-    @apply hidden;
-  }
-
   flynt-component[name='BlockWysiwyg'] {
     .boxed {
       @apply px-0 !important;

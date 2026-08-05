@@ -1,28 +1,333 @@
+// Map chrome (pins, filter bar, entry card). The sizes come from the Figma
+// "Map" frame and have no equivalent in the Tailwind token scale, so they are
+// kept as component-scoped values here; colours reference theme tokens.
+$overlay-gap: 20px;
+$overlay-radius: 20px;
+$control-radius: 12px;
+$control-font-size: 16px;
+$card-width: 260px;
+$card-padding: 12px;
+$card-font-size: 12px;
+$pin-width: 55.5px;
+$pin-height: 71px;
+$pin-icon-size: 32px;
+$pin-icon-offset: 12px;
+$icon-size: 24px;
+$zoom-size: 40px;
+
 .event-map {
-  // Leaflet needs an explicit stacking context below site overlays.
-  z-index: 0;
+  font-family: var(--primary-font-family);
+  position: relative;
+
+  &__canvas {
+    // Contains Leaflet's own stacking (its panes use z-index 400+), so the
+    // overlays below sit on top with a plain z-index.
+    height: clamp(480px, 80vh, 700px);
+    position: relative;
+    width: 100%;
+    z-index: 0;
+  }
+
+  // ---- Pins ----
 
   &__pin {
-    span {
-      background: var(--accentColor);
-      border: 2px solid var(--brandColor);
-      border-radius: 50% 50% 50% 0;
+    color: var(--white);
+
+    svg {
       display: block;
-      height: 22px;
-      transform: rotate(-45deg);
-      width: 22px;
+      height: $pin-height;
+      width: $pin-width;
+    }
+
+    &.is-active {
+      color: var(--green);
     }
   }
 
-  &__popup {
-    em {
-      display: block;
-      margin-block: 2px 4px;
-      opacity: 0.7;
+  &__pin-icon {
+    height: $pin-icon-size;
+    left: $pin-icon-offset;
+    position: absolute;
+    top: $pin-icon-offset;
+    width: $pin-icon-size;
+  }
+
+  // ---- Filter bar ----
+
+  &__filters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    left: 50%;
+    max-width: calc(100% - #{$overlay-gap * 2});
+    position: absolute;
+    top: $overlay-gap;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+
+  &__filters-inner {
+    background-color: theme('colors.greenFaded');
+    border-radius: $overlay-radius;
+    display: flex;
+    gap: $card-padding;
+    max-width: 100%;
+    overflow: visible;
+    padding: 16px;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__pill {
+    align-items: center;
+    background-color: var(--white);
+    border-radius: $control-radius;
+    display: flex;
+    flex-shrink: 0;
+    font-size: $control-font-size;
+    font-weight: 600;
+    gap: 8px;
+    justify-content: center;
+    line-height: 1.5;
+    padding: 8px 18px;
+    white-space: nowrap;
+
+    img,
+    svg {
+      height: $icon-size;
+      width: $icon-size;
     }
 
-    p {
-      margin: 0;
+    &--day {
+      background-color: rgb(255 255 255 / 75%);
+      position: relative;
+
+      &.is-active {
+        background-color: var(--white);
+      }
+    }
+
+    &--icon {
+      padding-inline: 14px;
+    }
+
+    // Any control that is currently narrowing the result set.
+    &.is-filtering {
+      background-color: var(--green);
+    }
+  }
+
+  // The weekday sits in the pill's top padding, as in the design, so day
+  // pills keep the same height as the other controls.
+  &__pill-weekday {
+    font-size: 8px;
+    inset-inline: 0;
+    line-height: 1;
+    position: absolute;
+    text-align: center;
+    text-transform: uppercase;
+    top: 4px;
+  }
+
+  &__dropdown {
+    position: relative;
+  }
+
+  &__menu {
+    background-color: var(--white);
+    border-radius: $control-radius;
+    display: flex;
+    flex-direction: column;
+    gap: $card-padding;
+    left: 0;
+    margin-top: 8px;
+    max-height: 50vh;
+    min-width: 260px;
+    overflow-y: auto;
+    padding: 16px;
+    position: absolute;
+    top: 100%;
+    z-index: 3;
+  }
+
+  &__menu-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__menu-legend {
+    font-size: $card-font-size;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  &__option {
+    align-items: flex-start;
+    cursor: pointer;
+    display: flex;
+    font-size: 14px;
+    gap: 8px;
+    line-height: 1.3;
+  }
+
+  &__empty {
+    align-self: center;
+    background-color: var(--white);
+    border-radius: $control-radius;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 18px;
+  }
+
+  // ---- Selected entry ----
+
+  &__card {
+    bottom: $overlay-gap;
+    left: $overlay-gap;
+    position: absolute;
+    right: $overlay-gap;
+    z-index: 2;
+
+    @media (min-width: theme('screens.mobile')) {
+      right: auto;
+      width: $card-width;
+    }
+  }
+
+  &__card-inner {
+    background-color: var(--white);
+    border-radius: $control-radius;
+    display: flex;
+    flex-direction: column;
+    gap: $card-padding;
+    padding: $card-padding;
+    position: relative;
+  }
+
+  &__card-close {
+    align-items: center;
+    background-color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    height: $icon-size;
+    justify-content: center;
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    width: $icon-size;
+    z-index: 1;
+
+    svg {
+      height: 16px;
+      width: 16px;
+    }
+  }
+
+  &__card-media {
+    aspect-ratio: 350 / 225;
+    background-color: var(--grey-200);
+    border-radius: 6px;
+    overflow: hidden;
+
+    img {
+      height: 100%;
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+
+  &__card-meta {
+    display: flex;
+    font-size: $card-font-size;
+    font-weight: 600;
+    gap: $card-padding;
+  }
+
+  &__card-title {
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  &__tag {
+    background-color: theme('colors.greenFaded');
+    border-radius: 8px;
+    font-size: $card-font-size;
+    font-weight: 500;
+    padding: 2px 6px;
+
+    &--primary {
+      background-color: var(--green);
+    }
+  }
+
+  &__card-org {
+    font-size: $card-font-size;
+    font-weight: 600;
+  }
+
+  &__card-footer {
+    align-items: flex-end;
+    display: flex;
+    gap: $card-padding;
+  }
+
+  &__card-icons {
+    display: flex;
+    flex: 1 0 0;
+    gap: $card-padding;
+
+    img {
+      height: $icon-size;
+      width: $icon-size;
+    }
+  }
+
+  &__card-language {
+    flex: 1 0 0;
+    font-size: $card-font-size;
+    line-height: 1.2;
+
+    span:first-child {
+      display: block;
+      font-weight: 600;
+    }
+  }
+
+  // ---- Zoom ----
+
+  &__zoom {
+    bottom: $overlay-gap;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    right: $overlay-gap;
+    z-index: 2;
+  }
+
+  &__zoom-button {
+    align-items: center;
+    background-color: var(--white);
+    border-radius: $overlay-radius;
+    display: flex;
+    height: $zoom-size;
+    justify-content: center;
+    width: $zoom-size;
+
+    svg {
+      height: 20px;
+      width: 20px;
     }
   }
 }

@@ -191,6 +191,15 @@ add_action('acf/init', function () {
                 'type' => 'checkbox',
                 'choices' => $config['audiences'],
             ],
+            [
+                'label' => __('Sprache der Veranstaltung', 'flynt'),
+                'instructions' => __('Wird auf der Karte angezeigt und filterbar. Nicht Teil des öffentlichen Formulars.', 'flynt'),
+                'name' => 'language',
+                'type' => 'radio',
+                'choices' => $config['languages'],
+                'default_value' => 'de',
+                'wrapper' => ['width' => 50],
+            ],
 
             // ---- Section 4: Veranstaltung ----
             [
@@ -300,6 +309,15 @@ add_action('acf/init', function () {
                         ['fieldPath' => 'locationMode', 'operator' => '==', 'value' => 'eigen'],
                     ],
                 ],
+                'wrapper' => ['width' => 50],
+            ],
+            [
+                'label' => __('Bezirk', 'flynt'),
+                'instructions' => __('Filterbar in der Programmliste. Nicht Teil des öffentlichen Formulars.', 'flynt'),
+                'name' => 'district',
+                'type' => 'select',
+                'choices' => $config['districts'],
+                'allow_null' => 1,
                 'wrapper' => ['width' => 50],
             ],
             [
