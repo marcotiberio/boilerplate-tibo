@@ -88,7 +88,8 @@ function buildEntry($post, array $config)
     $sectors = (array) (get_field('sectors', $post->ID) ?: []);
     $audiences = (array) (get_field('audiences', $post->ID) ?: []);
     $accessibility = (array) (get_field('accessibility', $post->ID) ?: []);
-    $language = (string) (get_field('language', $post->ID) ?: '');
+    // Multiple choice; legacy entries stored a single key, hence the cast.
+    $languages = array_values(array_filter((array) (get_field('language', $post->ID) ?: [])));
 
     // Pin glyph follows the first selected program type.
     $icons = Event\getProgramTypeIcons();
@@ -114,8 +115,8 @@ function buildEntry($post, array $config)
         'sectorLabels'     => array_values(array_filter(array_map(fn ($key) => $config['sectors'][$key] ?? '', $sectors))),
         'audiences'        => array_values($audiences),
         'format'           => (string) (get_field('format', $post->ID) ?: ''),
-        'language'         => $language,
-        'languageLabel'    => $config['languages'][$language] ?? '',
+        'languages'        => $languages,
+        'languageLabel'    => implode(', ', array_filter(array_map(fn ($key) => $config['languages'][$key] ?? '', $languages))),
         'accessible'       => Event\isAccessible($accessibility),
         'family'           => in_array('familien', $audiences, true),
         'icon'             => Asset::requireUrl('assets/icons/event/' . $iconFile),
@@ -138,7 +139,7 @@ add_filter('Flynt/addComponentData?name=BlockEventMap', function ($data) {
 
     // Language pills only list what the program actually offers, so a
     // German-only program shows a single "DE" button as in the design.
-    $usedLanguages = array_unique(array_filter(array_column($entries, 'language')));
+    $usedLanguages = array_unique(array_merge([], ...array_column($entries, 'languages')));
     $languages = [];
     foreach ($config['languages'] as $key => $label) {
         if (in_array($key, $usedLanguages, true)) {

@@ -27,7 +27,7 @@
         if (this.day && !entry.dates.includes(this.day)) return false;
         if (this.audiences.length && !this.audiences.some((key) => entry.audiences.includes(key))) return false;
         if (this.formats.length && !this.formats.includes(entry.format)) return false;
-        if (this.languages.length && !this.languages.includes(entry.language)) return false;
+        if (this.languages.length && !this.languages.some((key) => entry.languages.includes(key))) return false;
         if (this.accessibleOnly && !entry.accessible) return false;
         return true;
       },

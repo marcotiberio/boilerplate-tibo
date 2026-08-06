@@ -13,7 +13,7 @@
         form: {
           orgName: '', contactPerson: '', contactEmail: '', website: '', instagram: '', linkedin: '',
           goals: [], sectors: [], registration: '', registrationLink: '', costs: '', price: '', paymentLink: '',
-          description: '', programTypes: [], format: '', audiences: [],
+          description: '', programTypes: [], format: '', language: [], audiences: [],
           eventTitle: '', intro: '', credits: '',
           dates: [],
           times: { {% for value, label in config.dates %}'{{ value }}': { start: '', end: '' }{% if not loop.last %}, {% endif %}{% endfor %} },
@@ -283,6 +283,17 @@
                 {% endfor %}
               </div>
             </fieldset>
+
+            {# Multi-select: invalid state comes from `select:invalid` in _style.scss,
+               which a required <select multiple> triggers while nothing is picked. #}
+            <label class="flex flex-col gap-xs md:w-1/2">
+              <span class="font-bodySmall">{{ fieldLabels.languageQuestion }} * <small>({{ __('Mehrfachauswahl möglich', 'flynt') }})</small></span>
+              <select multiple size="8" required x-model="form.language" class="event-form__multiselect rounded border border-black p-xs bg-white">
+                {% for value, label in config.languages %}
+                  <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+              </select>
+            </label>
           </fieldset>
 
           {# ============ 3.1. Zielgruppe ============ #}

@@ -29,6 +29,7 @@ $context['labels'] = [
     'registration'  => $singleLabel('registration', $config['registration']),
     'costs'         => $singleLabel('costs', $config['costs']),
     'format'        => $singleLabel('format', $config['format']),
+    'language'      => $mapLabels($post->meta('language'), $config['languages']),
     'dates'         => $mapLabels($post->meta('dates'), $config['dates']),
     'locationMode'  => $singleLabel('locationMode', $config['locationMode']),
 ];

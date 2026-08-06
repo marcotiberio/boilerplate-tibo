@@ -32,9 +32,14 @@
       {# Headline #}
       <div class="flex flex-col gap-sm w-fit">
         {% if headline %}<h1 class="font-bodyLarge hero-text-shadow">{{ headline }}</h1>{% endif %}
-        {% if buttonLink %}
-          <a class="button button--green w-fit" href="{{ buttonLink.url }}" {% if buttonLink.target %} target="{{ buttonLink.target }}" rel="noreferrer noopener"{% endif %}>{{ buttonLink.title }}</a>
-        {% endif %}
+        <div class="flex flex-col md:flex-row gap-sm w-fit">
+          {% if buttonLink %}
+            <a class="button button--green w-fit" href="{{ buttonLink.url }}" {% if buttonLink.target %} target="{{ buttonLink.target }}" rel="noreferrer noopener"{% endif %}>{{ buttonLink.title }}</a>
+          {% endif %}
+          {% if buttonSecondary %}
+            <a class="button button--lilac w-fit" href="{{ buttonSecondary.url }}" {% if buttonSecondary.target %} target="{{ buttonSecondary.target }}" rel="noreferrer noopener"{% endif %}>{{ buttonSecondary.title }}</a>
+          {% endif %}
+        </div>
       </div>
       {# Funders #}
       {% if funders.logos or funders2.logos %}

@@ -9,6 +9,12 @@
     }
   }
 
+  // Multi-select list box — roomier rows than the browser default, so the
+  // options are as tappable as the checkbox rows above them.
+  &__multiselect option {
+    padding: 0.25rem 0.125rem;
+  }
+
   // Choice groups + required consent rows flagged invalid via Alpine.
   .field-error {
     border-radius: 2px;

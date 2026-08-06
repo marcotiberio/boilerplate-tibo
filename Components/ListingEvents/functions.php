@@ -77,7 +77,8 @@ function buildEntry($post, array $config)
             'sectors'    => array_values($sectors),
             'format'     => (string) (get_field('format', $post->ID) ?: ''),
             'district'   => (string) (get_field('district', $post->ID) ?: ''),
-            'language'   => (string) (get_field('language', $post->ID) ?: ''),
+            // Multiple choice; legacy entries stored a single key, hence the cast.
+            'language'   => array_values(array_filter((array) (get_field('language', $post->ID) ?: []))),
             'accessible' => $accessible,
         ],
     ];

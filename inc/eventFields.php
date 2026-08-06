@@ -99,13 +99,52 @@ function getDefaultConfig()
             'offen'      => __('Offenes Format', 'flynt'),
             'anmeldung'  => __('Mit Anmeldung', 'flynt'),
         ],
-        // Sprache der Veranstaltung — single choice (German language names).
-        // Set by the editor in wp-admin (not part of the public form); shown on
-        // the map card and used by the language filter.
+        // Sprache der Veranstaltung — multiple choice (German language names).
+        // Asked in the public form, shown on the map card and the single, and
+        // used by the language filter. Keys are ISO 639-1 codes (plus `dgs` for
+        // Deutsche Gebärdensprache), because the filter pills render the key
+        // uppercased — see languageShortLabel(). The three languages the program
+        // actually expects come first, the rest follow alphabetically.
         'languages' => [
             'de'    => __('Deutsch', 'flynt'),
             'en'    => __('Englisch', 'flynt'),
             'de-en' => __('Deutsch & Englisch', 'flynt'),
+            'ar'    => __('Arabisch', 'flynt'),
+            'bs'    => __('Bosnisch', 'flynt'),
+            'bg'    => __('Bulgarisch', 'flynt'),
+            'zh'    => __('Chinesisch', 'flynt'),
+            'da'    => __('Dänisch', 'flynt'),
+            'dgs'   => __('Deutsche Gebärdensprache', 'flynt'),
+            'fi'    => __('Finnisch', 'flynt'),
+            'fr'    => __('Französisch', 'flynt'),
+            'el'    => __('Griechisch', 'flynt'),
+            'he'    => __('Hebräisch', 'flynt'),
+            'hi'    => __('Hindi', 'flynt'),
+            'id'    => __('Indonesisch', 'flynt'),
+            'it'    => __('Italienisch', 'flynt'),
+            'ja'    => __('Japanisch', 'flynt'),
+            'ko'    => __('Koreanisch', 'flynt'),
+            'hr'    => __('Kroatisch', 'flynt'),
+            'ku'    => __('Kurdisch', 'flynt'),
+            'nl'    => __('Niederländisch', 'flynt'),
+            'no'    => __('Norwegisch', 'flynt'),
+            'fa'    => __('Persisch (Farsi)', 'flynt'),
+            'pl'    => __('Polnisch', 'flynt'),
+            'pt'    => __('Portugiesisch', 'flynt'),
+            'ro'    => __('Rumänisch', 'flynt'),
+            'ru'    => __('Russisch', 'flynt'),
+            'sv'    => __('Schwedisch', 'flynt'),
+            'sr'    => __('Serbisch', 'flynt'),
+            'sk'    => __('Slowakisch', 'flynt'),
+            'sl'    => __('Slowenisch', 'flynt'),
+            'es'    => __('Spanisch', 'flynt'),
+            'sw'    => __('Swahili', 'flynt'),
+            'th'    => __('Thailändisch', 'flynt'),
+            'cs'    => __('Tschechisch', 'flynt'),
+            'tr'    => __('Türkisch', 'flynt'),
+            'uk'    => __('Ukrainisch', 'flynt'),
+            'hu'    => __('Ungarisch', 'flynt'),
+            'vi'    => __('Vietnamesisch', 'flynt'),
         ],
         // Kosten? — single choice (conditional price + link)
         'costs' => [
@@ -365,6 +404,7 @@ function getDefaultFieldLabels()
         'description'          => __('Beschreibungstext des Angebots (max. 1.000 Zeichen)', 'flynt'),
         'programTypesQuestion' => __('Art des Programmpunkts', 'flynt'),
         'formatQuestion'       => __('Format', 'flynt'),
+        'languageQuestion'     => __('Sprache', 'flynt'),
         // 4. Veranstaltung
         'eventTitle'       => __('Titel der Veranstaltung', 'flynt'),
         'intro'            => __('Kurzer Introtext (1 Satz)', 'flynt'),

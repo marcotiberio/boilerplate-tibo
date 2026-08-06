@@ -186,19 +186,21 @@ add_action('acf/init', function () {
                 'wrapper' => ['width' => 50],
             ],
             [
+                'label' => __('Sprache der Veranstaltung', 'flynt'),
+                'instructions' => __('Mehrfachauswahl möglich. Wird auf der Karte und im Eintrag angezeigt und ist filterbar.', 'flynt'),
+                'name' => 'language',
+                'type' => 'select',
+                'choices' => $config['languages'],
+                'multiple' => 1,
+                'ui' => 1,
+                'default_value' => ['de'],
+                'wrapper' => ['width' => 50],
+            ],
+            [
                 'label' => __('Zielgruppe', 'flynt'),
                 'name' => 'audiences',
                 'type' => 'checkbox',
                 'choices' => $config['audiences'],
-            ],
-            [
-                'label' => __('Sprache der Veranstaltung', 'flynt'),
-                'instructions' => __('Wird auf der Karte angezeigt und filterbar. Nicht Teil des öffentlichen Formulars.', 'flynt'),
-                'name' => 'language',
-                'type' => 'radio',
-                'choices' => $config['languages'],
-                'default_value' => 'de',
-                'wrapper' => ['width' => 50],
             ],
 
             // ---- Section 4: Veranstaltung ----

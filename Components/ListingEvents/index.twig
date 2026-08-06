@@ -31,7 +31,7 @@
           if (this.sectors.length && !this.sectors.some((key) => entry.sectors.includes(key))) return false;
           if (this.formats.length && !this.formats.includes(entry.format)) return false;
           if (this.districts.length && !this.districts.includes(entry.district)) return false;
-          if (this.languages.length && !this.languages.includes(entry.language)) return false;
+          if (this.languages.length && !this.languages.some((key) => entry.language.includes(key))) return false;
           if (this.accessibleOnly && !entry.accessible) return false;
           return true;
         },
