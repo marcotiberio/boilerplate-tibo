@@ -1,4 +1,4 @@
-{# Program teaser card. Param: event (shape built in single-event.php) #}
+{# Program teaser card. Param: event (shape built in Components/BlockRelatedEvents/functions.php) #}
 <a class="group flex flex-col gap-3 no-underline text-black" href="{{ event.link }}">
   <div class="relative aspect-[350/225] w-full overflow-hidden rounded bg-grey-200">
     {% if event.thumbnail %}
@@ -28,10 +28,10 @@
   {% if event.programTypes or event.sectors %}
     <div class="flex flex-wrap content-start items-start gap-2.5">
       {% for tag in event.programTypes %}
-        <span class="rounded-image bg-green px-1.5 py-0.5 text-[12px] font-medium leading-none">{{ tag }}</span>
+        <span class="rounded-image bg-green px-[8px] py-min text-[12px] font-medium leading-none">{{ tag }}</span>
       {% endfor %}
       {% for tag in event.sectors %}
-        <span class="rounded-image bg-greenFaded px-1.5 py-0.5 text-[12px] font-medium leading-none">{{ tag }}</span>
+        <span class="rounded-image bg-greenFaded px-[8px] py-min text-[12px] font-medium leading-none">{{ tag }}</span>
       {% endfor %}
     </div>
   {% endif %}

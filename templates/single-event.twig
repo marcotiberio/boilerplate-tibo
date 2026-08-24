@@ -8,10 +8,10 @@
       {% include 'assets/images/event-bg-loops.svg' ignore missing %}
     </div>
 
-    <div class="relative mx-auto w-full max-w-[760px] px-4 py-8 tablet:px-6 tablet:py-[74px]">
+    <div class="relative mx-auto w-full max-w-screen-desktop px-4 py-8 tablet:px-6 tablet:py-[74px]">
       <div class="flex flex-col gap-6 rounded bg-greenFaded p-5 tablet:p-[30px]">
 
-        <a class="flex items-center justify-center gap-2.5 text-[16px] font-semibold leading-none text-black no-underline hover:underline" href="{{ programLink }}">
+        <a class="flex items-center justify-start gap-2.5 text-[16px] font-semibold leading-none text-black no-underline hover:underline" href="{{ programLink }}">
           <span class="flex h-4 w-4 shrink-0 items-center justify-center" aria-hidden="true">
             {% include 'assets/icons/event/arrow-left.svg' ignore missing %}
           </span>
@@ -39,10 +39,10 @@
         {% if labels.programTypes or labels.sectors %}
           <div class="flex flex-wrap content-start items-start gap-2.5">
             {% for tag in labels.programTypes %}
-              <span class="rounded-image bg-green px-1.5 py-0.5 text-[12px] font-medium leading-none">{{ tag }}</span>
+              <span class="rounded-image bg-green px-[8px] py-min text-[12px] font-medium leading-none">{{ tag }}</span>
             {% endfor %}
             {% for tag in labels.sectors %}
-              <span class="rounded-image bg-white px-1.5 py-0.5 text-[12px] font-medium leading-none">{{ tag }}</span>
+              <span class="rounded-image bg-white px-[8px] py-min text-[12px] font-medium leading-none">{{ tag }}</span>
             {% endfor %}
           </div>
         {% endif %}
@@ -121,9 +121,9 @@
           {% endif %}
 
           {# ---- Details ---- #}
-          <section class="flex flex-col gap-3">
+          <section class="flex flex-col gap-sm">
             <h2 class="m-0 text-[22px] font-medium leading-none desktop:text-[24px]">{{ __('Details', 'flynt') }}</h2>
-            <div class="grid grid-cols-1 gap-x-5 gap-y-8 tablet:grid-cols-2 tablet:gap-y-16">
+            <div class="grid grid-cols-1 gap-x-xs gap-y-sm tablet:grid-cols-2 tablet:grid-cols-sm tablet:gap-y-sm">
 
               <div class="flex items-start gap-5">
                 <img class="h-6 w-6 shrink-0" src="{{ icons.ticket }}" alt="" aria-hidden="true">
@@ -242,30 +242,7 @@
     </div>
 
     {# ---- Weitere Programmpunkte ---- #}
-    {% if relatedEvents %}
-      <section class="relative mx-auto flex w-full max-w-screen-lgplus flex-col gap-8 px-4 pb-8 tablet:px-8">
-        <h2 class="m-0 text-[22px] font-medium leading-none desktop:text-[24px]">
-          {{ __('Weitere Programmpunkte, die dir gefallen könnten', 'flynt') }}
-        </h2>
-
-        <div class="grid grid-cols-1 gap-5 tablet:grid-cols-2 desktop:grid-cols-3">
-          {% for event in relatedEvents %}
-            {% include 'templates/Partials/_eventCard.twig' with { event: event } only %}
-          {% endfor %}
-        </div>
-
-        <a
-          class="mx-auto mt-8 flex w-fit items-center justify-center gap-3 rounded bg-green px-[18px] py-2 text-[20px] font-semibold leading-none text-black no-underline transition-colors duration-200 ease-in-out hover:bg-greenFaded"
-          href="{{ programLink }}">
-          {{ __('Programm entdecken', 'flynt') }}
-          <span class="flex h-[33px] w-[33px] shrink-0 items-center justify-center rounded-full bg-white" aria-hidden="true">
-            <span class="flex h-[18px] w-[18px] items-center justify-center [&_svg]:h-full [&_svg]:w-full">
-              {% include 'assets/icons/event/button-arrow.svg' ignore missing %}
-            </span>
-          </span>
-        </a>
-      </section>
-    {% endif %}
+    {{ renderComponent('BlockRelatedEvents', { post: post, programLink: programLink }) }}
 
   </article>
 {% endblock %}

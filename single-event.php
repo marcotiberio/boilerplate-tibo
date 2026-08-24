@@ -137,61 +137,7 @@ $context['galleryUrls'] = array_values(array_filter(array_map(function ($id) {
 $programPage = get_page_by_path('programm');
 $context['programLink'] = $programPage ? get_permalink($programPage) : get_post_type_archive_link(Event\POST_TYPE);
 
-/**
- * Related program entries: same kind of program point first, topped up with the
- * most recent entries so the row is always full.
- */
-$programTypes = (array) ($post->meta('programTypes') ?: []);
-$related = [];
-
-if ($programTypes) {
-    $metaQuery = ['relation' => 'OR'];
-    foreach ($programTypes as $type) {
-        $metaQuery[] = ['key' => 'programTypes', 'value' => '"' . $type . '"', 'compare' => 'LIKE'];
-    }
-    $related = get_posts([
-        'post_type'      => Event\POST_TYPE,
-        'post_status'    => 'publish',
-        'posts_per_page' => 3,
-        'post__not_in'   => [$post->ID],
-        'meta_query'     => $metaQuery,
-    ]);
-}
-
-if (count($related) < 3) {
-    $exclude = array_merge([$post->ID], wp_list_pluck($related, 'ID'));
-    $related = array_merge($related, get_posts([
-        'post_type'      => Event\POST_TYPE,
-        'post_status'    => 'publish',
-        'posts_per_page' => 3 - count($related),
-        'post__not_in'   => $exclude,
-    ]));
-}
-
-$context['relatedEvents'] = array_map(function ($entry) use ($config, $mapLabels, $formatSchedule, $icon) {
-    $accessibility = (array) (get_field('accessibility', $entry->ID) ?: []);
-    $audiences     = (array) (get_field('audiences', $entry->ID) ?: []);
-
-    // Trailing icon row: audience group + accessibility, when either applies.
-    $markers = [];
-    if (array_intersect($audiences, ['familien', 'jugend'])) {
-        $markers[] = ['src' => $icon('family.png'), 'label' => __('Für Familien & Kinder geeignet', 'flynt')];
-    }
-    if ($accessibility && !in_array('keine', $accessibility, true)) {
-        $markers[] = ['src' => $icon('accessibility.png'), 'label' => __('Barrierefrei', 'flynt')];
-    }
-
-    return [
-        'title'        => get_the_title($entry),
-        'link'         => get_permalink($entry),
-        'thumbnail'    => get_the_post_thumbnail_url($entry, 'large'),
-        'badge'        => $icon(Event\getFormatIcon($entry->ID)),
-        'schedule'     => $formatSchedule($entry->ID),
-        'programTypes' => $mapLabels(get_field('programTypes', $entry->ID), $config['programTypes']),
-        'sectors'      => $mapLabels(get_field('sectors', $entry->ID), $config['sectors']),
-        'orgName'      => get_field('orgName', $entry->ID),
-        'markers'      => $markers,
-    ];
-}, $related);
+// The closing "Weitere Programmpunkte" row is a component of its own — see
+// Components/BlockRelatedEvents.
 
 Timber::render('templates/single-event.twig', $context);
