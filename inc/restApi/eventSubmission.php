@@ -84,6 +84,7 @@ function handleSubmission(\WP_REST_Request $request)
         'eventTitle'     => sanitize_text_field($params['eventTitle'] ?? ''),
         'intro'          => sanitize_text_field($params['intro'] ?? ''),
         'credits'        => sanitize_text_field($params['credits'] ?? ''),
+        'venueName'      => sanitize_text_field($params['venueName'] ?? ''),
         'locationMode'   => sanitize_key($params['locationMode'] ?? ''),
         'street'         => sanitize_text_field($params['street'] ?? ''),
         'postalCode'     => sanitize_text_field($params['postalCode'] ?? ''),

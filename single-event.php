@@ -52,20 +52,10 @@ $context['icons'] = [
 ];
 
 /**
- * Badge shown on the title card and on every teaser image. The design only
- * defines one glyph so far — add the per-type files to $perType once they are
- * exported, keyed by the `programTypes` config key.
+ * Badge shown on the title card and on every teaser image — the entry's format
+ * glyph, same as the map pins and the card badges.
  */
-$badgeForTypes = function ($keys) use ($icon) {
-    $perType = []; // e.g. 'workshop' => 'workshop.png'
-    foreach ((array) $keys as $key) {
-        if (isset($perType[$key])) {
-            return $icon($perType[$key]);
-        }
-    }
-    return $icon('team-assignment.png');
-};
-$context['badge'] = $badgeForTypes($post->meta('programTypes'));
+$context['badge'] = $icon(Event\getFormatIcon($post->ID));
 
 /**
  * Termine & Zeiten. `dates` stores ISO keys, the repeater stores the label the
@@ -178,7 +168,7 @@ if (count($related) < 3) {
     ]));
 }
 
-$context['relatedEvents'] = array_map(function ($entry) use ($config, $mapLabels, $badgeForTypes, $formatSchedule, $icon) {
+$context['relatedEvents'] = array_map(function ($entry) use ($config, $mapLabels, $formatSchedule, $icon) {
     $accessibility = (array) (get_field('accessibility', $entry->ID) ?: []);
     $audiences     = (array) (get_field('audiences', $entry->ID) ?: []);
 
@@ -195,7 +185,7 @@ $context['relatedEvents'] = array_map(function ($entry) use ($config, $mapLabels
         'title'        => get_the_title($entry),
         'link'         => get_permalink($entry),
         'thumbnail'    => get_the_post_thumbnail_url($entry, 'large'),
-        'badge'        => $badgeForTypes(get_field('programTypes', $entry->ID)),
+        'badge'        => $icon(Event\getFormatIcon($entry->ID)),
         'schedule'     => $formatSchedule($entry->ID),
         'programTypes' => $mapLabels(get_field('programTypes', $entry->ID), $config['programTypes']),
         'sectors'      => $mapLabels(get_field('sectors', $entry->ID), $config['sectors']),

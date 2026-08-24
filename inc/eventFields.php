@@ -91,8 +91,13 @@ function getDefaultConfig()
         ],
         // Format — single choice
         'format' => [
-            'vorort' => __('Vor Ort', 'flynt'),
-            'hybrid' => __('Hybrid', 'flynt'),
+            'workshop'   => __('Mitmachaktion / Workshop', 'flynt'),
+            'reparatur'  => __('Reparaturangebot / Reparatur Workshop', 'flynt'),
+            'panel'      => __('Panel / Vortrag', 'flynt'),
+            'kunst'      => __('Kunst / Kultur', 'flynt'),
+            'community'  => __('Community / Networking Event', 'flynt'),
+            'openhouse'  => __('Open House / Behind the Scene', 'flynt'),
+            'tour'       => __('Tour / Walk / Stadt-Erlebnis', 'flynt'),
         ],
         // Anmeldung erforderlich? — single choice (conditional link)
         'registration' => [
@@ -414,6 +419,7 @@ function getDefaultFieldLabels()
         'datesQuestion'    => __('Wann soll deine Veranstaltung am 14. oder 15.11.26 stattfinden?', 'flynt'),
         'timeStart'        => __('Startzeit', 'flynt'),
         'timeEnd'          => __('Ende', 'flynt'),
+        'venueName'        => __('Veranstaltungsort', 'flynt'),
         'locationQuestion' => __('Wo soll dein Angebot stattfinden?', 'flynt'),
         'street'           => __('Straße + Hausnummer', 'flynt'),
         'postalCode'       => __('Postleitzahl', 'flynt'),
@@ -543,24 +549,34 @@ function getLabelOptionFields()
 Options::addGlobal(LABEL_OPTIONS_SCOPE, getLabelOptionFields(), 'Event');
 
 /**
- * Pin icon per "Art des Programmpunkts", used by the map markers.
+ * Icon per "Format", used by the map pins and the card badges.
  * Values are file names inside assets/icons/event/.
- *
- * The design ships three glyphs (team assignment / person / hammer-wrench);
- * the remaining program types reuse the closest match until dedicated icons
- * exist. The first selected program type of an entry decides its pin.
  */
-function getProgramTypeIcons()
+function getFormatIcons()
 {
     return [
-        'workshop'  => 'hammer-wrench.png',
-        'reparatur' => 'hammer-wrench.png',
-        'panel'     => 'person.png',
-        'kunst'     => 'person.png',
-        'community' => 'team-assignment.png',
-        'openhouse' => 'team-assignment.png',
-        'tour'      => 'team-assignment.png',
+        'workshop'  => 'Workshop.svg',
+        'reparatur' => 'Repair.svg',
+        'panel'     => 'Vortraege.svg',
+        'kunst'     => 'Culture.svg',
+        'community' => 'Community.svg',
+        'openhouse' => 'BehindTheScenes.svg',
+        'tour'      => 'CityTour.svg',
     ];
+}
+
+/**
+ * Icon file name for one entry. Driven by `format`; entries submitted before
+ * the format list was reworked fall back to their first "Art des
+ * Programmpunkts" (same keys), and to the community glyph if neither matches.
+ */
+function getFormatIcon($postId)
+{
+    $icons = getFormatIcons();
+    $format = (string) (get_field('format', $postId) ?: '');
+    $programTypes = (array) (get_field('programTypes', $postId) ?: []);
+
+    return $icons[$format] ?? $icons[reset($programTypes) ?: ''] ?? 'Community.svg';
 }
 
 /**

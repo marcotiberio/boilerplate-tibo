@@ -17,7 +17,7 @@
           eventTitle: '', intro: '', credits: '',
           dates: [],
           times: { {% for value, label in config.dates %}'{{ value }}': { start: '', end: '' }{% if not loop.last %}, {% endif %}{% endfor %} },
-          locationMode: '', street: '', postalCode: '', mobilityInfo: '',
+          venueName: '', locationMode: '', street: '', postalCode: '', mobilityInfo: '',
           venueOpenForOthers: false, accessibility: [],
           fundingInterest: false, acceptCriteria: false, acceptTerms: false, newsletter: false,
           website_hp: ''
@@ -368,6 +368,11 @@
                 {% endfor %}
               </div>
             </fieldset>
+
+            <label class="flex flex-col gap-xs">
+              <span class="font-bodySmall">{{ fieldLabels.venueName }}</span>
+              <input type="text" x-model="form.venueName" class="rounded border border-black p-xs bg-white">
+            </label>
 
             {# Where #}
             <fieldset class="flex flex-col gap-xs">

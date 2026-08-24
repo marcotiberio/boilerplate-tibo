@@ -44,9 +44,8 @@ function buildEntry($post, array $config)
     $accessibility = (array) (get_field('accessibility', $post->ID) ?: []);
     $accessible = Event\isAccessible($accessibility);
 
-    // Badge glyph follows the first selected program type, as on the map pins.
-    $icons = Event\getProgramTypeIcons();
-    $iconFile = $icons[reset($programTypes) ?: ''] ?? 'team-assignment.png';
+    // Badge glyph follows the entry's format, as on the map pins.
+    $iconFile = Event\getFormatIcon($post->ID);
 
     $imageId = get_post_thumbnail_id($post) ?: 0;
     if (!$imageId) {

@@ -138,9 +138,8 @@ function buildEntry($post, array $config, $now)
     $programTypes = (array) (get_field('programTypes', $post->ID) ?: []);
     $sectors = (array) (get_field('sectors', $post->ID) ?: []);
 
-    // Badge glyph follows the first selected program type, as on the map pins.
-    $icons = Event\getProgramTypeIcons();
-    $iconFile = $icons[reset($programTypes) ?: ''] ?? 'team-assignment.png';
+    // Badge glyph follows the entry's format, as on the map pins.
+    $iconFile = Event\getFormatIcon($post->ID);
 
     $imageIds = imageIds($post->ID);
 

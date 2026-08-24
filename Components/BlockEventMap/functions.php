@@ -91,9 +91,8 @@ function buildEntry($post, array $config)
     // Multiple choice; legacy entries stored a single key, hence the cast.
     $languages = array_values(array_filter((array) (get_field('language', $post->ID) ?: [])));
 
-    // Pin glyph follows the first selected program type.
-    $icons = Event\getProgramTypeIcons();
-    $iconFile = $icons[reset($programTypes) ?: ''] ?? 'team-assignment.png';
+    // Pin glyph follows the entry's format.
+    $iconFile = Event\getFormatIcon($post->ID);
 
     $imageId = get_post_thumbnail_id($post) ?: 0;
     if (!$imageId) {

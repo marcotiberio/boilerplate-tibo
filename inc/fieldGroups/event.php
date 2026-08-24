@@ -285,6 +285,11 @@ add_action('acf/init', function () {
                 ],
             ],
             [
+                'label' => __('Veranstaltungsort', 'flynt'),
+                'name' => 'venueName',
+                'type' => 'text',
+            ],
+            [
                 'label' => __('Wo soll euer Angebot stattfinden?', 'flynt'),
                 'name' => 'locationMode',
                 'type' => 'radio',
