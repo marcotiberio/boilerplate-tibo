@@ -28,7 +28,9 @@ export default function (el) {
 
   L.tileLayer(refs.map.dataset.tileUrl, {
     attribution: refs.map.dataset.tileAttribution,
-    maxZoom: 19
+    maxZoom: 19,
+    // Upscale rather than request tiles the provider doesn't serve.
+    maxNativeZoom: parseInt(refs.map.dataset.tileMaxNative, 10) || 19
   }).addTo(map)
 
   const pinShape = el.querySelector('template[data-ref="pinTemplate"]')
