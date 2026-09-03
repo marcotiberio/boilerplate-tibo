@@ -10,12 +10,24 @@ export default function (el) {
   return () => swiper.destroy()
 }
 
+// ACF selects arrive as strings ('2.2'); fall back to the design default when
+// the field is empty or unparseable.
+function slidesPerView (value, fallback) {
+  const parsed = parseFloat(value)
+  return Number.isNaN(parsed) ? fallback : parsed
+}
+
 function initSlider (refs, data) {
   const { options = {} } = data
+  const gap = 24
+  const mobile = slidesPerView(options.slidesMobile, 1.2)
+  const tablet = slidesPerView(options.slidesTablet, 2.2)
+  const desktop = slidesPerView(options.slidesDesktop, 4)
+
   const config = {
     modules: [Navigation, A11y],
-    slidesPerView: 1.2,
-    spaceBetween: 24,
+    slidesPerView: mobile,
+    spaceBetween: gap,
     watchOverflow: true,
     navigation: {
       prevEl: refs.prev,
@@ -23,16 +35,16 @@ function initSlider (refs, data) {
     },
     breakpoints: {
       640: {
-        slidesPerView: 1.2,
-        spaceBetween: 24
+        slidesPerView: mobile,
+        spaceBetween: gap
       },
       780: {
-        slidesPerView: 2.2,
-        spaceBetween: 24
+        slidesPerView: tablet,
+        spaceBetween: gap
       },
       1180: {
-        slidesPerView: 4,
-        spaceBetween: 24
+        slidesPerView: desktop,
+        spaceBetween: gap
       }
     }
   }

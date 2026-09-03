@@ -150,3 +150,71 @@ function getFirstComponent()
         ],
     ];
 }
+
+/**
+ * Text size select for component options.
+ *
+ * Choices are populated at runtime from the Custom Font Styles defined in
+ * Global Options -> Typography, so blocks never hardcode a type scale.
+ *
+ * A component can use several of these by passing its own name and label.
+ * Any new name must also be listed in TEXT_SIZE_FIELDS in inc/typography.php,
+ * otherwise the select renders with no choices.
+ *
+ * @param string $default Default font-* class.
+ * @param string $name Field name.
+ * @param string $label Field label.
+ * @return array
+ */
+function getTextSize($default = '', $name = 'textSize', $label = '')
+{
+    return [
+        'label' => $label ?: __('Text Size', 'flynt'),
+        'instructions' => __('Uses a style from Global Options → Typography.', 'flynt'),
+        'name' => $name,
+        'type' => 'select',
+        'choices' => [],
+        'allow_null' => 1,
+        'multiple' => 0,
+        'ui' => 0,
+        'default_value' => $default,
+        'wrapper' => [
+            'width' => 100,
+        ],
+    ];
+}
+
+/**
+ * Shared "Options" tab scaffold.
+ *
+ * Provides the tab plus the `options` group that components already forward to
+ * their template via jsonData. It holds no fields of its own — each component
+ * composes what it needs:
+ *
+ *   ...FieldVariables\getStyleOptions([
+ *       FieldVariables\getTextSize(),
+ *       FieldVariables\getColorBackground(),
+ *   ]),
+ *
+ * @param array $fields Fields placed inside the options group.
+ * @return array
+ */
+function getStyleOptions($fields = [])
+{
+    return [
+        [
+            'label' => __('Options', 'flynt'),
+            'name' => 'optionsTab',
+            'type' => 'tab',
+            'placement' => 'top',
+            'endpoint' => 0,
+        ],
+        [
+            'label' => '',
+            'name' => 'options',
+            'type' => 'group',
+            'layout' => 'row',
+            'sub_fields' => $fields,
+        ],
+    ];
+}

@@ -2,7 +2,7 @@
   <flynt-component
     name="HighlightCard"
     class="contents"
-    x-data="{ show: true }"
+    x-data="highlightCard('{{ dismissKey }}')"
     x-cloak>
     {# Fixed, dismissible promo card — vertical on desktop, horizontal on mobile #}
     <div
@@ -33,7 +33,7 @@
       </div>
       <button
         type="button"
-        @click="show = false"
+        @click="dismiss()"
         aria-label="{{ __('Close', 'flynt') }}"
         class="absolute top-xs right-xs z-10 flex items-center justify-center w-[34px] h-[31px] rounded-[8.5px] text-off-white leading-none hover:bg-white/40 transition-colors">
         <svg class="w-[10px] h-[10px]" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">

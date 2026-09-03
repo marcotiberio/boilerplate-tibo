@@ -11,6 +11,16 @@ add_filter('Flynt/addComponentData?name=HighlightCard', function ($data) {
     $data['title'] = $options['title'] ?? '';
     $data['link'] = $options['link'] ?? null;
 
+    // Dismissal is stored client-side under this key; changing the card
+    // content changes the key, so an updated promo shows again.
+    $image = $data['image'];
+    $imageId = is_array($image) ? ($image['ID'] ?? null) : ($image->id ?? null);
+    $data['dismissKey'] = substr(md5(implode('|', [
+        $imageId,
+        $data['title'],
+        $data['link']['url'] ?? '',
+    ])), 0, 8);
+
     return $data;
 });
 

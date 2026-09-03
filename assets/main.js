@@ -3,6 +3,7 @@ import './scripts/loadCustomElements'
 import Alpine from 'alpinejs'
 import intersect from '@alpinejs/intersect'
 import FlyntComponent from './scripts/FlyntComponent'
+import { getCookie, setCookie } from './scripts/helpers'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import 'lazysizes'
@@ -20,6 +21,21 @@ window.customElements.define(
   'flynt-component',
   FlyntComponent
 )
+
+// Remembers a dismissed HighlightCard in a cookie. The key is derived from the
+// card content, so editing the promo makes it reappear for returning visitors.
+Alpine.data('highlightCard', (key) => ({
+  show: false,
+
+  init () {
+    this.show = getCookie('highlightCardDismissed') !== key
+  },
+
+  dismiss () {
+    this.show = false
+    setCookie('highlightCardDismissed', key)
+  }
+}))
 
 Alpine.data('themeSwitcher', () => ({
   isDark: localStorage.getItem('theme') === 'dark',

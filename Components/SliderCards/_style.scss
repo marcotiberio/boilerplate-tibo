@@ -1,4 +1,19 @@
 flynt-component[name='SliderCards'] {
+  .swiper-slide {
+    display: flex;
+    height: auto;
+  }
+
+  // Card surface. Defaults come from the theme palette; the editor's colour
+  // pickers override them via inline custom properties on the article.
+  .card {
+    background-color: var(--card-bg, theme('colors.moss'));
+
+    &:hover {
+      background-color: var(--card-bg-hover, theme('colors.jungle'));
+    }
+  }
+
   .slider-button {
     @apply flex h-11 w-14 items-center justify-center rounded-cta bg-beige text-dark-green transition-colors;
 

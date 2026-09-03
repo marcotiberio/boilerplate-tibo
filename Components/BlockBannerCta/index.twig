@@ -19,7 +19,9 @@
     {% if layout == 'split' %}
 
       {# Split — title and body side by side on desktop, icon badge top-right #}
-      <div class="relative {{ surfaceClass }} rounded-banner overflow-hidden p-sm lg:p-md">
+      {# offWhite sits flush on the page background, so it drops the inner padding #}
+      {% set splitPaddingClass = theme == 'offWhite' ? 'p-0' : 'p-sm lg:p-md' %}
+      <div class="relative {{ surfaceClass }} rounded-banner overflow-hidden {{ splitPaddingClass }}">
         {% if image %}
           <div class="cta-badge lg:absolute mb-sm lg:mb-0 top-sm right-sm lg:top-md lg:right-md flex items-center gap-sm justify-center w-[72px] h-[72px] rounded-cta {{ isDark ? 'bg-white/[0.08]' : 'bg-dark-brown/[0.05]' }}">
             <img class="w-11 h-11 object-contain" src="{{ image.src }}" alt="{{ image.alt|e | default('') }}" loading="lazy" />

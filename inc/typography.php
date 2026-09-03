@@ -1662,3 +1662,58 @@ add_filter('tiny_mce_before_init', function ($init) {
     
     return $init;
 }, 20);
+
+// Component field names that offer the editor-defined type scale. Add a name
+// here whenever a component introduces another FieldVariables\getTextSize().
+const TEXT_SIZE_FIELDS = [
+    'textSize',
+    'cardTitleSize',
+    'cardTextSize',
+];
+
+// Dynamically populate text size selects from the Custom Font Styles defined in
+// Global Options -> Typography, so blocks stay in sync with the editor-defined
+// type scale instead of hardcoding h1-h6.
+function populateFontStyleChoices($field)
+{
+    // Prevent infinite recursion: loading this field triggers Options::getGlobal
+    // which loads all Typography fields, including this one again
+    static $loading = false;
+    if ($loading) {
+        return $field;
+    }
+    $loading = true;
+
+    $typographyOptions = Options::getGlobal('Typography') ?: [];
+    $customFontStyles = !empty($typographyOptions['customFontStyles'])
+        ? $typographyOptions['customFontStyles']
+        : [];
+
+    $choices = [];
+    foreach ($customFontStyles as $style) {
+        if (empty($style['className']) || empty($style['styleName'])) {
+            continue;
+        }
+
+        $className = $style['className'];
+        // Ensure class name starts with "font-" if it doesn't already
+        if (strpos($className, 'font-') !== 0) {
+            $className = 'font-' . $className;
+        }
+
+        $category = !empty($style['category']) ? $style['category'] : 'Custom';
+        $choices[$className] = sprintf('%s — %s', $category, $style['styleName']);
+    }
+
+    if (!empty($choices)) {
+        $field['choices'] = $choices;
+    }
+
+    $loading = false;
+
+    return $field;
+}
+
+foreach (TEXT_SIZE_FIELDS as $textSizeField) {
+    add_filter("acf/load_field/name={$textSizeField}", 'Flynt\\Typography\\populateFontStyleChoices', 10);
+}

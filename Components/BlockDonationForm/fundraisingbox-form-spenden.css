@@ -1,0 +1,469 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
+
+/* ============================================================================
+   Jane Goodall Institut — FundraisingBox form styling · /spenden/
+   ----------------------------------------------------------------------------
+   THIS FILE IS NOT PART OF THE THEME BUILD. The donation form renders inside a
+   cross-origin FundraisingBox iframe, so the site's CSS cannot reach it. Paste
+   the rules below into FundraisingBox instead:
+
+     FundraisingBox → Formulare → "Spenden" (hash o8a2ajp2efevf24x)
+       → Design/Layout → "Eigenes CSS"
+
+   Sibling file: fundraisingbox-form-patenschaft.css (hash 5h5prdwkt2pije19).
+   Same structure, different palette — do not paste one into the other's form.
+
+   Matches the Figma "Step 2" design (node 1-3618): the dark jungle-green card
+   with translucent-white field pills, white text and a moss CTA. The site
+   already renders the card (.fbox-card.bg-jungle on /spenden/), so the form
+   canvas stays transparent and only the fields carry a background.
+
+   Selectors taken from the live markup. FundraisingBox drives almost everything
+   from --fb-* custom properties (paymentAddOn/style8.css), so we retheme through
+   those first and only write real rules where the base stylesheet has no
+   variable — hence almost no !important.
+
+   The @import must stay on line 1 or Geist will not load; if FundraisingBox
+   ever strips it, the font falls back to the system sans in --jgi-sans.
+   ============================================================================ */
+
+:root {
+  /* JGI palette — mirrors tailwind.config.js */
+  --jgi-jungle: #294a3e;        /* card behind the iframe */
+  --jgi-dark-green: #113328;
+  --jgi-moss: #d2e8c3;
+  --jgi-white: #fcfbfa;
+  --jgi-field-bg: rgb(252 251 250 / 20%);   /* Figma field fill */
+  --jgi-muted: rgb(252 251 250 / 50%);      /* Figma: white at 50% */
+  --jgi-hairline: rgb(252 251 250 / 25%);
+
+  --jgi-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', roboto, 'Helvetica Neue', arial, sans-serif;
+
+  /* --- FundraisingBox theme variables ------------------------------------ */
+  --fb-primary: #d2e8c3;
+  --fb-text-color: var(--jgi-white);
+  --fb-font-family: var(--jgi-sans);
+  --fb-font-size: 16px;
+  --fb-link-color: var(--jgi-white);
+
+  /* Group headings ("Ihre Daten", "Zahlungsart") — 13px white at 50% */
+  --fb-legend-font-size: 13px;
+  --fb-legend-font-weight: 400;
+  --fb-legend-font-family: var(--jgi-sans);
+
+  /* Field labels — 13px, full-strength white in this design */
+  --fb-label-font-size: 13px;
+  --fb-label-font-weight: 400;
+  --fb-label-text-color: var(--jgi-white);
+  --fb-label-text-transform: none;
+  --fb-label-font-family: var(--jgi-sans);
+
+  /* Fields — 40px translucent pills, 8px radius, 8/12 padding */
+  --fb-input-font-size: 16px;
+  --fb-input-font-family: var(--jgi-sans);
+  --fb-input-text-color: var(--jgi-white);
+  --fb-input-padding: 8px 12px;
+  --fb-input-bg-color: var(--jgi-field-bg);
+  --fb-input-bg-color-focus: var(--jgi-field-bg);
+  --fb-input-border-width: 1.5px;      /* transparent — reserves the focus ring */
+  --fb-input-border-color: transparent;
+  --fb-input-border-color-focus: var(--jgi-white);
+  --fb-input-border-radius: 8px;
+
+  /* CTA — moss on dark green, 12px radius, sentence case */
+  --fb-button-padding: 8px 20px;
+  --fb-button-border-radius: 12px;
+  --fb-button-bg-color: var(--jgi-moss);
+  --fb-button-bg-color-focus: #bcd9a9;
+  --fb-button-text-color: var(--jgi-dark-green);
+  --fb-button-text-color-focus: var(--jgi-dark-green);
+  --fb-button-text-transform: none;
+  --fb-button-font-size: 16px;
+  --fb-button-font-weight: 600;
+  --fb-button-font-family: var(--jgi-sans);
+  --fb-button-secondary-border-radius: 12px;
+  --fb-button-secondary-text-transform: none;
+  --fb-button-secondary-text-color: var(--jgi-dark-green);
+  --fb-button-secondary-font-size: 16px;
+  --fb-button-secondary-padding: 8px 20px;
+
+  /* Controls — white ring, white dot */
+  --fb-checkbox-size: 16px;
+  --fb-checkbox-bg-color: var(--jgi-field-bg);
+  --fb-checkbox-border-color: var(--jgi-white);
+  --fb-checkbox-border-width: 1.5px;
+  --fb-checkbox-border-radius: 4px;
+  --fb-radio-size: 16px;
+  --fb-radio-bg-color: transparent;
+  --fb-radio-border-color: var(--jgi-white);
+  --fb-radio-border-width: 1.5px;
+
+  /* Preset amounts + payment tiles are flattened into radio rows below */
+  --fb-amount-choice-bg-color: transparent;
+  --fb-amount-choice-border-color: transparent;
+  --fb-amount-choice-border-width: 0;
+  --fb-amount-choice-border-radius: 0;
+  --fb-amount-choice-amount-font-size: 16px;
+  --fb-amount-choice-description-font-size: 13px;
+  --fb-payment-method-bg-color: transparent;
+  --fb-payment-method-bg-color-focus: transparent;
+  --fb-payment-method-border-color: transparent;
+  --fb-payment-method-border-color-focus: transparent;
+  --fb-payment-method-border-width: 0;
+  --fb-payment-method-border-radius: 0;
+
+  --fb-footnote-font-size: 13px;
+  --fb-footnote-text-color: var(--jgi-muted);
+  --fb-footnote-font-family: var(--jgi-sans);
+
+  --fb-modal-bg-color: var(--jgi-jungle);
+  --fb-modal-text-color: var(--jgi-white);
+  --fb-modal-heading-text-color: var(--jgi-white);
+  --fb-modal-heading-font-family: var(--jgi-sans);
+  --fb-modal-font-family: var(--jgi-sans);
+  --fb-modal-border-radius: 16px;
+}
+
+/* --- Canvas: transparent so the site's jungle card shows through ---------- */
+html,
+body,
+#wrapper {
+  background: transparent;
+  color: var(--jgi-white);
+  font-family: var(--jgi-sans);
+}
+
+/* The org logo is already in the site header above the form. FundraisingBox
+   reveals it with an inline style via jQuery .show(), so !important is needed. */
+#organisation-logo {
+  display: none !important;
+}
+
+/* --- Layout rhythm — Figma: 40px between groups, 16px between rows -------- */
+#fbPaymentForm fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+/* Scoped under the form id so these beat `#fbPaymentForm fieldset { margin: 0 }` */
+#fbPaymentForm #donorData,
+#fbPaymentForm #paymentMethodBox,
+#fbPaymentForm #additionalSettings {
+  margin-block-start: 40px;
+}
+
+#fbPaymentForm .form-group {
+  margin-block-end: 16px;
+}
+
+#fbPaymentForm legend {
+  color: var(--jgi-muted);
+  margin-block-end: 12px;
+}
+
+#amountChoicesLabel {
+  margin-block-end: 12px;
+}
+
+#fbPaymentForm .form-group .label {
+  margin-block-end: 4px;
+}
+
+/* The design opens on the amount question — FB's "Spende" heading has no
+   counterpart, so hide it visually but keep the fieldset's accessible name. */
+#amountBox > legend {
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* Inline "?" help buttons next to a label */
+#fbPaymentForm .help-text-indicator {
+  color: var(--jgi-white);
+}
+
+/* --- Fields --------------------------------------------------------------- */
+#fbPaymentForm ::placeholder {
+  color: var(--jgi-muted);
+}
+
+/* Chevron in white instead of the default grey */
+#fbPaymentForm select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='https://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23FCFBFA' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-size: 15px 15px;
+  padding-inline-end: 36px;
+}
+
+/* Dropdown lists are painted by the OS — keep them legible on the dark card */
+#fbPaymentForm select option {
+  background: var(--jgi-dark-green);
+  color: var(--jgi-white);
+}
+
+/* --- Radios & checkboxes: 16px, 1.5px white ring, white dot --------------- */
+#fbPaymentForm input[type='radio'],
+#fbPaymentForm input[type='checkbox']:not(.sr-only) {
+  appearance: none;
+  background-color: transparent;
+  background-image: none;
+  border: 1.5px solid var(--jgi-white);
+  height: 16px;
+  width: 16px;
+}
+
+#fbPaymentForm input[type='radio'] {
+  border-radius: 50%;
+}
+
+#fbPaymentForm input[type='checkbox']:not(.sr-only) {
+  border-radius: 4px;
+}
+
+#fbPaymentForm input[type='radio']:checked {
+  appearance: none;
+  background-color: transparent;
+  background-image: radial-gradient(circle at center, var(--jgi-white) 0 4px, transparent 4px);
+  border-color: var(--jgi-white);
+}
+
+#fbPaymentForm input[type='checkbox']:not(.sr-only):checked {
+  appearance: none;
+  background-color: var(--jgi-white);
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23294a3e' xmlns='https://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border-color: var(--jgi-white);
+}
+
+#fbPaymentForm input[type='radio']:focus-visible,
+#fbPaymentForm input[type='checkbox']:focus-visible {
+  outline: 2px solid var(--jgi-moss);
+  outline-offset: 2px;
+}
+
+/* "Als Unternehmen spenden" switch — Figma has no switch, so it borrows the
+   moss accent of the CTA. */
+#fbPaymentForm .toggle {
+  margin-block-end: 16px;
+}
+
+#fbPaymentForm .toggle-ui {
+  background-color: var(--jgi-field-bg);
+  border-color: var(--jgi-hairline);
+}
+
+#fbPaymentForm .toggle-ui::after {
+  background-color: var(--jgi-white);
+  border-color: var(--jgi-white);
+}
+
+#fbPaymentForm .toggle input:checked + .toggle-ui {
+  background-color: var(--jgi-moss);
+}
+
+#fbPaymentForm .toggle input:checked + .toggle-ui::after {
+  background-color: var(--jgi-dark-green);
+  border-color: var(--jgi-dark-green);
+}
+
+/* --- Amounts -------------------------------------------------------------- */
+#amountChoices {
+  margin-block-end: 40px;
+}
+
+#amountChoices .choices-grid {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 31px;
+  margin-block-end: 0;
+}
+
+/* Preset amounts: flatten FB's tile grid into the Figma radio row */
+#amountChoices .choice:not(.choice-custom) {
+  align-items: center;
+  background: transparent;
+  flex: 0 0 auto;
+  flex-direction: row;
+  gap: 13px;
+  overflow: visible;
+  padding: 0;
+  text-align: start;
+}
+
+#amountChoices .choice:not(.choice-custom) input[type='radio'] {
+  appearance: none;
+  cursor: pointer;
+  flex: none;
+  height: 16px;
+  inset: auto;
+  opacity: 1;
+  position: static;
+  width: 16px;
+}
+
+#amountChoices .choice:not(.choice-custom) > span {
+  align-items: baseline;
+  column-gap: 6px;
+  flex-direction: row;
+  text-align: start;
+}
+
+#amountChoices .choice:not(.choice-custom) > span > :not([hidden]) ~ :not([hidden]) {
+  margin-block: 0;
+}
+
+#amountChoices .choice .amount {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+#amountChoices .choice .description {
+  color: var(--jgi-muted);
+  font-size: 13px;
+}
+
+/* The tile's checked state painted a full-bleed primary background — the row
+   layout marks selection with the radio dot instead. */
+#amountChoices .choice.checked {
+  color: inherit;
+}
+
+#amountChoices .choice.checked::before {
+  content: none;
+}
+
+/* "Freier Betrag" — the design's "Alternativbetrag €" pill: a field, not a row */
+#amountChoices .choice-custom {
+  background: transparent;
+  flex: 1 1 264px;
+  max-width: 264px;
+  overflow: visible;
+  padding: 0;
+}
+
+#amountChoices .choice-custom .input-custom-amount {
+  background: var(--jgi-field-bg);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  gap: 8px;
+  justify-content: space-between;
+  margin-block-end: 8px;
+  min-height: 40px;
+  padding: 8px 12px;
+}
+
+#amountChoices .choice-custom .input-custom-amount input {
+  background: transparent;
+  border: 0;
+  color: var(--jgi-white);
+  flex: 1 1 auto;
+  font-size: 16px;
+  font-weight: 400;
+  min-width: 0;
+  padding: 0;              /* the pill itself carries the 8/12 padding */
+  text-align: start;
+}
+
+#amountChoices .choice-custom .description {
+  padding-inline-start: 12px;
+}
+
+/* --- Payment methods: same flattening, text labels as in Figma ------------ */
+#paymentmethods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 31px;
+}
+
+#fbPaymentForm .paymentmethod {
+  gap: 13px;
+  padding: 0;
+  width: auto;
+}
+
+#fbPaymentForm .paymentmethod-visual {
+  align-items: center;
+  flex-direction: row;
+  margin-inline-start: 0;
+  width: auto;
+}
+
+#fbPaymentForm .paymentmethod-logo {
+  display: none;
+}
+
+#fbPaymentForm .paymentmethod-label {
+  color: var(--jgi-white);
+  display: block;
+  font-size: 16px;
+}
+
+#bankAccountForm {
+  padding-block-start: 12px;
+}
+
+#bankAccountForm > p:first-child {
+  color: var(--jgi-muted);
+  font-size: 13px;
+  margin: 0 0 12px;
+}
+
+/* --- SSL / "Sicheres Spenden" notice -------------------------------------- */
+#securityBox {
+  margin: 40px 0 0;
+  padding: 0;
+}
+
+#securityBox > div {
+  background: var(--jgi-field-bg);
+  border: 0;
+  border-radius: 8px;
+}
+
+#securityBox svg,
+#securityBox p {
+  color: var(--jgi-white);
+}
+
+/* --- Submit --------------------------------------------------------------- */
+#fbPaymentForm div:has(> #submitForm) {
+  margin: 40px 0 0;
+  padding: 0;
+}
+
+#submitForm {
+  justify-content: center;
+  letter-spacing: 0.16px;
+  min-height: 44px;
+  min-width: 200px;
+}
+
+/* --- Errors: keep them readable on the dark card -------------------------- */
+#fbPaymentForm .error {
+  color: #ffb4a8;
+}
+
+/* --- Footnotes, links, footer -------------------------------------------- */
+#fbPaymentForm a,
+#imprintLink a {
+  color: var(--jgi-white);
+  text-decoration: underline;
+}
+
+#imprintLink {
+  padding: 16px 0 0;
+}
+
+/* FundraisingBox badge — not in the design. Like the org logo, FB reveals it
+   with an inline style via jQuery .show(), so !important is needed. */
+#footer,
+#fundraisingBoxLogo {
+  display: none !important;
+}

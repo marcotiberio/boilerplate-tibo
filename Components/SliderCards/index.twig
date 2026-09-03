@@ -1,6 +1,9 @@
 <flynt-component
   load:on="idle" name="SliderCards"
-  class="w-full overflow-hidden">
+  class="w-full overflow-hidden"
+  style="
+    {% if options.colorText %}color: {{ options.colorText }};{% endif %}
+    {% if options.colorBackground %}background-color: {{ options.colorBackground }};{% endif %}">
   <script type="application/json">{{ jsonData|json_encode }}</script>
   <div class="boxed">
     <div class="flex flex-col md:flex-row justify-between md:items-center gap-sm mb-lg">
@@ -28,8 +31,12 @@
       <div data-ref="slider" class="swiper-container">
         <div class="swiper-wrapper">
           {% for card in cards %}
-            <div class="swiper-slide h-auto">
-              <article class="group relative flex flex-col h-full p-min bg-moss hover:bg-jungle rounded-card overflow-hidden transition-colors duration-300 ease-in-out">
+            <div class="swiper-slide flex h-auto">
+              <article
+                class="card group relative flex w-full flex-col h-full p-min rounded-card overflow-hidden transition-colors duration-300 ease-in-out"
+                style="
+                  {% if options.cardColorBackground %}--card-bg: {{ options.cardColorBackground }};{% endif %}
+                  {% if options.cardColorBackgroundHover %}--card-bg-hover: {{ options.cardColorBackgroundHover }};{% endif %}">
                 {% if card.image and card.image.src %}
                   <img class="w-full h-[181px] object-cover aspect-video rounded-image" src="{{ card.image.src }}" alt="{{ card.image.alt|e|default('') }}">
                 {% endif %}
@@ -42,7 +49,9 @@
                     </h3>
                   {% endif %}
                   {% if card.excerpt %}
-                    <p class="text-sm text-muted-black group-hover:text-white transition-colors duration-300 ease-in-out flex-1">{{ card.excerpt }}</p>
+                    {# Cap card copy so slides stay a predictable length; the ellipsis counts toward the 100 #}
+                    {% set excerpt = card.excerpt|length > 100 ? card.excerpt|slice(0, 99)|trim ~ '…' : card.excerpt %}
+                    <p class="{{ options.textSize|default('font-body') }} text-muted-black group-hover:text-white transition-colors duration-300 ease-in-out flex-1">{{ excerpt }}</p>
                   {% endif %}
                 </div>
                 {% if card.link %}

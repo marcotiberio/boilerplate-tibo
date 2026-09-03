@@ -2,6 +2,7 @@
 
 namespace Flynt\Components\SliderCards;
 
+use Flynt\FieldVariables;
 use Timber\Timber;
 
 add_filter('Flynt/addComponentData?name=SliderCards', function ($data) {
@@ -110,6 +111,88 @@ function getChimpanzeeCards($postCount)
     }
 
     return $cards;
+}
+
+/**
+ * Cards-per-view selects, one per breakpoint.
+ *
+ * Decimal values intentionally show a sliver of the next card ("peek"), which
+ * signals the carousel is scrollable. Values live in the options group, so they
+ * reach script.js through jsonData without extra wiring.
+ *
+ * @return array
+ */
+function getSlidesPerViewFields()
+{
+    $choices = [
+        '1' => __('1 card', 'flynt'),
+        '1.2' => __('1 card + peek', 'flynt'),
+        '2' => __('2 cards', 'flynt'),
+        '2.2' => __('2 cards + peek', 'flynt'),
+        '3' => __('3 cards', 'flynt'),
+        '3.2' => __('3 cards + peek', 'flynt'),
+        '4' => __('4 cards', 'flynt'),
+        '5' => __('5 cards', 'flynt'),
+    ];
+
+    return [
+        [
+            'label' => __('Cards per View (Mobile)', 'flynt'),
+            'name' => 'slidesMobile',
+            'type' => 'select',
+            'choices' => $choices,
+            'default_value' => '1.2',
+            'allow_null' => 0,
+            'wrapper' => ['width' => 33],
+        ],
+        [
+            'label' => __('Cards per View (Tablet)', 'flynt'),
+            'name' => 'slidesTablet',
+            'type' => 'select',
+            'choices' => $choices,
+            'default_value' => '2.2',
+            'allow_null' => 0,
+            'wrapper' => ['width' => 33],
+        ],
+        [
+            'label' => __('Cards per View (Desktop)', 'flynt'),
+            'name' => 'slidesDesktop',
+            'type' => 'select',
+            'choices' => $choices,
+            'default_value' => '4',
+            'allow_null' => 0,
+            'wrapper' => ['width' => 34],
+        ],
+    ];
+}
+
+/**
+ * Card surface colors.
+ *
+ * Block-level rather than per-card: the Projects and Chimpanzee sources build
+ * their cards in PHP and have no repeater to hang a per-card field on, so a
+ * single setting is the only one that works for all three content sources.
+ *
+ * @return array
+ */
+function getCardColorFields()
+{
+    return [
+        [
+            'label' => __('Card Background', 'flynt'),
+            'instructions' => __('Leave empty for the default moss green.', 'flynt'),
+            'name' => 'cardColorBackground',
+            'type' => 'color_picker',
+            'wrapper' => ['width' => 50],
+        ],
+        [
+            'label' => __('Card Background (Hover)', 'flynt'),
+            'instructions' => __('Leave empty for the default jungle green.', 'flynt'),
+            'name' => 'cardColorBackgroundHover',
+            'type' => 'color_picker',
+            'wrapper' => ['width' => 50],
+        ],
+    ];
 }
 
 function getACFLayout()
@@ -242,6 +325,14 @@ function getACFLayout()
                     ],
                 ],
             ],
+            ...FieldVariables\getStyleOptions(array_merge(
+                [
+                    FieldVariables\getTextSize('', 'cardTitleSize', __('Card Title Size', 'flynt')),
+                    FieldVariables\getTextSize('', 'cardTextSize', __('Card Text Size', 'flynt')),
+                ],
+                getSlidesPerViewFields(),
+                getCardColorFields()
+            )),
         ],
     ];
 }

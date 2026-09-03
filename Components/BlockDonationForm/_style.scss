@@ -10,6 +10,16 @@
     max-width: 100%;
     width: 100% !important;
   }
+
+  // FundraisingBox attribution badge, when it sits next to #fbIframeDiv on the
+  // parent page. The badge inside the iframe is hidden by the fundraisingbox-form-*.css files.
+  //
+  // Do NOT hide this with an inline style: paymentJS's window.onload looks for a
+  // logo link whose inline display/visibility/opacity are unset, and deletes the
+  // whole form when it finds none. It never reads stylesheets, so this is safe.
+  a[href*='fundraisingbox.com']:has(img) {
+    display: none;
+  }
 }
 
 .fbox-embed__placeholder {
