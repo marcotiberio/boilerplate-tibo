@@ -96,6 +96,29 @@ function getACFLayout()
                 'delay' => 1,
                 'required' => 0,
             ],
+            [
+                'label' => __('Button', 'flynt'),
+                'instructions' => __('Optional button shown below the caption.', 'flynt'),
+                'name' => 'button',
+                'type' => 'link',
+                'required' => 0,
+                'wrapper' => ['width' => 50],
+            ],
+            [
+                'label' => __('Button Color', 'flynt'),
+                'instructions' => __('Colour variant of the button.', 'flynt'),
+                'name' => 'buttonStyle',
+                'type' => 'select',
+                'choices' => [
+                    'primary' => __('Primary', 'flynt'),
+                    'secondary' => __('Secondary', 'flynt'),
+                    'accent' => __('Accent', 'flynt'),
+                    'mutedWhite' => __('Muted White', 'flynt'),
+                ],
+                'default_value' => 'primary',
+                'allow_null' => 0,
+                'wrapper' => ['width' => 50],
+            ],
         ],
     ];
 }

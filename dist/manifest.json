@@ -314,7 +314,7 @@
     "file": "assets/swiper-bundle-e0f77aaf.js"
   },
   "assets/admin.js": {
-    "file": "assets/admin-ef4fd34b.js",
+    "file": "assets/admin-a583fdd1.js",
     "isEntry": true,
     "src": "assets/admin.js"
   },
@@ -371,6 +371,10 @@
     "file": "assets/youtube-77f3f8fd.svg",
     "src": "assets/icons/youtube.svg"
   },
+  "assets/images/acacia.svg": {
+    "file": "assets/acacia-37d45f8f.svg",
+    "src": "assets/images/acacia.svg"
+  },
   "assets/images/bgWave.svg": {
     "file": "assets/bgWave-b9861c07.svg",
     "src": "assets/images/bgWave.svg"
@@ -423,7 +427,7 @@
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-d7c693d6.css",
+    "file": "assets/main-d3486946.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
@@ -433,7 +437,7 @@
     "src": "assets/print.scss"
   },
   "assets/tinyMce.scss": {
-    "file": "assets/tinyMce-96a2a093.css",
+    "file": "assets/tinyMce-868fc5c5.css",
     "isEntry": true,
     "src": "assets/tinyMce.scss"
   },

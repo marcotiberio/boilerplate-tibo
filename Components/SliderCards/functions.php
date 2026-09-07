@@ -304,7 +304,7 @@ function getACFLayout()
                         'name' => 'image',
                         'type' => 'image',
                         'preview_size' => 'medium',
-                        'required' => 0,
+                        'required' => 1,
                     ],
                     [
                         'label' => __('Title', 'flynt'),
@@ -319,9 +319,11 @@ function getACFLayout()
                     ],
                     [
                         'label' => __('Link', 'flynt'),
+                        'instructions' => __('Link text: maximum 25 characters.', 'flynt'),
                         'name' => 'link',
                         'type' => 'link',
                         'required' => 0,
+                        'maxlength' => 32,
                     ],
                 ],
             ],

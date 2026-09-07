@@ -39,3 +39,11 @@ body {
   @apply text-black;
   font-family: var(--primary-font-family, 'Inter', Arial, sans-serif);
 }
+
+/* Neutralise iOS/WebKit data detectors (auto-linked phone numbers, addresses, dates) */
+a[x-apple-data-detectors],
+a[href^='x-apple-data-detectors://'] {
+  color: inherit !important;
+  text-decoration: none !important;
+  pointer-events: none;
+}

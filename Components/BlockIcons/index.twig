@@ -5,7 +5,7 @@
   style="
     {% if options.colorText %}color: {{ options.colorText }};{% endif %}
     {% if options.colorBackground %}background-color: {{ options.colorBackground }};{% endif %}">
-  <div class="boxed py-xl">
+  <div class="boxed">
     {% if title %}
       {% set tag = titleTag|default('h2') %}
       <{{ tag }} class="font-{{ titleSize|default('h2') }} text-dark-green mb-xl">{{ title }}</{{ tag }}>

@@ -1,11 +1,7 @@
 <flynt-component load:on="visible" name="NavigationFooter" class="relative block">
 
   {# ───────────────────────── Newsletter ───────────────────────── #}
-  <section class="relative overflow-hidden min-h-[100vh] md:min-h-[50vh] lg:min-h-[50vh]">
-    {# Decorative acacia silhouette bridging into the footer #}
-    <div class="block absolute right-0 bottom-[-40px] w-[75vw] sm:w-[50vw] sm:bottom-[-60px] md:bottom-[-40px] md:max-w-[325px] text-dark-green pointer-events-none select-none [&>svg]:w-full [&>svg]:h-auto" aria-hidden="true">
-      {% include 'assets/images/footer-forest.svg' ignore missing %}
-    </div>
+  <section class="relative overflow-hidden md:min-h-[50vh] lg:min-h-[50vh] pb-[22px] md:pb-0">
 
     <div class="boxed relative z-10 py-xl">
       <div class="flex flex-col md:flex-row items-start lg:items-center gap-sm sm:gap-md lg:gap-xxl max-w-[900px]">
@@ -40,6 +36,16 @@
         </div>
       </div>
     </div>
+    {# Decorative acacia silhouette bridging into the footer #}
+    <div class="block lg:absolute 
+                mr-0 ml-auto
+                md:right-0 md:bottom-[45px]
+                w-[75vw] sm:w-[50vw]
+                lg:max-w-[500px] 
+                text-dark-green pointer-events-none select-none [&>svg]:w-full [&>svg]:h-auto"
+                aria-hidden="true">
+      {% include 'assets/images/acacia.svg' ignore missing %}
+    </div>
   </section>
 
   {# ───────────────────────── Main footer (dark green) ───────────────────────── #}
@@ -66,12 +72,12 @@
               <span class="text-off-white/80">{{ address|nl2br }}</span>
             {% endif %}
             {% if phone %}
-              <span class="flex items-center gap-xs text-off-white/80">
+              <a class="flex items-center gap-xs text-off-white/80 hover:text-off-white transition-colors" href="tel:{{ phone|replace({' ': '', '(': '', ')': '', '-': '', '/': ''}) }}">
                 <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
                 </svg>
                 <span>{{ phone }}</span>
-              </span>
+              </a>
             {% endif %}
             {% if email %}
               <a class="flex items-center gap-xs text-off-white/80 hover:text-off-white transition-colors" href="mailto:{{ email }}">
@@ -154,9 +160,14 @@
 
     {# ── Bottom legal bar — wave-backed full-width band (lighter green) ── #}
     <div class="relative mt-xl">
-      {# Decorative wave lifting the lighter-green legal strip out of the footer #}
-      <div class="absolute inset-0 pointer-events-none select-none [&>svg]:h-full [&>svg]:w-full" aria-hidden="true">
-        {% include 'assets/images/bgWave.svg' ignore missing %}
+      {# Decorative wave lifting the lighter-green legal strip out of the footer.
+         The wave sits in a fixed-height cap (not stretched over the whole band) so the
+         curve stays gentle on narrow screens, where the band grows tall as content stacks. #}
+      <div class="absolute inset-0 pointer-events-none select-none" aria-hidden="true">
+        <div class="absolute inset-x-0 top-0 h-[44px] md:h-[56px] lg:h-[68px] [&>svg]:h-full [&>svg]:w-full">
+          {% include 'assets/images/bgWave.svg' ignore missing %}
+        </div>
+        <div class="absolute inset-x-0 bottom-0 top-[44px] md:top-[56px] lg:top-[68px] bg-jungle"></div>
       </div>
 
       <div class="boxed relative z-10 !py-sm">

@@ -1,7 +1,7 @@
 <flynt-component
   load:on="idle"
   name="SliderImages"
-  class="w-full overflow-hidden py-xl">
+  class="w-full overflow-hidden py-0">
   <script type="application/json">{{ jsonData|json_encode }}</script>
   <div class="boxed">
     <div class="flex flex-col md:flex-row justify-between md:items-center gap-sm mb-[32px]">
@@ -43,6 +43,15 @@
 
     {% if caption %}
       <div class="prose font-body text-black max-w-screen-mobile mt-md">{{ caption }}</div>
+    {% endif %}
+
+    {% if button %}
+      <a
+        class="button button--{{ buttonStyle|default('primary') }} mt-md"
+        href="{{ button.url }}"
+        {% if button.target %} target="{{ button.target }}" rel="noreferrer noopener"{% endif %}>
+        <span>{{ button.title }}</span>
+      </a>
     {% endif %}
   </div>
 </flynt-component>

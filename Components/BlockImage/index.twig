@@ -16,9 +16,9 @@
   {# Mobile crops media to a 3:4 portrait unless "show full image" is enabled. #}
   {% set aspectClass = showFullImageMobile ? '' : 'aspect-[3/4] md:aspect-auto' %}
 
-  <div class="{{ isFullscreen ? 'relative left-1/2 w-screen -translate-x-1/2' : 'relative boxed !py-xl' }}">
+  <div class="{{ isFullscreen ? 'relative left-1/2 w-screen -translate-x-1/2' : 'relative boxed' }}">
     <figure
-      class="group peer relative z-10 m-0 w-full overflow-hidden {{ aspectClass }} {{ isFullscreen ? '' : 'is-framed' }}"
+      class="group peer relative z-10 m-0 w-full max-w-screen-max mx-auto overflow-hidden {{ aspectClass }} {{ isFullscreen ? 'rounded-image' : 'rounded-none is-framed' }}"
       {% if video.url %}x-data="{ playing: true }"{% endif %}>
 
       {# Media — video takes priority, image doubles as poster/fallback #}
@@ -35,7 +35,7 @@
         </video>
       {% elseif image %}
         <img
-          class="block w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.03]"
+          class="block w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.03]""
           src="{{ image.src }}"
           alt="{{ image.alt|e|default('') }}"
           loading="lazy"
