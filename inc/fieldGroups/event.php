@@ -178,7 +178,7 @@ add_action('acf/init', function () {
                 'required' => 1,
             ],
             [
-                'label' => __('Icon-Format', 'flynt'),
+                'label' => __('Old Format', 'flynt'),
                 'instructions' => __('Bestimmt nur das Icon auf der Karte und im Karten-Badge.', 'flynt'),
                 'name' => 'format',
                 'type' => 'radio',
