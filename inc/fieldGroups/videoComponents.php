@@ -73,6 +73,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'button_label' => __('Add Component', 'flynt'),
                 'layouts' => [
                     Components\BlockVideoOembed\getACFLayout(),
+                    Components\BlockEmbed\getACFLayout(),
                     Components\BlockWysiwyg\getACFLayout(),
                     Components\BlockVideoText\getACFLayout(),
                     Components\ListingVideosRelated\getACFLayout(),

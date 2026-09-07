@@ -1,104 +1,248 @@
 {% extends 'templates/_document.twig' %}
 
 {% block content %}
-  {# Bare, unstyled dump of every event field — style later. #}
-  <article class="event mt-pageTop boxed max-w-screen-max mx-auto">
-    <h1>{{ post.title }}</h1>
-    {% if post.meta('intro') %}<p class="intro">{{ post.meta('intro') }}</p>{% endif %}
+  <article class="event relative overflow-hidden bg-white text-black">
 
-    {% if post.thumbnail %}
-      <img src="{{ post.thumbnail.src }}" alt="{{ post.thumbnail.alt|e|default('') }}">
-    {% endif %}
+    {# Decorative brand loops behind the panel. #}
+    <div class="pointer-events-none absolute -left-[20%] -top-[300px] hidden w-[180%] rotate-[25deg] select-none tablet:block [&_svg]:h-auto [&_svg]:w-full" aria-hidden="true">
+      {% include 'assets/images/event-bg-loops.svg' ignore missing %}
+    </div>
 
-    {# ---- Organisation ---- #}
-    <h2>{{ __('Organisation', 'flynt') }}</h2>
-    <dl>
-      {% if post.meta('orgName') %}<dt>{{ __('Name der Organisation', 'flynt') }}</dt><dd>{{ post.meta('orgName') }}</dd>{% endif %}
-      {% if post.meta('contactPerson') %}<dt>{{ __('Kontaktperson', 'flynt') }}</dt><dd>{{ post.meta('contactPerson') }}</dd>{% endif %}
-      {% if post.meta('contactEmail') %}<dt>{{ __('Mailadresse', 'flynt') }}</dt><dd>{{ post.meta('contactEmail') }}</dd>{% endif %}
-      {% if orgLogoUrl %}<dt>{{ __('Logo', 'flynt') }}</dt><dd><img src="{{ orgLogoUrl }}" alt="{{ post.meta('orgName')|e }}"></dd>{% endif %}
-      {% if post.meta('website') %}<dt>{{ __('Website', 'flynt') }}</dt><dd><a href="{{ post.meta('website') }}" target="_blank" rel="noopener">{{ post.meta('website') }}</a></dd>{% endif %}
-      {% if post.meta('instagram') %}<dt>{{ __('Instagram', 'flynt') }}</dt><dd><a href="{{ post.meta('instagram') }}" target="_blank" rel="noopener">{{ post.meta('instagram') }}</a></dd>{% endif %}
-      {% if post.meta('linkedin') %}<dt>{{ __('LinkedIn', 'flynt') }}</dt><dd><a href="{{ post.meta('linkedin') }}" target="_blank" rel="noopener">{{ post.meta('linkedin') }}</a></dd>{% endif %}
-    </dl>
+    <div class="relative mx-auto w-full max-w-screen-desktop px-4 py-8 tablet:px-6 tablet:py-[74px]">
+      <div class="flex flex-col gap-6 rounded bg-greenFaded p-5 tablet:p-[30px]">
 
-    {# ---- Angebot ---- #}
-    <h2>{{ __('Angebot', 'flynt') }}</h2>
-    <dl>
-      {% if labels.goals %}<dt>{{ __('Thema / Ziele', 'flynt') }}</dt><dd>{{ labels.goals|join(', ') }}</dd>{% endif %}
-      {% if labels.sectors %}<dt>{{ __('Sektor', 'flynt') }}</dt><dd>{{ labels.sectors|join(', ') }}</dd>{% endif %}
-      {% if labels.registration %}<dt>{{ __('Anmeldung erforderlich?', 'flynt') }}</dt><dd>{{ labels.registration }}</dd>{% endif %}
-      {# Link only when it's an actual URL — the field also accepts free text (e.g. e-mail instructions) #}
-      {% if post.meta('registrationLink') %}
-        <dt>{{ __('Anmeldelink', 'flynt') }}</dt>
-        <dd>
-          {% if post.meta('registrationLink') starts with 'http' %}
-            <a href="{{ post.meta('registrationLink') }}" target="_blank" rel="noopener">{{ post.meta('registrationLink') }}</a>
-          {% else %}
-            {{ post.meta('registrationLink') }}
+        <a class="flex items-center justify-start gap-2.5 text-[16px] font-semibold leading-none text-black no-underline hover:underline" href="{{ programLink }}">
+          <span class="flex h-4 w-4 shrink-0 items-center justify-center" aria-hidden="true">
+            {% include 'assets/icons/event/arrow-left.svg' ignore missing %}
+          </span>
+          {{ __('Zurück zum Programm', 'flynt') }}
+        </a>
+
+        {# ---- Title ----
+           Deliberately a div: `.single header` is hidden globally in _custom.scss. #}
+        <div class="flex items-start gap-4">
+          {% if badge %}
+            <span class="flex h-[57px] w-[57px] shrink-0 items-center justify-center rounded-[9px] bg-white">
+              <img class="h-8 w-8" src="{{ badge }}" alt="" aria-hidden="true">
+            </span>
           {% endif %}
-        </dd>
-      {% endif %}
-      {% if labels.costs %}<dt>{{ __('Kosten?', 'flynt') }}</dt><dd>{{ labels.costs }}</dd>{% endif %}
-      {% if post.meta('price') %}<dt>{{ __('Preis', 'flynt') }}</dt><dd>{{ post.meta('price') }}</dd>{% endif %}
-      {% if post.meta('paymentLink') %}<dt>{{ __('Bezahllink', 'flynt') }}</dt><dd><a href="{{ post.meta('paymentLink') }}" target="_blank" rel="noopener">{{ post.meta('paymentLink') }}</a></dd>{% endif %}
-    </dl>
+          <div class="flex flex-col gap-1">
+            {# normal-case overrides the global uppercase h1 from the typography options. #}
+            <h1 class="m-0 text-[26px] font-medium normal-case leading-tight desktop:text-[32px]">{{ post.meta('eventTitle') ?: post.title }}</h1>
+            {% if post.meta('intro') %}
+              <p class="m-0 text-[18px] font-medium leading-tight desktop:text-[20px]">{{ post.meta('intro') }}</p>
+            {% endif %}
+          </div>
+        </div>
 
-    {# ---- Details ---- #}
-    <h2>{{ __('Details zum Angebot', 'flynt') }}</h2>
-    <dl>
-      {% if post.meta('description') %}<dt>{{ __('Beschreibung', 'flynt') }}</dt><dd>{{ post.meta('description') }}</dd>{% endif %}
-      {% if post.meta('language') %}<dt>{{ __('Sprache', 'flynt') }}</dt><dd>{{ post.meta('language') }}</dd>{% endif %}
-      {% if labels.programTypes %}<dt>{{ __('Art des Programmpunkts', 'flynt') }}</dt><dd>{{ labels.programTypes|join(', ') }}</dd>{% endif %}
-      {% if labels.format %}<dt>{{ __('Format', 'flynt') }}</dt><dd>{{ labels.format }}</dd>{% endif %}
-      {% if labels.audiences %}<dt>{{ __('Zielgruppe', 'flynt') }}</dt><dd>{{ labels.audiences|join(', ') }}</dd>{% endif %}
-    </dl>
+        {# ---- Tags ---- #}
+        {% if labels.programTypes or labels.sectors %}
+          <div class="flex flex-wrap content-start items-start gap-2.5">
+            {% for tag in labels.programTypes %}
+              <span class="rounded-image bg-green px-[8px] py-min text-[12px] font-medium leading-none">{{ tag }}</span>
+            {% endfor %}
+            {% for tag in labels.sectors %}
+              <span class="rounded-image bg-white px-[8px] py-min text-[12px] font-medium leading-none">{{ tag }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
 
-    {# ---- Veranstaltung ---- #}
-    <h2>{{ __('Veranstaltung', 'flynt') }}</h2>
-    <dl>
-      {% if post.meta('eventTitle') %}<dt>{{ __('Titel', 'flynt') }}</dt><dd>{{ post.meta('eventTitle') }}</dd>{% endif %}
-      {% if post.meta('intro') %}<dt>{{ __('Introtext', 'flynt') }}</dt><dd>{{ post.meta('intro') }}</dd>{% endif %}
-      {% if post.meta('credits') %}<dt>{{ __('Bildnachweise / Credits', 'flynt') }}</dt><dd>{{ post.meta('credits') }}</dd>{% endif %}
+        {# ---- Titelbild ---- #}
+        {% if post.thumbnail %}
+          <figure class="relative m-0">
+            <img
+              class="aspect-[700/450] w-full rounded-image object-cover"
+              src="{{ post.thumbnail.src }}"
+              alt="{{ post.thumbnail.alt|default('')|e('html_attr') }}">
+            {% if post.meta('credits') %}
+              <figcaption class="absolute bottom-1.5 left-2 text-[8px] font-semibold leading-none text-white">
+                {{ __('Fotocredit:', 'flynt') }} {{ post.meta('credits') }}
+              </figcaption>
+            {% endif %}
+          </figure>
+        {% endif %}
 
-      {% set schedule = post.meta('eventSchedule') %}
-      {% if schedule %}
-        <dt>{{ __('Termine & Zeiten', 'flynt') }}</dt>
-        <dd>
-          {% for row in schedule %}
-            {{ row.date }}{% if row.timeStart %}, {{ row.timeStart }}{% if row.timeEnd %}–{{ row.timeEnd }}{% endif %}{% endif %}{% if not loop.last %}<br>{% endif %}
-          {% endfor %}
-        </dd>
-      {% elseif labels.dates %}
-        <dt>{{ __('Termin', 'flynt') }}</dt><dd>{{ labels.dates|join(', ') }}</dd>
-      {% endif %}
+        <div class="flex flex-col gap-8">
 
-      {% if labels.locationMode %}<dt>{{ __('Ort', 'flynt') }}</dt><dd>{{ labels.locationMode }}</dd>{% endif %}
-      {% if post.meta('street') %}<dt>{{ __('Straße + Hausnummer', 'flynt') }}</dt><dd>{{ post.meta('street') }}</dd>{% endif %}
-      {% if post.meta('postalCode') %}<dt>{{ __('Postleitzahl', 'flynt') }}</dt><dd>{{ post.meta('postalCode') }}</dd>{% endif %}
-      {% set location = post.meta('location') %}
-      {% if location.lat %}<dt>{{ __('Koordinaten', 'flynt') }}</dt><dd>{{ location.lat }}, {{ location.lng }}</dd>{% endif %}
-      {% if post.meta('mobilityInfo') %}<dt>{{ __('Anreise', 'flynt') }}</dt><dd>{{ post.meta('mobilityInfo') }}</dd>{% endif %}
-      <dt>{{ __('Ort für weitere Programmpunkte?', 'flynt') }}</dt><dd>{{ post.meta('venueOpenForOthers') ? __('Ja', 'flynt') : __('Nein', 'flynt') }}</dd>
-      {% if labels.accessibility %}<dt>{{ __('Barrierefreiheit', 'flynt') }}</dt><dd>{{ labels.accessibility|join(', ') }}</dd>{% endif %}
+          {# ---- Termin & Ort ---- #}
+          <div class="flex flex-col gap-[30px]">
+            {% for entry in schedule %}
+              <div class="flex flex-col gap-[30px] tablet:flex-row tablet:items-start tablet:justify-between">
+                <div class="flex flex-1 items-center gap-5">
+                  <img class="h-6 w-6 shrink-0" src="{{ icons.calendar }}" alt="{{ __('Datum', 'flynt')|e('html_attr') }}">
+                  <p class="m-0 text-[16px] font-semibold leading-none">{{ entry.long }}</p>
+                </div>
+                {% if entry.time %}
+                  <div class="flex flex-1 items-center gap-5">
+                    <img class="h-6 w-6 shrink-0" src="{{ icons.clock }}" alt="{{ __('Uhrzeit', 'flynt')|e('html_attr') }}">
+                    <p class="m-0 text-[16px] font-semibold leading-none">{{ entry.time }}</p>
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
 
-      {% if galleryUrls %}
-        <dt>{{ __('Weitere Fotos', 'flynt') }}</dt>
-        <dd>
-          {% for url in galleryUrls %}
-            <img src="{{ url }}" alt="">
-          {% endfor %}
-        </dd>
-      {% endif %}
-    </dl>
+            {% if address or mapsUrl %}
+              <div class="flex items-start gap-5">
+                <img class="h-6 w-6 shrink-0" src="{{ icons.mapPin }}" alt="{{ __('Ort', 'flynt')|e('html_attr') }}">
+                <div class="flex flex-1 flex-col gap-1">
+                  {% if address %}
+                    <p class="m-0 text-[16px] leading-tight">{{ address }}</p>
+                  {% endif %}
+                  {% if mapsUrl %}
+                    <div class="flex flex-wrap items-start gap-x-4 text-[16px] leading-none">
+                      {% include 'templates/Partials/_externalLink.twig' with { url: mapsUrl, label: __('Google Maps', 'flynt') } only %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
 
-    {# ---- Intern & Zustimmung ---- #}
-    <h2>{{ __('Intern & Zustimmung', 'flynt') }}</h2>
-    <dl>
-      <dt>{{ __('Programmförderung gewünscht?', 'flynt') }}</dt><dd>{{ post.meta('fundingInterest') ? __('Ja', 'flynt') : __('Nein', 'flynt') }}</dd>
-      <dt>{{ __('Teilnahmekriterien akzeptiert', 'flynt') }}</dt><dd>{{ post.meta('acceptCriteria') ? __('Ja', 'flynt') : __('Nein', 'flynt') }}</dd>
-      <dt>{{ __('Nutzungsbedingungen akzeptiert', 'flynt') }}</dt><dd>{{ post.meta('acceptTerms') ? __('Ja', 'flynt') : __('Nein', 'flynt') }}</dd>
-      <dt>{{ __('Newsletter abonniert', 'flynt') }}</dt><dd>{{ post.meta('newsletter') ? __('Ja', 'flynt') : __('Nein', 'flynt') }}</dd>
-    </dl>
+          {# ---- Über das Event ---- #}
+          {# `description` is a plain textarea; the post content is the WYSIWYG fallback. #}
+          {% if post.meta('description') %}
+            <section class="flex flex-col gap-3">
+              <h2 class="m-0 text-[22px] font-medium leading-none desktop:text-[24px]">{{ __('Über das Event', 'flynt') }}</h2>
+              <p class="m-0 text-[16px] leading-normal">{{ post.meta('description')|nl2br }}</p>
+            </section>
+          {% elseif post.content %}
+            <section class="flex flex-col gap-3">
+              <h2 class="m-0 text-[22px] font-medium leading-none desktop:text-[24px]">{{ __('Über das Event', 'flynt') }}</h2>
+              <div class="wysiwyg text-[16px] leading-normal">{{ post.content|e('wp_kses_post') }}</div>
+            </section>
+          {% endif %}
+
+          {# ---- Anreise ---- #}
+          {% if post.meta('mobilityInfo') %}
+            <section class="flex flex-col">
+              <h3 class="m-0 text-[16px] font-semibold leading-normal">{{ __('Hinweise zur Anreise', 'flynt') }}</h3>
+              <p class="m-0 text-[16px] leading-normal">{{ post.meta('mobilityInfo')|nl2br }}</p>
+            </section>
+          {% endif %}
+
+          {# ---- Details ---- #}
+          <section class="flex flex-col gap-sm">
+            <h2 class="m-0 text-[22px] font-medium leading-none desktop:text-[24px]">{{ __('Details', 'flynt') }}</h2>
+            <div class="grid grid-cols-1 gap-x-xs gap-y-sm tablet:grid-cols-2 tablet:grid-cols-sm tablet:gap-y-sm">
+
+              <div class="flex items-start gap-5">
+                <img class="h-6 w-6 shrink-0" src="{{ icons.ticket }}" alt="" aria-hidden="true">
+                <div class="flex flex-col">
+                  <p class="m-0 text-[16px] font-semibold leading-normal">{{ __('Anmeldung', 'flynt') }}</p>
+                  {% if labels.registration %}
+                    <p class="m-0 text-[16px] leading-normal">{{ labels.registration }}</p>
+                  {% endif %}
+                  {% set registrationLink = post.meta('registrationLink') %}
+                  {% if registrationLink %}
+                    {% if registrationLink starts with 'http' %}
+                      <div class="text-[16px] leading-normal">
+                        {% include 'templates/Partials/_externalLink.twig' with { url: registrationLink, label: __('Link', 'flynt') } only %}
+                      </div>
+                    {% else %}
+                      <p class="m-0 text-[16px] leading-normal">{{ registrationLink }}</p>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="flex items-start gap-5">
+                <img class="h-5 w-5 shrink-0" src="{{ icons.money }}" alt="" aria-hidden="true">
+                <div class="flex flex-col">
+                  <p class="m-0 text-[16px] font-semibold leading-normal">{{ __('Kosten', 'flynt') }}</p>
+                  {% if post.meta('costs') == 'ja' %}
+                    <p class="m-0 text-[16px] leading-normal">{{ post.meta('price') ?: __('Kostenpflichtig', 'flynt') }}</p>
+                    {% if post.meta('paymentLink') %}
+                      <div class="text-[16px] leading-normal">
+                        {% include 'templates/Partials/_externalLink.twig' with { url: post.meta('paymentLink'), label: __('Buchung', 'flynt') } only %}
+                      </div>
+                    {% endif %}
+                  {% else %}
+                    <p class="m-0 text-[16px] leading-normal">{{ __('Kostenlos', 'flynt') }}</p>
+                  {% endif %}
+                </div>
+              </div>
+
+              {% if labels.audiences %}
+                <div class="flex items-start gap-5">
+                  <img class="h-6 w-6 shrink-0" src="{{ icons.audience }}" alt="" aria-hidden="true">
+                  <div class="flex flex-col">
+                    <p class="m-0 text-[16px] font-semibold leading-normal">{{ __('Zielgruppe', 'flynt') }}</p>
+                    <p class="m-0 text-[16px] leading-normal">{{ labels.audiences|join(', ') }}</p>
+                  </div>
+                </div>
+              {% endif %}
+
+              {% if labels.accessibility %}
+                <div class="flex items-start gap-5">
+                  <img class="h-6 w-6 shrink-0" src="{{ icons.accessibility }}" alt="" aria-hidden="true">
+                  <div class="flex flex-col">
+                    <p class="m-0 text-[16px] font-semibold leading-normal">{{ __('Barrierefrei', 'flynt') }}</p>
+                    <p class="m-0 text-[16px] leading-normal">{{ labels.accessibility|join(', ') }}</p>
+                  </div>
+                </div>
+              {% endif %}
+
+              {% if labels.language %}
+                <div class="flex items-start gap-5">
+                  {# No PNG in the icon set for this one — inline SVG, same 24px box. #}
+                  <span class="flex h-6 w-6 shrink-0 items-center justify-center [&_svg]:h-full [&_svg]:w-full" aria-hidden="true">
+                    {% include 'assets/icons/event/language.svg' ignore missing %}
+                  </span>
+                  <div class="flex flex-col">
+                    <p class="m-0 text-[16px] font-semibold leading-normal">{{ __('Sprache', 'flynt') }}</p>
+                    <p class="m-0 text-[16px] leading-normal">{{ labels.language|join(', ') }}</p>
+                  </div>
+                </div>
+              {% endif %}
+
+            </div>
+          </section>
+
+          {# ---- Veranstalter ---- #}
+          {% if post.meta('orgName') or orgLogoUrl %}
+            <section class="flex flex-col gap-3">
+              <h2 class="m-0 text-[22px] font-medium leading-none desktop:text-[24px]">{{ __('Veranstalter', 'flynt') }}</h2>
+              <div class="flex items-start gap-5">
+                {% if orgLogoUrl %}
+                  <span class="flex h-[47px] w-[109px] shrink-0 items-center justify-center rounded-[15px] bg-white p-1.5">
+                    <img class="max-h-full max-w-full object-contain" src="{{ orgLogoUrl }}" alt="{{ post.meta('orgName')|default('')|e('html_attr') }}">
+                  </span>
+                {% endif %}
+                <div class="flex flex-1 flex-col">
+                  {% if post.meta('orgName') %}
+                    <p class="m-0 text-[16px] font-semibold leading-normal">{{ post.meta('orgName') }}</p>
+                  {% endif %}
+                  <div class="flex flex-wrap items-start gap-x-4 text-[16px] leading-normal">
+                    {% if post.meta('website') %}
+                      {% include 'templates/Partials/_externalLink.twig' with { url: post.meta('website'), label: __('Website', 'flynt') } only %}
+                    {% endif %}
+                    {% if post.meta('instagram') %}
+                      {% include 'templates/Partials/_externalLink.twig' with { url: post.meta('instagram'), label: __('Instagram', 'flynt') } only %}
+                    {% endif %}
+                    {% if post.meta('linkedin') %}
+                      {% include 'templates/Partials/_externalLink.twig' with { url: post.meta('linkedin'), label: __('LinkedIn', 'flynt') } only %}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </section>
+          {% endif %}
+
+          {# ---- Weitere Fotos ---- #}
+          {% if galleryUrls %}
+            <section class="grid grid-cols-2 gap-3 tablet:grid-cols-3">
+              {% for url in galleryUrls %}
+                <img class="aspect-[4/3] w-full rounded-image object-cover" src="{{ url }}" alt="" loading="lazy">
+              {% endfor %}
+            </section>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+
+    {# ---- Weitere Programmpunkte ---- #}
+    {{ renderComponent('BlockRelatedEvents', { post: post, programLink: programLink }) }}
+
   </article>
 {% endblock %}

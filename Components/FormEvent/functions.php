@@ -18,46 +18,6 @@ function getACFLayout()
                 'placement' => 'top',
                 'endpoint' => 0,
             ],
-            // [
-            //     'label' => __('Intro', 'flynt'),
-            //     'name' => 'preContentHtml',
-            //     'type' => 'wysiwyg',
-            //     'tabs' => 'visual',
-            //     'media_upload' => 0,
-            //     'delay' => 1,
-            // ],
-            // [
-            //     'label' => __('Section intro — Organisation', 'flynt'),
-            //     'name' => 'introOrg',
-            //     'type' => 'wysiwyg',
-            //     'tabs' => 'visual',
-            //     'media_upload' => 0,
-            //     'delay' => 1,
-            // ],
-            // [
-            //     'label' => __('Section intro — Angebot', 'flynt'),
-            //     'name' => 'introOffer',
-            //     'type' => 'wysiwyg',
-            //     'tabs' => 'visual',
-            //     'media_upload' => 0,
-            //     'delay' => 1,
-            // ],
-            // [
-            //     'label' => __('Section intro — Details', 'flynt'),
-            //     'name' => 'introDetails',
-            //     'type' => 'wysiwyg',
-            //     'tabs' => 'visual',
-            //     'media_upload' => 0,
-            //     'delay' => 1,
-            // ],
-            // [
-            //     'label' => __('Section intro — Veranstaltung', 'flynt'),
-            //     'name' => 'introEvent',
-            //     'type' => 'wysiwyg',
-            //     'tabs' => 'visual',
-            //     'media_upload' => 0,
-            //     'delay' => 1,
-            // ],
             [
                 'label' => __('Success message', 'flynt'),
                 'name' => 'successHtml',
@@ -111,6 +71,10 @@ function getACFLayout()
 // handled server-side via honeypot, per-IP rate limit and pending-only posts.
 add_filter('Flynt/addComponentData?name=FormEvent', function ($data) {
     $data['config'] = Event\getConfig();
+    // Section titles + intros, client-editable under "Global Options → Event".
+    $data['sections'] = Event\getSections();
+    // Free-text field labels + question legends, same options page.
+    $data['fieldLabels'] = Event\getFieldLabels();
     $data['restUrl'] = esc_url_raw(rest_url('looptopia/v1/event'));
     // Local-only: exposes a button to preview the success popup + confetti
     // without submitting the form. True when the Vite dev server is running

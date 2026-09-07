@@ -60,6 +60,16 @@ function getACFLayout()
                 'return_format' => 'array',
                 'instructions' => __('Optional green button below the headline.', 'flynt'),
                 'required' => 0,
+                'wrapper' => ['width' => 50], 
+            ],
+            [
+                'label' => __('Button (Secondary)', 'flynt'),
+                'name' => 'buttonSecondary',
+                'type' => 'link',
+                'return_format' => 'array',
+                'instructions' => __('Optional green button below the headline.', 'flynt'),
+                'required' => 0,
+                'wrapper' => ['width' => 50],
             ],
             [
                 'label' => __('Funders (left)', 'flynt'),

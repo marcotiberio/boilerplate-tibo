@@ -84,6 +84,7 @@ function handleSubmission(\WP_REST_Request $request)
         'eventTitle'     => sanitize_text_field($params['eventTitle'] ?? ''),
         'intro'          => sanitize_text_field($params['intro'] ?? ''),
         'credits'        => sanitize_text_field($params['credits'] ?? ''),
+        'venueName'      => sanitize_text_field($params['venueName'] ?? ''),
         'locationMode'   => sanitize_key($params['locationMode'] ?? ''),
         'street'         => sanitize_text_field($params['street'] ?? ''),
         'postalCode'     => sanitize_text_field($params['postalCode'] ?? ''),
@@ -96,6 +97,9 @@ function handleSubmission(\WP_REST_Request $request)
     $programTypes = allowedKeys($params['programTypes'] ?? [], $config['programTypes']);
     $audiences    = allowedKeys($params['audiences'] ?? [], $config['audiences']);
     $accessibility = allowedKeys($params['accessibility'] ?? [], $config['accessibility']);
+    // Sprache — multiple choice, stored under the singular `language` key the
+    // field has always used so existing entries stay readable.
+    $language     = allowedKeys($params['language'] ?? [], $config['languages']);
 
     // Event day(s) + per-day times. `dates` is the set of selected day keys;
     // `times` is a map keyed by the same day → { start, end } (HH:MM).
@@ -146,6 +150,9 @@ function handleSubmission(\WP_REST_Request $request)
     }
     if (!isset($config['format'][$data['format']])) {
         $errors[] = __('Bitte wähle ein Format.', 'flynt');
+    }
+    if (!$language) {
+        $errors[] = __('Bitte wähle mindestens eine Sprache.', 'flynt');
     }
     if (!$dates) {
         $errors[] = __('Bitte wähle mindestens einen Veranstaltungstag.', 'flynt');
@@ -224,6 +231,7 @@ function handleSubmission(\WP_REST_Request $request)
     update_field('programTypes', $programTypes, $postId);
     update_field('audiences', $audiences, $postId);
     update_field('accessibility', $accessibility, $postId);
+    update_field('language', $language, $postId);
     update_field('venueOpenForOthers', $venueOpenForOthers, $postId);
     update_field('fundingInterest', $fundingInterest, $postId);
     update_field('acceptCriteria', $acceptCriteria, $postId);

@@ -2,6 +2,7 @@
 
 use Timber\Timber;
 use Flynt\Event;
+use Flynt\Utils\Asset;
 
 $context = Timber::context();
 $post = $context['post'];
@@ -28,17 +29,115 @@ $context['labels'] = [
     'registration'  => $singleLabel('registration', $config['registration']),
     'costs'         => $singleLabel('costs', $config['costs']),
     'format'        => $singleLabel('format', $config['format']),
+    'language'      => $mapLabels($post->meta('language'), $config['languages']),
     'dates'         => $mapLabels($post->meta('dates'), $config['dates']),
     'locationMode'  => $singleLabel('locationMode', $config['locationMode']),
 ];
 
-// Image fields are stored as attachment IDs.
-$logoId = $post->meta('orgLogo');
-$context['orgLogoUrl'] = $logoId ? wp_get_attachment_image_url($logoId, 'medium') : '';
+/**
+ * Icon set exported from the design (Streamline Ultimate).
+ * Passed as URLs because the PNGs are not part of a Vite entry.
+ */
+$icon = function ($file) {
+    return Asset::requireUrl('assets/icons/event/' . $file);
+};
+$context['icons'] = [
+    'calendar'      => $icon('calendar.png'),
+    'clock'         => $icon('clock.png'),
+    'mapPin'        => $icon('map-pin.png'),
+    'ticket'        => $icon('ticket.png'),
+    'money'         => $icon('money-wallet.png'),
+    'audience'      => $icon('audience.png'),
+    'accessibility' => $icon('accessibility.png'),
+];
 
-$galleryIds = $post->meta('gallery') ?: [];
+/**
+ * Badge shown on the title card and on every teaser image — the entry's format
+ * glyph, same as the map pins and the card badges.
+ */
+$context['badge'] = $icon(Event\getFormatIcon($post->ID));
+
+/**
+ * Termine & Zeiten. `dates` stores ISO keys, the repeater stores the label the
+ * submitter saw — pair them by index (both are written in the same loop) so the
+ * weekday can be formatted, with the stored label as fallback.
+ */
+// Weekday names are spelled out here rather than taken from wp_date('l') so the
+// page stays German even on an installation running an English WP locale.
+$weekdays = [
+    1 => __('Montag', 'flynt'),
+    2 => __('Dienstag', 'flynt'),
+    3 => __('Mittwoch', 'flynt'),
+    4 => __('Donnerstag', 'flynt'),
+    5 => __('Freitag', 'flynt'),
+    6 => __('Samstag', 'flynt'),
+    7 => __('Sonntag', 'flynt'),
+];
+
+$formatSchedule = function ($postId) use ($config, $weekdays) {
+    $dateKeys = (array) (get_field('dates', $postId) ?: []);
+    $rows     = (array) (get_field('eventSchedule', $postId) ?: []);
+    $entries  = [];
+
+    // Without ISO keys the repeater is the only source, so walk that instead.
+    $source = $dateKeys ?: array_keys($rows);
+
+    foreach (array_values($source) as $index => $key) {
+        $row       = $rows[$index] ?? [];
+        $timestamp = $dateKeys ? strtotime($key) : false;
+        $fallback  = $config['dates'][$key] ?? ($row['date'] ?? '');
+
+        $start = trim((string) ($row['timeStart'] ?? ''));
+        $end   = trim((string) ($row['timeEnd'] ?? ''));
+
+        $entries[] = [
+            'long'  => $timestamp
+                ? $weekdays[(int) wp_date('N', $timestamp)] . ', ' . wp_date('d.m.Y', $timestamp)
+                : $fallback,
+            'short' => $timestamp ? wp_date('d.m.y', $timestamp) : $fallback,
+            'time'  => $start . ($end ? '–' . $end : ''),
+        ];
+    }
+
+    return array_values(array_filter($entries, function ($entry) {
+        return $entry['long'] !== '' || $entry['time'] !== '';
+    }));
+};
+$context['schedule'] = $formatSchedule($post->ID);
+
+// Location. There is no venue name / venue website field yet, so the block
+// shows the submitted address plus a map link.
+$street     = trim((string) $post->meta('street'));
+$postalCode = trim((string) $post->meta('postalCode'));
+$context['address'] = trim(implode(' ', array_filter([
+    $street ? $street . ',' : '',
+    trim($postalCode . ' Berlin'),
+])));
+
+$location = $post->meta('location');
+$context['mapsUrl'] = '';
+if (!empty($location['lat']) && !empty($location['lng'])) {
+    $context['mapsUrl'] = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode($location['lat'] . ',' . $location['lng']);
+} elseif ($street || $postalCode) {
+    $context['mapsUrl'] = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(Event\composeAddress($street, $postalCode));
+}
+
+// Image fields are stored as attachment IDs — read the raw meta so the ACF
+// image formatter (which returns a Timber\Image) stays out of the way.
+$logoId = get_post_meta($post->ID, 'orgLogo', true);
+$context['orgLogoUrl'] = $logoId ? wp_get_attachment_image_url((int) $logoId, 'medium') : '';
+
+$galleryIds = get_post_meta($post->ID, 'gallery', true);
 $context['galleryUrls'] = array_values(array_filter(array_map(function ($id) {
-    return wp_get_attachment_image_url($id, 'medium');
-}, (array) $galleryIds)));
+    return wp_get_attachment_image_url((int) $id, 'large');
+}, (array) ($galleryIds ?: []))));
+
+// "Zurück zum Programm" / "Programm entdecken" point at the program page when
+// the client has created one, otherwise at the event archive.
+$programPage = get_page_by_path('programm');
+$context['programLink'] = $programPage ? get_permalink($programPage) : get_post_type_archive_link(Event\POST_TYPE);
+
+// The closing "Weitere Programmpunkte" row is a component of its own — see
+// Components/BlockRelatedEvents.
 
 Timber::render('templates/single-event.twig', $context);
