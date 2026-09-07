@@ -148,7 +148,10 @@ function handleSubmission(\WP_REST_Request $request)
     } elseif ($data['costs'] === 'ja' && $data['price'] === '') {
         $errors[] = __('Bitte gib den Preis an.', 'flynt');
     }
-    if (!isset($config['format'][$data['format']])) {
+    // Hidden in the public form (see Components/FormEvent/index.twig), so an empty
+    // value is expected — but a submitted value must still be a known key. The map
+    // pin and card badge fall back to the first programTypes key via getFormatIcon().
+    if ($data['format'] !== '' && !isset($config['format'][$data['format']])) {
         $errors[] = __('Bitte wähle ein Format.', 'flynt');
     }
     if (!$language) {

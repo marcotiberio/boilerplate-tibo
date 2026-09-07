@@ -179,11 +179,11 @@ add_action('acf/init', function () {
             ],
             [
                 'label' => __('Old Format', 'flynt'),
-                'instructions' => __('Bestimmt nur das Icon auf der Karte und im Karten-Badge.', 'flynt'),
+                'instructions' => __('Optional. Bestimmt nur das Icon auf der Karte und im Karten-Badge — ohne Auswahl wird das Icon aus dem ersten gewählten Format abgeleitet.', 'flynt'),
                 'name' => 'format',
                 'type' => 'radio',
                 'choices' => $config['format'],
-                'required' => 1,
+                'allow_null' => 1,
                 'wrapper' => ['width' => 50],
             ],
             [
