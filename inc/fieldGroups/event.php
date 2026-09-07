@@ -171,14 +171,15 @@ add_action('acf/init', function () {
                 'required' => 1,
             ],
             [
-                'label' => __('Art des Programmpunkts', 'flynt'),
+                'label' => __('Format', 'flynt'),
                 'name' => 'programTypes',
                 'type' => 'checkbox',
                 'choices' => $config['programTypes'],
                 'required' => 1,
             ],
             [
-                'label' => __('Format', 'flynt'),
+                'label' => __('Icon-Format', 'flynt'),
+                'instructions' => __('Bestimmt nur das Icon auf der Karte und im Karten-Badge.', 'flynt'),
                 'name' => 'format',
                 'type' => 'radio',
                 'choices' => $config['format'],

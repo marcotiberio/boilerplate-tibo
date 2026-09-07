@@ -273,7 +273,7 @@
               </div>
             </fieldset>
 
-            <fieldset class="flex flex-col gap-xs">
+            {# <fieldset class="flex flex-col gap-xs">
               <legend class="font-bodySmall mb-xs">{{ fieldLabels.formatQuestion }} *</legend>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-min" :class="attempted && !form.format ? 'field-error' : ''">
                 {% for value, label in config.format %}
@@ -282,7 +282,7 @@
                   </label>
                 {% endfor %}
               </div>
-            </fieldset>
+            </fieldset> #}
 
             {# Multi-select: invalid state comes from `select:invalid` in _style.scss,
                which a required <select multiple> triggers while nothing is picked. #}
