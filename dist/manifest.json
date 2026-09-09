@@ -24,7 +24,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-e7e3c88a.js",
+    "file": "assets/script-2b9fa6b4.js",
     "imports": [
       "assets/main.js"
     ],
@@ -32,7 +32,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-2b9fa6b4.js",
+    "file": "assets/script-e7e3c88a.js",
     "imports": [
       "assets/main.js"
     ],
@@ -314,7 +314,7 @@
     "file": "assets/swiper-bundle-e0f77aaf.js"
   },
   "assets/admin.js": {
-    "file": "assets/admin-a583fdd1.js",
+    "file": "assets/admin-66abc6e2.js",
     "isEntry": true,
     "src": "assets/admin.js"
   },
@@ -427,7 +427,7 @@
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-d3486946.css",
+    "file": "assets/main-70119eb8.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
@@ -437,7 +437,7 @@
     "src": "assets/print.scss"
   },
   "assets/tinyMce.scss": {
-    "file": "assets/tinyMce-868fc5c5.css",
+    "file": "assets/tinyMce-bda3848f.css",
     "isEntry": true,
     "src": "assets/tinyMce.scss"
   },

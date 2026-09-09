@@ -36,7 +36,7 @@ html {
 }
 
 body {
-  @apply text-black;
+  @apply text-black bg-off-white;
   font-family: var(--primary-font-family, 'Inter', Arial, sans-serif);
 }
 

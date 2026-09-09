@@ -16,72 +16,66 @@
   {# Mobile crops media to a 3:4 portrait unless "show full image" is enabled. #}
   {% set aspectClass = showFullImageMobile ? '' : 'aspect-[3/4] md:aspect-auto' %}
 
-  <div class="{{ isFullscreen ? 'relative left-1/2 w-screen -translate-x-1/2' : 'relative boxed' }}">
-    <figure
-      class="group peer relative z-10 m-0 w-full max-w-screen-max mx-auto overflow-hidden {{ aspectClass }} {{ isFullscreen ? 'rounded-image' : 'rounded-none is-framed' }}"
-      {% if video.url %}x-data="{ playing: true }"{% endif %}>
+  <div class="{{ isFullscreen ? 'relative left-1/2 w-screen -translate-x-1/2' : 'boxed' }}">
+    {# Media box — matches the media exactly in both variants (the fullscreen wrapper is
+       wider than the media above 1920px, the framed one narrower). The caption is
+       positioned against this box, so it stays tied to the image itself. #}
+    <div class="mediaBox relative mx-auto w-full max-w-screen-max">
+      <figure
+        class="group relative z-10 m-0 w-full overflow-hidden {{ aspectClass }} {{ isFullscreen ? 'rounded-image' : 'rounded-none is-framed' }}"
+        {% if video.url %}x-data="{ playing: true }"{% endif %}>
 
-      {# Media — video takes priority, image doubles as poster/fallback #}
-      {% if video.url %}
-        <video
-          x-ref="video"
-          class="block w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.03]"
-          autoplay
-          muted
-          loop
-          playsinline
-          poster="{{ image.src|default('') }}">
-          <source src="{{ video.url }}" type="{{ video.mime_type|default('video/mp4') }}" />
-        </video>
-      {% elseif image %}
-        <img
-          class="block w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.03]""
-          src="{{ image.src }}"
-          alt="{{ image.alt|e|default('') }}"
-          loading="lazy"
-        />
-      {% endif %}
+        {# Media — video takes priority, image doubles as poster/fallback #}
+        {% if video.url %}
+          <video
+            x-ref="video"
+            class="block w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.03]"
+            autoplay
+            muted
+            loop
+            playsinline
+            poster="{{ image.src|default('') }}">
+            <source src="{{ video.url }}" type="{{ video.mime_type|default('video/mp4') }}" />
+          </video>
+        {% elseif image %}
+          <img
+            class="block w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-[1.03]"
+            src="{{ image.src }}"
+            alt="{{ image.alt|e|default('') }}"
+            loading="lazy"
+          />
+        {% endif %}
 
-      {# Play / pause control (only when a video is set) #}
-      {% if video.url %}
-        <button
-          type="button"
-          class="absolute bottom-sm right-sm z-20 flex items-center justify-center w-14 h-11 rounded-cta bg-off-white/20 backdrop-blur-sm text-off-white transition-colors hover:bg-off-white/30"
-          @click="playing ? $refs.video.pause() : $refs.video.play(); playing = !playing"
-          :aria-label="playing ? '{{ __('Pause video', 'flynt') }}' : '{{ __('Play video', 'flynt') }}'">
-          <svg x-show="playing" class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
-            <rect x="2.2" y="0.2" width="3" height="14" rx="1" />
-            <rect x="9.2" y="0.2" width="3" height="14" rx="1" />
-          </svg>
-          <svg x-show="!playing" x-cloak class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
-            <path d="M2 1.2 12.5 7 2 12.8Z" />
-          </svg>
-        </button>
-      {% endif %}
-    </figure>
+        {# Play / pause control (only when a video is set) #}
+        {% if video.url %}
+          <button
+            type="button"
+            class="absolute bottom-sm right-sm z-20 flex items-center justify-center w-14 h-11 rounded-cta bg-off-white/20 backdrop-blur-sm text-off-white transition-colors hover:bg-off-white/30"
+            @click="playing ? $refs.video.pause() : $refs.video.play(); playing = !playing"
+            :aria-label="playing ? '{{ __('Pause video', 'flynt') }}' : '{{ __('Play video', 'flynt') }}'">
+            <svg x-show="playing" class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+              <rect x="2.2" y="0.2" width="3" height="14" rx="1" />
+              <rect x="9.2" y="0.2" width="3" height="14" rx="1" />
+            </svg>
+            <svg x-show="!playing" x-cloak class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+              <path d="M2 1.2 12.5 7 2 12.8Z" />
+            </svg>
+          </button>
+        {% endif %}
+      </figure>
 
-    {# Caption pill (WP media caption) — sits behind the image and slides down into view on hover.
-       On touch (no hover) it stays visible over the image bottom-right. #}
-    {% if image.caption %}
-      {% if not isFullscreen %}
-        <figcaption class="block absolute bottom-[115px] md:bottom-[110px] right-md md:right-xxl z-0 rotate-2 translate-y-[calc(100%-0px)] transition-transform duration-500 ease-out lgplus:translate-y-0 lgplus:peer-hover:translate-y-[calc(100%-0px)]">
-          <span class="max-w-[312px] lg:max-w-[560px] flex items-start gap-1.5 rounded-card bg-warmer-beige px-[20px] pt-md pb-[20px] font-caption text-dark-brown">
+      {# Caption pill (WP media caption) — one markup for both variants; the tuck behind the
+         media edge and the hover reveal live in _style.scss. #}
+      {% if image.caption %}
+        <figcaption class="flex justify-end pr-xs md:pr-md">
+          <span class="max-w-[312px] lg:max-w-[560px] flex items-center gap-1.5 rounded-card bg-warmer-beige px-[20px] pb-[20px] font-caption text-dark-brown">
             <svg class="w-3.5 h-3.5 shrink-0 -rotate-2" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M7 14C10.866 14 14 10.866 14 7C14 3.13401 10.866 0 7 0C3.13401 0 0 3.13401 0 7C0 10.866 3.13401 14 7 14ZM5.5 9.375C5.15482 9.375 4.875 9.65482 4.875 10C4.875 10.3452 5.15482 10.625 5.5 10.625H8.5C8.84518 10.625 9.125 10.3452 9.125 10C9.125 9.65482 8.84518 9.375 8.5 9.375H7.625V6.5C7.625 6.15482 7.34518 5.875 7 5.875H6C5.65482 5.875 5.375 6.15482 5.375 6.5C5.375 6.84518 5.65482 7.125 6 7.125H6.375V9.375H5.5ZM8 4C8 4.55228 7.55228 5 7 5C6.44772 5 6 4.55228 6 4C6 3.44772 6.44772 3 7 3C7.55228 3 8 3.44772 8 4Z" />
             </svg>
             {{ image.caption|e }}
           </span>
         </figcaption>
-      {% else %}
-      <figcaption class="block absolute bottom-[15px] md:bottom-[10px] right-sm z-0 rotate-2 translate-y-[calc(100%-20px)] transition-transform duration-500 ease-out lgplus:translate-y-0 lgplus:peer-hover:translate-y-[calc(100%-20px)]">
-        <span class="flex items-start gap-1.5 rounded-card bg-warmer-beige px-[20px] pt-md pb-[20px] font-caption text-dark-brown">
-          <svg class="w-3.5 h-3.5 shrink-0 -rotate-2" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M7 14C10.866 14 14 10.866 14 7C14 3.13401 10.866 0 7 0C3.13401 0 0 3.13401 0 7C0 10.866 3.13401 14 7 14ZM5.5 9.375C5.15482 9.375 4.875 9.65482 4.875 10C4.875 10.3452 5.15482 10.625 5.5 10.625H8.5C8.84518 10.625 9.125 10.3452 9.125 10C9.125 9.65482 8.84518 9.375 8.5 9.375H7.625V6.5C7.625 6.15482 7.34518 5.875 7 5.875H6C5.65482 5.875 5.375 6.15482 5.375 6.5C5.375 6.84518 5.65482 7.125 6 7.125H6.375V9.375H5.5ZM8 4C8 4.55228 7.55228 5 7 5C6.44772 5 6 4.55228 6 4C6 3.44772 6.44772 3 7 3C7.55228 3 8 3.44772 8 4Z" />
-          </svg>
-          {{ image.caption|e }}
-        </span>
-      </figcaption>
       {% endif %}
-    {% endif %}
+    </div>
   </div>
 </flynt-component>

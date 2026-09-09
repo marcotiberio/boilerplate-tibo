@@ -9,7 +9,8 @@
         {% set tag = titleTag|default('h2') %}
         <{{ tag }} class="font-{{ titleSize|default('h5') }} text-black max-w-[636px]">{{ title }}</{{ tag }}>
       {% endif %}
-      <div class="flex gap-min shrink-0">
+      {# Arrows follow the slide count: Swiper locks them on desktop when every image fits. #}
+      <div class="flex gap-min shrink-0{% if not images %} hidden{% endif %}">
         <button type="button" data-ref="prev" class="slider-button" aria-label="{{ __('Vorherige', 'flynt') }}">
           <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true">
             <path d="M5.5 1 1.5 5l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>

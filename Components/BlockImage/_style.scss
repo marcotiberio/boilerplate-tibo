@@ -1,14 +1,52 @@
 flynt-component[name='BlockImage'] {
+  // How deep the caption pill hides behind the media edge. Must stay >= the pill
+  // radius (rounded-card) so its top corners never peek out from behind the media.
+  --caption-tuck: var(--spacing-md, 48px);
+
   figure {
     line-height: 0;
   }
 
   // Framed variant: clip the media to the hand-drawn frame silhouette.
   figure.is-framed {
-    clip-path: url(#blockImageFrameClip);
+    clip-path: url('#blockImageFrameClip');
   }
 
+  // Anchored to .mediaBox, so framed and fullscreen share one rule.
+  // Below lgplus (no hover) the pill stays in flow under the media and reserves
+  // the space it needs; only its tucked part slips behind the media edge.
   figcaption {
     line-height: normal;
+    margin-block-start: calc(var(--caption-tuck) * -1);
+    position: relative;
+    transform: rotate(2deg);
+    transition: transform 500ms ease-out;
+    z-index: 0;
+
+    // Padding covers the tucked part; below lgplus it also adds the gap between
+    // the media edge and the caption text.
+    > span {
+      padding-block-start: calc(var(--caption-tuck) + var(--spacing-xs, 12px));
+
+      @screen lgplus {
+        padding-block-start: var(--caption-tuck);
+      }
+    }
+
+    // From lgplus the pill hides behind the media and slides out on hover.
+    // The lift keeps the rotated corners clear of the media's (waved) bottom edge.
+    @screen lgplus {
+      inset: auto 0 0;
+      margin-block-start: 0;
+      position: absolute;
+      transform: translateY(calc(var(--caption-tuck) * -1)) rotate(2deg);
+    }
+  }
+
+  @screen lgplus {
+    .mediaBox:hover figcaption,
+    .mediaBox:focus-within figcaption {
+      transform: translateY(calc(100% - var(--caption-tuck))) rotate(2deg);
+    }
   }
 }

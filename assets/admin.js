@@ -55,4 +55,30 @@ if (typeof acf !== 'undefined' && typeof jQuery !== 'undefined') {
   })
 }
 
+/**
+ * Character limit for the built-in WordPress caption of media files.
+ *
+ * The caption input is rendered by core in places that can't be filtered from
+ * PHP (the Backbone media modal templates, the Edit Media form), and the modal
+ * re-renders it on every selection, so the `maxlength` is set when a caption
+ * field is focused. The limit comes from inc/mediaCaptionLimit.php.
+ */
+if (window.FlyntMediaCaption && window.FlyntMediaCaption.maxLength) {
+  const captionSelector = [
+    '#attachment_caption', // Edit Media screen
+    '#attachment-details-caption', // Media modal sidebar
+    '#attachment-details-two-column-caption', // Media library grid modal
+    '#image-details-caption', // Image details modal
+    '#embed-image-settings-caption', // Image settings on insert
+    'input.describe[data-setting="caption"]', // Uploader list view
+    'textarea[name$="[post_excerpt]"]' // Legacy attachment fields
+  ].join(',')
+
+  document.addEventListener('focusin', ({ target }) => {
+    if (target.matches && target.matches(captionSelector)) {
+      target.setAttribute('maxlength', window.FlyntMediaCaption.maxLength)
+    }
+  })
+}
+
 import.meta.glob('../Components/*/admin.js', { eager: true })

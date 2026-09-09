@@ -13,8 +13,17 @@ add_filter('Flynt/addComponentData?name=SliderCards', function ($data) {
     } elseif ($source === 'chimpanzee') {
         $data['cards'] = getChimpanzeeCards($data['postCount'] ?? 8);
     } else {
-        $data['cards'] = $data['cards'] ?? [];
+        $data['cards'] = array_map(function ($card) {
+            $card['excerpt'] = truncateAtSentence($card['excerpt'] ?? '');
+
+            return $card;
+        }, $data['cards'] ?? []);
     }
+
+    $data['hideNavigationDesktop'] = !hasDesktopOverflow(
+        count($data['cards'] ?? []),
+        $data['options']['slidesDesktop'] ?? null
+    );
 
     $data['jsonData'] = [
         'options' => $data['options'] ?? [],
@@ -22,6 +31,55 @@ add_filter('Flynt/addComponentData?name=SliderCards', function ($data) {
 
     return $data;
 });
+
+/**
+ * Whether the cards overflow the desktop viewport and therefore need arrows.
+ *
+ * Mirrors the 1180px breakpoint in script.js: below it the slider always shows
+ * fewer cards than the desktop setting, so navigation stays visible there.
+ *
+ * @param int $cardCount
+ * @param mixed $slidesDesktop ACF select, arrives as a string ('3.2').
+ * @return bool
+ */
+function hasDesktopOverflow($cardCount, $slidesDesktop)
+{
+    $slides = is_numeric($slidesDesktop) ? (float) $slidesDesktop : 4.0;
+
+    return $cardCount > $slides;
+}
+
+/**
+ * Cap card copy at the end of the last complete sentence that fits.
+ *
+ * Slides stay a predictable length without cutting a sentence mid-thought.
+ * Falls back to a clean word-boundary cut when the first sentence is already
+ * longer than the limit.
+ *
+ * @param string $text
+ * @param int $maxLength
+ * @return string
+ */
+function truncateAtSentence($text, $maxLength = 150)
+{
+    $text = trim(wp_strip_all_tags((string) $text));
+
+    if ($text === '' || mb_strlen($text) <= $maxLength) {
+        return $text;
+    }
+
+    $slice = mb_substr($text, 0, $maxLength);
+
+    // Last sentence end inside the slice. The lookbehind keeps abbreviations
+    // like "z. B." from counting as a sentence end.
+    if (preg_match('/^.*(?<=[\p{L}\p{N}]{2})[.!?](?=\s|$)/us', $slice, $matches)) {
+        return trim($matches[0]);
+    }
+
+    $lastSpace = mb_strrpos($slice, ' ');
+
+    return rtrim(mb_substr($slice, 0, $lastSpace ?: $maxLength), " ,;:…");
+}
 
 /**
  * Build cards from the latest posts of a given post type (Projects).
@@ -55,7 +113,7 @@ function getPostCards($postType, $postCount)
                 'alt' => $post->title,
             ],
             'title' => $post->title,
-            'excerpt' => wp_trim_words($excerpt, 24),
+            'excerpt' => truncateAtSentence($excerpt),
             'link' => [
                 'url' => $post->link,
                 'title' => __('Mehr lesen', 'flynt'),
@@ -101,7 +159,7 @@ function getChimpanzeeCards($postCount)
             ],
             'title' => $post->title,
             'subtitle' => $sex ?: '',
-            'excerpt' => wp_trim_words($description, 24),
+            'excerpt' => truncateAtSentence($description),
             'link' => [
                 'url' => $post->link,
                 // e.g. "Mawa" → "Mawas Pate werden"

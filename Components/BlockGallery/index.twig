@@ -36,7 +36,7 @@
               {# Overlay slides up from the bottom on hover (desktop); always shown on touch. #}
               <div class="gallery-card__overlay absolute inset-0 flex flex-col items-center justify-center gap-sm p-sm bg-black/50 opacity-100 transition-opacity duration-300 lg:opacity-0 lg:group-hover:opacity-100">
                 {% if card.icon %}
-                  <span class="flex h-[72px] w-[72px] items-center justify-center rounded-cta bg-white transition-transform duration-500 ease-out group-hover:-rotate-2">
+                  <span class="flex h-[72px] w-[72px] items-center justify-center rounded-cta bg-white/50 transition-transform duration-500 ease-out group-hover:-rotate-2">
                     <img
                       class="h-11 w-11 object-contain"
                       src="{{ card.icon.src }}"

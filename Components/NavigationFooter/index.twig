@@ -1,7 +1,7 @@
 <flynt-component load:on="visible" name="NavigationFooter" class="relative block">
 
   {# ───────────────────────── Newsletter ───────────────────────── #}
-  <section class="relative overflow-hidden md:min-h-[50vh] lg:min-h-[50vh] pb-[22px] md:pb-0">
+  <section class="relative overflow-hidden md:min-h-[50vh] lg:min-h-[50vh] pb-[22px] lgplus:pb-0">
 
     <div class="boxed relative z-10 py-xl">
       <div class="flex flex-col md:flex-row items-start lg:items-center gap-sm sm:gap-md lg:gap-xxl max-w-[900px]">
@@ -37,9 +37,9 @@
       </div>
     </div>
     {# Decorative acacia silhouette bridging into the footer #}
-    <div class="block lg:absolute 
+    <div class="block lgplus:absolute 
                 mr-0 ml-auto
-                md:right-0 md:bottom-[45px]
+                md:right-0 md:bottom-[43px]
                 w-[75vw] sm:w-[50vw]
                 lg:max-w-[500px] 
                 text-dark-green pointer-events-none select-none [&>svg]:w-full [&>svg]:h-auto"
@@ -51,8 +51,8 @@
   {# ───────────────────────── Main footer (dark green) ───────────────────────── #}
   <section class="relative bg-dark-green text-off-white">
     {# Wave that lifts the dark-green panel into the off-white newsletter above #}
-    <svg class="absolute left-0 bottom-full w-full h-[60px] lg:h-[120px] block pointer-events-none" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-      <path fill="#113328" d="M0,120 L0,64 C240,16 480,0 720,24 C960,48 1200,96 1440,64 L1440,120 Z"></path>
+    <svg class="absolute left-0 bottom-full -mb-px w-full h-[60px] lg:h-[120px] block pointer-events-none text-dark-green" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M0,120 L0,64 C240,16 480,0 720,24 C960,48 1200,96 1440,64 L1440,120 Z"></path>
     </svg>
 
     <div class="boxed pt-xl">

@@ -8,8 +8,18 @@ flynt-component[name='SliderImages'] {
 
     &.swiper-button-disabled {
       cursor: default;
-      opacity: 0;
+      opacity: 0.4;
       pointer-events: none;
+    }
+
+    // Swiper adds this class (watchOverflow) while every slide fits. Slide
+    // widths follow each image's aspect ratio, so only Swiper knows whether
+    // they overflow. Below desktop the slides always overflow, so navigation
+    // stays visible there.
+    &.swiper-button-lock {
+      @screen desktop {
+        display: none;
+      }
     }
   }
 

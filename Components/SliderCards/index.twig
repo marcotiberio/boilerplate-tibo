@@ -11,7 +11,8 @@
         {% set tag = titleTag|default('h2') %}
         <{{ tag }} class="font-{{ titleSize|default('h2') }} text-black max-w-[960px]">{{ title }}</{{ tag }}>
       {% endif %}
-      <div class="flex gap-min shrink-0 md:ml-auto">
+      {# Arrows follow the card count: hidden on desktop when every card already fits. #}
+      <div class="flex gap-min shrink-0 md:ml-auto{% if not cards %} hidden{% elseif hideNavigationDesktop %} desktop:hidden{% endif %}">
         <button type="button" data-ref="prev" class="slider-button" aria-label="{{ __('Vorherige', 'flynt') }}">
           <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true">
             <path d="M5.5 1 1.5 5l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -49,9 +50,8 @@
                     </h3>
                   {% endif %}
                   {% if card.excerpt %}
-                    {# Cap card copy so slides stay a predictable length; the ellipsis counts toward the 100 #}
-                    {% set excerpt = card.excerpt|length > 100 ? card.excerpt|slice(0, 99)|trim ~ '…' : card.excerpt %}
-                    <p class="{{ options.textSize|default('font-body') }} text-muted-black group-hover:text-white transition-colors duration-300 ease-in-out flex-1">{{ excerpt }}</p>
+                    {# Copy is capped at the last full sentence in functions.php #}
+                    <p class="{{ options.textSize|default('font-small') }} text-muted-black-50  group-hover:text-white transition-colors duration-300 ease-in-out flex-1">{{ card.excerpt }}</p>
                   {% endif %}
                 </div>
                 {% if card.link %}
