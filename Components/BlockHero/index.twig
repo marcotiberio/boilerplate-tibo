@@ -21,7 +21,7 @@
       {% if image %}
         <img
           data-ref="backgroundImageDesktop"
-          class="hidden lgplus:block w-full h-full object-cover"
+          class="{% if imageMobile %}hidden lgplus:block{% else %}block{% endif %} w-full h-full object-cover"
           src="{{ image.src }}"
           alt="{{ image.alt|e | default('') }}"
           loading="eager"

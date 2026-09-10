@@ -24,7 +24,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-2b9fa6b4.js",
+    "file": "assets/script-e7e3c88a.js",
     "imports": [
       "assets/main.js"
     ],
@@ -32,7 +32,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-e7e3c88a.js",
+    "file": "assets/script-2b9fa6b4.js",
     "imports": [
       "assets/main.js"
     ],
@@ -427,7 +427,7 @@
     "src": "assets/main.js"
   },
   "assets/main.scss": {
-    "file": "assets/main-70119eb8.css",
+    "file": "assets/main-1050e03c.css",
     "isEntry": true,
     "src": "assets/main.scss"
   },
@@ -437,7 +437,7 @@
     "src": "assets/print.scss"
   },
   "assets/tinyMce.scss": {
-    "file": "assets/tinyMce-bda3848f.css",
+    "file": "assets/tinyMce-f3ad156e.css",
     "isEntry": true,
     "src": "assets/tinyMce.scss"
   },
