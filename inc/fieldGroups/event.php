@@ -82,6 +82,63 @@ add_action('acf/init', function () {
                 'type' => 'url',
                 'wrapper' => ['width' => 33],
             ],
+            [
+                'label' => __('Weitere Organisationen', 'flynt'),
+                'instructions' => __('Optional. Nur im Backend pflegbar — das öffentliche Formular erlaubt weiterhin nur eine Organisation.', 'flynt'),
+                'name' => 'additionalOrganisations',
+                'type' => 'repeater',
+                'layout' => 'block',
+                'button_label' => __('Organisation hinzufügen', 'flynt'),
+                'sub_fields' => [
+                    [
+                        'label' => __('Name der Organisation', 'flynt'),
+                        'name' => 'orgName',
+                        'type' => 'text',
+                        'required' => 1,
+                        'wrapper' => ['width' => 50],
+                    ],
+                    [
+                        'label' => __('Kontaktperson', 'flynt'),
+                        'name' => 'contactPerson',
+                        'type' => 'text',
+                        'wrapper' => ['width' => 50],
+                    ],
+                    [
+                        'label' => __('Mailadresse', 'flynt'),
+                        'instructions' => __('Privat — nicht öffentlich sichtbar.', 'flynt'),
+                        'name' => 'contactEmail',
+                        'type' => 'email',
+                        'wrapper' => ['width' => 50],
+                    ],
+                    [
+                        'label' => __('Logo der Organisation', 'flynt'),
+                        'name' => 'orgLogo',
+                        'type' => 'image',
+                        'return_format' => 'array',
+                        'preview_size' => 'medium',
+                        'mime_types' => 'jpg,jpeg,png,svg',
+                        'wrapper' => ['width' => 50],
+                    ],
+                    [
+                        'label' => __('Website', 'flynt'),
+                        'name' => 'website',
+                        'type' => 'url',
+                        'wrapper' => ['width' => 33],
+                    ],
+                    [
+                        'label' => __('Instagram', 'flynt'),
+                        'name' => 'instagram',
+                        'type' => 'url',
+                        'wrapper' => ['width' => 33],
+                    ],
+                    [
+                        'label' => __('LinkedIn', 'flynt'),
+                        'name' => 'linkedin',
+                        'type' => 'url',
+                        'wrapper' => ['width' => 33],
+                    ],
+                ],
+            ],
 
             // ---- Section 2: Angebot (allgemein) ----
             [

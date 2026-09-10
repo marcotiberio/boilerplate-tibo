@@ -127,6 +127,38 @@ if (!empty($location['lat']) && !empty($location['lng'])) {
 $logoId = get_post_meta($post->ID, 'orgLogo', true);
 $context['orgLogoUrl'] = $logoId ? wp_get_attachment_image_url((int) $logoId, 'medium') : '';
 
+/**
+ * Veranstalter. The submitted organisation comes from the top-level fields
+ * (the public form only ever writes one); the client can add more in wp-admin
+ * through the `additionalOrganisations` repeater. Both are normalised into one
+ * list so the template renders every entry the same way.
+ */
+$organisations = [[
+    'name'      => trim((string) $post->meta('orgName')),
+    'logoUrl'   => $context['orgLogoUrl'],
+    'website'   => trim((string) $post->meta('website')),
+    'instagram' => trim((string) $post->meta('instagram')),
+    'linkedin'  => trim((string) $post->meta('linkedin')),
+]];
+
+foreach ((array) (get_field('additionalOrganisations', $post->ID) ?: []) as $index => $row) {
+    // Same reasoning as above: take the attachment ID from the raw row meta
+    // rather than the formatted repeater value.
+    $rowLogoId = get_post_meta($post->ID, "additionalOrganisations_{$index}_orgLogo", true);
+
+    $organisations[] = [
+        'name'      => trim((string) ($row['orgName'] ?? '')),
+        'logoUrl'   => $rowLogoId ? wp_get_attachment_image_url((int) $rowLogoId, 'medium') : '',
+        'website'   => trim((string) ($row['website'] ?? '')),
+        'instagram' => trim((string) ($row['instagram'] ?? '')),
+        'linkedin'  => trim((string) ($row['linkedin'] ?? '')),
+    ];
+}
+
+$context['organisations'] = array_values(array_filter($organisations, function ($org) {
+    return $org['name'] !== '' || $org['logoUrl'] !== '';
+}));
+
 $galleryIds = get_post_meta($post->ID, 'gallery', true);
 $context['galleryUrls'] = array_values(array_filter(array_map(function ($id) {
     return wp_get_attachment_image_url((int) $id, 'large');

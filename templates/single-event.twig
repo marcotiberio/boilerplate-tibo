@@ -199,32 +199,38 @@
           </section>
 
           {# ---- Veranstalter ---- #}
-          {% if post.meta('orgName') or orgLogoUrl %}
+          {# First entry is the submitted organisation, the rest come from the
+             backend-only `additionalOrganisations` repeater. #}
+          {% if organisations %}
             <section class="flex flex-col gap-3">
-              <h2 class="m-0 text-[22px] font-medium leading-none desktop:text-[24px]">{{ __('Veranstalter', 'flynt') }}</h2>
-              <div class="flex items-start gap-5">
-                {% if orgLogoUrl %}
-                  <span class="flex h-[47px] w-[109px] shrink-0 items-center justify-center rounded-[15px] bg-white p-1.5">
-                    <img class="max-h-full max-w-full object-contain" src="{{ orgLogoUrl }}" alt="{{ post.meta('orgName')|default('')|e('html_attr') }}">
-                  </span>
-                {% endif %}
-                <div class="flex flex-1 flex-col">
-                  {% if post.meta('orgName') %}
-                    <p class="m-0 text-[16px] font-semibold leading-normal">{{ post.meta('orgName') }}</p>
+              <h2 class="m-0 text-[22px] font-medium leading-none desktop:text-[24px]">
+                {{ organisations|length > 1 ? __('Veranstalter:innen', 'flynt') : __('Veranstalter', 'flynt') }}
+              </h2>
+              {% for org in organisations %}
+                <div class="flex items-start gap-5">
+                  {% if org.logoUrl %}
+                    <span class="flex h-[47px] w-[109px] shrink-0 items-center justify-center rounded-[15px] bg-white p-1.5">
+                      <img class="max-h-full max-w-full object-contain" src="{{ org.logoUrl }}" alt="{{ org.name|e('html_attr') }}">
+                    </span>
                   {% endif %}
-                  <div class="flex flex-wrap items-start gap-x-4 text-[16px] leading-normal">
-                    {% if post.meta('website') %}
-                      {% include 'templates/Partials/_externalLink.twig' with { url: post.meta('website'), label: __('Website', 'flynt') } only %}
+                  <div class="flex flex-1 flex-col">
+                    {% if org.name %}
+                      <p class="m-0 text-[16px] font-semibold leading-normal">{{ org.name }}</p>
                     {% endif %}
-                    {% if post.meta('instagram') %}
-                      {% include 'templates/Partials/_externalLink.twig' with { url: post.meta('instagram'), label: __('Instagram', 'flynt') } only %}
-                    {% endif %}
-                    {% if post.meta('linkedin') %}
-                      {% include 'templates/Partials/_externalLink.twig' with { url: post.meta('linkedin'), label: __('LinkedIn', 'flynt') } only %}
-                    {% endif %}
+                    <div class="flex flex-wrap items-start gap-x-4 text-[16px] leading-normal">
+                      {% if org.website %}
+                        {% include 'templates/Partials/_externalLink.twig' with { url: org.website, label: __('Website', 'flynt') } only %}
+                      {% endif %}
+                      {% if org.instagram %}
+                        {% include 'templates/Partials/_externalLink.twig' with { url: org.instagram, label: __('Instagram', 'flynt') } only %}
+                      {% endif %}
+                      {% if org.linkedin %}
+                        {% include 'templates/Partials/_externalLink.twig' with { url: org.linkedin, label: __('LinkedIn', 'flynt') } only %}
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
-              </div>
+              {% endfor %}
             </section>
           {% endif %}
 
