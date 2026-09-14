@@ -65,9 +65,9 @@
   --fb-input-padding: 8px 12px;
   --fb-input-bg-color: var(--jgi-field-bg);
   --fb-input-bg-color-focus: var(--jgi-field-bg);
-  --fb-input-border-width: 1.5px;      /* transparent — reserves the focus ring */
+  --fb-input-border-width: 1px;        /* transparent — reserves the focus ring */
   --fb-input-border-color: transparent;
-  --fb-input-border-color-focus: var(--jgi-white);
+  --fb-input-border-color-focus: color-mix(in srgb, var(--jgi-white) 15%, transparent);
   --fb-input-border-radius: 8px;
 
   /* CTA — moss on dark green, 12px radius, sentence case */
@@ -137,6 +137,26 @@ body,
    reveals it with an inline style via jQuery .show(), so !important is needed. */
 #organisation-logo {
   display: none !important;
+}
+
+/* No outlines anywhere. FB's style8.css (Tailwind forms) draws its visible
+   focus ring as a box-shadow, not an outline, so both are neutralised —
+   !important wins regardless of FB's selector specificity. */
+*,
+*::before,
+*::after,
+*:focus,
+*:focus-visible,
+*:focus-within {
+  --tw-ring-color: transparent !important;
+  --tw-ring-offset-color: transparent !important;
+  --tw-ring-offset-width: 0px !important;
+  outline: none !important;
+}
+
+*:focus,
+*:focus-visible {
+  box-shadow: none !important;
 }
 
 /* --- Layout rhythm — Figma: 40px between groups, 16px between rows -------- */
@@ -240,12 +260,6 @@ body,
   border-color: var(--jgi-white);
 }
 
-#fbPaymentForm input[type='radio']:focus-visible,
-#fbPaymentForm input[type='checkbox']:focus-visible {
-  outline: 2px solid var(--jgi-moss);
-  outline-offset: 2px;
-}
-
 /* "Als Unternehmen spenden" switch — Figma has no switch, so it borrows the
    moss accent of the CTA. */
 #fbPaymentForm .toggle {
@@ -277,7 +291,7 @@ body,
 }
 
 #amountChoices .choices-grid {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
   gap: 12px 31px;
@@ -417,7 +431,8 @@ body,
 
 /* --- SSL / "Sicheres Spenden" notice -------------------------------------- */
 #securityBox {
-  margin: 40px 0 0;
+  scale: 0.75;
+  margin: 14px 0 0 0;
   padding: 0;
 }
 
