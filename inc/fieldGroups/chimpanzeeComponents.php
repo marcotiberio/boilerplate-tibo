@@ -3,7 +3,13 @@
 namespace Flynt\FieldGroups\Chimpanzee;
 
 use ACFComposer\ACFComposer;
+use Flynt\Utils\FundraisingBox;
 use Flynt\Utils\Options;
+
+// ID of the chimpanzee dropdown in the sponsorship forms, from FundraisingBox →
+// Konfiguration → benutzerdef. Felder (column "ID"). The same field is used by
+// every sponsorship form, so editors never see or set it.
+const CHIMPANZEE_DROPDOWN_FIELD_ID = '16562';
 
 // Fallback list used until the sanctuaries are configured in Blocks Settings.
 const DEFAULT_SANCTUARIES = [
@@ -78,6 +84,83 @@ add_filter('acf/load_field/name=sanctuary', function ($field) {
     return $field;
 });
 
+/**
+ * Compose the FundraisingBox embed URL for a chimpanzee out of the form fields
+ * saved on its post, so editors never assemble a query string by hand.
+ *
+ * Single source of truth for both the backend preview below and the
+ * BlockFormChimpanzeeSponsor component.
+ *
+ * @param int $postId Chimpanzee post ID.
+ * @return string Embed URL, or an empty string when no form hash is set.
+ */
+function getEmbedUrl($postId)
+{
+    $params = [];
+
+    // Preselect this chimpanzee in the form's dropdown. Like the country
+    // below, the selection stays editable: if a value ever stops matching an
+    // option, donors can still pick the right one themselves.
+    $customField = FundraisingBox::customFieldParam(CHIMPANZEE_DROPDOWN_FIELD_ID);
+    if ($customField !== '') {
+        $value = trim((string) get_field('fbCustomFieldValue', $postId));
+        $params[$customField] = $value !== '' ? $value : get_the_title($postId);
+    }
+
+    if (get_field('fbPreselectCountry', $postId)) {
+        $params += FundraisingBox::countryParams(get_field('fbCountry', $postId) ?: 'DE');
+    }
+
+    return FundraisingBox::embedUrl(get_field('formHash', $postId), $params);
+}
+
+/**
+ * Ready-to-output embed markup for a chimpanzee: the snippet an editor pasted
+ * into "Full embed code" when there is one, otherwise the composed script.
+ *
+ * @param int $postId Chimpanzee post ID.
+ * @return string Embed markup, or an empty string when no form is set up.
+ */
+function getEmbedScript($postId)
+{
+    $embedCode = trim((string) get_field('formEmbedCode', $postId));
+
+    if ($embedCode !== '') {
+        return $embedCode;
+    }
+
+    return FundraisingBox::embedScript(getEmbedUrl($postId));
+}
+
+/**
+ * Show the composed embed code on the chimpanzee edit screen, so editors can
+ * see (and copy) exactly what the fields above produce.
+ */
+add_filter('acf/prepare_field', function ($field) {
+    if (($field['_name'] ?? '') !== 'fbPreview') {
+        return $field;
+    }
+
+    $postId = get_the_ID();
+    $embedUrl = $postId ? getEmbedUrl($postId) : '';
+
+    if ($embedUrl === '') {
+        $field['message'] = '<em>' . esc_html__('Add a form hash above and save to see the embed code.', 'flynt') . '</em>';
+
+        return $field;
+    }
+
+    $field['message'] = sprintf(
+        '<p>%s</p><textarea readonly rows="4" style="width:100%%;font-family:monospace;font-size:11px" onclick="this.select()">%s</textarea>',
+        esc_html__('Built from the fields above — this is what gets embedded on the page. Updates when you save.', 'flynt'),
+        // Decode the &#038; that esc_url() writes, so the copied snippet also
+        // works where it is not parsed as HTML.
+        esc_textarea(html_entity_decode(FundraisingBox::embedScript($embedUrl), ENT_QUOTES))
+    );
+
+    return $field;
+});
+
 add_action('Flynt/afterRegisterComponents', function () {
     ACFComposer::registerFieldGroup([
         'name' => 'chimpanzeeMeta',
@@ -86,6 +169,13 @@ add_action('Flynt/afterRegisterComponents', function () {
         'menu_order' => 1,
         'position' => 'acf_after_title',
         'fields' => [
+            [
+                'label' => __('Chimpanzee Info', 'flynt'),
+                'name' => 'infoTab',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0
+            ],
             [
                 'label' => __('Sex', 'flynt'),
                 'name' => 'sex',
@@ -138,6 +228,13 @@ add_action('Flynt/afterRegisterComponents', function () {
                 ],
             ],
             [
+                'label' => __('Form', 'flynt'),
+                'name' => 'formTab',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0
+            ],
+            [
                 'label' => __('Sponsorship form (FundraisingBox)', 'flynt'),
                 'name' => 'sponsorshipHeadline',
                 'type' => 'message',
@@ -153,17 +250,56 @@ add_action('Flynt/afterRegisterComponents', function () {
                 ],
             ],
             [
-                'label' => __('Item ID (optional)', 'flynt'),
-                'instructions' => __('FundraisingBox <code>fb_item_id</code> — lets one shared form know which chimpanzee is being sponsored.', 'flynt'),
-                'name' => 'fbItemId',
+                'label' => __('Sponsored Chimpanzee', 'flynt'),
+                'instructions' => __('The option this chimpanzee corresponds to in the form\'s chimpanzee dropdown, exactly as FundraisingBox spells it, e.g. <code>Mawa</code>. Leave empty to use this chimpanzee\'s name.', 'flynt'),
+                'name' => 'fbCustomFieldValue',
                 'type' => 'text',
                 'wrapper' => [
                     'width' => 50,
                 ],
             ],
             [
+                'label' => __('Preselect country', 'flynt'),
+                'instructions' => __('Open the country dropdown in the donor\'s address on a set country. Donors can still choose another one.', 'flynt'),
+                'name' => 'fbPreselectCountry',
+                'type' => 'true_false',
+                'ui' => 1,
+                'default_value' => 0,
+                'wrapper' => [
+                    'width' => 50,
+                ],
+            ],
+            [
+                'label' => __('Country', 'flynt'),
+                'name' => 'fbCountry',
+                'type' => 'select',
+                'choices' => FundraisingBox::countryChoices(),
+                'default_value' => 'DE',
+                'allow_null' => 0,
+                'conditional_logic' => [
+                    [
+                        [
+                            'fieldPath' => 'fbPreselectCountry',
+                            'operator' => '==',
+                            'value' => 1,
+                        ],
+                    ],
+                ],
+                'wrapper' => [
+                    'width' => 50,
+                ],
+            ],
+            [
+                'label' => __('Generated embed code', 'flynt'),
+                'instructions' => __('Copy the generated embed code into the Full embed code (advanced) field below.', 'flynt'),
+                'name' => 'fbPreview',
+                'type' => 'message',
+                'message' => '',
+                'new_lines' => '',
+                'escape_html' => 0,
+            ],
+            [
                 'label' => __('Full embed code (advanced)', 'flynt'),
-                'instructions' => __('Optional. If FundraisingBox gives you a different snippet, paste it here <strong>exactly</strong>. When set, this overrides the form hash above.', 'flynt'),
                 'name' => 'formEmbedCode',
                 'type' => 'textarea',
                 'rows' => 3,

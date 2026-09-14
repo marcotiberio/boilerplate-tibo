@@ -2,6 +2,44 @@
 
 namespace Flynt\Components\BlockDonationForm;
 
+use Flynt\Utils\FundraisingBox;
+
+/**
+ * Compose the paymentJS embed URL from the form hash + prepopulation fields,
+ * so editors pick values in the backend instead of editing a query string.
+ */
+add_filter('Flynt/addComponentData?name=BlockDonationForm', function ($data) {
+    $prepopulation = $data['prepopulation'] ?? [];
+    $params = [];
+
+    if (!empty($prepopulation['amount'])) {
+        $params['amount'] = $prepopulation['amount'];
+    }
+
+    $interval = $prepopulation['interval'] ?? '';
+    if ($interval !== '' && $interval !== null) {
+        $params['interval_fix'] = $interval;
+    }
+
+    if (!empty($prepopulation['itemId'])) {
+        $params['fb_item_id'] = $prepopulation['itemId'];
+    }
+
+    $customField = FundraisingBox::customFieldParam($prepopulation['customFieldId'] ?? '');
+    if ($customField !== '' && !empty($prepopulation['customFieldValue'])) {
+        $params[$customField] = $prepopulation['customFieldValue'];
+    }
+
+    if (!empty($prepopulation['preselectCountry'])) {
+        $params += FundraisingBox::countryParams($prepopulation['country'] ?? 'DE');
+    }
+
+    $embedUrl = FundraisingBox::embedUrl($data['formHash'] ?? '', $params);
+    $data['embedScript'] = FundraisingBox::embedScript($embedUrl);
+
+    return $data;
+});
+
 function getACFLayout()
 {
     return [
@@ -148,6 +186,49 @@ function getACFLayout()
                         'type' => 'text',
                         'required' => 0,
                         'wrapper' => ['width' => 33],
+                    ],
+                    [
+                        'label' => __('Dropdown field ID', 'flynt'),
+                        'instructions' => __('Optional. ID of a dropdown / custom field in this form, from FundraisingBox → Konfiguration → benutzerdef. Felder (column "ID"), e.g. <code>16562</code>.', 'flynt'),
+                        'name' => 'customFieldId',
+                        'type' => 'text',
+                        'required' => 0,
+                        'wrapper' => ['width' => 50],
+                    ],
+                    [
+                        'label' => __('Dropdown value', 'flynt'),
+                        'instructions' => __('The option to preselect, exactly as FundraisingBox spells it, e.g. <code>Mawa</code>.', 'flynt'),
+                        'name' => 'customFieldValue',
+                        'type' => 'text',
+                        'required' => 0,
+                        'wrapper' => ['width' => 50],
+                    ],
+                    [
+                        'label' => __('Preselect country', 'flynt'),
+                        'instructions' => __('Open the country dropdown in the donor\'s address on a set country. Donors can still choose another one.', 'flynt'),
+                        'name' => 'preselectCountry',
+                        'type' => 'true_false',
+                        'ui' => 1,
+                        'default_value' => 0,
+                        'wrapper' => ['width' => 50],
+                    ],
+                    [
+                        'label' => __('Country', 'flynt'),
+                        'name' => 'country',
+                        'type' => 'select',
+                        'choices' => FundraisingBox::countryChoices(),
+                        'default_value' => 'DE',
+                        'allow_null' => 0,
+                        'conditional_logic' => [
+                            [
+                                [
+                                    'fieldPath' => 'preselectCountry',
+                                    'operator' => '==',
+                                    'value' => 1,
+                                ],
+                            ],
+                        ],
+                        'wrapper' => ['width' => 50],
                     ],
                 ],
             ],

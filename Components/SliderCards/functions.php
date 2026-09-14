@@ -390,7 +390,7 @@ function getACFLayout()
                     FieldVariables\getTextSize('', 'cardTitleSize', __('Card Title Size', 'flynt')),
                     FieldVariables\getTextSize('', 'cardTextSize', __('Card Text Size', 'flynt')),
                 ],
-                getSlidesPerViewFields(),
+                // getSlidesPerViewFields(),
                 getCardColorFields()
             )),
         ],

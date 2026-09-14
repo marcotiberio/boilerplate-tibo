@@ -1,19 +1,13 @@
 {% extends 'templates/_document.twig' %}
 
 {# FundraisingBox embed — same integration as the BlockDonationForm component.
-   The form (fields + styling) is built on the FundraisingBox platform; here we
-   only reference it by its form hash and inject the paymentJS script. #}
-{% macro fboxEmbed(hash, itemId, embedCode, height) %}
-  {% set embedUrl = 'https://secure.fundraisingbox.com/app/paymentJS?hash=' ~ hash|url_encode %}
-  {% if itemId %}{% set embedUrl = embedUrl ~ '&fb_item_id=' ~ itemId|url_encode %}{% endif %}
+   The form (fields + styling) is built on the FundraisingBox platform; the
+   embed markup is composed from the chimpanzee's fields in
+   inc/fieldGroups/chimpanzeeComponents.php and passed in as embedScript. #}
+{% macro fboxEmbed(embedScript, height) %}
   <div class="fbox-embed" style="min-height: {{ height|default(640) }}px">
-    {% if embedCode %}
-      {{ embedCode|raw }}
-    {% elseif hash %}
-      <script type="text/javascript" src="{{ embedUrl }}"></script>
-      <noscript>
-        <p class="font-small">{{ __('Please enable JavaScript to view the donation form.', 'flynt') }}</p>
-      </noscript>
+    {% if embedScript %}
+      {{ embedScript|raw }}
     {% else %}
       <p class="fbox-embed__placeholder font-small">{{ __('No FundraisingBox form set for this chimpanzee.', 'flynt') }}</p>
     {% endif %}
@@ -24,7 +18,7 @@
 
 {% block content %}
   <article class="single-chimpanzee">
-    <div class="boxed">
+    <div class="boxed !pt-[96px]">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-sm items-start">
 
         {# ---- Left: chimpanzee info card ---- #}
@@ -75,7 +69,7 @@
           <h2 class="font-h2 text-dark-green">{{ post.title }}{{ __('’s Patenschaft', 'flynt') }}</h2>
 
           <div class="mt-sm">
-            {{ fbox.fboxEmbed(post.meta('formHash'), post.meta('fbItemId'), post.meta('formEmbedCode'), 900) }}
+            {{ fbox.fboxEmbed(embedScript, 900) }}
           </div>
         </div>
 

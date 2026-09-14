@@ -4,6 +4,8 @@ namespace Flynt\Components\BlockFormChimpanzeeSponsor;
 
 use Timber\Timber;
 
+use function Flynt\FieldGroups\Chimpanzee\getEmbedScript;
+
 /**
  * Pull the selected chimpanzee's photo, details and FundraisingBox form data
  * off its post (see inc/fieldGroups/chimpanzeeComponents.php) so the block only
@@ -31,9 +33,10 @@ add_filter('Flynt/addComponentData?name=BlockFormChimpanzeeSponsor', function ($
                 'born' => get_field('born', $id),
                 'arrival' => get_field('arrival', $id),
                 'description' => get_field('description', $id),
-                'formHash' => get_field('formHash', $id),
-                'fbItemId' => get_field('fbItemId', $id),
-                'formEmbedCode' => get_field('formEmbedCode', $id),
+                // Pasted snippet, or composed from the chimp's form fields
+                // (hash, dropdown, country) — see
+                // inc/fieldGroups/chimpanzeeComponents.php.
+                'embedScript' => getEmbedScript($id),
             ];
         }
     }

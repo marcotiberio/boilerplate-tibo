@@ -19,21 +19,14 @@
 }[theme] %}
 {% set headingClass = isDark ? 'text-off-white' : 'text-dark-green' %}
 
-{# Build the paymentJS embed URL from the hash + optional prepopulation. #}
-{% set embedUrl = 'https://secure.fundraisingbox.com/app/paymentJS?hash=' ~ formHash|url_encode %}
-{% if prepopulation.amount %}{% set embedUrl = embedUrl ~ '&amount=' ~ prepopulation.amount %}{% endif %}
-{% if prepopulation.interval is not null and prepopulation.interval != '' %}{% set embedUrl = embedUrl ~ '&interval_fix=' ~ prepopulation.interval %}{% endif %}
-{% if prepopulation.itemId %}{% set embedUrl = embedUrl ~ '&fb_item_id=' ~ prepopulation.itemId|url_encode %}{% endif %}
+{# embedScript is composed in functions.php from the hash + prepopulation fields. #}
 
-{% macro embed(embedCode, embedUrl, hash, height) %}
+{% macro embed(embedCode, embedScript, height) %}
   <div class="fbox-embed" style="min-height: {{ height|default(640) }}px">
     {% if embedCode %}
       {{ embedCode|raw }}
-    {% elseif hash %}
-      <script type="text/javascript" src="{{ embedUrl }}"></script>
-      <noscript>
-        <p class="font-small">{{ __('Please enable JavaScript to view the donation form.', 'flynt') }}</p>
-      </noscript>
+    {% elseif embedScript %}
+      {{ embedScript|raw }}
     {% else %}
       {# No form configured yet — visible only to editors. #}
       <p class="fbox-embed__placeholder font-small">{{ __('No FundraisingBox form set. Add a form hash in the block settings.', 'flynt') }}</p>
@@ -106,7 +99,7 @@
             <div class="wysiwyg font-small opacity-80">{{ mediaDescription|e('wp_kses_post') }}</div>
           {% endif %}
 
-          {{ ui.embed(embedCode, embedUrl, formHash, formHeight) }}
+          {{ ui.embed(embedCode, embedScript, formHeight) }}
         </div>
       </div>
 
@@ -131,7 +124,7 @@
            behind its translucent fields. #}
         <div>
           <div class="fbox-card bg-jungle text-off-white rounded-banner p-sm lg:p-md">
-            {{ ui.embed(embedCode, embedUrl, formHash, formHeight) }}
+            {{ ui.embed(embedCode, embedScript, formHeight) }}
           </div>
 
           {# Info block (e.g. bank transfer details) #}

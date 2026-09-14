@@ -35,15 +35,15 @@ function initSlider (refs, data) {
     },
     breakpoints: {
       640: {
-        slidesPerView: mobile,
+        slidesPerView: 1.2,
         spaceBetween: gap
       },
       780: {
-        slidesPerView: tablet,
+        slidesPerView: 2.2,
         spaceBetween: gap
       },
       1180: {
-        slidesPerView: desktop,
+        slidesPerView: 4,
         spaceBetween: gap
       }
     }

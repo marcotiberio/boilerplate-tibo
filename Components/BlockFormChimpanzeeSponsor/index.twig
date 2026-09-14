@@ -14,10 +14,6 @@
   'beige': 'bg-beige'
 }[theme] %}
 
-{# Build the paymentJS embed URL from the chimp's hash + optional item id. #}
-{% set embedUrl = 'https://secure.fundraisingbox.com/app/paymentJS?hash=' ~ chimp.formHash|url_encode %}
-{% if chimp.fbItemId %}{% set embedUrl = embedUrl ~ '&fb_item_id=' ~ chimp.fbItemId|url_encode %}{% endif %}
-
 <flynt-component
   load:on="idle"
   name="BlockFormChimpanzeeSponsor"
@@ -78,13 +74,8 @@
           </{{ tag }}>
 
           <div class="fbox-embed mt-sm" style="min-height: {{ formHeight|default(900) }}px">
-            {% if chimp.formEmbedCode %}
-              {{ chimp.formEmbedCode|raw }}
-            {% elseif chimp.formHash %}
-              <script type="text/javascript" src="{{ embedUrl }}"></script>
-              <noscript>
-                <p class="font-small">{{ __('Please enable JavaScript to view the donation form.', 'flynt') }}</p>
-              </noscript>
+            {% if chimp.embedScript %}
+              {{ chimp.embedScript|raw }}
             {% else %}
               <p class="fbox-embed__placeholder font-small">{{ __('No FundraisingBox form set for this chimpanzee. Add a form hash on the chimpanzee post.', 'flynt') }}</p>
             {% endif %}
