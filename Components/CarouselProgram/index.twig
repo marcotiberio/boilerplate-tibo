@@ -4,16 +4,16 @@
       <h2 class="font-h1 mb-sm">{{ title }}</h2>
     {% endif %}
 
-    {% if preContentHtml %}
+    {# {% if preContentHtml %}
       <div class="wysiwyg mb-sm">{{ preContentHtml|e('wp_kses_post') }}</div>
-    {% endif %}
+    {% endif %} #}
 
     <div class="carousel-program">
       {% if not featured %}
         <p class="carousel-program__empty">{{ __('Noch keine Programmpunkte veröffentlicht.', 'flynt') }}</p>
       {% else %}
 
-        {# ============ Featured: the entry closest in time ============ #}
+        {# ============ Featured: chosen in the backend, else closest in time ============ #}
         <article class="carousel-program__feature">
           <div class="carousel-program__feature-body">
             <p class="carousel-program__feature-meta">
@@ -85,16 +85,32 @@
           </div>
         </article>
 
-        {# ============ Carousel ============ #}
+        {# ============ Carousel: a random pick, reshuffled on every load ============ #}
         {% if entries|length > 0 %}
           <div
             class="carousel-program__track"
             role="region"
             aria-label="{{ __('Weitere Programmpunkte', 'flynt') }}"
             tabindex="0"
+            {# Shuffled in the browser, as a server-side shuffle would be frozen by the page cache. #}
+            x-data="{
+              max: {{ maxCards }},
+              init() {
+                const cards = Array.from(this.$el.children);
+                for (let i = cards.length - 1; i > 0; i--) {
+                  const j = Math.floor(Math.random() * (i + 1));
+                  [cards[i], cards[j]] = [cards[j], cards[i]];
+                }
+                cards.forEach((card, index) => {
+                  card.hidden = index >= this.max;
+                  this.$el.append(card);
+                });
+              }
+            }"
           >
             {% for entry in entries %}
-              <article class="carousel-program__card">
+              {# Without Alpine the nine soonest entries stay visible. #}
+              <article class="carousel-program__card" {% if loop.index0 >= maxCards %}hidden{% endif %}>
                 <div class="carousel-program__card-media">
                   {% if entry.image %}
                     <img

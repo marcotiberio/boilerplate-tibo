@@ -6,7 +6,8 @@ use Flynt\Event;
 use Flynt\Utils\Asset;
 
 // Cards shown in the carousel. The featured entry sits above the carousel and
-// is never repeated among them, so the row holds the nine entries that follow.
+// is never repeated among them. Every other upcoming entry is rendered and the
+// browser picks nine at random, so the choice survives full-page caching.
 const MAX_CARDS = 9;
 
 function getACFLayout()
@@ -21,13 +22,26 @@ function getACFLayout()
                 'type' => 'text',
                 'default_value' => __('Programm', 'flynt'),
             ],
+            // [
+            //     'label' => __('Intro', 'flynt'),
+            //     'name' => 'preContentHtml',
+            //     'type' => 'wysiwyg',
+            //     'tabs' => 'visual',
+            //     'media_upload' => 0,
+            //     'delay' => 1,
+            //     'required' => 0,
+            // ],
             [
-                'label' => __('Intro', 'flynt'),
-                'name' => 'preContentHtml',
-                'type' => 'wysiwyg',
-                'tabs' => 'visual',
-                'media_upload' => 0,
-                'delay' => 1,
+                'label' => __('Featured entry', 'flynt'),
+                'instructions' => __('Leave empty to feature the entry closest in time. Entries that are already over are skipped.', 'flynt'),
+                'name' => 'featuredEntry',
+                'type' => 'post_object',
+                'post_type' => [Event\POST_TYPE],
+                'post_status' => ['publish'],
+                'return_format' => 'id',
+                'allow_null' => 1,
+                'multiple' => 0,
+                'ui' => 1,
                 'required' => 0,
             ],
             [
@@ -35,12 +49,18 @@ function getACFLayout()
                 'name' => 'programLink',
                 'type' => 'link',
                 'required' => 0,
+                'wrapper' => [
+                    'width' => 50,
+                ],
             ],
             [
                 'label' => __('Button: Karte', 'flynt'),
                 'name' => 'mapLink',
                 'type' => 'link',
                 'required' => 0,
+                'wrapper' => [
+                    'width' => 50,
+                ],
             ],
         ],
     ];
@@ -192,11 +212,17 @@ add_filter('Flynt/addComponentData?name=CarouselProgram', function ($data) {
     $entries = array_values(array_filter(array_map(fn ($post) => buildEntry($post, $config, $now), $posts)));
     usort($entries, fn ($a, $b) => strcmp($a['sortKey'], $b['sortKey']));
 
-    // The entry closest in time is featured; the carousel continues from there.
-    $featured = array_shift($entries);
+    // The entry chosen in the backend is featured, provided it is still upcoming;
+    // otherwise the entry closest in time. It is never repeated in the carousel.
+    $chosenId = (int) ($data['featuredEntry'] ?? 0);
+    $chosenIndex = $chosenId ? array_search($chosenId, array_column($entries, 'id'), true) : false;
+    $featured = $chosenIndex !== false
+        ? array_splice($entries, $chosenIndex, 1)[0]
+        : array_shift($entries);
 
     $data['featured'] = $featured ? buildFeatured($featured) : null;
-    $data['entries'] = array_slice($entries, 0, MAX_CARDS);
+    $data['entries'] = $entries;
+    $data['maxCards'] = MAX_CARDS;
 
     return $data;
 });
