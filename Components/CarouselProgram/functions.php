@@ -14,7 +14,7 @@ function getACFLayout()
 {
     return [
         'name' => 'carouselProgram',
-        'label' => __('Carousel: Programm', 'flynt'),
+        'label' => __('Featured Programm Events', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('Title', 'flynt'),
