@@ -68,10 +68,15 @@ $nav-size: 24px;
 
   &__feature-title {
     margin-bottom: 0;
+  }
 
-    a:hover,
-    a:focus {
-      text-decoration: underline;
+  // Title links never underline, in any state.
+  &__feature-title a,
+  &__card-title a {
+    &,
+    &:hover,
+    &:focus {
+      text-decoration: none;
     }
   }
 
@@ -184,11 +189,6 @@ $nav-size: 24px;
 
   &__card-title {
     margin-bottom: 0;
-
-    a:hover,
-    a:focus {
-      text-decoration: underline;
-    }
   }
 
   &__card-org {
