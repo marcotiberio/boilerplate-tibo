@@ -5,10 +5,10 @@ namespace Flynt\Components\CarouselProgram;
 use Flynt\Event;
 use Flynt\Utils\Asset;
 
-// Cards shown in the carousel. The featured entry sits above the carousel and
-// is never repeated among them. Every other upcoming entry is rendered and the
-// browser picks nine at random, so the choice survives full-page caching.
-const MAX_CARDS = 9;
+// Cards shown in the grid. The featured entry sits above the grid and is never
+// repeated among them. Every other upcoming entry is rendered and the browser
+// picks four at random, so the choice survives full-page caching.
+const MAX_CARDS = 4;
 
 function getACFLayout()
 {

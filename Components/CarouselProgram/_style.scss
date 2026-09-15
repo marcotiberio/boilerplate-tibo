@@ -1,10 +1,9 @@
-// Featured program point + card carousel. Measurements come from the Figma
+// Featured program point + card grid. Measurements come from the Figma
 // "Carousel Programm" frame (1200px content width); they have no equivalent in
 // the Tailwind token scale, so they stay component-scoped here while colours
 // and fonts reference theme tokens.
 $gap: 20px;
 $radius: 12px;
-$card-width: 350px;
 $feature-body-width: 512px;
 $badge-size: 55.5px;
 $badge-icon-size: 32px;
@@ -143,26 +142,27 @@ $nav-size: 24px;
     }
   }
 
-  // ---- Carousel ----
+  // ---- Grid ----
 
-  // Scroll-snapped row: the cards keep their design width and are dragged or
-  // swiped, so no slider library is involved.
-  &__track {
-    display: flex;
+  // One column on mobile, two on tablet, four on desktop.
+  &__grid {
+    display: grid;
     gap: $gap;
-    overflow-x: auto;
-    // Room for the focus ring of the card links inside the scroll container.
-    padding-bottom: 4px;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: thin;
+    grid-template-columns: minmax(0, 1fr);
+
+    @media (min-width: theme('screens.tablet')) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (min-width: theme('screens.desktop')) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 
   &__card {
     display: flex;
-    flex: 0 0 min(#{$card-width}, 80vw);
     flex-direction: column;
     gap: 12px;
-    scroll-snap-align: start;
 
     // `display: flex` would otherwise override the hidden attribute.
     &[hidden] {

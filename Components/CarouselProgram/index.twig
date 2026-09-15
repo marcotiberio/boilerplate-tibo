@@ -85,13 +85,10 @@
           </div>
         </article>
 
-        {# ============ Carousel: a random pick, reshuffled on every load ============ #}
+        {# ============ Grid: a random pick, reshuffled on every load ============ #}
         {% if entries|length > 0 %}
           <div
-            class="carousel-program__track"
-            role="region"
-            aria-label="{{ __('Weitere Programmpunkte', 'flynt') }}"
-            tabindex="0"
+            class="carousel-program__grid"
             {# Shuffled in the browser, as a server-side shuffle would be frozen by the page cache. #}
             x-data="{
               max: {{ maxCards }},
@@ -109,7 +106,7 @@
             }"
           >
             {% for entry in entries %}
-              {# Without Alpine the nine soonest entries stay visible. #}
+              {# Without Alpine the soonest entries stay visible. #}
               <article class="carousel-program__card" {% if loop.index0 >= maxCards %}hidden{% endif %}>
                 <div class="carousel-program__card-media">
                   {% if entry.image %}
