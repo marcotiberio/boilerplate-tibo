@@ -79,6 +79,14 @@ $formatSchedule = function ($postId) use ($config, $weekdays) {
     $rows     = (array) (get_field('eventSchedule', $postId) ?: []);
     $entries  = [];
 
+    // Backend-only override: one custom date replaces the selected days. The
+    // time is taken from the first schedule row.
+    $dateOverride = get_field('hasDateOverride', $postId) ? (string) get_field('dateOverride', $postId) : '';
+    if ($dateOverride) {
+        $dateKeys = [$dateOverride];
+        $rows     = array_slice(array_values($rows), 0, 1);
+    }
+
     // Without ISO keys the repeater is the only source, so walk that instead.
     $source = $dateKeys ?: array_keys($rows);
 

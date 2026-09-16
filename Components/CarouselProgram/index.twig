@@ -86,7 +86,7 @@
         </article>
 
         {# ============ Grid: a random pick, reshuffled on every load ============ #}
-        {% if entries|length > 0 %}
+        {% if showGrid and entries|length > 0 %}
           <div
             class="carousel-program__grid"
             {# Shuffled in the browser, as a server-side shuffle would be frozen by the page cache. #}

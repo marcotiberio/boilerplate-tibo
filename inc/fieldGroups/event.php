@@ -343,6 +343,29 @@ add_action('acf/init', function () {
                 ],
             ],
             [
+                'label' => __('Override date?', 'flynt'),
+                'instructions' => __('Nur im Backend. Ersetzt auf der Eventseite die gewählten Termine durch das Datum rechts.', 'flynt'),
+                'name' => 'hasDateOverride',
+                'type' => 'true_false',
+                'ui' => 1,
+                'wrapper' => ['width' => 50],
+            ],
+            [
+                'label' => __('Datum', 'flynt'),
+                'name' => 'dateOverride',
+                'type' => 'date_picker',
+                'display_format' => 'd.m.Y',
+                'return_format' => 'Y-m-d',
+                'first_day' => 1,
+                'required' => 1,
+                'conditional_logic' => [
+                    [
+                        ['fieldPath' => 'hasDateOverride', 'operator' => '==', 'value' => '1'],
+                    ],
+                ],
+                'wrapper' => ['width' => 50],
+            ],
+            [
                 'label' => __('Veranstaltungsort', 'flynt'),
                 'name' => 'venueName',
                 'type' => 'text',

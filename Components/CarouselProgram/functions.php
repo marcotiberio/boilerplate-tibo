@@ -45,6 +45,14 @@ function getACFLayout()
                 'required' => 0,
             ],
             [
+                'label' => __('Show grid', 'flynt'),
+                'instructions' => __('Show the random pick of upcoming entries below the featured entry.', 'flynt'),
+                'name' => 'showGrid',
+                'type' => 'true_false',
+                'default_value' => 1,
+                'ui' => 1,
+            ],
+            [
                 'label' => __('Button: Programm', 'flynt'),
                 'name' => 'programLink',
                 'type' => 'link',
