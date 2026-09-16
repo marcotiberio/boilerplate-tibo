@@ -135,6 +135,13 @@ if (!empty($location['lat']) && !empty($location['lng'])) {
 $logoId = get_post_meta($post->ID, 'orgLogo', true);
 $context['orgLogoUrl'] = $logoId ? wp_get_attachment_image_url((int) $logoId, 'medium') : '';
 
+// Titelbild — the submitted `featuredImage`, not the WP post thumbnail.
+$featuredId = (int) get_post_meta($post->ID, 'featuredImage', true);
+$context['featuredImage'] = $featuredId ? [
+    'src' => wp_get_attachment_image_url($featuredId, 'large'),
+    'alt' => (string) get_post_meta($featuredId, '_wp_attachment_image_alt', true),
+] : null;
+
 /**
  * Veranstalter. The submitted organisation comes from the top-level fields
  * (the public form only ever writes one); the client can add more in wp-admin
