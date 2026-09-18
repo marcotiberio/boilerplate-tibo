@@ -1,10 +1,10 @@
 {% extends 'templates/_document.twig' %}
 
 {% block content %}
-  <article class="post pt-xl pb-xl">
+  <article class="post pt-xxl lg:pt-max pb-lg">
 
     {# ---- Header: back-nav · date · title · intro ---- #}
-    <header class="w-full max-w-screen-md mx-auto px-xs md:px-lg">
+    <header class="w-full max-w-screen-tablet mx-auto px-xs md:px-lg">
       {% set newsUrl = function('get_permalink', function('get_option', 'page_for_posts')) %}
       <a
         href="{{ newsUrl ?: function('home_url', '/') }}"
@@ -25,7 +25,7 @@
 
     {# ---- Featured image with optional copyright caption ---- #}
     {% if post.thumbnail %}
-      <figure class="relative w-full max-w-screen-lg mx-auto mt-md px-xs md:px-lg">
+      <figure class="relative w-full max-w-screen-desktop mx-auto mt-md px-xs md:px-lg">
         <div class="relative w-full overflow-hidden rounded-card">
           <img
             class="block w-full h-full object-cover aspect-[16/9]"
@@ -51,7 +51,7 @@
 
     {# ---- Author ---- #}
     {% if post.postAuthor %}
-      <div class="w-full max-w-screen-md mx-auto mt-md px-xs md:px-lg">
+      <div class="w-full max-w-screen-tablet mx-auto mt-md px-xs md:px-lg">
         <p class="font-body !mb-0 text-muted-black">{{ __('Von', 'flynt') }} {{ post.postAuthor }}</p>
       </div>
     {% endif %}
