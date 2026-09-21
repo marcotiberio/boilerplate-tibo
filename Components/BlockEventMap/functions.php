@@ -99,8 +99,15 @@ function buildEntry($post, array $config)
 
     $imageId = get_post_thumbnail_id($post) ?: 0;
     if (!$imageId) {
+        // Timber's ACF integration returns a Timber\Image; plain ACF an array or an ID.
         $featured = get_field('featuredImage', $post->ID);
-        $imageId = is_array($featured) ? ($featured['ID'] ?? 0) : (int) $featured;
+        if (is_object($featured)) {
+            $imageId = (int) ($featured->id ?? 0);
+        } elseif (is_array($featured)) {
+            $imageId = (int) ($featured['ID'] ?? 0);
+        } else {
+            $imageId = (int) $featured;
+        }
     }
 
     return [
@@ -132,10 +139,10 @@ add_filter('Flynt/addComponentData?name=BlockEventMap', function ($data) {
         'post_type'      => Event\POST_TYPE,
         'post_status'    => 'publish',
         'posts_per_page' => -1,
-        'meta_query'     => [
-            ['key' => 'location', 'compare' => 'EXISTS'],
-        ],
     ]);
+
+    // Entries without coordinates are dropped by buildEntry(), so no meta_query
+    // here — an EXISTS check would also hide entries whose pin is added later.
 
     $entries = array_values(array_filter(array_map(fn ($post) => buildEntry($post, $config), $posts)));
 

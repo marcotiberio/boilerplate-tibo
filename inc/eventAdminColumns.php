@@ -9,6 +9,10 @@
 
 namespace Flynt\Event;
 
+// The hook names below are built at load time from POST_TYPE, and FileLoader
+// requires inc/*.php in filesystem order — so pull the definitions in first.
+require_once __DIR__ . '/eventFields.php';
+
 // Insert the column directly after the title.
 add_filter('manage_' . POST_TYPE . '_posts_columns', function ($columns) {
     $output = [];

@@ -651,25 +651,128 @@ function isAccessible(array $keys)
     return (bool) array_diff($keys, ['keine']);
 }
 
+const GEOCODE_ERROR_META = '_geocodeError';
+
 /**
- * Geocode a free-text address into coordinates via the Google Geocoding API.
- * Reuses the key configured for the ACF Google Map field (Theme Options).
- * Returns null on any failure so callers can store the entry without a pin.
+ * Geocode a free-text address into coordinates.
  *
- * @return array{lat: float, lng: float, formatted: string}|null
+ * Google is tried first when a key is configured, Nominatim (OpenStreetMap,
+ * keyless — same spirit as the map tiles) picks up whatever Google refuses.
+ * The Theme Options key is usually a browser key with referrer restrictions,
+ * which the Geocoding API rejects server side; the fallback keeps entries
+ * pinned regardless.
+ *
+ * Returns null on failure. The reason is written to $error so callers can log
+ * it and surface it in wp-admin instead of silently storing an entry with no
+ * pin — see the acf/save_post hook below.
+ *
+ * @param string      $address Free-text address.
+ * @param string|null $error   Out: human-readable failure reason.
+ * @return array{lat: float, lng: float, formatted: string, provider: string}|null
  */
-function geocodeAddress($address)
+function geocodeAddress($address, &$error = null)
 {
+    $error = null;
     $address = trim((string) $address);
     if ($address === '') {
+        $error = __('Keine Adresse hinterlegt.', 'flynt');
         return null;
     }
 
+    $reasons = [];
     $apiKey = Options::getGlobal('Acf', 'googleMapsApiKey');
-    if (empty($apiKey)) {
-        return null;
+
+    // Submitted addresses often carry entrance/floor notes that the geocoders
+    // choke on, so retry with progressively simpler variants.
+    foreach (addressVariants($address) as $variant) {
+        if (!empty($apiKey)) {
+            $result = geocodeViaGoogle($variant, $apiKey, $googleError);
+            if ($result) {
+                return $result;
+            }
+            $reasons[] = 'Google: ' . $googleError;
+        }
+
+        $result = geocodeViaNominatim($variant, $nominatimError);
+        if ($result) {
+            return $result;
+        }
+        $reasons[] = 'Nominatim: ' . $nominatimError;
     }
 
+    $error = implode(' | ', array_unique($reasons));
+
+    return null;
+}
+
+/**
+ * Progressively simpler forms of an address, most complete first:
+ *   1. as submitted
+ *   2. without parenthetical notes and floor/entrance hints
+ *   3. only the street segment (the one carrying a house number) + postal code
+ *
+ * @return string[]
+ */
+function addressVariants($address)
+{
+    $variants = [$address];
+
+    // Drop "(Eingang: …)" style notes and access hints the geocoders reject.
+    $clean = preg_replace('/\s*\([^)]*\)/u', '', $address);
+    $clean = preg_replace('/,?\s*\b(\d+\.\s*)?(Stock|Etage|OG|EG|Eg|VH|HH|Hinterhaus|Vorderhaus|Dachgeschoss|Hall|Halle\s*\d*)\b[^,]*/iu', '', $clean);
+    $clean = normalizeAddressPunctuation($clean);
+    $variants[] = $clean;
+
+    // Berlin, Germany is appended by composeAddress and always kept.
+    $parts = array_map('trim', explode(',', $clean));
+    $tail = array_slice($parts, -2);
+    $body = array_slice($parts, 0, max(0, count($parts) - 2));
+
+    // Postal codes arrive as "10967 Berlin-Bezirk …"; keep the digits only.
+    $postal = '';
+    foreach ($body as $index => $part) {
+        if (preg_match('/\b(\d{5})\b/', $part, $match)) {
+            $postal = $match[1];
+            unset($body[$index]);
+            break;
+        }
+    }
+
+    // The street is the first remaining segment that reads like "name + number";
+    // venue names and duplicated address fragments sit around it.
+    $street = '';
+    foreach ($body as $part) {
+        if (preg_match('/\p{L}/u', $part) && preg_match('/\d/', $part)) {
+            $street = $part;
+            break;
+        }
+    }
+
+    if ($street !== '') {
+        $variants[] = normalizeAddressPunctuation(implode(', ', array_filter([$street, $postal, ...$tail])));
+    }
+
+    return array_values(array_unique(array_filter(array_map('trim', $variants))));
+}
+
+/**
+ * Collapse the empty segments and doubled spaces left behind by stripping.
+ */
+function normalizeAddressPunctuation($address)
+{
+    $address = preg_replace('/\s+/u', ' ', $address);
+    $parts = array_filter(array_map('trim', explode(',', $address)), fn ($part) => $part !== '');
+
+    return implode(', ', $parts);
+}
+
+/**
+ * Google Geocoding API. Reuses the key configured for the ACF Google Map
+ * field (Theme Options); that key must be unrestricted or IP-restricted for
+ * server-side calls to be accepted.
+ */
+function geocodeViaGoogle($address, $apiKey, &$error = null)
+{
     // add_query_arg url-encodes values, so pass the raw address.
     $url = add_query_arg([
         'address' => $address,
@@ -678,11 +781,14 @@ function geocodeAddress($address)
 
     $response = wp_remote_get($url, ['timeout' => 8]);
     if (is_wp_error($response)) {
+        $error = $response->get_error_message();
         return null;
     }
 
     $body = json_decode(wp_remote_retrieve_body($response), true);
+
     if (empty($body['results'][0]['geometry']['location'])) {
+        $error = trim(($body['status'] ?? 'UNKNOWN_ERROR') . ' ' . ($body['error_message'] ?? ''));
         return null;
     }
 
@@ -692,6 +798,65 @@ function geocodeAddress($address)
         'lat'       => (float) $location['lat'],
         'lng'       => (float) $location['lng'],
         'formatted' => $body['results'][0]['formatted_address'] ?? $address,
+        'provider'  => 'google',
+    ];
+}
+
+/**
+ * Nominatim (OpenStreetMap). Keyless, but the usage policy requires an
+ * identifying User-Agent and at most one request per second — the throttle
+ * below keeps bulk backfills compliant.
+ *
+ * @see https://operations.osmfoundation.org/policies/nominatim/
+ */
+function geocodeViaNominatim($address, &$error = null)
+{
+    static $lastRequest = 0.0;
+
+    $wait = 1.0 - (microtime(true) - $lastRequest);
+    if ($wait > 0) {
+        usleep((int) ($wait * 1000000));
+    }
+    $lastRequest = microtime(true);
+
+    $url = add_query_arg([
+        'q'              => $address,
+        'format'         => 'jsonv2',
+        'limit'          => 1,
+        'countrycodes'   => 'de',
+        'addressdetails' => 0,
+    ], 'https://nominatim.openstreetmap.org/search');
+
+    $response = wp_remote_get($url, [
+        'timeout' => 10,
+        'headers' => [
+            'User-Agent' => 'LOOPTOPIA/1.0 (' . home_url() . ')',
+            'Referer'    => home_url(),
+        ],
+    ]);
+
+    if (is_wp_error($response)) {
+        $error = $response->get_error_message();
+        return null;
+    }
+
+    $code = wp_remote_retrieve_response_code($response);
+    if ($code !== 200) {
+        $error = 'HTTP ' . $code;
+        return null;
+    }
+
+    $body = json_decode(wp_remote_retrieve_body($response), true);
+    if (empty($body[0]['lat']) || empty($body[0]['lon'])) {
+        $error = 'ZERO_RESULTS';
+        return null;
+    }
+
+    return [
+        'lat'       => (float) $body[0]['lat'],
+        'lng'       => (float) $body[0]['lon'],
+        'formatted' => $body[0]['display_name'] ?? $address,
+        'provider'  => 'nominatim',
     ];
 }
 
@@ -720,13 +885,61 @@ add_action('acf/save_post', function ($postId) {
         return;
     }
 
-    $address = composeAddress(get_field('street', $postId), get_field('postalCode', $postId));
-    $geo = geocodeAddress($address);
-    if ($geo) {
-        update_field('location', [
-            'address' => $geo['formatted'],
-            'lat'     => $geo['lat'],
-            'lng'     => $geo['lng'],
-        ], $postId);
+    $street = (string) get_field('street', $postId);
+    $postalCode = (string) get_field('postalCode', $postId);
+
+    // Nothing to geocode yet (venue still being sought) — not an error.
+    if (trim($street) === '' && trim($postalCode) === '') {
+        delete_post_meta($postId, GEOCODE_ERROR_META);
+        return;
     }
+
+    $geo = geocodeAddress(composeAddress($street, $postalCode), $error);
+    if (!$geo) {
+        storeGeocodeError($postId, $error);
+        return;
+    }
+
+    delete_post_meta($postId, GEOCODE_ERROR_META);
+    update_field('location', [
+        'address' => $geo['formatted'],
+        'lat'     => $geo['lat'],
+        'lng'     => $geo['lng'],
+    ], $postId);
 }, 20);
+
+/**
+ * Record why an entry has no pin: the error log for developers, post meta for
+ * the notice on the edit screen. Without this the map just silently loses the
+ * entry.
+ */
+function storeGeocodeError($postId, $error)
+{
+    $error = (string) $error;
+    update_post_meta($postId, GEOCODE_ERROR_META, $error);
+    error_log(sprintf('[looptopia] Geocoding failed for event %d: %s', $postId, $error));
+}
+
+/**
+ * Warn the editor when an entry could not be placed on the map, so a missing
+ * pin is noticed here rather than on the live map.
+ */
+add_action('admin_notices', function () {
+    $screen = get_current_screen();
+    if (!$screen || $screen->base !== 'post' || $screen->post_type !== POST_TYPE) {
+        return;
+    }
+
+    $postId = get_the_ID();
+    $error = get_post_meta($postId, GEOCODE_ERROR_META, true);
+    if (!$error) {
+        return;
+    }
+
+    printf(
+        '<div class="notice notice-warning"><p><strong>%s</strong> %s</p><p><code>%s</code></p></div>',
+        esc_html__('Kein Map-Pin:', 'flynt'),
+        esc_html__('Die Adresse konnte nicht in Koordinaten umgewandelt werden. Der Eintrag erscheint nicht auf der Karte. Bitte Straße und PLZ prüfen oder den Pin manuell setzen.', 'flynt'),
+        esc_html($error)
+    );
+});

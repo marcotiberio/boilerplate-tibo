@@ -201,8 +201,9 @@ function handleSubmission(\WP_REST_Request $request)
 
     // 5. Geocode (best-effort) for an own venue.
     $geo = null;
+    $geoError = null;
     if ($data['locationMode'] === 'eigen') {
-        $geo = geocodeAddress(composeAddress($data['street'], $data['postalCode']));
+        $geo = geocodeAddress(composeAddress($data['street'], $data['postalCode']), $geoError);
     }
 
     // 6. Create the pending post.
@@ -257,6 +258,9 @@ function handleSubmission(\WP_REST_Request $request)
             'lat'     => $geo['lat'],
             'lng'     => $geo['lng'],
         ], $postId);
+    } elseif ($geoError) {
+        // Flags the entry in wp-admin instead of losing it from the map.
+        storeGeocodeError($postId, $geoError);
     }
 
     // 9. Notify the editor.
