@@ -41,10 +41,13 @@ $button-arrow-size: 18px;
     position: relative;
   }
 
-  // Slide widths come from the design, not from `slidesPerView`.
+  // Slide widths come from the design, not from `slidesPerView`. The fallback
+  // is relative to the track (not the viewport), so on mobile the active card
+  // fits inside the panel padding and the next one peeks in.
   .swiper-slide {
     height: auto;
-    width: min(#{$card-width}, 80vw);
+    min-width: 0;
+    width: min(#{$card-width}, 85%);
   }
 
   &__card {
@@ -70,8 +73,11 @@ $button-arrow-size: 18px;
     width: $icon-size;
   }
 
+  // Long German compounds ("Reparaturangebote") would otherwise push past the
+  // card edge on narrow screens.
   &__card-title {
     margin-bottom: 0;
+    overflow-wrap: break-word;
   }
 
   &__card-text {
