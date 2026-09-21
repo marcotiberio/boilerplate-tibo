@@ -871,6 +871,85 @@ function composeAddress($street, $postalCode)
 }
 
 /**
+ * Give one entry a map pin from its street + postal code.
+ *
+ * Shared by the save hook below and the backfill tool (inc/eventGeocodeTool.php)
+ * so both behave identically.
+ *
+ * @param int  $postId
+ * @param bool $force Re-geocode even if a pin is already set.
+ * @return string One of: has-pin, no-address, pinned, failed.
+ */
+function geocodePost($postId, $force = false)
+{
+    $location = get_field('location', $postId);
+    if (!$force && !empty($location['lat'])) {
+        return 'has-pin';
+    }
+
+    $street = (string) get_field('street', $postId);
+    $postalCode = (string) get_field('postalCode', $postId);
+
+    // Nothing to geocode yet (venue still being sought) — not an error.
+    if (trim($street) === '' && trim($postalCode) === '') {
+        delete_post_meta($postId, GEOCODE_ERROR_META);
+        return 'no-address';
+    }
+
+    $geo = geocodeAddress(composeAddress($street, $postalCode), $error);
+    if (!$geo) {
+        storeGeocodeError($postId, $error);
+        return 'failed';
+    }
+
+    delete_post_meta($postId, GEOCODE_ERROR_META);
+    update_field('location', [
+        'address' => $geo['formatted'],
+        'lat'     => $geo['lat'],
+        'lng'     => $geo['lng'],
+    ], $postId);
+
+    return 'pinned';
+}
+
+/**
+ * Every event that could get a pin but hasn't got one: an address on file and
+ * no coordinates. The pin lives in a serialised array, so the filtering happens
+ * in PHP rather than in a meta query.
+ *
+ * @param bool $skipFailed Leave out entries whose address already failed, so a
+ *                         batch run drains instead of retrying them forever.
+ *                         The error is cleared whenever the address is saved
+ *                         again, which puts the entry back in the queue.
+ * @return int[]
+ */
+function eventsNeedingPin($skipFailed = false)
+{
+    $posts = get_posts([
+        'post_type'        => POST_TYPE,
+        'post_status'      => ['publish', 'pending', 'draft', 'future'],
+        'posts_per_page'   => -1,
+        'fields'           => 'ids',
+        'suppress_filters' => false,
+    ]);
+
+    return array_values(array_filter($posts, function ($postId) use ($skipFailed) {
+        $location = get_field('location', $postId);
+        if (!empty($location['lat'])) {
+            return false;
+        }
+
+        if ($skipFailed && get_post_meta($postId, GEOCODE_ERROR_META, true)) {
+            return false;
+        }
+
+        $address = trim((string) get_field('street', $postId) . (string) get_field('postalCode', $postId));
+
+        return $address !== '';
+    }));
+}
+
+/**
  * Re-geocode when an editor saves an entry with an address but no pin yet.
  * Lets the client adjust street/PLZ in wp-admin and get a marker automatically,
  * while still being able to drag the pin manually afterwards.
@@ -880,32 +959,7 @@ add_action('acf/save_post', function ($postId) {
         return;
     }
 
-    $location = get_field('location', $postId);
-    if (!empty($location['lat'])) {
-        return;
-    }
-
-    $street = (string) get_field('street', $postId);
-    $postalCode = (string) get_field('postalCode', $postId);
-
-    // Nothing to geocode yet (venue still being sought) — not an error.
-    if (trim($street) === '' && trim($postalCode) === '') {
-        delete_post_meta($postId, GEOCODE_ERROR_META);
-        return;
-    }
-
-    $geo = geocodeAddress(composeAddress($street, $postalCode), $error);
-    if (!$geo) {
-        storeGeocodeError($postId, $error);
-        return;
-    }
-
-    delete_post_meta($postId, GEOCODE_ERROR_META);
-    update_field('location', [
-        'address' => $geo['formatted'],
-        'lat'     => $geo['lat'],
-        'lng'     => $geo['lng'],
-    ], $postId);
+    geocodePost($postId);
 }, 20);
 
 /**
