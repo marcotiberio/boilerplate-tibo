@@ -19,7 +19,7 @@ export default function (el) {
   const [centerLat, centerLng] = (refs.map.dataset.center || '52.5200, 13.4050')
     .split(',')
     .map((n) => parseFloat(n.trim()))
-  const zoom = parseInt(refs.map.dataset.zoom, 10) || 12
+  const zoom = parseInt(refs.map.dataset.zoom, 10) || 16
 
   const map = L.map(refs.map, {
     scrollWheelZoom: false,

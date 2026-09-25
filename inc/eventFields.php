@@ -651,6 +651,21 @@ function isAccessible(array $keys)
     return (bool) array_diff($keys, ['keine']);
 }
 
+/**
+ * Should the entry be listed in the program list? Driven by the `showInProgram`
+ * toggle in wp-admin, which defaults to on.
+ *
+ * The raw meta is read rather than get_field() so entries saved before the
+ * toggle existed — they carry no meta at all — stay visible instead of
+ * depending on ACF resolving the field default.
+ */
+function isListed($postId)
+{
+    $value = get_post_meta($postId, 'showInProgram', true);
+
+    return $value === '' ? true : (bool) $value;
+}
+
 const GEOCODE_ERROR_META = '_geocodeError';
 
 /**

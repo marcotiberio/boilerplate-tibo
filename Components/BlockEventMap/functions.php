@@ -32,7 +32,7 @@ function getACFLayout()
                 'label' => __('Default zoom', 'flynt'),
                 'name' => 'zoom',
                 'type' => 'number',
-                'default_value' => 12,
+                'default_value' => 16,
                 'min' => 1,
                 'max' => 18,
                 'wrapper' => ['width' => 33],

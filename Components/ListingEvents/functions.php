@@ -55,32 +55,50 @@ function buildEntry($post, array $config)
 
     $schedule = Event\getScheduleRows($post->ID);
 
+    $title = get_the_title($post);
+    $org = (string) (get_field('orgName', $post->ID) ?: '');
+    $addressLines = buildAddressLines($post->ID);
+    // An entry can carry several program types; the row prints them all.
+    $programTypeLabels = array_values(array_filter(array_map(fn ($key) => $config['programTypes'][$key] ?? '', $programTypes)));
+    $sectorLabels = array_values(array_filter(array_map(fn ($key) => $config['sectors'][$key] ?? '', $sectors)));
+
     return [
         'id'               => $post->ID,
-        'title'            => get_the_title($post),
+        'title'            => $title,
         'link'             => get_permalink($post),
         'image'            => $imageId ? wp_get_attachment_image_url($imageId, 'medium_large') : '',
         'imageAlt'         => $imageId ? (string) get_post_meta($imageId, '_wp_attachment_image_alt', true) : '',
         'icon'             => Asset::requireUrl('assets/icons/event/' . $iconFile),
         'schedule'         => $schedule,
-        'programTypeLabel' => $config['programTypes'][reset($programTypes) ?: ''] ?? '',
-        'sectorLabels'     => array_values(array_filter(array_map(fn ($key) => $config['sectors'][$key] ?? '', $sectors))),
-        'org'              => (string) (get_field('orgName', $post->ID) ?: ''),
-        'addressLines'     => buildAddressLines($post->ID),
+        'programTypeLabels' => $programTypeLabels,
+        'sectorLabels'     => $sectorLabels,
+        'org'              => $org,
+        'addressLines'     => $addressLines,
         'family'           => in_array('familien', $audiences, true),
         'accessible'       => $accessible,
-        'sortKey'          => buildSortKey($dates, $schedule),
+        'sortKey'          => buildSortKey($dates, startTimes($schedule)),
         'filters'          => [
             'dates'      => $dates,
             'audiences'  => array_values($audiences),
             'sectors'    => array_values($sectors),
             'format'     => (string) (get_field('format', $post->ID) ?: ''),
             'district'   => (string) (get_field('district', $post->ID) ?: ''),
-            // Multiple choice; legacy entries stored a single key, hence the cast.
-            'language'   => array_values(array_filter((array) (get_field('language', $post->ID) ?: []))),
             'accessible' => $accessible,
+            'search'     => buildSearchIndex(array_merge([$title, $org], $programTypeLabels, $sectorLabels, $addressLines)),
         ],
     ];
+}
+
+/**
+ * Lowercased haystack the search box matches against. It holds what the row
+ * prints — title, organiser, tags and address — so any word the visitor can
+ * read on a row also finds it.
+ */
+function buildSearchIndex(array $parts)
+{
+    $text = implode(' ', array_filter(array_map('strval', $parts)));
+
+    return trim(preg_replace('/\s+/u', ' ', mb_strtolower($text)));
 }
 
 /**
@@ -99,18 +117,42 @@ function buildAddressLines($postId)
 }
 
 /**
- * Chronological sort key: earliest day, then earliest start time. Entries
- * without a day or time sort last rather than jumping to the top.
+ * Earliest start time per day key, e.g. `['2026-11-14' => '10:00']`. Times are
+ * stored as `H:i`, so they compare as plain strings.
  */
-function buildSortKey(array $dates, array $schedule)
+function startTimes(array $schedule)
 {
-    $days = array_values(array_filter($dates));
+    $starts = [];
+
+    foreach ($schedule as $row) {
+        $day = (string) ($row['key'] ?? '');
+        $start = (string) ($row['start'] ?? '');
+
+        if ($day === '' || $start === '') {
+            continue;
+        }
+
+        if (!isset($starts[$day]) || $start < $starts[$day]) {
+            $starts[$day] = $start;
+        }
+    }
+
+    return $starts;
+}
+
+/**
+ * Chronological sort key: earliest day, then that day's start time — a time is
+ * never compared outside the day it belongs to, so an entry running late on the
+ * first day does not borrow an early start from the second. Entries without a
+ * day or time sort last rather than jumping to the top.
+ */
+function buildSortKey(array $dates, array $starts)
+{
+    $days = array_values(array_filter($dates)) ?: array_keys($starts);
     sort($days);
+    $first = (string) ($days[0] ?? '');
 
-    $starts = array_values(array_filter(array_column($schedule, 'start')));
-    sort($starts);
-
-    return ($days[0] ?? '9999-12-31') . ' ' . ($starts[0] ?? '99:99');
+    return ($first ?: '9999-12-31') . ' ' . ($starts[$first] ?? '99:99');
 }
 
 /**
@@ -139,19 +181,14 @@ add_filter('Flynt/addComponentData?name=ListingEvents', function ($data) {
         'posts_per_page' => -1,
     ]);
 
-    $entries = array_map(fn ($post) => buildEntry($post, $config), $posts);
-    usort($entries, fn ($a, $b) => strcmp($a['sortKey'], $b['sortKey']));
+    // Entries the editor has switched off stay published and reachable by URL,
+    // they just don't appear in the list.
+    $posts = array_filter($posts, fn ($post) => Event\isListed($post->ID));
 
-    // Bezirk and Sprache only list what the program actually offers, so a
-    // German-only program shows a single "DE" button as in the design.
-    $languages = [];
-    foreach (array_keys(usedValues($entries, 'language')) as $key) {
-        $languages[] = [
-            'key'   => $key,
-            'label' => $config['languages'][$key] ?? $key,
-            'short' => Event\languageShortLabel($key),
-        ];
-    }
+    $entries = array_map(fn ($post) => buildEntry($post, $config), $posts);
+    // Day, then start time, then title — so entries starting at the same moment
+    // keep a stable order instead of following the publish date.
+    usort($entries, fn ($a, $b) => strcmp($a['sortKey'], $b['sortKey']) ?: strnatcasecmp($a['title'], $b['title']));
 
     $data['entries'] = $entries;
     // Keyed by post ID: the rows are rendered server side and only ask the
@@ -163,8 +200,9 @@ add_filter('Flynt/addComponentData?name=ListingEvents', function ($data) {
     $data['audienceGroups'] = $config['audienceGroups'];
     $data['sectors'] = $config['sectors'];
     $data['formats'] = $config['format'];
+    // Bezirk only lists what the program actually offers, so a control that
+    // would match nothing is never rendered.
     $data['districts'] = array_intersect_key($config['districts'], usedValues($entries, 'district'));
-    $data['languages'] = $languages;
     $data['icons'] = [
         'family'        => Asset::requireUrl('assets/icons/event/family.png'),
         'accessibility' => Asset::requireUrl('assets/icons/event/accessibility.png'),

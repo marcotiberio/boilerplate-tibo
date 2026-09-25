@@ -24,6 +24,16 @@ add_action('acf/init', function () {
         'style' => 'default',
         'position' => 'normal',
         'fields' => [
+            // Sits before the first tab, so it stays visible on every tab.
+            [
+                'label' => __('Im Programm anzeigen', 'flynt'),
+                'instructions' => __('Aus: Der Eintrag wird aus der Programmliste ausgeblendet. Die Eventseite bleibt erreichbar.', 'flynt'),
+                'name' => 'showInProgram',
+                'type' => 'true_false',
+                'ui' => 1,
+                'default_value' => 1,
+            ],
+
             // ---- Section 1: Organisation ----
             [
                 'label' => __('Organisation', 'flynt'),

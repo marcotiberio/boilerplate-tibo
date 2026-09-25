@@ -18,7 +18,7 @@
         sectors: [],
         formats: [],
         districts: [],
-        languages: [],
+        search: '',
         accessibleOnly: false,
         openMenu: '',
         init() {
@@ -31,9 +31,13 @@
           if (this.sectors.length && !this.sectors.some((key) => entry.sectors.includes(key))) return false;
           if (this.formats.length && !this.formats.includes(entry.format)) return false;
           if (this.districts.length && !this.districts.includes(entry.district)) return false;
-          if (this.languages.length && !this.languages.some((key) => entry.language.includes(key))) return false;
+          if (this.searchTerm && !entry.search.includes(this.searchTerm)) return false;
           if (this.accessibleOnly && !entry.accessible) return false;
           return true;
+        },
+        /* Server side lowercases entry.search, so both sides compare the same. */
+        get searchTerm() {
+          return this.search.trim().toLowerCase();
         },
         /* Unknown IDs stay visible, so a row is never hidden by a data gap. */
         isVisible(id) {
@@ -42,10 +46,6 @@
         },
         get visibleCount() {
           return Object.values(this.filters).filter((entry) => this.matches(entry)).length;
-        },
-        toggleValue(list, key) {
-          const index = this[list].indexOf(key);
-          if (index === -1) { this[list].push(key); } else { this[list].splice(index, 1); }
         },
         toggleMenu(name) {
           this.openMenu = this.openMenu === name ? '' : name;
@@ -191,17 +191,24 @@
             <img src="{{ icons.accessibility }}" alt="{{ __('Nur barrierefreie Angebote', 'flynt') }}" width="24" height="24">
           </button>
 
-          {# Sprache — one pill per language used in the program #}
-          {% for language in languages %}
+          {# Suche — free text over title, organiser, tags and address #}
+          <div class="event-filters__search" :class="searchTerm !== '' && 'is-filtering'">
+            <input
+              type="search"
+              class="event-filters__search-input"
+              placeholder="{{ __('Suche', 'flynt') }}"
+              aria-label="{{ __('Programm durchsuchen', 'flynt') }}"
+              x-model.debounce.200ms="search"
+            >
             <button
               type="button"
-              class="event-filters__pill"
-              :class="languages.includes('{{ language.key }}') && 'is-filtering'"
-              :aria-pressed="languages.includes('{{ language.key }}')"
-              aria-label="{{ language.label }}"
-              x-on:click="toggleValue('languages', '{{ language.key }}')"
-            >{{ language.short }}</button>
-          {% endfor %}
+              class="event-filters__search-clear"
+              x-show="search !== ''"
+              x-cloak
+              aria-label="{{ __('Suche zurücksetzen', 'flynt') }}"
+              x-on:click="search = ''"
+            >{% include 'assets/icons/map-close.svg' ignore missing %}</button>
+          </div>
         </div>
       </div>
 
@@ -240,9 +247,9 @@
             </h3>
 
             <div class="listing-events__tags">
-              {% if entry.programTypeLabel %}
-                <span class="listing-events__tag listing-events__tag--primary">{{ entry.programTypeLabel }}</span>
-              {% endif %}
+              {% for label in entry.programTypeLabels %}
+                <span class="listing-events__tag listing-events__tag--primary">{{ label }}</span>
+              {% endfor %}
               {% for label in entry.sectorLabels %}
                 <span class="listing-events__tag">{{ label }}</span>
               {% endfor %}
