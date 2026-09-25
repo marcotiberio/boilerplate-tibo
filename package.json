@@ -41,6 +41,7 @@
     "jquery": "^3.6.4",
     "lazysizes": "^5.3.2",
     "leaflet": "^1.9.4",
+    "leaflet.markercluster": "^1.5.3",
     "lodash-es": "^4.17.21",
     "modern-normalize": "^1.1.0",
     "postcss-cli": "^10.1.0",

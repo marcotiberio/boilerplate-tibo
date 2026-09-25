@@ -1,6 +1,20 @@
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+// Only the plugin's animation CSS — the bubbles are styled in _style.scss, so
+// its default blue/yellow theme (MarkerCluster.Default.css) stays out.
+import 'leaflet.markercluster'
+import 'leaflet.markercluster/dist/MarkerCluster.css'
 import { buildRefs, getJSON } from '@/assets/scripts/helpers.js'
+
+// Cluster bubble grows in three steps so dense areas read heavier. The
+// thresholds are calibrated to the size of the programme (a few dozen pins
+// across the city), where a cluster of 7 is already dense — re-tune these if
+// the event count grows by an order of magnitude.
+const CLUSTER_STEPS = [
+  { upTo: 3, name: 'sm', size: 40 },
+  { upTo: 6, name: 'md', size: 52 },
+  { upTo: Infinity, name: 'lg', size: 64 }
+]
 
 /**
  * Leaflet layer for the event map.
@@ -37,7 +51,14 @@ export default function (el) {
   const pinSvg = pinShape ? pinShape.innerHTML.trim() : ''
 
   const markers = new Map()
-  const layer = L.layerGroup().addTo(map)
+  const layer = L.markerClusterGroup({
+    iconCreateFunction: buildClusterIcon,
+    // The design has no coverage outline; overlapping pins fan out instead.
+    showCoverageOnHover: false,
+    spiderfyOnMaxZoom: true,
+    // Just under the pin width, so pins only merge once they actually touch.
+    maxClusterRadius: 60
+  }).addTo(map)
 
   entries.forEach((entry) => {
     if (!entry.lat || !entry.lng) return
@@ -49,8 +70,10 @@ export default function (el) {
     })
     marker.on('click', () => dispatch('eventmap:select', { id: entry.id }))
     markers.set(entry.id, marker)
-    layer.addLayer(marker)
   })
+
+  // Bulk add: the cluster group reclusters on every single addLayer call.
+  layer.addLayers([...markers.values()])
 
   // Clicking the map background clears the selection.
   map.on('click', () => dispatch('eventmap:select', { id: null }))
@@ -58,6 +81,11 @@ export default function (el) {
   frame([...markers.values()])
 
   let visibleKey = [...markers.keys()].join(',')
+  let selectedId = null
+
+  // A clustered pin has no element, and gets a fresh one when its cluster
+  // opens, so the active class is re-applied after every cluster re-render.
+  layer.on('animationend', applyActive)
 
   el.addEventListener('eventmap:filter', (event) => {
     const ids = event.detail.ids || []
@@ -65,23 +93,30 @@ export default function (el) {
     if (key === visibleKey) return
     visibleKey = key
 
+    const add = []
+    const remove = []
     markers.forEach((marker, id) => {
       const isVisible = ids.includes(id)
-      if (isVisible && !layer.hasLayer(marker)) layer.addLayer(marker)
-      if (!isVisible && layer.hasLayer(marker)) layer.removeLayer(marker)
+      if (isVisible && !layer.hasLayer(marker)) add.push(marker)
+      if (!isVisible && layer.hasLayer(marker)) remove.push(marker)
     })
+    if (remove.length) layer.removeLayers(remove)
+    if (add.length) layer.addLayers(add)
 
     frame(ids.map((id) => markers.get(id)).filter(Boolean))
   })
 
   el.addEventListener('eventmap:selected', (event) => {
-    const id = event.detail.id
-    markers.forEach((marker, markerId) => {
-      const element = marker.getElement()
-      if (element) element.classList.toggle('is-active', markerId === id)
+    selectedId = event.detail.id
+    applyActive()
+
+    const selected = markers.get(selectedId)
+    if (!selected || !layer.hasLayer(selected)) return
+    // Opens the surrounding cluster first if the pin is hidden inside one.
+    layer.zoomToShowLayer(selected, () => {
+      map.panTo(selected.getLatLng(), { animate: true })
+      applyActive()
     })
-    const selected = markers.get(id)
-    if (selected) map.panTo(selected.getLatLng(), { animate: true })
   })
 
   el.addEventListener('eventmap:zoom', (event) => {
@@ -92,6 +127,13 @@ export default function (el) {
 
   function dispatch (name, detail) {
     refs.map.dispatchEvent(new CustomEvent(name, { detail, bubbles: true }))
+  }
+
+  function applyActive () {
+    markers.forEach((marker, id) => {
+      const element = marker.getElement()
+      if (element) element.classList.toggle('is-active', id === selectedId)
+    })
   }
 
   // Frame the given markers, keeping the overlay chrome clear of the pins.
@@ -118,5 +160,21 @@ function buildIcon (entry, pinSvg) {
     html: `${pinSvg}${icon}`,
     iconSize: [55.5, 71],
     iconAnchor: [28, 71]
+  })
+}
+
+/**
+ * Cluster bubble: the number of events grouped at this point, in one of three
+ * sizes. Clicking it zooms to the group's bounds (Leaflet's own behaviour).
+ */
+function buildClusterIcon (cluster) {
+  const count = cluster.getChildCount()
+  const step = CLUSTER_STEPS.find((candidate) => count <= candidate.upTo)
+
+  return L.divIcon({
+    className: `event-map__cluster event-map__cluster--${step.name}`,
+    html: `<span>${count}</span>`,
+    iconSize: [step.size, step.size],
+    iconAnchor: [step.size / 2, step.size / 2]
   })
 }
