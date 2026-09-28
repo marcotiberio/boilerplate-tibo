@@ -84,7 +84,7 @@ class Asset
         }
 
         if ('url' == $returnType) {
-            if (file_exists(self::viteHotFile())) {
+            if (self::isHotModuleReplacement()) {
                 return trailingslashit(trim(file_get_contents(self::viteHotFile()))) . $asset;
             }
             return file_exists($filePath) ? get_template_directory_uri() . '/dist/' . $assetSuffix : get_template_directory_uri() . '/' . $assetSuffix;
@@ -96,11 +96,30 @@ class Asset
     /**
      * Checks if the current environment is a Vite dev server.
      *
+     * The hot file is only honoured on local sites, so a stray dist/hot
+     * deployed to production can never point assets at localhost.
+     *
      * @return bool
      */
     public static function isHotModuleReplacement()
     {
-        return file_exists(self::viteHotFile());
+        return self::isLocalSite() && file_exists(self::viteHotFile());
+    }
+
+    /**
+     * Checks if the site runs in a local development environment.
+     *
+     * @return bool
+     */
+    protected static function isLocalSite()
+    {
+        if (in_array(wp_get_environment_type(), ['local', 'development'], true)) {
+            return true;
+        }
+
+        $host = (string) wp_parse_url(home_url(), PHP_URL_HOST);
+        return 'localhost' === $host
+            || (bool) preg_match('/\.(ddev\.site|local|test|localhost)$/', $host);
     }
 
     /**
