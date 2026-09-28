@@ -158,18 +158,6 @@
         >
           <img src="{{ cardIcons.wheelchair }}" alt="{{ __('Nur barrierefreie Angebote', 'flynt') }}" width="24" height="24">
         </button>
-
-        {# Sprache — one pill per language used in the program #}
-        {% for language in languages %}
-          <button
-            type="button"
-            class="event-map__pill"
-            :class="languages.includes('{{ language.key }}') && 'is-filtering'"
-            :aria-pressed="languages.includes('{{ language.key }}')"
-            aria-label="{{ language.label }}"
-            x-on:click="toggleValue('languages', '{{ language.key }}')"
-          >{{ language.short }}</button>
-        {% endfor %}
       </div>
 
       <p class="event-map__empty" x-show="entries.length > 0 && visible.length === 0" x-cloak>
