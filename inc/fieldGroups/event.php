@@ -427,6 +427,37 @@ add_action('acf/init', function () {
                 'zoom' => 13,
             ],
             [
+                'label' => __('Weitere Orte', 'flynt'),
+                'instructions' => __('Nur im Backend. Jeder Ort bekommt einen eigenen Pin auf der Karte. Der Pin wird beim Speichern aus der Adresse ermittelt und kann danach verschoben werden.', 'flynt'),
+                'name' => 'additionalLocations',
+                'type' => 'repeater',
+                'layout' => 'block',
+                'button_label' => __('Ort hinzufügen', 'flynt'),
+                'collapsed' => 'field_eventDetails_additionalLocations_name',
+                'sub_fields' => [
+                    [
+                        'label' => __('Bezeichnung', 'flynt'),
+                        'name' => 'name',
+                        'type' => 'text',
+                        'wrapper' => ['width' => 50],
+                    ],
+                    [
+                        'label' => __('Adresse', 'flynt'),
+                        'instructions' => __('Straße + Hausnummer, PLZ', 'flynt'),
+                        'name' => 'address',
+                        'type' => 'text',
+                        'wrapper' => ['width' => 50],
+                    ],
+                    [
+                        'label' => __('Map-Pin', 'flynt'),
+                        'name' => 'location',
+                        'type' => 'google_map',
+                        'height' => 300,
+                        'zoom' => 13,
+                    ],
+                ],
+            ],
+            [
                 'label' => __('Hinweise zur klimafreundlichen Anreise', 'flynt'),
                 'name' => 'mobilityInfo',
                 'type' => 'textarea',

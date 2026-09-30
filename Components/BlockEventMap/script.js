@@ -50,6 +50,8 @@ export default function (el) {
   const pinShape = el.querySelector('template[data-ref="pinTemplate"]')
   const pinSvg = pinShape ? pinShape.innerHTML.trim() : ''
 
+  // Entry id → its markers. An entry has one pin per location (main pin +
+  // "Weitere Orte"); every one of them selects the same entry.
   const markers = new Map()
   const layer = L.markerClusterGroup({
     iconCreateFunction: buildClusterIcon,
@@ -60,25 +62,39 @@ export default function (el) {
     maxClusterRadius: 60
   }).addTo(map)
 
+  // The pin last clicked, so selecting an entry zooms to that location rather
+  // than to its first one.
+  let clickedMarker = null
+
   entries.forEach((entry) => {
-    if (!entry.lat || !entry.lng) return
-    const marker = L.marker([entry.lat, entry.lng], {
-      icon: buildIcon(entry, pinSvg),
-      title: entry.title,
-      alt: entry.title,
-      riseOnHover: true
-    })
-    marker.on('click', () => dispatch('eventmap:select', { id: entry.id }))
-    markers.set(entry.id, marker)
+    const list = (entry.points || [])
+      .filter((point) => point.lat && point.lng)
+      .map((point) => {
+        const title = point.name ? `${entry.title} – ${point.name}` : entry.title
+        const marker = L.marker([point.lat, point.lng], {
+          icon: buildIcon(entry, pinSvg),
+          title,
+          alt: title,
+          riseOnHover: true
+        })
+        marker.on('click', () => {
+          clickedMarker = marker
+          dispatch('eventmap:select', { id: entry.id })
+        })
+        return marker
+      })
+    if (list.length) markers.set(entry.id, list)
   })
 
+  const allMarkers = () => [...markers.values()].flat()
+
   // Bulk add: the cluster group reclusters on every single addLayer call.
-  layer.addLayers([...markers.values()])
+  layer.addLayers(allMarkers())
 
   // Clicking the map background clears the selection.
   map.on('click', () => dispatch('eventmap:select', { id: null }))
 
-  frame([...markers.values()])
+  frame(allMarkers())
 
   let visibleKey = [...markers.keys()].join(',')
   let selectedId = null
@@ -95,22 +111,26 @@ export default function (el) {
 
     const add = []
     const remove = []
-    markers.forEach((marker, id) => {
+    markers.forEach((list, id) => {
       const isVisible = ids.includes(id)
-      if (isVisible && !layer.hasLayer(marker)) add.push(marker)
-      if (!isVisible && layer.hasLayer(marker)) remove.push(marker)
+      list.forEach((marker) => {
+        if (isVisible && !layer.hasLayer(marker)) add.push(marker)
+        if (!isVisible && layer.hasLayer(marker)) remove.push(marker)
+      })
     })
     if (remove.length) layer.removeLayers(remove)
     if (add.length) layer.addLayers(add)
 
-    frame(ids.map((id) => markers.get(id)).filter(Boolean))
+    frame(ids.flatMap((id) => markers.get(id) || []))
   })
 
   el.addEventListener('eventmap:selected', (event) => {
     selectedId = event.detail.id
     applyActive()
 
-    const selected = markers.get(selectedId)
+    const list = markers.get(selectedId) || []
+    const selected = list.includes(clickedMarker) ? clickedMarker : list[0]
+    clickedMarker = null
     if (!selected || !layer.hasLayer(selected)) return
     // Opens the surrounding cluster first if the pin is hidden inside one.
     layer.zoomToShowLayer(selected, () => {
@@ -130,9 +150,11 @@ export default function (el) {
   }
 
   function applyActive () {
-    markers.forEach((marker, id) => {
-      const element = marker.getElement()
-      if (element) element.classList.toggle('is-active', id === selectedId)
+    markers.forEach((list, id) => {
+      list.forEach((marker) => {
+        const element = marker.getElement()
+        if (element) element.classList.toggle('is-active', id === selectedId)
+      })
     })
   }
 
@@ -164,7 +186,7 @@ function buildIcon (entry, pinSvg) {
 }
 
 /**
- * Cluster bubble: the number of events grouped at this point, in one of three
+ * Cluster bubble: the number of pins grouped at this point, in one of three
  * sizes. Clicking it zooms to the group's bounds (Leaflet's own behaviour).
  */
 function buildClusterIcon (cluster) {

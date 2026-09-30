@@ -975,7 +975,83 @@ add_action('acf/save_post', function ($postId) {
     }
 
     geocodePost($postId);
+    geocodeAdditionalLocations($postId);
 }, 20);
+
+const ADDITIONAL_GEOCODE_ERROR_META = '_additionalGeocodeErrors';
+
+/**
+ * Pin every "Weitere Orte" row that has an address but no pin yet.
+ * Backend only — the public form never fills this repeater.
+ *
+ * @return string[] Addresses that could not be geocoded.
+ */
+function geocodeAdditionalLocations($postId)
+{
+    $rows = get_field('additionalLocations', $postId) ?: [];
+    $failed = [];
+
+    foreach ($rows as $index => $row) {
+        $address = trim((string) ($row['address'] ?? ''));
+        if ($address === '' || !empty($row['location']['lat'])) {
+            continue;
+        }
+
+        $geo = geocodeAddress(composeAddress($address, ''), $error);
+        if (!$geo) {
+            $failed[] = $address;
+            error_log(sprintf('[looptopia] Geocoding failed for event %d, location "%s": %s', $postId, $address, $error));
+            continue;
+        }
+
+        // Row numbers in update_sub_field() are 1-based.
+        update_sub_field(['additionalLocations', $index + 1, 'location'], [
+            'address' => $geo['formatted'],
+            'lat'     => $geo['lat'],
+            'lng'     => $geo['lng'],
+        ], $postId);
+    }
+
+    if ($failed) {
+        update_post_meta($postId, ADDITIONAL_GEOCODE_ERROR_META, $failed);
+    } else {
+        delete_post_meta($postId, ADDITIONAL_GEOCODE_ERROR_META);
+    }
+
+    return $failed;
+}
+
+/**
+ * All map points of an entry: the main pin first, then "Weitere Orte".
+ *
+ * @return array<int, array{lat: float, lng: float, name: string}>
+ */
+function getMapPoints($postId)
+{
+    $points = [];
+
+    $location = get_field('location', $postId);
+    if (!empty($location['lat']) && !empty($location['lng'])) {
+        $points[] = [
+            'lat'  => (float) $location['lat'],
+            'lng'  => (float) $location['lng'],
+            'name' => (string) (get_field('venueName', $postId) ?: ''),
+        ];
+    }
+
+    foreach (get_field('additionalLocations', $postId) ?: [] as $row) {
+        if (empty($row['location']['lat']) || empty($row['location']['lng'])) {
+            continue;
+        }
+        $points[] = [
+            'lat'  => (float) $row['location']['lat'],
+            'lng'  => (float) $row['location']['lng'],
+            'name' => (string) ($row['name'] ?? ''),
+        ];
+    }
+
+    return $points;
+}
 
 /**
  * Record why an entry has no pin: the error log for developers, post meta for
@@ -1000,6 +1076,18 @@ add_action('admin_notices', function () {
     }
 
     $postId = get_the_ID();
+
+    $additionalFailed = (array) get_post_meta($postId, ADDITIONAL_GEOCODE_ERROR_META, true);
+    $additionalFailed = array_filter($additionalFailed);
+    if ($additionalFailed) {
+        printf(
+            '<div class="notice notice-warning"><p><strong>%s</strong> %s</p><p><code>%s</code></p></div>',
+            esc_html__('Weitere Orte ohne Map-Pin:', 'flynt'),
+            esc_html__('Diese Adressen konnten nicht in Koordinaten umgewandelt werden. Bitte Adresse prüfen oder den Pin manuell setzen.', 'flynt'),
+            esc_html(implode(' · ', $additionalFailed))
+        );
+    }
+
     $error = get_post_meta($postId, GEOCODE_ERROR_META, true);
     if (!$error) {
         return;

@@ -100,6 +100,25 @@
                 </div>
               </div>
             {% endif %}
+
+            {% for extra in additionalLocations %}
+              <div class="flex items-start gap-5">
+                <img class="h-6 w-6 shrink-0" src="{{ icons.mapPin }}" alt="{{ __('Ort', 'flynt')|e('html_attr') }}">
+                <div class="flex flex-1 flex-col gap-1">
+                  {% if extra.name %}
+                    <p class="m-0 text-[16px] font-semibold leading-tight">{{ extra.name }}</p>
+                  {% endif %}
+                  {% if extra.address %}
+                    <p class="m-0 text-[16px] leading-tight">{{ extra.address }}</p>
+                  {% endif %}
+                  {% if extra.mapsUrl %}
+                    <div class="flex flex-wrap items-start gap-x-4 text-[16px] leading-none">
+                      {% include 'templates/Partials/_externalLink.twig' with { url: extra.mapsUrl, label: __('Google Maps', 'flynt') } only %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
           </div>
 
           {# ---- Über das Event ---- #}

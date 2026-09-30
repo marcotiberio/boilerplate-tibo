@@ -81,8 +81,9 @@ function getTileSources()
  */
 function buildEntry($post, array $config)
 {
-    $location = get_field('location', $post->ID);
-    if (empty($location['lat']) || empty($location['lng'])) {
+    // Main pin + "Weitere Orte"; one marker each, all selecting this entry.
+    $points = Event\getMapPoints($post->ID);
+    if (!$points) {
         return null;
     }
 
@@ -114,8 +115,7 @@ function buildEntry($post, array $config)
         'id'               => $post->ID,
         'title'            => get_the_title($post),
         'link'             => get_permalink($post),
-        'lat'              => (float) $location['lat'],
-        'lng'              => (float) $location['lng'],
+        'points'           => $points,
         'image'            => $imageId ? wp_get_attachment_image_url($imageId, 'medium_large') : '',
         'org'              => (string) (get_field('orgName', $post->ID) ?: ''),
         'schedule'         => Event\getScheduleRows($post->ID),
@@ -141,7 +141,7 @@ add_filter('Flynt/addComponentData?name=BlockEventMap', function ($data) {
         'posts_per_page' => -1,
     ]);
 
-    // Entries without coordinates are dropped by buildEntry(), so no meta_query
+    // Entries without any coordinates are dropped by buildEntry(), so no meta_query
     // here — an EXISTS check would also hide entries whose pin is added later.
 
     $entries = array_values(array_filter(array_map(fn ($post) => buildEntry($post, $config), $posts)));

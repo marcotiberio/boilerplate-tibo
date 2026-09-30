@@ -130,6 +130,30 @@ if (!empty($location['lat']) && !empty($location['lng'])) {
     $context['mapsUrl'] = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(Event\composeAddress($street, $postalCode));
 }
 
+// "Weitere Orte" (backend only), listed below the main location.
+$context['additionalLocations'] = array_values(array_filter(array_map(function ($row) {
+    $name = trim((string) ($row['name'] ?? ''));
+    $address = trim((string) ($row['address'] ?? ''));
+    $pin = $row['location'] ?? [];
+
+    $mapsUrl = '';
+    if (!empty($pin['lat']) && !empty($pin['lng'])) {
+        $mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode($pin['lat'] . ',' . $pin['lng']);
+    } elseif ($address !== '') {
+        $mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode(Event\composeAddress($address, ''));
+    }
+
+    if ($name === '' && $address === '' && $mapsUrl === '') {
+        return null;
+    }
+
+    return [
+        'name'    => $name,
+        'address' => $address,
+        'mapsUrl' => $mapsUrl,
+    ];
+}, get_field('additionalLocations', $post->ID) ?: [])));
+
 // Image fields are stored as attachment IDs — read the raw meta so the ACF
 // image formatter (which returns a Timber\Image) stays out of the way.
 $logoId = get_post_meta($post->ID, 'orgLogo', true);
