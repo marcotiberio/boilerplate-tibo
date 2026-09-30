@@ -4,6 +4,7 @@ namespace Flynt\Components\BlockRelatedEvents;
 
 use Flynt\Event;
 use Flynt\Utils\Asset;
+use Flynt\Utils\Options;
 
 // One full row of the three-column grid, as in the design.
 const MAX_CARDS = 3;
@@ -153,7 +154,24 @@ function programLink()
     return $programPage ? get_permalink($programPage) : get_post_type_archive_link(Event\POST_TYPE);
 }
 
+/**
+ * Block toggle from "Blocks Settings". Never-saved options come back as null,
+ * which counts as enabled so the block shows by default.
+ */
+function isEnabled()
+{
+    $value = Options::getTranslatable('BlockRelatedEvents', 'showRelatedEvents');
+
+    return $value === null || (bool) $value;
+}
+
 add_filter('Flynt/addComponentData?name=BlockRelatedEvents', function ($data) {
+    // The template renders nothing without events.
+    if (!isEnabled()) {
+        $data['events'] = [];
+        return $data;
+    }
+
     $postId = isset($data['post']) ? (int) $data['post']->ID : (int) get_the_ID();
     $config = Event\getConfig();
 
@@ -167,3 +185,14 @@ add_filter('Flynt/addComponentData?name=BlockRelatedEvents', function ($data) {
 
     return $data;
 });
+
+Options::addTranslatable('BlockRelatedEvents', [
+    [
+        'label' => __('Show related events', 'flynt'),
+        'instructions' => __('Show the "Weitere Programmpunkte" block below single events.', 'flynt'),
+        'name' => 'showRelatedEvents',
+        'type' => 'true_false',
+        'default_value' => 1,
+        'ui' => 1,
+    ],
+]);
