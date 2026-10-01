@@ -22,7 +22,7 @@
                 <span>{{ featured.when.time }}</span>
               </span>
               {% if featured.venue %}
-                <span class="carousel-program__feature-venue">{{ featured.venue }}</span>
+                <span class="carousel-program__feature-venue" data-no-translation>{{ featured.venue }}</span>
               {% endif %}
             </p>
 
@@ -142,7 +142,7 @@
                 </div>
 
                 {% if entry.org %}
-                  <p class="carousel-program__card-org">{{ entry.org }}</p>
+                  <p class="carousel-program__card-org" data-no-translation>{{ entry.org }}</p>
                 {% endif %}
               </article>
             {% endfor %}

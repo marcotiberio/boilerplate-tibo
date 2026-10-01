@@ -11,12 +11,27 @@ $badge-size: 57px;
 $badge-icon-size: 32px;
 $small-font-size: 12px;
 $icon-size: 24px;
+// Height of the fixed site header the sticky bar has to clear — same values as
+// the main element's offset in templates/_document.twig.
+$header-height: 44px;
+$header-height-lg: 72px;
 
 .listing-events {
   font-family: var(--primary-font-family);
 
+  // Stays in reach while scrolling the list. The page-coloured band keeps rows
+  // from showing through around the bar's rounded corners as they pass behind.
   &__filters {
-    margin-bottom: $row-gap;
+    background-color: var(--white);
+    margin-bottom: 10px;
+    padding-block: 10px;
+    position: sticky;
+    top: $header-height;
+    z-index: 2;
+
+    @media (min-width: theme('screens.lg')) {
+      top: $header-height-lg;
+    }
   }
 
   &__list {

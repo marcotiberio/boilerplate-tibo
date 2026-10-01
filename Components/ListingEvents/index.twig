@@ -256,7 +256,8 @@
             </div>
 
             <div class="listing-events__meta">
-              <div class="listing-events__address">
+              {# Names and addresses stay as entered — keep TranslatePress from machine-translating them #}
+              <div class="listing-events__address" data-no-translation>
                 {% if entry.org %}
                   <p class="listing-events__org">{{ entry.org }}</p>
                 {% endif %}
