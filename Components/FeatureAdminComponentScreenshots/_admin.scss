@@ -42,3 +42,8 @@
     white-space: nowrap;
   }
 }
+
+/* ACF sets overflow: hidden on popup links, which clips the hover preview */
+.acf-fc-popup a[data-layout]:has(.flyntComponentScreenshot-imageWrapper) {
+  overflow: visible;
+}
