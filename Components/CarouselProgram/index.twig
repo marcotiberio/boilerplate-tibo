@@ -108,7 +108,8 @@
             {% for entry in entries %}
               {# Without Alpine the soonest entries stay visible. #}
               <article class="carousel-program__card" {% if loop.index0 >= maxCards %}hidden{% endif %}>
-                <div class="carousel-program__card-media">
+                {# Duplicate of the title link, so kept out of the tab order and screen reader output. #}
+                <a class="carousel-program__card-media" href="{{ entry.link }}" tabindex="-1" aria-hidden="true">
                   {% if entry.image %}
                     <img
                       class="carousel-program__card-image"
@@ -120,7 +121,7 @@
                   <span class="carousel-program__badge">
                     <img src="{{ entry.icon }}" alt="" width="32" height="32">
                   </span>
-                </div>
+                </a>
 
                 <p class="carousel-program__card-when">
                   <span>{{ entry.when.date }}</span>

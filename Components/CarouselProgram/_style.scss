@@ -175,6 +175,7 @@ $nav-size: 24px;
     aspect-ratio: 350 / 225;
     background-color: var(--grey-200);
     border-radius: $radius;
+    display: block;
     overflow: hidden;
     position: relative;
   }
