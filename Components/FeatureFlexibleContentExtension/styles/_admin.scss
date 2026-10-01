@@ -41,11 +41,12 @@
   }
 }
 
-.acf-flexible-content {
-  a[data-layout]:has(.flyntComponentScreenshot-imageWrapper) {
-    overflow: visible;
-  }
+// ACF 6.5+ appends the popup to <body>, outside .acf-flexible-content
+.acf-fc-popup a[data-layout]:has(.flyntComponentScreenshot-imageWrapper) {
+  overflow: visible;
+}
 
+.acf-flexible-content {
   .layout[data-renamed="1"] .acf-fc-layout-handle {
     .acf-fc-layout-original-title:has(.flyntComponentScreenshot-label) {
       color: inherit;
@@ -68,7 +69,8 @@
     }
   }
 
-  .layout[data-renamed="0"] .acf-fc-layout-handle {
+  // only hide the plain title when the screenshot title replaces it
+  .layout[data-renamed="0"] .acf-fc-layout-handle:has(.flyntComponentScreenshot-label) {
     .acf-fc-layout-title {
       display: none;
     }

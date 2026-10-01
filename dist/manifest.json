@@ -24,7 +24,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-cbd2dfae.js",
+    "file": "assets/script-6c6e9f89.js",
     "imports": [
       "assets/main.js"
     ],
@@ -32,7 +32,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-6c6e9f89.js",
+    "file": "assets/script-cbd2dfae.js",
     "imports": [
       "assets/main.js"
     ],
@@ -319,7 +319,7 @@
     "src": "assets/admin.js"
   },
   "assets/admin.scss": {
-    "file": "assets/admin-b9c8e862.css",
+    "file": "assets/admin-2deaba19.css",
     "isEntry": true,
     "src": "assets/admin.scss"
   },
