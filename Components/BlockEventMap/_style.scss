@@ -40,8 +40,8 @@ $zoom-size: 40px;
     svg {
       display: block;
       height: $pin-height;
-      width: $pin-width;
       transition: all 0.2s ease, filter 0.2s ease;
+      width: $pin-width;
     }
 
     &.is-active {
@@ -50,6 +50,7 @@ $zoom-size: 40px;
 
     &:hover {
       filter: drop-shadow(0 2px #{$pin-shadow-blur} var(--white));
+
       svg {
         color: var(--green);
       }
@@ -115,6 +116,8 @@ $zoom-size: 40px;
     background-color: theme('colors.greenFaded');
     border-radius: $overlay-radius;
     display: flex;
+    // Lets the search field drop to its own line once the pills fill the bar.
+    flex-wrap: nowrap;
     gap: $card-padding;
     max-width: 100%;
     overflow: visible;
@@ -123,6 +126,51 @@ $zoom-size: 40px;
 
     &::-webkit-scrollbar {
       display: none;
+    }
+  }
+
+  // Shares the pill shape, but takes whatever space the pills leave on the
+  // last row — below its basis it wraps and spans the bar on its own line.
+  &__search {
+    align-items: center;
+    background-color: var(--white);
+    border-radius: $control-radius;
+    display: flex;
+    flex: 1 1 200px;
+    gap: 8px;
+    min-width: 0;
+    padding: 8px 14px;
+
+    &.is-filtering {
+      background-color: var(--green);
+    }
+  }
+
+  &__search-input {
+    background-color: transparent;
+    border: 0;
+    flex: 1;
+    font-size: $control-font-size;
+    font-weight: 600;
+    line-height: 1.5;
+    min-width: 0;
+    outline: none;
+    width: 100%;
+
+    // Safari draws its own clear button next to ours.
+    &::-webkit-search-cancel-button {
+      appearance: none;
+    }
+  }
+
+  &__search-clear {
+    display: flex;
+    flex-shrink: 0;
+
+    img,
+    svg {
+      height: 16px;
+      width: 16px;
     }
   }
 
@@ -149,14 +197,16 @@ $zoom-size: 40px;
     &--day {
       background-color: rgb(255 255 255 / 75%);
       position: relative;
-
-      &.is-active {
-        background-color: var(--white);
-      }
     }
 
     &--icon {
       padding-inline: 14px;
+    }
+
+    // The chosen day, or "Alle Tage" while no single day is chosen — only one
+    // of them carries the accent at a time.
+    &.is-active {
+      background-color: var(--green);
     }
 
     // Any control that is currently narrowing the result set.

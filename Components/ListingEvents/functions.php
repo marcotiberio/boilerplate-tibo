@@ -57,7 +57,7 @@ function buildEntry($post, array $config)
 
     $title = get_the_title($post);
     $org = (string) (get_field('orgName', $post->ID) ?: '');
-    $addressLines = buildAddressLines($post->ID);
+    $addressLines = Event\getAddressLines($post->ID);
     // An entry can carry several program types; the row prints them all.
     $programTypeLabels = array_values(array_filter(array_map(fn ($key) => $config['programTypes'][$key] ?? '', $programTypes)));
     $sectorLabels = array_values(array_filter(array_map(fn ($key) => $config['sectors'][$key] ?? '', $sectors)));
@@ -84,36 +84,9 @@ function buildEntry($post, array $config)
             'format'     => (string) (get_field('format', $post->ID) ?: ''),
             'district'   => (string) (get_field('district', $post->ID) ?: ''),
             'accessible' => $accessible,
-            'search'     => buildSearchIndex(array_merge([$title, $org], $programTypeLabels, $sectorLabels, $addressLines)),
+            'search'     => Event\buildSearchIndex(array_merge([$title, $org], $programTypeLabels, $sectorLabels, $addressLines)),
         ],
     ];
-}
-
-/**
- * Lowercased haystack the search box matches against. It holds what the row
- * prints — title, organiser, tags and address — so any word the visitor can
- * read on a row also finds it.
- */
-function buildSearchIndex(array $parts)
-{
-    $text = implode(' ', array_filter(array_map('strval', $parts)));
-
-    return trim(preg_replace('/\s+/u', ' ', mb_strtolower($text)));
-}
-
-/**
- * Venue address as printed lines. Berlin is implied by the feature (the
- * geocoder appends it too), so only street and postal code are stored.
- */
-function buildAddressLines($postId)
-{
-    $street = trim((string) (get_field('street', $postId) ?: ''));
-    $postalCode = trim((string) (get_field('postalCode', $postId) ?: ''));
-
-    return array_values(array_filter([
-        $street,
-        $postalCode ? $postalCode . ' ' . __('Berlin', 'flynt') : '',
-    ]));
 }
 
 /**

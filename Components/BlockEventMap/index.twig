@@ -14,6 +14,7 @@
       formats: [],
       languages: [],
       accessibleOnly: false,
+      search: '',
       openMenu: '',
       selected: null,
       init() {
@@ -29,7 +30,12 @@
         if (this.formats.length && !this.formats.includes(entry.format)) return false;
         if (this.languages.length && !this.languages.some((key) => entry.languages.includes(key))) return false;
         if (this.accessibleOnly && !entry.accessible) return false;
+        if (this.searchTerm && !entry.search.includes(this.searchTerm)) return false;
         return true;
+      },
+      /* Server side lowercases entry.search, so both sides compare the same. */
+      get searchTerm() {
+        return this.search.trim().toLowerCase();
       },
       setDay(key) {
         this.day = key;
@@ -158,6 +164,25 @@
         >
           <img src="{{ cardIcons.wheelchair }}" alt="{{ __('Nur barrierefreie Angebote', 'flynt') }}" width="24" height="24">
         </button>
+
+        {# Suche — free text over title, organiser, tags, venue and address #}
+        <div class="event-map__search" :class="searchTerm !== '' && 'is-filtering'">
+          <input
+            type="search"
+            class="event-map__search-input"
+            placeholder="{{ __('Suche', 'flynt') }}"
+            aria-label="{{ __('Programm durchsuchen', 'flynt') }}"
+            x-model.debounce.200ms="search"
+          >
+          <button
+            type="button"
+            class="event-map__search-clear"
+            x-show="search !== ''"
+            x-cloak
+            aria-label="{{ __('Suche zurücksetzen', 'flynt') }}"
+            x-on:click="search = ''"
+          >{% include 'assets/icons/map-close.svg' ignore missing %}</button>
+        </div>
       </div>
 
       <p class="event-map__empty" x-show="entries.length > 0 && visible.length === 0" x-cloak>

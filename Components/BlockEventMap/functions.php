@@ -98,6 +98,13 @@ function buildEntry($post, array $config)
     // Pin glyph follows the entry's format.
     $iconFile = Event\getFormatIcon($post->ID);
 
+    $title = html_entity_decode(get_the_title($post), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $org = (string) (get_field('orgName', $post->ID) ?: '');
+    $programTypeLabel = $config['programTypes'][reset($programTypes) ?: ''] ?? '';
+    $sectorLabels = array_values(array_filter(array_map(fn ($key) => $config['sectors'][$key] ?? '', $sectors)));
+    // Venue names too — on a map, "where" is as likely a search term as "what".
+    $venueNames = array_values(array_filter(array_column($points, 'name')));
+
     $imageId = get_post_thumbnail_id($post) ?: 0;
     if (!$imageId) {
         // Timber's ACF integration returns a Timber\Image; plain ACF an array or an ID.
@@ -113,15 +120,22 @@ function buildEntry($post, array $config)
 
     return [
         'id'               => $post->ID,
-        'title'            => get_the_title($post),
+        // Decode texturized entities (&#8211;, &#038;) — the card renders this via x-text.
+        'title'            => $title,
         'link'             => get_permalink($post),
         'points'           => $points,
         'image'            => $imageId ? wp_get_attachment_image_url($imageId, 'medium_large') : '',
-        'org'              => (string) (get_field('orgName', $post->ID) ?: ''),
+        'org'              => $org,
         'schedule'         => Event\getScheduleRows($post->ID),
         'dates'            => array_values($dates),
-        'programTypeLabel' => $config['programTypes'][reset($programTypes) ?: ''] ?? '',
-        'sectorLabels'     => array_values(array_filter(array_map(fn ($key) => $config['sectors'][$key] ?? '', $sectors))),
+        'programTypeLabel' => $programTypeLabel,
+        'sectorLabels'     => $sectorLabels,
+        'search'           => Event\buildSearchIndex(array_merge(
+            [$title, $org, $programTypeLabel],
+            $sectorLabels,
+            $venueNames,
+            Event\getAddressLines($post->ID)
+        )),
         'audiences'        => array_values($audiences),
         'format'           => (string) (get_field('format', $post->ID) ?: ''),
         'languages'        => $languages,

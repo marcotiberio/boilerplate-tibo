@@ -73,7 +73,7 @@ function getDefaultConfig()
             'workshop'   => __('Mitmachaktion / Workshop', 'flynt'),
             'reparatur'  => __('Reparaturangebot / Reparatur Workshop', 'flynt'),
             'panel'      => __('Panel / Vortrag', 'flynt'),
-            'kunst'      => __('Kunst / Kultur (Ausstellung, Performance, Tanz, Musik, Film, Lesung, Podcast)', 'flynt'),
+            'kunst'      => __('Kunst / Kultur', 'flynt'),
             'community'  => __('Community / Networking Event', 'flynt'),
             'openhouse'  => __('Open House / Behind the Scene', 'flynt'),
             'tour'       => __('Tour / Walk / Stadt-Erlebnis', 'flynt'),
@@ -1019,6 +1019,34 @@ function geocodeAdditionalLocations($postId)
     }
 
     return $failed;
+}
+
+/**
+ * Lowercased haystack the search boxes match against. It holds what the entry
+ * prints — title, organiser, tags and address — so any word the visitor can
+ * read also finds it. Shared by the program list and the map so a term that
+ * works in one works in the other.
+ */
+function buildSearchIndex(array $parts)
+{
+    $text = implode(' ', array_filter(array_map('strval', $parts)));
+
+    return trim(preg_replace('/\s+/u', ' ', mb_strtolower($text)));
+}
+
+/**
+ * Venue address as printed lines. Berlin is implied by the feature (the
+ * geocoder appends it too), so only street and postal code are stored.
+ */
+function getAddressLines($postId)
+{
+    $street = trim((string) (get_field('street', $postId) ?: ''));
+    $postalCode = trim((string) (get_field('postalCode', $postId) ?: ''));
+
+    return array_values(array_filter([
+        $street,
+        $postalCode ? $postalCode . ' ' . __('Berlin', 'flynt') : '',
+    ]));
 }
 
 /**
