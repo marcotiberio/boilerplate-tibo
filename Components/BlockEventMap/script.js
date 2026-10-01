@@ -36,7 +36,8 @@ export default function (el) {
   const zoom = parseInt(refs.map.dataset.zoom, 10) || 16
 
   const map = L.map(refs.map, {
-    scrollWheelZoom: false,
+    scrollWheelZoom: false, // see enableWheelZoom
+    zoomSnap: 0, // fractional zoom, so scroll/pinch zoom is continuous
     zoomControl: false // replaced by the design's own zoom buttons
   }).setView([centerLat, centerLng], zoom)
 
@@ -140,8 +141,11 @@ export default function (el) {
   })
 
   el.addEventListener('eventmap:zoom', (event) => {
-    map.setZoom(map.getZoom() + (event.detail.delta || 0))
+    // Buttons step from the nearest whole level, as zoom can be fractional.
+    map.setZoom(Math.round(map.getZoom()) + (event.detail.delta || 0))
   })
+
+  enableWheelZoom(map)
 
   dispatch('eventmap:ready', {})
 
@@ -166,6 +170,59 @@ export default function (el) {
       map.setView(list[0].getLatLng(), Math.max(map.getZoom(), 14))
     }
   }
+}
+
+// Wheel distance (in pixels) per zoom level. Pinch deltas are much smaller
+// than scroll deltas, so pinching gets its own rate. Raise to zoom slower.
+const SCROLL_PX_PER_LEVEL = 250
+const PINCH_PX_PER_LEVEL = 60
+// Pixels per line, for wheels reporting in lines (Firefox mouse wheel).
+const LINE_PX = 40
+
+/**
+ * Continuous scroll and pinch zoom around the pointer, following the gesture
+ * frame by frame (needs zoomSnap: 0). Chrome/Firefox/Edge report a pinch as a
+ * wheel event with ctrlKey set, Safari as gesture events.
+ */
+function enableWheelZoom (map) {
+  const container = map.getContainer()
+  let pending = 0
+  let point = null
+  let frame = 0
+
+  // Wheel events fire faster than the screen refreshes; zoom once per frame.
+  const zoomBy = (delta, clientX, clientY) => {
+    pending += delta
+    point = map.mouseEventToContainerPoint({ clientX, clientY })
+    if (frame) return
+    frame = requestAnimationFrame(() => {
+      frame = 0
+      map.setZoomAround(point, map.getZoom() + pending, { animate: false })
+      pending = 0
+    })
+  }
+
+  container.addEventListener('wheel', (event) => {
+    // The map takes the scroll instead of the page (and pinch instead of
+    // the browser's page zoom).
+    event.preventDefault()
+
+    const pixels = event.deltaMode === 0 ? event.deltaY : event.deltaY * LINE_PX
+    const rate = event.ctrlKey ? PINCH_PX_PER_LEVEL : SCROLL_PX_PER_LEVEL
+    zoomBy(-pixels / rate, event.clientX, event.clientY)
+  }, { passive: false })
+
+  // Safari (non-standard GestureEvent): scale is relative to the gesture start.
+  let lastScale = 1
+  container.addEventListener('gesturestart', (event) => {
+    event.preventDefault()
+    lastScale = 1
+  })
+  container.addEventListener('gesturechange', (event) => {
+    event.preventDefault()
+    zoomBy(Math.log2(event.scale / lastScale), event.clientX, event.clientY)
+    lastScale = event.scale
+  })
 }
 
 /**
