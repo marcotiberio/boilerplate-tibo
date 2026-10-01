@@ -3,6 +3,7 @@
 namespace Flynt\FieldGroups\Chimpanzee;
 
 use ACFComposer\ACFComposer;
+use Flynt\Components;
 use Flynt\Utils\FundraisingBox;
 use Flynt\Utils\Options;
 
@@ -306,6 +307,47 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'new_lines' => '',
                 'wrapper' => [
                     'width' => 100,
+                ],
+            ],
+        ],
+        'location' => [
+            [
+                [
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'chimpanzee',
+                ],
+            ],
+        ],
+    ]);
+    ACFComposer::registerFieldGroup([
+        'name' => 'chimpanzeeComponents',
+        'title' => __('Chimpanzee Components', 'flynt'),
+        'style' => 'seamless',
+        'fields' => [
+            [
+                'name' => 'chimpanzeeComponents',
+                'label' => __('Chimpanzee Components', 'flynt'),
+                'type' => 'flexible_content',
+                'button_label' => __('Add Component', 'flynt'),
+                'layouts' => [
+                    // JGI homepage components
+                    Components\BlockHero\getACFLayout(),
+                    Components\BlockStats\getACFLayout(),
+                    Components\BlockIcons\getACFLayout(),
+                    Components\BlockGallery\getACFLayout(),
+                    Components\SliderCards\getACFLayout(),
+                    Components\SliderImages\getACFLayout(),
+                    Components\BlockMediaQuote\getACFLayout(),
+                    Components\BlockDonationForm\getACFLayout(),
+                    Components\BlockFormChimpanzeeSponsor\getACFLayout(),
+                    Components\BlockWysiwygColumns\getACFLayout(),
+                    Components\BlockContact\getACFLayout(),
+                    // Boilerplate components
+                    Components\BlockAnchor\getACFLayout(),
+                    Components\BlockBannerCta\getACFLayout(),
+                    Components\BlockImage\getACFLayout(),
+                    Components\BlockSpacer\getACFLayout(),
                 ],
             ],
         ],

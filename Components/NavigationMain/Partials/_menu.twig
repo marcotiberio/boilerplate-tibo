@@ -14,25 +14,39 @@
         </a>
       </div>
     {% endif %}
-    {# menu item with dropdown submenu #}
+    {# menu item with dropdown submenu
+       Hover opens it for mouse users. The down chevron is a separate toggle
+       button, so the parent stays a plain link and keyboard users can open it.
+       Closes on Escape and when focus leaves the item. #}
     {% if item.children %}
+      {% set submenuId = 'navigationMain-submenu-' ~ loop.index %}
       <div
         x-data="{ open: false }"
         @mouseenter="open = true"
         @mouseleave="open = false"
-        class="item font-menu relative {{ item.classes|join(' ') }}{{ item.current ? ' current-menu-item' }}">
+        @keydown.escape.stop="if (open) { open = false; $refs.toggle.focus() }"
+        @focusout="if (!$el.contains($event.relatedTarget)) open = false"
+        class="item font-menu relative flex items-center gap-[2px] {{ item.classes|join(' ') }}{{ item.current ? ' current-menu-item' }}">
         <a
-          class="link group inline-flex items-center gap-[4px] whitespace-nowrap cursor-pointer"
+          class="link inline-flex items-center whitespace-nowrap"
           href="{{ item.link }}"
-          @click="open = !open"
-          :aria-expanded="open ? 'true' : 'false'"
           {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>
           <span>{{ item.title }}</span>
-          <svg class="chevron h-[12px] w-[12px] shrink-0 -translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-            <path d="M4.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
         </a>
+        <button
+          type="button"
+          x-ref="toggle"
+          class="submenu-toggle"
+          @click="open = !open"
+          :aria-expanded="open ? 'true' : 'false'"
+          aria-controls="{{ submenuId }}">
+          <span class="visuallyHidden">{{ __('Untermenü', 'flynt') }} {{ item.title }}</span>
+          <svg class="h-[12px] w-[12px] shrink-0 transition-transform duration-200" :class="{ 'rotate-180': open }" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M3 4.5l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
         <div
+          id="{{ submenuId }}"
           class="submenu"
           x-cloak
           x-show="open"

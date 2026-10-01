@@ -91,11 +91,11 @@ add_action('Flynt/afterRegisterComponents', function () {
                     'operator' => '!=',
                     'value' => 'post'
                 ],
-                // [
-                //     'param' => 'post_type',
-                //     'operator' => '!=',
-                //     'value' => 'video'
-                // ],
+                [
+                    'param' => 'post_type',
+                    'operator' => '!=',
+                    'value' => 'chimpanzee'
+                ],
                 [
                     'param' => 'post_type',
                     'operator' => '!=',

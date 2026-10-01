@@ -35,6 +35,22 @@ flynt-component[name='NavigationMain'] {
     }
   }
 
+  // Down chevron next to dropdown items — marks the submenu and toggles it.
+  // Follows the link colour: muted at rest, full while the item is hovered,
+  // open or current.
+  .submenu-toggle {
+    @apply text-dark-green/60 transition-colors;
+    align-items: center;
+    display: flex;
+    padding: 2px;
+  }
+
+  .item:hover > .submenu-toggle,
+  .submenu-toggle[aria-expanded='true'],
+  .item.current-menu-item > .submenu-toggle {
+    @apply text-dark-green;
+  }
+
   // CTA buttons
   .button--donate,
   .button--shop {

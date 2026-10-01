@@ -1,27 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
 
 /* ============================================================================
-   Jane Goodall Institut — FundraisingBox form styling
+   Jane Goodall Institut — FundraisingBox form styling · Mitgliedschaft
    ----------------------------------------------------------------------------
    THIS FILE IS NOT PART OF THE THEME BUILD. The donation form renders inside a
    cross-origin FundraisingBox iframe, so the site's CSS cannot reach it. Paste
    the rules below into FundraisingBox instead:
 
-       FundraisingBox → Formulare → "Patenschaft" (hash 5h5prdwkt2pije19)
+     FundraisingBox → Formulare → "Mitgliedschaft" (hash TODO)
        → Design/Layout → "Eigenes CSS"
 
-   Sibling file: fundraisingbox-form-spenden.css (hash o8a2ajp2efevf24x).
-   Same structure, different palette — do not paste one into the other's form.
+   Sibling files: fundraisingbox-form-spenden.css (hash o8a2ajp2efevf24x) and
+   fundraisingbox-form-patenschaft.css (hash 5h5prdwkt2pije19). Do not paste
+   one into another's form.
 
-   Matches the Figma "Patenschaft" form (node 1-4179): a warm-beige card with
-   lighter beige field pills, dark-brown text and a terracotta CTA. The site
-   already renders the beige card (.bg-warmer-beige) around the iframe, so the
-   form canvas stays transparent and only the fields carry a background.
+   Structure of the Spenden form (node 1-3618) in the Patenschaft palette
+   (node 1-4179): a warm-beige card with lighter beige field pills, dark-brown
+   text and a terracotta CTA. The site renders the beige card
+   (.bg-warmer-beige) around the iframe, so the form canvas stays transparent
+   and only the fields carry a background.
 
-   Selectors taken from the live markup (hash 5h5prdwkt2pije19). FundraisingBox
-   drives almost everything from --fb-* custom properties (paymentAddOn/style8.css),
-   so we retheme through those first and only write real rules where the base
-   stylesheet has no variable — hence almost no !important.
+   Selectors taken from the live markup. FundraisingBox drives almost everything
+   from --fb-* custom properties (paymentAddOn/style8.css), so we retheme through
+   those first and only write real rules where the base stylesheet has no
+   variable — hence almost no !important.
 
    The @import must stay on line 1 or Geist will not load; if FundraisingBox
    ever strips it, the font falls back to the system sans in --jgi-sans.
@@ -48,15 +50,12 @@
   --fb-font-size: 16px;
   --fb-link-color: var(--jgi-dark-brown);
 
-  /* Error banner background + field error colour (FB default: #dc3545 red) */
-  --fb-error-color: var(--jgi-terracotta);
-
-  /* Group headings ("Betrag", "Ihre Daten", "Zahlungsart") — 1rem, full dark brown */
-  --fb-legend-font-size: 1rem;
+  /* Group headings ("Ihre Daten", "Zahlungsart") — 13px dark brown at 50% */
+  --fb-legend-font-size: 13px;
   --fb-legend-font-weight: 400;
   --fb-legend-font-family: var(--jgi-sans);
 
-  /* Field labels — same muted caption treatment */
+  /* Field labels — 13px muted caption */
   --fb-label-font-size: 13px;
   --fb-label-font-weight: 400;
   --fb-label-text-color: var(--jgi-muted);
@@ -81,6 +80,7 @@
   --fb-button-bg-color: var(--jgi-terracotta);
   --fb-button-bg-color-focus: #93420a;
   --fb-button-text-color: var(--jgi-white);
+  --fb-button-text-color-focus: var(--jgi-white);
   --fb-button-text-transform: none;
   --fb-button-font-size: 16px;
   --fb-button-font-weight: 600;
@@ -90,7 +90,7 @@
   --fb-button-secondary-font-size: 16px;
   --fb-button-secondary-padding: 8px 20px;
 
-  /* Controls */
+  /* Controls — dark-brown ring, dark-brown dot */
   --fb-checkbox-size: 16px;
   --fb-checkbox-bg-color: var(--jgi-field-bg);
   --fb-checkbox-border-color: var(--jgi-dark-brown);
@@ -101,13 +101,13 @@
   --fb-radio-border-color: var(--jgi-dark-brown);
   --fb-radio-border-width: 1.5px;
 
-  /* Amount + payment tiles are flattened into radio rows below */
+  /* Preset amounts + payment tiles are flattened into radio rows below */
   --fb-amount-choice-bg-color: transparent;
   --fb-amount-choice-border-color: transparent;
   --fb-amount-choice-border-width: 0;
   --fb-amount-choice-border-radius: 0;
   --fb-amount-choice-amount-font-size: 16px;
-  --fb-amount-choice-description-font-size: 16px;
+  --fb-amount-choice-description-font-size: 13px;
   --fb-payment-method-bg-color: transparent;
   --fb-payment-method-bg-color-focus: transparent;
   --fb-payment-method-border-color: transparent;
@@ -121,6 +121,7 @@
 
   --fb-modal-bg-color: var(--jgi-warmer-beige);
   --fb-modal-text-color: var(--jgi-dark-brown);
+  --fb-modal-heading-text-color: var(--jgi-dark-brown);
   --fb-modal-heading-font-family: var(--jgi-sans);
   --fb-modal-font-family: var(--jgi-sans);
   --fb-modal-border-radius: 16px;
@@ -170,7 +171,7 @@ body,
   outline: none !important;
 }
 
-/* --- Layout rhythm — Figma: 28px between groups, 16px between rows -------- */
+/* --- Layout rhythm — Figma: 40px between groups, 16px between rows -------- */
 #fbPaymentForm fieldset {
   margin: 0;
   padding: 0;
@@ -180,22 +181,35 @@ body,
 #fbPaymentForm #donorData,
 #fbPaymentForm #paymentMethodBox,
 #fbPaymentForm #additionalSettings {
-  margin-block-start: 28px;
+  margin-block-start: 40px;
 }
 
 #fbPaymentForm .form-group {
   margin-block-end: 16px;
 }
 
-#fbPaymentForm legend,
+#fbPaymentForm legend {
+  color: var(--jgi-muted);
+  margin-block-end: 12px;
+}
+
 #amountChoicesLabel {
-  color: var(--jgi-dark-brown);
-  font-size: 1rem; /* "Betrag" is a .label span, so the legend variable misses it */
   margin-block-end: 12px;
 }
 
 #fbPaymentForm .form-group .label {
   margin-block-end: 4px;
+}
+
+/* The design opens on the amount question — FB's "Spende" heading has no
+   counterpart, so hide it visually but keep the fieldset's accessible name. */
+#amountBox > legend {
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 /* Inline "?" help buttons next to a label */
@@ -214,6 +228,12 @@ body,
   background-position: right 12px center;
   background-size: 15px 15px;
   padding-inline-end: 36px;
+}
+
+/* Dropdown lists are painted by the OS — match the field pill */
+#fbPaymentForm select option {
+  background: var(--jgi-field-bg);
+  color: var(--jgi-dark-brown);
 }
 
 /* --- Radios & checkboxes: 16px, 1.5px dark ring, dark dot ----------------- */
@@ -242,23 +262,18 @@ body,
   border-color: var(--jgi-dark-brown);
 }
 
-/* Transparent ring between border and fill: the padding is left unpainted
-   (clip + origin = content-box), so the card colour shows through it. */
 #fbPaymentForm input[type='checkbox']:not(.sr-only):checked {
   appearance: none;
-  background-clip: content-box;
   background-color: var(--jgi-dark-brown);
   background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23fcfbfa' xmlns='https://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
-  background-origin: content-box;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   border-color: var(--jgi-dark-brown);
-  padding: 2px;
 }
 
 /* "Als Unternehmen spenden" switch — Figma has no switch, so it borrows the
-   selection colour of the radios. */
+   terracotta accent of the CTA. */
 #fbPaymentForm .toggle {
   margin-block-end: 16px;
 }
@@ -277,30 +292,40 @@ body,
   background-color: var(--jgi-terracotta);
 }
 
-/* --- Amount choices: flatten FB's tile grid into Figma's radio row -------- */
+#fbPaymentForm .toggle input:checked + .toggle-ui::after {
+  background-color: var(--jgi-white);
+  border-color: var(--jgi-white);
+}
+
+/* --- Amounts -------------------------------------------------------------- */
 #amountChoices {
-  margin-block-end: 28px;
+  margin-block-end: 40px;
 }
 
 #amountChoices .choices-grid {
+  align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
   gap: 12px 31px;
   margin-block-end: 0;
 }
 
-#amountChoices .choice {
+/* Preset amounts: flatten FB's tile grid into the Figma radio row.
+   min-height matches the custom-amount pill, so the row centres on the pill
+   rather than on the pill + "Freier Betrag" caption below it. */
+#amountChoices .choice:not(.choice-custom) {
   align-items: center;
   background: transparent;
   flex: 0 0 auto;
   flex-direction: row;
   gap: 13px;
+  min-height: 40px;
   overflow: visible;
   padding: 0;
   text-align: start;
 }
 
-#amountChoices .choice input[type='radio'] {
+#amountChoices .choice:not(.choice-custom) input[type='radio'] {
   appearance: none;
   cursor: pointer;
   flex: none;
@@ -328,8 +353,8 @@ body,
 }
 
 #amountChoices .choice .description {
-  color: var(--jgi-muted-black);
-  font-size: 16px;
+  color: var(--jgi-muted);
+  font-size: 13px;
 }
 
 /* The tile's checked state painted a full-bleed primary background — the row
@@ -342,12 +367,41 @@ body,
   content: none;
 }
 
-/* "Freier Betrag" tile keeps an inline input */
-#amountChoices .choice-custom .input-custom-amount input {
-  border-bottom-color: var(--jgi-dark-brown);
-  color: var(--jgi-dark-brown);
+/* "Freier Betrag" — the design's "Alternativbetrag €" pill: a field, not a row */
+#amountChoices .choice-custom {
+  background: transparent;
+  flex: 1 1 264px;
+  max-width: 264px;
+  overflow: visible;
+  padding: 0;
+}
+
+#amountChoices .choice-custom .input-custom-amount {
+  background: var(--jgi-field-bg);
+  border-radius: 8px;
   font-size: 16px;
   font-weight: 400;
+  gap: 8px;
+  justify-content: space-between;
+  margin-block-end: 8px;
+  min-height: 40px;
+  padding: 8px 12px;
+}
+
+#amountChoices .choice-custom .input-custom-amount input {
+  background: transparent;
+  border: 0;
+  color: var(--jgi-dark-brown);
+  flex: 1 1 auto;
+  font-size: 16px;
+  font-weight: 400;
+  min-width: 0;
+  padding: 0;              /* the pill itself carries the 8/12 padding */
+  text-align: start;
+}
+
+#amountChoices .choice-custom .description {
+  padding-inline-start: 12px;
 }
 
 /* --- Payment methods: same flattening, text labels as in Figma ------------ */
@@ -414,7 +468,7 @@ body,
 
 /* --- Submit --------------------------------------------------------------- */
 #fbPaymentForm div:has(> #submitForm) {
-  margin: 28px 0 0;
+  margin: 40px 0 0;
   padding: 0;
 }
 
@@ -443,22 +497,11 @@ body,
   display: none !important;
 }
 
-.input-donation_custom_field_16562  {
-	display: none !important;
-}
-
-/* Two-column rows only when the form has room. Media queries inside the iframe
-   measure the iframe, not the screen — in the media layout the form sits in a
-   half-width column on desktop, so a viewport-style 1024px breakpoint would
-   never match. 480px separates phones (stacked) from everything wider. */
+/* --- Adresse: two columns when the form has room -------------------------
+   Media queries inside the iframe measure the iframe, not the screen, so a
+   viewport-style 1024px breakpoint would never match a half-width column.
+   480px separates phones (stacked) from everything wider. */
 @media (min-width: 480px) {
-  #donorSalutation,
-  #donorFirstLastName {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 12px;
-  }
-
   #address {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -466,100 +509,16 @@ body,
   }
 }
 
-/* --- Field order -----------------------------------------------------------
-   Visual order only — tab order still follows FundraisingBox's DOM, so keep
-   moves small and do big rearrangements in the FB form editor instead.
-
-   `order` only works between siblings: a field can move within its own
-   container, never into another one. Values below mirror the current DOM in
-   steps of 10 — change a number to move an item. The `> *` catch-all (900)
-   parks any field FB adds later at the end instead of jumping to the top.
-   Hidden fields (inline display:none) stay hidden regardless of order.
-   ------------------------------------------------------------------------- */
-
-/* Sections */
-#fbPaymentForm {
-  display: flex;
-  flex-direction: column;
-}
-
-#fbPaymentForm > * { order: 900; }
-#fbPaymentForm > #amountBox { order: 10; }
-#fbPaymentForm > #donorData { order: 20; }
-#fbPaymentForm > #paymentMethodBox { order: 30; }
-#fbPaymentForm > #additionalSettings { order: 40; }
-#fbPaymentForm > #securityBox { order: 50; }
-#fbPaymentForm > div:has(#submitForm) { order: 60; }
-
-/* Betrag — the fieldset's legend sits outside the flex flow */
-#amountBox {
-  display: flex;
-  flex-direction: column;
-}
-
-#amountBox > * { order: 900; }
-#amountBox > #amountChoice { order: 10; }
-#amountBox > #coveredFee { order: 20; margin-bottom: 12px !important; } /* "Gebühren übernehmen" checkbox */
-#amountBox > #intervalChoice { order: 30; }
-#amountBox > #donationCustomFields { order: 40; }
-
-/* Patenschaft custom fields — wrapping row: every field takes a full line.
-   From 480px up (see the two-column note above), Vorname + Nachname
-   Beschenkte/r share one, with the same 12px gap as the donor name row. */
-#donationCustomFields {
-  column-gap: 12px;
-  display: flex;
-  flex-flow: row wrap;
-}
-
-#donationCustomFields > * {
-  flex: 0 0 100%;
-}
-
-@media (min-width: 480px) {
-  #donationCustomFields > .input-donation_custom_field_5079,
-  #donationCustomFields > .input-donation_custom_field_5080 {
-    flex: 1 1 0;
-    min-width: 0;
-  }
-}
-
-#donationCustomFields > * { order: 900; }
-#donationCustomFields > .input-donation_custom_field_16562 { order: 10; } /* Patentier (hidden) */
-#donationCustomFields > .input-donation_custom_field_16848 { order: 20; } /* für mich / verschenken */
-#donationCustomFields > .input-donation_custom_field_5079 { order: 30; }  /* Vorname Beschenkte/r */
-#donationCustomFields > .input-donation_custom_field_5080 { order: 40; }  /* Nachname Beschenkte/r */
-#donationCustomFields > .input-donation_custom_field_16849 { order: 50; } /* Kategorie (hidden) */
-
-/* Ihre persönlichen Daten — fields live in an unnamed div under the legend */
-#donorData > div {
-  display: flex;
-  flex-direction: column;
-}
-
-#donorData > div > * { order: 900; }
-#donorData > div > #donorSalutation { order: 10; }    /* Anrede + Titel */
-#donorData > div > #donorFirstLastName { order: 20; } /* Vorname + Nachname */
-#donorData > div > #toggleCompanyName { order: 30; }
-#donorData > div > #companyNameRow { order: 40; }
-#donorData > div > .input-email { order: 50; }
-#donorData > div > .input-wants_receipt { order: 70; }
-#donorData > div > #address { order: 60; }
-
-/* Adresse — already a grid above, `order` works there too */
 /* FB wraps PLZ + Ort in one .form-row, which made them a single, double-height
    grid cell and left a gap under Straße. `contents` drops the wrapper box so
-   both fields become direct #address grid items (and orderable on their own). */
+   both fields become direct #address grid items. */
 #address > .form-row {
   display: contents;
 }
 
-#address > *,
-#address > .form-row > * { order: 900; }
-#address > .input-address { order: 10; }
-#address .input-post_code { order: 20; }
-#address .input-city { order: 30; }
-#address > .input-country { order: 40; }
+.fixedValue {
+  padding-left: 0 !important;
+}
 
 /* --- Errors: terracotta boxes, white text ----------------------------------
    Two kinds, both from FB's addFieldError():

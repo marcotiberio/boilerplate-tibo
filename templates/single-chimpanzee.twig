@@ -74,6 +74,13 @@
         </div>
 
       </div>
+
+      {# ---- Body / modules (self-contained components) ---- #}
+      <section class="post-main mx-auto">
+        {% for component in post.meta('chimpanzeeComponents') %}
+          {{ renderComponent(component) }}
+        {% endfor %}
+      </section>
     </div>
   </article>
 {% endblock %}

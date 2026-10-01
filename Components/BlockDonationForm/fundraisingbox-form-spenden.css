@@ -36,6 +36,7 @@
   --jgi-field-bg: rgb(252 251 250 / 20%);   /* Figma field fill */
   --jgi-muted: rgb(252 251 250 / 50%);      /* Figma: white at 50% */
   --jgi-hairline: rgb(252 251 250 / 25%);
+  --jgi-focus: var(--jgi-white);      /* keyboard focus ring */
 
   --jgi-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', roboto, 'Helvetica Neue', arial, sans-serif;
 
@@ -139,24 +140,33 @@ body,
   display: none !important;
 }
 
-/* No outlines anywhere. FB's style8.css (Tailwind forms) draws its visible
-   focus ring as a box-shadow, not an outline, so both are neutralised —
-   !important wins regardless of FB's selector specificity. */
+/* Focus. FB's style8.css (Tailwind forms) draws its focus ring as a
+   box-shadow on every focus, mouse included — neutralised here. In its place
+   one keyboard-only outline (:focus-visible) so tabbing stays visible
+   (WCAG 2.4.7). The id-free :is() list out-specifies `*:focus`, so both
+   !important declarations resolve in favour of the ring. */
 *,
 *::before,
-*::after,
-*:focus,
-*:focus-visible,
-*:focus-within {
+*::after {
   --tw-ring-color: transparent !important;
   --tw-ring-offset-color: transparent !important;
   --tw-ring-offset-width: 0px !important;
+}
+
+*:focus {
+  box-shadow: none !important;
   outline: none !important;
 }
 
-*:focus,
-*:focus-visible {
-  box-shadow: none !important;
+:is(a, button, input, select, textarea, summary, [tabindex]):focus-visible,
+.toggle input:focus-visible + .toggle-ui,                    /* sr-only input — ring the switch */
+.input-custom-amount:has(input:focus-visible) {              /* ring the pill, not the bare input */
+  outline: 2px solid var(--jgi-focus) !important;
+  outline-offset: 2px;
+}
+
+.input-custom-amount input:focus-visible {
+  outline: none !important;
 }
 
 /* --- Layout rhythm — Figma: 40px between groups, 16px between rows -------- */
@@ -481,4 +491,72 @@ body,
 #footer,
 #fundraisingBoxLogo {
   display: none !important;
+}
+
+/* --- Errors: terracotta boxes, white text ----------------------------------
+   Two kinds, both from FB's addFieldError():
+   - .error-banner — the "Es sind Fehler aufgetreten" box under the submit
+     button. Already filled with --fb-error-color (set to terracotta above)
+     and white text by style8.css; only the radius is aligned here.
+   - p.field-error — the message appended under each invalid field. */
+#fbPaymentForm .error-banner {
+  border-radius: 8px;
+  color: var(--jgi-white);
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 16px 0 0;
+  padding: 14px 16px;
+}
+
+/* FB prints the banner twice — top and bottom of the form. The `> *`
+   catch-all in Field order parked the top copy's wrapper (order 900) right
+   under the submit button, so both showed stacked. Back to the top it goes,
+   with the wrapper's padding dropped so it lines up with the fields. */
+#fbPaymentForm > .form-error-message:not(:has(#submitForm)),
+#fbPaymentForm > :has(.form-error-message):not(:has(#submitForm)) {
+  margin: 0 0 28px;
+  order: 0;
+  padding: 0;
+}
+
+#fbPaymentForm > :has(.form-error-message):not(:has(#submitForm)) .error-banner {
+  margin: 0;
+}
+
+/* Per-field lines inside the banner ("Betrag: Dies ist ein Pflichtfeld."):
+   flush left, regular weight, caption size — no indent, no nested box. */
+#fbPaymentForm .error-banner ul,
+#fbPaymentForm .error-banner ol {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+}
+
+#fbPaymentForm .error-banner li,
+#fbPaymentForm .error-banner .error,
+#fbPaymentForm .error-banner .field-error {
+  background: none;
+  font-size: 13px;
+  font-weight: 400;
+  margin: 2px 0 0;
+  padding: 0;
+}
+
+/* Trailing <br/> after the headline would add an empty line at the bottom */
+#fbPaymentForm .error-banner > br:last-child {
+  display: none;
+}
+
+#fbPaymentForm .field-error {
+  background-color: transparent;
+  border-radius: 8px;
+  color: var(--jgi-terracotta);
+  font-size: 13px;
+  margin-block-start: 4px;
+  padding: 6px 0;
+}
+
+#fbPaymentForm .error-banner a,
+#fbPaymentForm .field-error a {
+  color: var(--jgi-white);
 }
