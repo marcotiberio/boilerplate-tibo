@@ -75,37 +75,53 @@ $weekdays = [
 ];
 
 $formatSchedule = function ($postId) use ($config, $weekdays) {
-    $dateKeys = (array) (get_field('dates', $postId) ?: []);
-    $rows     = (array) (get_field('eventSchedule', $postId) ?: []);
-    $entries  = [];
+    $dateKeys = array_values((array) (get_field('dates', $postId) ?: []));
+
+    // One entry per repeater row, so several time slots on the same day all
+    // show. Each row is resolved to its ISO key (by label, then by position).
+    $rows = Event\getScheduleRows($postId);
 
     // Backend-only override: one custom date replaces the selected days. The
     // time is taken from the first schedule row.
     $dateOverride = get_field('hasDateOverride', $postId) ? (string) get_field('dateOverride', $postId) : '';
     if ($dateOverride) {
+        $first    = $rows[0] ?? [];
         $dateKeys = [$dateOverride];
-        $rows     = array_slice(array_values($rows), 0, 1);
+        $rows     = [array_merge($first, ['key' => $dateOverride])];
     }
 
-    // Without ISO keys the repeater is the only source, so walk that instead.
-    $source = $dateKeys ?: array_keys($rows);
+    // Selected days without a repeater row still show, just without a time.
+    $usedKeys = array_column($rows, 'key');
+    foreach ($dateKeys as $key) {
+        if (!in_array($key, $usedKeys, true)) {
+            $rows[] = ['key' => $key, 'date' => '', 'start' => '', 'end' => ''];
+        }
+    }
 
-    foreach (array_values($source) as $index => $key) {
-        $row       = $rows[$index] ?? [];
-        $timestamp = $dateKeys ? strtotime($key) : false;
-        $fallback  = $config['dates'][$key] ?? ($row['date'] ?? '');
+    $entries = [];
+    foreach ($rows as $row) {
+        $key       = (string) ($row['key'] ?? '');
+        $timestamp = $key !== '' ? strtotime($key) : false;
+        $fallback  = $config['dates'][$key] ?? (string) ($row['date'] ?? '');
 
-        $start = trim((string) ($row['timeStart'] ?? ''));
-        $end   = trim((string) ($row['timeEnd'] ?? ''));
+        $start = trim((string) ($row['start'] ?? ''));
+        $end   = trim((string) ($row['end'] ?? ''));
 
         $entries[] = [
-            'long'  => $timestamp
+            'timestamp' => $timestamp ?: PHP_INT_MAX,
+            'long'      => $timestamp
                 ? $weekdays[(int) wp_date('N', $timestamp)] . ', ' . wp_date('d.m.Y', $timestamp)
                 : $fallback,
-            'short' => $timestamp ? wp_date('d.m.y', $timestamp) : $fallback,
-            'time'  => $start . ($end ? '–' . $end : ''),
+            'short'     => $timestamp ? wp_date('d.m.y', $timestamp) : $fallback,
+            'time'      => $start . ($end ? '–' . $end : ''),
+            'start'     => $start,
         ];
     }
+
+    // Chronological: by day, then by start time. Undated rows go last.
+    usort($entries, function ($a, $b) {
+        return [$a['timestamp'], $a['start']] <=> [$b['timestamp'], $b['start']];
+    });
 
     return array_values(array_filter($entries, function ($entry) {
         return $entry['long'] !== '' || $entry['time'] !== '';
