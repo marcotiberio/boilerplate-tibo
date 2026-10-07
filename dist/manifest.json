@@ -314,12 +314,12 @@
     "file": "assets/swiper-bundle-e0f77aaf.js"
   },
   "assets/admin.js": {
-    "file": "assets/admin-66abc6e2.js",
+    "file": "assets/admin-5bf2fc9e.js",
     "isEntry": true,
     "src": "assets/admin.js"
   },
   "assets/admin.scss": {
-    "file": "assets/admin-2deaba19.css",
+    "file": "assets/admin-4e573e8b.css",
     "isEntry": true,
     "src": "assets/admin.scss"
   },

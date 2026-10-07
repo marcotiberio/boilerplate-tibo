@@ -26,7 +26,7 @@
   const changeText = function ($el, val) {
     const $blockAnchor = $el.closest('[data-layout="blockAnchor"]:not(.acf-clone)')
     const $anchorLinkInput = $blockAnchor.find('.anchorLink-url')
-    if ($anchorLinkInput) {
+    if ($anchorLinkInput.length > 0) {
       const href = $anchorLinkInput.data('href')
       val = sanitizeText(val)
       const link = `${href}#${val}`

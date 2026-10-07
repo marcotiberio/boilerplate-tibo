@@ -1,4 +1,4 @@
-/* globals FlyntData, FeatureFlexibleContentExtension */
+/* globals FlyntComponentScreenshots */
 
 // Add delegated events.
 document.addEventListener('mouseenter', (e) => {
@@ -19,23 +19,31 @@ document.addEventListener('mouseleave', (e) => {
 }, true)
 
 function showComponentScreenshot (layout, wrapper) {
-  const componentName = firstToUpperCase(layout)
-  const image = `${FlyntData.templateDirectoryUri}/${FeatureFlexibleContentExtension.components[componentName]}/screenshot.png?v=${FeatureFlexibleContentExtension.version}`
-  const wrapperContainer = document.createElement('div')
+  const { templateDirectoryUri, components, version } = FlyntComponentScreenshots
+  const componentPath = components[firstToUpperCase(layout)]
 
+  if (!componentPath) {
+    return
+  }
+
+  const wrapperContainer = document.createElement('div')
   wrapperContainer.classList.add('flyntComponentScreenshot-imageWrapper')
   wrapper.append(wrapperContainer)
 
   const img = document.createElement('img')
   img.classList.add('flyntComponentScreenshot-previewImageLarge')
-  img.src = image
+  img.src = `${templateDirectoryUri}${componentPath}/screenshot.png?v=${version}`
+  // hide the wrapper if the component has no screenshot
+  img.addEventListener('error', () => wrapperContainer.remove())
 
   wrapperContainer.prepend(img)
 }
 
 function hideComponentScreenshot (wrapper) {
   const wrapperContainer = wrapper.querySelector('.flyntComponentScreenshot-imageWrapper')
-  wrapperContainer.remove()
+  if (wrapperContainer) {
+    wrapperContainer.remove()
+  }
 }
 
 function firstToUpperCase (str) {

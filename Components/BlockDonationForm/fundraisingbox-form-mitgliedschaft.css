@@ -520,34 +520,29 @@ body,
   padding-left: 0 !important;
 }
 
-/* --- Errors: terracotta boxes, white text ----------------------------------
+/* --- Errors: transparent boxes, error-coloured border + text ----------------
    Two kinds, both from FB's addFieldError():
    - .error-banner — the "Es sind Fehler aufgetreten" box under the submit
-     button. Already filled with --fb-error-color (set to terracotta above)
-     and white text by style8.css; only the radius is aligned here.
+     button. style8.css fills it with --fb-error-color; we drop the fill and
+     keep the colour on the border and text instead.
    - p.field-error — the message appended under each invalid field. */
 #fbPaymentForm .error-banner {
+  background-color: transparent;
+  border: 1px solid var(--fb-error-color);
   border-radius: 8px;
-  color: var(--jgi-white);
+  color: var(--fb-error-color);
   font-size: 16px;
   line-height: 1.4;
-  margin: 16px 0 0;
+  margin: 16px 0 20px;
   padding: 14px 16px;
 }
 
-/* FB prints the banner twice — top and bottom of the form. The `> *`
-   catch-all in Field order parked the top copy's wrapper (order 900) right
-   under the submit button, so both showed stacked. Back to the top it goes,
-   with the wrapper's padding dropped so it lines up with the fields. */
-#fbPaymentForm > .form-error-message:not(:has(#submitForm)),
-#fbPaymentForm > :has(.form-error-message):not(:has(#submitForm)) {
-  margin: 0 0 28px;
-  order: 0;
-  padding: 0;
-}
-
-#fbPaymentForm > :has(.form-error-message):not(:has(#submitForm)) .error-banner {
-  margin: 0;
+/* After a server-side validation round trip FB prints a second banner
+   (.error-banner without .form-error-message) in its own padded div. Only
+   the JS-driven .form-error-message under the submit button is kept. */
+#fbPaymentForm .error-banner:not(.form-error-message),
+#fbPaymentForm > :has(> .error-banner:not(.form-error-message)) {
+  display: none !important;
 }
 
 /* Per-field lines inside the banner ("Betrag: Dies ist ein Pflichtfeld."):
@@ -577,7 +572,7 @@ body,
 #fbPaymentForm .field-error {
   background-color: transparent;
   border-radius: 8px;
-  color: var(--jgi-terracotta);
+  color: red;
   font-size: 13px;
   margin-block-start: 4px;
   padding: 6px 0;
@@ -585,5 +580,5 @@ body,
 
 #fbPaymentForm .error-banner a,
 #fbPaymentForm .field-error a {
-  color: var(--jgi-white);
+  color: var(--fb-error-color);
 }
