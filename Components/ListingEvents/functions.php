@@ -81,7 +81,8 @@ function buildEntry($post, array $config)
             'dates'      => $dates,
             'audiences'  => array_values($audiences),
             'sectors'    => array_values($sectors),
-            'format'     => (string) (get_field('format', $post->ID) ?: ''),
+            // Format filter matches the program type tags shown on the row.
+            'programTypes' => array_values($programTypes),
             'district'   => (string) (get_field('district', $post->ID) ?: ''),
             'accessible' => $accessible,
             'search'     => Event\buildSearchIndex(array_merge([$title, $org], $programTypeLabels, $sectorLabels, $addressLines)),
@@ -172,7 +173,7 @@ add_filter('Flynt/addComponentData?name=ListingEvents', function ($data) {
     $data['days'] = Event\getDays();
     $data['audienceGroups'] = $config['audienceGroups'];
     $data['sectors'] = $config['sectors'];
-    $data['formats'] = $config['format'];
+    $data['formats'] = $config['programTypes'];
     // Bezirk only lists what the program actually offers, so a control that
     // would match nothing is never rendered.
     $data['districts'] = array_intersect_key($config['districts'], usedValues($entries, 'district'));

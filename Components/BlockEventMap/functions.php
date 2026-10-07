@@ -137,7 +137,8 @@ function buildEntry($post, array $config)
             Event\getAddressLines($post->ID)
         )),
         'audiences'        => array_values($audiences),
-        'format'           => (string) (get_field('format', $post->ID) ?: ''),
+        // Format filter matches the program type tags, as on the listing.
+        'programTypes'     => array_values($programTypes),
         'languages'        => $languages,
         'languageLabel'    => implode(', ', array_filter(array_map(fn ($key) => $config['languages'][$key] ?? '', $languages))),
         'accessible'       => Event\isAccessible($accessibility),
@@ -179,7 +180,7 @@ add_filter('Flynt/addComponentData?name=BlockEventMap', function ($data) {
     $data['entries'] = $entries;
     $data['days'] = Event\getDays();
     $data['audienceGroups'] = $config['audienceGroups'];
-    $data['formats'] = $config['format'];
+    $data['formats'] = $config['programTypes'];
     $data['languages'] = $languages;
     $data['tiles'] = $tiles[$data['mapStyle'] ?? 'light'] ?? $tiles['light'];
     $data['cardIcons'] = [
