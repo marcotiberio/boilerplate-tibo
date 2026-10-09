@@ -97,7 +97,7 @@ body {
 */
 
 .single {
-  flynt-component {
+  flynt-component:not([name='NavigationFooter']) {
     .boxed {
       @apply px-0 !important;
     }

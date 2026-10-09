@@ -75,6 +75,7 @@ module.exports = {
         xl: 'var(--spacing-xl, 80px)',
         xxl: 'var(--spacing-xxl, 100px)',
         max: 'var(--spacing-max, 120px)',
+        pageTop: 'var(--spacing-pageTop, 120px)',
         // Spacing variables from _variables.scss (using CSS variables)
         xSmall: 'var(--spacing-xs, 10px)',
         small: 'var(--spacing-sm, 20px)',
