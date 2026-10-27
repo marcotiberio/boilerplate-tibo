@@ -2,7 +2,7 @@
   <div class="group relative">
     <figure
       class="relative z-10 m-0 w-full overflow-hidden rounded-media"
-      {% if video.url %}x-data="{ playing: true }"{% endif %}>
+      {% if video.url %}x-data="{ playing: true, muted: true }"{% endif %}>
 
       {# Media — video takes priority, image doubles as poster/fallback #}
       {% if video.url %}
@@ -25,21 +25,37 @@
         />
       {% endif %}
 
-      {# Play / pause control (only when a video is set) #}
+      {# Sound + play / pause controls (only when a video is set) #}
       {% if video.url %}
-        <button
-          type="button"
-          class="absolute bottom-sm right-sm z-20 flex items-center justify-center w-14 h-11 rounded-cta bg-off-white/20 backdrop-blur-sm text-off-white transition-colors hover:bg-off-white/30"
-          @click="playing ? $refs.video.pause() : $refs.video.play(); playing = !playing"
-          :aria-label="playing ? '{{ __('Pause video', 'flynt') }}' : '{{ __('Play video', 'flynt') }}'">
-          <svg x-show="playing" class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
-            <rect x="2.2" y="0.2" width="3" height="14" rx="1" />
-            <rect x="9.2" y="0.2" width="3" height="14" rx="1" />
-          </svg>
-          <svg x-show="!playing" x-cloak class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
-            <path d="M2 1.2 12.5 7 2 12.8Z" />
-          </svg>
-        </button>
+        <div class="absolute bottom-sm right-sm z-20 flex gap-min">
+          <button
+            type="button"
+            class="flex items-center justify-center w-14 h-11 rounded-cta bg-off-white/20 backdrop-blur-sm text-off-white transition-colors hover:bg-off-white/30"
+            @click="muted = !muted; $refs.video.muted = muted; if (!muted && !playing) { $refs.video.play(); playing = true }"
+            :aria-label="muted ? '{{ __('Unmute video', 'flynt') }}' : '{{ __('Mute video', 'flynt') }}'">
+            <svg x-show="muted" class="w-4 h-4" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M1 5h2.5L7 2v10L3.5 9H1Z" fill="currentColor" />
+              <path d="m9.5 5 3.5 4m0-4-3.5 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+            </svg>
+            <svg x-show="!muted" x-cloak class="w-4 h-4" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M1 5h2.5L7 2v10L3.5 9H1Z" fill="currentColor" />
+              <path d="M9.5 4.5a3.5 3.5 0 0 1 0 5M11.25 2.5a6.5 6.5 0 0 1 0 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="flex items-center justify-center w-14 h-11 rounded-cta bg-off-white/20 backdrop-blur-sm text-off-white transition-colors hover:bg-off-white/30"
+            @click="playing ? $refs.video.pause() : $refs.video.play(); playing = !playing"
+            :aria-label="playing ? '{{ __('Pause video', 'flynt') }}' : '{{ __('Play video', 'flynt') }}'">
+            <svg x-show="playing" class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+              <rect x="2.2" y="0.2" width="3" height="14" rx="1" />
+              <rect x="9.2" y="0.2" width="3" height="14" rx="1" />
+            </svg>
+            <svg x-show="!playing" x-cloak class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+              <path d="M2 1.2 12.5 7 2 12.8Z" />
+            </svg>
+          </button>
+        </div>
       {% endif %}
     </figure>
 

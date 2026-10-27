@@ -17,11 +17,11 @@ add_filter('Flynt/addComponentData?name=SliderCards', function ($data) {
             $card['excerpt'] = truncateAtSentence($card['excerpt'] ?? '');
 
             return $card;
-        }, $data['cards'] ?? []);
+        }, ($data['cards'] ?? null) ?: []);
     }
 
     $data['hideNavigationDesktop'] = !hasDesktopOverflow(
-        count($data['cards'] ?? []),
+        count(($data['cards'] ?? null) ?: []),
         $data['options']['slidesDesktop'] ?? null
     );
 

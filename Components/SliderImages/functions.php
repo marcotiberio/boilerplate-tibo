@@ -5,7 +5,7 @@ namespace Flynt\Components\SliderImages;
 add_filter('Flynt/addComponentData?name=SliderImages', function ($data) {
     $data['images'] = array_values(array_filter(array_map(function ($row) {
         return $row['image'] ?? null;
-    }, $data['images'] ?? [])));
+    }, ($data['images'] ?? null) ?: [])));
 
     $data['jsonData'] = [
         'options' => $data['options'] ?? [],
