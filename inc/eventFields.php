@@ -666,6 +666,16 @@ function isListed($postId)
     return $value === '' ? true : (bool) $value;
 }
 
+/**
+ * Is the entry pinned to the top of the program list? Driven by the
+ * `programPosition` choice in wp-admin; entries without the meta keep their
+ * chronological position.
+ */
+function isPinned($postId)
+{
+    return get_post_meta($postId, 'programPosition', true) === 'top';
+}
+
 const GEOCODE_ERROR_META = '_geocodeError';
 
 /**

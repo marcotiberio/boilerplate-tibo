@@ -76,6 +76,7 @@ function buildEntry($post, array $config)
         'addressLines'     => $addressLines,
         'family'           => in_array('familien', $audiences, true),
         'accessible'       => $accessible,
+        'pinned'           => Event\isPinned($post->ID),
         'sortKey'          => buildSortKey($dates, startTimes($schedule)),
         'filters'          => [
             'dates'      => $dates,
@@ -160,9 +161,11 @@ add_filter('Flynt/addComponentData?name=ListingEvents', function ($data) {
     $posts = array_filter($posts, fn ($post) => Event\isListed($post->ID));
 
     $entries = array_map(fn ($post) => buildEntry($post, $config), $posts);
-    // Day, then start time, then title — so entries starting at the same moment
-    // keep a stable order instead of following the publish date.
-    usort($entries, fn ($a, $b) => strcmp($a['sortKey'], $b['sortKey']) ?: strnatcasecmp($a['title'], $b['title']));
+    // Pinned entries first, then day, start time and title — so entries starting
+    // at the same moment keep a stable order instead of following the publish date.
+    usort($entries, fn ($a, $b) => ($b['pinned'] <=> $a['pinned'])
+        ?: strcmp($a['sortKey'], $b['sortKey'])
+        ?: strnatcasecmp($a['title'], $b['title']));
 
     $data['entries'] = $entries;
     // Keyed by post ID: the rows are rendered server side and only ask the

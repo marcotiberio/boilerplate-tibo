@@ -32,6 +32,20 @@ add_action('acf/init', function () {
                 'type' => 'true_false',
                 'ui' => 1,
                 'default_value' => 1,
+                'wrapper' => ['width' => 50],
+            ],
+            [
+                'label' => __('Position in der Programmliste', 'flynt'),
+                'instructions' => __('Oben fixieren: Der Eintrag steht immer ganz oben in der Programmliste.', 'flynt'),
+                'name' => 'programPosition',
+                'type' => 'button_group',
+                'choices' => [
+                    'default' => __('Position beibehalten', 'flynt'),
+                    'top' => __('Oben fixieren', 'flynt'),
+                ],
+                'default_value' => 'default',
+                'return_format' => 'value',
+                'wrapper' => ['width' => 50],
             ],
 
             // ---- Section 1: Organisation ----
