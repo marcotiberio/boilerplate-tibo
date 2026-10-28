@@ -6,9 +6,9 @@
  * Vite emits hashed asset filenames, so cached HTML pointing at the previous
  * build's CSS/JS breaks as soon as the new dist/ lands on the server.
  *
- * - WP Pusher: purges right after the theme is updated.
- * - Any other deploy (rsync, FTP, GitHub Actions): purges on the first
- *   uncached request (admin, cron, logged-in) after dist/manifest.json changes.
+ * GitHub Actions purges via wp-cli after each deploy; as a fallback this
+ * purges on the first uncached request (admin, cron, logged-in) after
+ * dist/manifest.json changes.
  */
 
 namespace Flynt\PurgeCacheOnDeploy;
@@ -20,8 +20,6 @@ function purgeAll()
     // LiteSpeed Cache public API; no-op if the plugin is inactive.
     do_action('litespeed_purge_all');
 }
-
-add_action('wppusher_theme_was_updated', __NAMESPACE__ . '\\purgeAll');
 
 add_action('init', function () {
     $manifestPath = get_template_directory() . '/dist/manifest.json';
