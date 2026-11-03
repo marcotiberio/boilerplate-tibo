@@ -1,0 +1,1 @@
+- 2026-11-03: Links in .wysiwyg had no underline — Tailwind preflight sets text-decoration: inherit and base `a` rule only set underline-offset. Fixed in _typography.scss with `.wysiwyg a:not([class])`. dist/ is committed (WP Pusher), so rebuild with vite after SCSS changes.

@@ -161,6 +161,12 @@ blockquote,
     text-decoration: none;
   }
 
+  // Editor links: Tailwind preflight resets text-decoration, so re-apply it.
+  // :not([class]) skips buttons and other styled anchors.
+  a:not([class]) {
+    @apply underline underline-offset-4 hover:no-underline;
+  }
+
   p {
     &:last-child {
       margin-bottom: 0;
