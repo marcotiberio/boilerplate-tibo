@@ -23,15 +23,46 @@
             <p class="font-h5 text-black">{{ newsletterHeading }}</p>
           {% endif %}
 
-          {# NOTE: markup only — no ESP wired yet. onsubmit prevented so nothing is sent. #}
-          <form class="flex flex-col sm:flex-row gap-xs w-full" onsubmit="return false;"
+          {# Mailchimp embedded form (audience 2da6336db9). Posts to Mailchimp in a new tab;
+             their hosted page handles validation + confirmation, so no mc-validate.js/jQuery. #}
+          <form class="flex flex-col gap-sm w-full"
+            action="https://janegoodall.us6.list-manage.com/subscribe/post?u=5eac8b9863df7ecc3592e3c7e&amp;id=2da6336db9&amp;f_id=005e1ce2f0"
+            method="post" target="_blank"
             aria-label="{{ newsletterHeading|e|default('Newsletter') }}">
-            <label class="sr-only" for="footer-nl-email">{{ newsletterPlaceholder|e }}</label>
-            <input
-              id="footer-nl-email" type="email" name="email"
-              class="flex-1 h-auto px-sm rounded-cta border-0 bg-warmer-beige/50 text-dark-brown placeholder:text-dark-brown/60 focus:outline-none focus:ring-2 focus:ring-jungle/40"
-              placeholder="{{ newsletterPlaceholder|e }}">
-            <button type="submit" class="button button--jungle !w-full sm:!w-auto">{{ newsletterButtonLabel|e|default('Anmelden') }}</button>
+            <div class="flex flex-col sm:flex-row gap-xs w-full">
+              <label class="sr-only" for="mce-EMAIL">Email Adresse *</label>
+              <input
+                id="mce-EMAIL" type="email" name="EMAIL" required autocomplete="email"
+                class="flex-1 h-auto px-sm rounded-cta border-0 bg-warmer-beige/50 text-dark-brown placeholder:text-dark-brown/60 focus:outline-none focus:ring-2 focus:ring-jungle/40"
+                placeholder="{{ newsletterPlaceholder|e }}">
+              <button type="submit" name="subscribe" class="button button--jungle !w-full sm:!w-auto">{{ newsletterButtonLabel|e|default('Anmelden') }}</button>
+            </div>
+
+            {# GDPR consent (required by the Mailchimp audience) #}
+            <fieldset class="flex flex-col gap-xs font-small text-dark-brown">
+              <legend class="sr-only">Marketing Berechtigungen</legend>
+              <label class="flex items-start gap-xs cursor-pointer" for="gdpr_1361">
+                <input type="checkbox" id="gdpr_1361" name="gdpr[1361]" value="Y" required class="mt-[0.2em] shrink-0 accent-jungle">
+                <span>Ja, bitte senden Sie mir den Paten-Newsletter vom Jane Goodall Institut ab jetzt per Email zu</span>
+              </label>
+              {# Legal notice collapsed by default; native details/summary, no JS needed #}
+              <details class="group text-dark-brown/70 hidden">
+                <summary class="inline-flex items-center gap-xs cursor-pointer list-none underline hover:text-jungle [&::-webkit-details-marker]:hidden">
+                  Datenschutzhinweise
+                  <span class="w-3 h-3 transition-transform group-open:rotate-180 [&_svg]:w-full [&_svg]:h-full [&_path]:stroke-current" aria-hidden="true">
+                    {% include 'assets/icons/chevron-down.svg' ignore missing %}
+                  </span>
+                </summary>
+                <p class="mt-xs">
+                Sie können Ihre Meinung jederzeit ändern, indem Sie auf den Link zum Abbestellen in der Fußzeile einer E-Mail klicken, die Sie von uns erhalten, oder indem Sie uns unter <a class="underline hover:text-jungle" href="mailto:kontakt@janegoodall.de">kontakt@janegoodall.de</a> kontaktieren. Wir verwenden Mailchimp als Marketing-Plattform; Ihre Angaben werden zur Verarbeitung an Mailchimp übertragen (<a class="underline hover:text-jungle" href="https://mailchimp.com/legal/terms" target="_blank" rel="noreferrer noopener">mehr erfahren</a>).
+                </p>
+              </details>
+            </fieldset>
+
+            {# Honeypot — bots fill it, Mailchimp rejects the signup #}
+            <div class="sr-only" aria-hidden="true">
+              <input type="text" name="b_5eac8b9863df7ecc3592e3c7e_2da6336db9" tabindex="-1" value="" autocomplete="off">
+            </div>
           </form>
         </div>
       </div>
