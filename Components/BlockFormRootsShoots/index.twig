@@ -1,0 +1,163 @@
+{#
+  Roots & Shoots group signup. Fields, validation and the notification email
+  are defined once in functions.php (getSections). Submits via Alpine fetch to
+  admin-post.php; without JS it posts normally and redirects back with ?rs-signup.
+  Chrome mirrors BlockDonationForm (text + jungle form card).
+#}
+{% set theme = options.theme|default('offWhite') %}
+{% set surfaceClass = {
+  'offWhite': 'bg-off-white text-dark-brown',
+  'beige': 'bg-beige text-dark-brown',
+  'moss': 'bg-moss text-dark-green',
+  'dark-green': 'bg-dark-green text-off-white'
+}[theme]|default('bg-off-white text-dark-brown') %}
+{% set headingClass = theme == 'dark-green' ? 'text-off-white' : 'text-dark-green' %}
+{# Field colours live in _style.scss: global _forms.scss input rules use !important #}
+{% set inputClass = 'rs-form__input w-full font-body' %}
+{% set labelClass = 'font-small text-off-white' %}
+
+{% set conditions = {} %}
+{% for section in sections|filter(section => section.condition) %}
+  {% set conditions = conditions|merge({ (section.condition[0]): '' }) %}
+{% endfor %}
+
+{% set confirmation %}
+  <h3 class="font-h4 text-off-white focus:outline-none" tabindex="-1" x-ref="confirmation">{{ successTitle|default('Vielen Dank für eure Anmeldung!') }}</h3>
+  {% if successHtml %}
+    <div class="wysiwyg font-body">{{ successHtml|e('wp_kses_post') }}</div>
+  {% endif %}
+{% endset %}
+
+<flynt-component
+  load:on="visible"
+  name="BlockFormRootsShoots"
+  id="rs-signup"
+  class="w-full scroll-mt-xl {{ surfaceClass }}">
+  <div class="boxed">
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-md items-start">
+
+      {# Heading + intro #}
+      <div class="flex flex-col gap-sm">
+        {% if title %}
+          {% set tag = titleTag|default('h2') %}
+          <{{ tag }} class="font-{{ titleSize|default('h2') }} {{ headingClass }}">{{ title }}</{{ tag }}>
+        {% endif %}
+        {% if contentHtml %}
+          <div class="wysiwyg">{{ contentHtml|e('wp_kses_post') }}</div>
+        {% endif %}
+      </div>
+
+      {# Form card #}
+      <div class="rs-form bg-jungle text-off-white rounded-banner p-sm lg:p-md">
+        {% if status == 'success' %}
+          {# No-JS fallback after redirect #}
+          <div class="flex flex-col gap-xs" role="status">{{ confirmation }}</div>
+        {% else %}
+          <div x-data="rootsShootsForm({{ conditions|json_encode|e('html_attr') }})">
+
+            <div class="flex flex-col gap-xs" role="status" x-show="state === 'success'" x-cloak>{{ confirmation }}</div>
+
+            <form
+              class="flex flex-col gap-md"
+              action="{{ actionUrl }}"
+              method="post"
+              novalidate
+              x-ref="form"
+              x-show="state !== 'success'"
+              @submit.prevent="submit">
+              <input type="hidden" name="action" value="{{ action }}">
+
+              {# Honeypot, hidden from people and assistive tech #}
+              <div class="sr-only" aria-hidden="true">
+                <label for="rs-website">Website</label>
+                <input type="text" id="rs-website" name="website" tabindex="-1" autocomplete="off">
+              </div>
+
+              {% for sectionKey, section in sections %}
+                {% set showIf = section.condition ? "fields." ~ section.condition[0] ~ " === '" ~ section.condition[1] ~ "'" : '' %}
+                <fieldset
+                  class="flex flex-col gap-xs"
+                  {% if showIf %}x-show="{{ showIf }}" x-bind:disabled="!({{ showIf }})"{% endif %}>
+                  <legend class="font-small text-off-white/50">{{ section.title }}{% if loop.first %} · * Pflichtfelder{% endif %}</legend>
+                  {% if section.description %}
+                    <p class="font-body">{{ section.description }}</p>
+                  {% endif %}
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-xs gap-y-xs">
+                    {% for key, field in section.fields %}
+                      {% set id = 'rs-' ~ key %}
+                      {% set isFull = field.width == 'full' or field.type == 'textarea' %}
+                      {# Conditional sections only require fields while visible (JS); the server enforces it either way #}
+                      {% set requiredAttr = field.required ? (showIf ? 'x-bind:required="' ~ showIf ~ '"' : 'required') : '' %}
+
+                      <div class="flex flex-col gap-min {{ isFull ? 'md:col-span-2' }}">
+                        {% if field.type in ['radio', 'checkbox'] %}
+                          <fieldset class="flex flex-col gap-min" aria-describedby="{{ id }}-error">
+                            <legend class="{{ labelClass }}">{{ field.label }}{% if field.required %} *{% endif %}</legend>
+                            <div class="flex flex-wrap gap-x-sm gap-y-min">
+                              {% for value, choice in field.choices %}
+                                <label class="inline-flex items-center gap-xs font-body cursor-pointer">
+                                  <input
+                                    type="{{ field.type }}"
+                                    name="{{ key }}{{ field.type == 'checkbox' ? '[]' }}"
+                                    value="{{ value }}"
+                                    class="rs-form__control"
+                                    {% if field.type == 'radio' %}{{ requiredAttr|raw }}{% endif %}
+                                    {% if conditions[key] is defined %}x-model="fields.{{ key }}"{% endif %}>
+                                  <span>{{ choice }}</span>
+                                </label>
+                              {% endfor %}
+                            </div>
+                          </fieldset>
+                        {% else %}
+                          <label class="{{ labelClass }}" for="{{ id }}">{{ field.label }}{% if field.required %} *{% endif %}</label>
+                          {% if field.type == 'textarea' %}
+                            <textarea
+                              id="{{ id }}" name="{{ key }}" rows="5"
+                              class="{{ inputClass }}"
+                              aria-describedby="{{ id }}-error"
+                              x-bind:aria-invalid="errors.{{ key }} ? 'true' : null"
+                              {{ requiredAttr|raw }}></textarea>
+                          {% else %}
+                            <input
+                              id="{{ id }}" name="{{ key }}" type="{{ field.type }}"
+                              class="{{ inputClass }}"
+                              {% if field.autocomplete %}autocomplete="{{ field.autocomplete }}"{% endif %}
+                              {% if field.type == 'number' %}min="1" inputmode="numeric"{% endif %}
+                              {% if field.default %}value="{{ field.default }}"{% endif %}
+                              aria-describedby="{{ id }}-error"
+                              x-bind:aria-invalid="errors.{{ key }} ? 'true' : null"
+                              {{ requiredAttr|raw }}>
+                          {% endif %}
+                        {% endif %}
+                        <p id="{{ id }}-error" class="rs-form__error font-small" x-show="errors.{{ key }}" x-text="errors.{{ key }}" x-cloak></p>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </fieldset>
+              {% endfor %}
+
+              <div class="flex flex-col gap-min">
+                <label class="flex items-start gap-xs font-small cursor-pointer">
+                  <input type="checkbox" id="rs-consent" name="consent" value="1" required class="rs-form__control mt-[0.1em] shrink-0" aria-describedby="rs-consent-error">
+                  <span class="rs-form__consent">{{ consentHtml|striptags('<a><strong><em>')|e('wp_kses_post') }} *</span>
+                </label>
+                <p id="rs-consent-error" class="rs-form__error font-small" x-show="errors.consent" x-text="errors.consent" x-cloak></p>
+              </div>
+
+              <div class="flex flex-col items-start gap-xs">
+                <p class="rs-form__error font-body" role="alert" x-show="message" x-text="message" {% if status != 'error' %}x-cloak{% endif %}>
+                  {%- if status == 'error' %}Bitte prüft eure Angaben und versucht es erneut.{% endif -%}
+                </p>
+                <button type="submit" class="button button--primary" x-bind:disabled="state === 'sending'" x-bind:aria-busy="state === 'sending'">
+                  <span x-text="state === 'sending' ? 'Wird gesendet …' : '{{ buttonLabel|default('Anmeldung absenden')|e('js') }}'">{{ buttonLabel|default('Anmeldung absenden') }}</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</flynt-component>

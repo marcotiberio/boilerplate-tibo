@@ -1,0 +1,82 @@
+// Fields mirror the FundraisingBox form in BlockDonationForm: translucent
+// white pills on the jungle card, white-ring radios/checkboxes.
+flynt-component[name='BlockFormRootsShoots'] {
+  .wysiwyg > :last-child {
+    margin-block-end: 0;
+  }
+
+  // _forms.scss styles every input as a beige pill with !important, so the
+  // overridden properties need !important too to win on the dark card.
+  .rs-form__input {
+    background-color: color-mix(in srgb, theme('colors.off-white') 20%, transparent) !important;
+    border: 1px solid transparent !important;
+    border-radius: theme('borderRadius.image') !important;
+    caret-color: theme('colors.off-white') !important;
+    color: theme('colors.off-white') !important;
+    color-scheme: dark; // Light native date picker icon on the dark card.
+    padding: theme('spacing.min') theme('spacing.xs');
+
+    &::placeholder {
+      color: color-mix(in srgb, theme('colors.off-white') 50%, transparent);
+    }
+
+    &:focus {
+      border-color: color-mix(in srgb, theme('colors.off-white') 15%, transparent) !important;
+    }
+
+    &:focus-visible {
+      box-shadow: none;
+      outline: 2px solid theme('colors.off-white') !important;
+      outline-offset: 2px;
+    }
+
+    &[aria-invalid='true'] {
+      border-color: theme('colors.moss') !important;
+    }
+  }
+
+  textarea.rs-form__input {
+    height: auto;
+    resize: vertical;
+  }
+
+  .rs-form__control {
+    appearance: none;
+    background-color: transparent;
+    border: 1.5px solid theme('colors.off-white');
+    cursor: pointer;
+    flex-shrink: 0;
+    height: 16px;
+    width: 16px;
+
+    &:focus-visible {
+      outline: 2px solid theme('colors.off-white');
+      outline-offset: 2px;
+    }
+  }
+
+  input[type='radio'].rs-form__control {
+    border-radius: 50%;
+
+    &:checked {
+      background-image: radial-gradient(circle at center, theme('colors.off-white') 0 4px, transparent 4px);
+    }
+  }
+
+  input[type='checkbox'].rs-form__control {
+    border-radius: 4px;
+
+    &:checked {
+      background-color: theme('colors.off-white');
+      box-shadow: inset 0 0 0 3px theme('colors.jungle');
+    }
+  }
+
+  .rs-form__consent a {
+    text-decoration: underline;
+  }
+
+  .rs-form__error {
+    color: theme('colors.moss');
+  }
+}

@@ -74,6 +74,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockMediaQuote\getACFLayout(),
                     Components\BlockDonationForm\getACFLayout(),
                     Components\BlockFormChimpanzeeSponsor\getACFLayout(),
+                    Components\BlockFormRootsShoots\getACFLayout(),
                     Components\BlockWysiwygColumns\getACFLayout(),
                     Components\BlockContact\getACFLayout(),
                     // Boilerplate components

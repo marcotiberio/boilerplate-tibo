@@ -4,6 +4,7 @@ import Alpine from 'alpinejs'
 import intersect from '@alpinejs/intersect'
 import FlyntComponent from './scripts/FlyntComponent'
 import { getCookie, setCookie } from './scripts/helpers'
+import rootsShootsForm from '@/Components/BlockFormRootsShoots/form'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import 'lazysizes'
@@ -54,6 +55,8 @@ Alpine.data('themeSwitcher', () => ({
     document.documentElement.classList.toggle('dark', this.isDark)
   }
 }))
+
+Alpine.data('rootsShootsForm', rootsShootsForm)
 
 window.Alpine = Alpine
 Alpine.plugin(intersect)
