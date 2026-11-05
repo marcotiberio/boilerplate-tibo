@@ -66,6 +66,7 @@
               x-show="state !== 'success'"
               @submit.prevent="submit">
               <input type="hidden" name="action" value="{{ action }}">
+              <input type="hidden" name="pageId" value="{{ pageId }}">
 
               {# Honeypot, hidden from people and assistive tech #}
               <div class="sr-only" aria-hidden="true">

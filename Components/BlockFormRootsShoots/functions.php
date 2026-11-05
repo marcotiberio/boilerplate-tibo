@@ -6,6 +6,8 @@ const ACTION = 'rootsShootsSignup';
 const RECIPIENT = 'rootsandshoots@janegoodall.de';
 const POST_TYPE = 'roots-shoots-signup';
 const RATE_LIMIT = 5; // Submissions per IP per hour.
+const CONFIRMATION_SUBJECT = 'Eure Roots & Shoots Gruppenanmeldung';
+const CONFIRMATION_TEXT = "Hallo {firstName},\n\nvielen Dank für eure Anmeldung bei Roots & Shoots! Wir haben eure Angaben erhalten und melden uns schnellstmöglich bei euch. Es kann sein, dass wir gerade viele Anfragen haben und ihr nicht sofort eine Antwort erhaltet.\n\nBei Fragen antwortet einfach auf diese E-Mail.\n\nViele Grüße\nEuer Roots & Shoots Team\nJane Goodall Institut Deutschland";
 
 /**
  * Form definition: the single source for the rendered form, server-side
@@ -66,6 +68,8 @@ add_filter('Flynt/addComponentData?name=BlockFormRootsShoots', function ($data) 
     $data['sections'] = getSections();
     $data['action'] = ACTION;
     $data['actionUrl'] = admin_url('admin-post.php');
+    // Lets the handler read this block's confirmation email settings.
+    $data['pageId'] = get_queried_object_id();
     // Set by the no-JS redirect fallback.
     $data['status'] = sanitize_key($_GET['rs-signup'] ?? '');
     return $data;
@@ -103,7 +107,8 @@ function handleSubmission()
 
     set_transient($rateKey, $count + 1, HOUR_IN_SECONDS);
 
-    $body = buildEmailBody($values);
+    $summary = buildSummary($values);
+    $body = "Neue Roots & Shoots Gruppenanmeldung über janegoodall.de\n\n" . $summary;
     $name = trim($values['firstName'] . ' ' . $values['lastName']);
     $subject = 'Roots & Shoots Gruppenanmeldung: ' . ($values['groupName'] ?: $name);
 
@@ -130,6 +135,11 @@ function handleSubmission()
 
     if (!$sent) {
         error_log('BlockFormRootsShoots: notification email failed for signup ' . (int) $postId);
+    }
+
+    $confirmationSent = sendConfirmation($values, $summary, getBlockSettings((int) ($input['pageId'] ?? 0)));
+    if (!is_wp_error($postId) && $postId) {
+        update_post_meta($postId, 'confirmationSent', $confirmationSent ? 1 : 0);
     }
 
     // The signup is safe once stored, even if the mail failed.
@@ -196,11 +206,61 @@ function sanitizeValue($raw, array $field)
 }
 
 /**
- * Plain-text email listing every answer, grouped by section.
+ * Confirmation email to the applicant: editable text plus a copy of the
+ * answers. Replies go to the Roots & Shoots inbox.
  */
-function buildEmailBody(array $values)
+function sendConfirmation(array $values, $summary, array $settings)
 {
-    $lines = ['Neue Roots & Shoots Gruppenanmeldung über janegoodall.de', ''];
+    if (!($settings['sendConfirmation'] ?? true)) {
+        return false;
+    }
+
+    $subject = ($settings['confirmationSubject'] ?? '') ?: CONFIRMATION_SUBJECT;
+    $text = ($settings['confirmationText'] ?? '') ?: CONFIRMATION_TEXT;
+    $text = str_replace('{firstName}', $values['firstName'], $text);
+
+    $sent = wp_mail(
+        $values['email'],
+        $subject,
+        $text . "\n\n\nEURE ANGABEN\n\n" . $summary,
+        [
+            'Content-Type: text/plain; charset=UTF-8',
+            'Reply-To: Roots & Shoots <' . RECIPIENT . '>',
+        ]
+    );
+
+    if (!$sent) {
+        error_log('BlockFormRootsShoots: confirmation email failed');
+    }
+
+    return $sent;
+}
+
+/**
+ * This block's saved fields on the page the form was sent from. Read from the
+ * database, so the posted page ID can only pick existing settings.
+ */
+function getBlockSettings($pageId)
+{
+    if (!$pageId) {
+        return [];
+    }
+
+    foreach ((array) get_field('pageComponents', $pageId) as $component) {
+        if (($component['acf_fc_layout'] ?? '') === 'BlockFormRootsShoots') {
+            return $component;
+        }
+    }
+
+    return [];
+}
+
+/**
+ * Plain-text list of every answer, grouped by section.
+ */
+function buildSummary(array $values)
+{
+    $lines = [];
 
     foreach (getSections() as $sectionKey => $section) {
         $fields = array_intersect_key($section['fields'], $values);
@@ -368,6 +428,31 @@ function getACFLayout()
                 'media_upload' => 0,
                 'delay' => 1,
                 'default_value' => '<p>Wir haben eure Angaben erhalten und melden uns schnellstmöglich bei euch. Wir freuen uns auf euch!</p>',
+            ],
+            [
+                'label' => __('Send Confirmation Email', 'flynt'),
+                'instructions' => __('Email the applicant a confirmation with a copy of their answers. Replies go to the Roots & Shoots inbox.', 'flynt'),
+                'name' => 'sendConfirmation',
+                'type' => 'true_false',
+                'ui' => 1,
+                'default_value' => 1,
+            ],
+            [
+                'label' => __('Confirmation Email Subject', 'flynt'),
+                'name' => 'confirmationSubject',
+                'type' => 'text',
+                'default_value' => CONFIRMATION_SUBJECT,
+                'conditional_logic' => [[['fieldPath' => 'sendConfirmation', 'operator' => '==', 'value' => '1']]],
+            ],
+            [
+                'label' => __('Confirmation Email Text', 'flynt'),
+                'instructions' => __('Plain text. {firstName} is replaced with the applicant\'s first name. A copy of their answers is added below.', 'flynt'),
+                'name' => 'confirmationText',
+                'type' => 'textarea',
+                'rows' => 10,
+                'new_lines' => '',
+                'default_value' => CONFIRMATION_TEXT,
+                'conditional_logic' => [[['fieldPath' => 'sendConfirmation', 'operator' => '==', 'value' => '1']]],
             ],
             [
                 'label' => __('Options', 'flynt'),
