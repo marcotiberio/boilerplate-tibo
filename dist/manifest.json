@@ -1,6 +1,6 @@
 {
   "Components/BlockGalleryMedia/script.js": {
-    "file": "assets/script-663ce199.js",
+    "file": "assets/script-4301f425.js",
     "imports": [
       "assets/main.js"
     ],
@@ -8,7 +8,7 @@
     "src": "Components/BlockGalleryMedia/script.js"
   },
   "Components/BlockMediaQuote/script.js": {
-    "file": "assets/script-e87489e5.js",
+    "file": "assets/script-0b2ecff7.js",
     "imports": [
       "assets/main.js"
     ],
@@ -16,7 +16,7 @@
     "src": "Components/BlockMediaQuote/script.js"
   },
   "Components/BlockSliderLogos/script.js": {
-    "file": "assets/script-4c62a0bb.js",
+    "file": "assets/script-5d998c86.js",
     "imports": [
       "assets/main.js"
     ],
@@ -24,7 +24,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-4e9f4130.js",
+    "file": "assets/script-d0d871e2.js",
     "imports": [
       "assets/main.js"
     ],
@@ -32,7 +32,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-006db74e.js",
+    "file": "assets/script-a1155090.js",
     "imports": [
       "assets/main.js"
     ],
@@ -47,7 +47,7 @@
     "css": [
       "assets/script-b3ce9496.css"
     ],
-    "file": "assets/script-770ff91f.js",
+    "file": "assets/script-4345f8bd.js",
     "imports": [
       "assets/main.js"
     ],
@@ -55,7 +55,7 @@
     "src": "Components/GridImages/script.js"
   },
   "Components/GridPostsArchive/script.js": {
-    "file": "assets/script-7df45391.js",
+    "file": "assets/script-7ee6f14f.js",
     "imports": [
       "assets/main.js"
     ],
@@ -63,7 +63,7 @@
     "src": "Components/GridPostsArchive/script.js"
   },
   "Components/ListComponents/script.js": {
-    "file": "assets/script-0ad85955.js",
+    "file": "assets/script-11d29c9e.js",
     "imports": [
       "assets/main.js"
     ],
@@ -71,7 +71,7 @@
     "src": "Components/ListComponents/script.js"
   },
   "Components/ListingJournalRelated/script.js": {
-    "file": "assets/script-39bbbc93.js",
+    "file": "assets/script-7e6774a2.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "_pagination-36f520d6.js",
@@ -81,7 +81,7 @@
     "src": "Components/ListingJournalRelated/script.js"
   },
   "Components/ListingVideosRelated/script.js": {
-    "file": "assets/script-0aadfe18.js",
+    "file": "assets/script-d9ca12d5.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "_pagination-36f520d6.js",
@@ -95,7 +95,7 @@
     "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/SliderBox/script.js": {
-    "file": "assets/script-16651fd0.js",
+    "file": "assets/script-3eadfedf.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "_pagination-36f520d6.js",
@@ -105,7 +105,7 @@
     "src": "Components/SliderBox/script.js"
   },
   "Components/SliderBoxText/script.js": {
-    "file": "assets/script-9d11280d.js",
+    "file": "assets/script-007abd14.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "_pagination-36f520d6.js",
@@ -115,7 +115,7 @@
     "src": "Components/SliderBoxText/script.js"
   },
   "Components/SliderCards/script.js": {
-    "file": "assets/script-1a8793b9.js",
+    "file": "assets/script-cfa6dd89.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "assets/main.js"
@@ -124,7 +124,7 @@
     "src": "Components/SliderCards/script.js"
   },
   "Components/SliderImages/script.js": {
-    "file": "assets/script-a310d3cc.js",
+    "file": "assets/script-90329b70.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "_pagination-36f520d6.js",
@@ -134,7 +134,7 @@
     "src": "Components/SliderImages/script.js"
   },
   "Components/ZZZ/AccordionSystems/script.js": {
-    "file": "assets/script-2948fc61.js",
+    "file": "assets/script-168b7ae8.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "_autoplay-c1344ccb.js",
@@ -145,7 +145,7 @@
   },
   "Components/ZZZ/BlockCta/Assets/facebook.svg": {
     "file": "assets/facebook-8975c208.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/facebook.svg"
+    "src": "Components/ZZZ/BlockCta/Assets/linkedin.svg"
   },
   "Components/ZZZ/BlockCta/Assets/instagram.svg": {
     "file": "assets/instagram-5bab2c82.svg",
@@ -153,7 +153,7 @@
   },
   "Components/ZZZ/BlockCta/Assets/linkedin.svg": {
     "file": "assets/facebook-8975c208.svg",
-    "src": "Components/ZZZ/BlockCta/Assets/facebook.svg"
+    "src": "Components/ZZZ/BlockCta/Assets/linkedin.svg"
   },
   "Components/ZZZ/BlockCta/Assets/logo.svg": {
     "file": "assets/logo-eeb7436e.svg",
@@ -173,7 +173,7 @@
     "src": "Components/ZZZ/BlockPostArchive/script.js"
   },
   "Components/ZZZ/BlockProductSpecs/script.js": {
-    "file": "assets/script-005b411d.js",
+    "file": "assets/script-856f662f.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "_autoplay-c1344ccb.js",
@@ -183,7 +183,7 @@
     "src": "Components/ZZZ/BlockProductSpecs/script.js"
   },
   "Components/ZZZ/HeroImageText/script.js": {
-    "file": "assets/script-53409c59.js",
+    "file": "assets/script-2db7d473.js",
     "imports": [
       "assets/main.js"
     ],
@@ -191,7 +191,7 @@
     "src": "Components/ZZZ/HeroImageText/script.js"
   },
   "Components/ZZZ/HeroSlider/script.js": {
-    "file": "assets/script-d46959ba.js",
+    "file": "assets/script-a1ee00f6.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "_pagination-36f520d6.js",
@@ -202,7 +202,7 @@
     "src": "Components/ZZZ/HeroSlider/script.js"
   },
   "Components/ZZZ/HeroSliderComposite/script.js": {
-    "file": "assets/script-2fe88c8d.js",
+    "file": "assets/script-7a6be9a8.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "_pagination-36f520d6.js",
@@ -213,7 +213,7 @@
     "src": "Components/ZZZ/HeroSliderComposite/script.js"
   },
   "Components/ZZZ/HeroVideoBackground/script.js": {
-    "file": "assets/script-8ebfd99d.js",
+    "file": "assets/script-3f21a8aa.js",
     "imports": [
       "assets/main.js"
     ],
@@ -230,7 +230,7 @@
     "src": "Components/ZZZ/NavigationMainLogo/Assets/logo.svg"
   },
   "Components/ZZZ/ScrolltriggerComparison/script.js": {
-    "file": "assets/script-1ac960d3.js",
+    "file": "assets/script-6f71bfc5.js",
     "imports": [
       "assets/main.js"
     ],
@@ -238,7 +238,7 @@
     "src": "Components/ZZZ/ScrolltriggerComparison/script.js"
   },
   "Components/ZZZ/SliderFeatProjects/script.js": {
-    "file": "assets/script-6e1ceaa9.js",
+    "file": "assets/script-3bcf0149.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "_autoplay-c1344ccb.js",
@@ -248,7 +248,7 @@
     "src": "Components/ZZZ/SliderFeatProjects/script.js"
   },
   "Components/ZZZ/SliderHorizontal/script.js": {
-    "file": "assets/script-2d23b16c.js",
+    "file": "assets/script-d4eeea42.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "_pagination-36f520d6.js",
@@ -259,7 +259,7 @@
     "src": "Components/ZZZ/SliderHorizontal/script.js"
   },
   "Components/ZZZ/SliderImages/script.js": {
-    "file": "assets/script-39e4cd03.js",
+    "file": "assets/script-c3a2397f.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "_pagination-36f520d6.js",
@@ -270,7 +270,7 @@
     "src": "Components/ZZZ/SliderImages/script.js"
   },
   "Components/ZZZ/SliderLogos/script.js": {
-    "file": "assets/script-b6dc9d16.js",
+    "file": "assets/script-bd3cc5b1.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "_pagination-36f520d6.js",
@@ -281,7 +281,7 @@
     "src": "Components/ZZZ/SliderLogos/script.js"
   },
   "Components/ZZZ/SliderQuotes/script.js": {
-    "file": "assets/script-feb0a3cb.js",
+    "file": "assets/script-3f130001.js",
     "imports": [
       "_swiper-bundle-e0f77aaf.js",
       "_pagination-36f520d6.js",
@@ -422,7 +422,7 @@
       "Components/ZZZ/SliderLogos/script.js",
       "Components/ZZZ/SliderQuotes/script.js"
     ],
-    "file": "assets/main-303d7f9c.js",
+    "file": "assets/main-4cf7375d.js",
     "isEntry": true,
     "src": "assets/main.js"
   },

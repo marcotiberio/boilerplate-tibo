@@ -14,9 +14,12 @@ export default (conditions = {}) => ({
     this.message = ''
 
     const form = this.$refs.form
+    // Not form.action: the hidden input named "action" (for admin-post.php)
+    // shadows that property.
+    const url = form.getAttribute('action')
 
     try {
-      const response = await fetch(form.action, {
+      const response = await fetch(url, {
         method: 'POST',
         body: new FormData(form),
         headers: { Accept: 'application/json' },
