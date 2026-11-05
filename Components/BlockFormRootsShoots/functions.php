@@ -6,6 +6,7 @@ const ACTION = 'rootsShootsSignup';
 const RECIPIENT = 'rootsandshoots@janegoodall.de';
 const POST_TYPE = 'roots-shoots-signup';
 const RATE_LIMIT = 5; // Submissions per IP per hour.
+const FROM_NAME = 'JGI Roots & Shoots';
 const CONFIRMATION_SUBJECT = 'Eure Roots & Shoots Gruppenanmeldung';
 const CONFIRMATION_TEXT = "Hallo {firstName},\n\nvielen Dank für eure Anmeldung bei Roots & Shoots! Wir haben eure Angaben erhalten und melden uns schnellstmöglich bei euch. Es kann sein, dass wir gerade viele Anfragen haben und ihr nicht sofort eine Antwort erhaltet.\n\nBei Fragen antwortet einfach auf diese E-Mail.\n\nViele Grüße\nEuer Roots & Shoots Team\nJane Goodall Institut Deutschland";
 
@@ -119,7 +120,7 @@ function handleSubmission()
         'post_content' => $body,
     ]);
 
-    $sent = wp_mail(
+    $sent = sendMail(
         apply_filters('Flynt/BlockFormRootsShoots/recipient', RECIPIENT),
         $subject,
         $body,
@@ -206,6 +207,23 @@ function sanitizeValue($raw, array $field)
 }
 
 /**
+ * wp_mail with this form's sender name. Only the name changes: the address
+ * stays the site's default so SPF/DMARC on the sending server still pass.
+ */
+function sendMail($to, $subject, $body, array $headers)
+{
+    $fromName = function () {
+        return FROM_NAME;
+    };
+
+    add_filter('wp_mail_from_name', $fromName);
+    $sent = wp_mail($to, $subject, $body, $headers);
+    remove_filter('wp_mail_from_name', $fromName);
+
+    return $sent;
+}
+
+/**
  * Confirmation email to the applicant: editable text plus a copy of the
  * answers. Replies go to the Roots & Shoots inbox.
  */
@@ -219,7 +237,7 @@ function sendConfirmation(array $values, $summary, array $settings)
     $text = ($settings['confirmationText'] ?? '') ?: CONFIRMATION_TEXT;
     $text = str_replace('{firstName}', $values['firstName'], $text);
 
-    $sent = wp_mail(
+    $sent = sendMail(
         $values['email'],
         $subject,
         $text . "\n\n\nEURE ANGABEN\n\n" . $summary,
