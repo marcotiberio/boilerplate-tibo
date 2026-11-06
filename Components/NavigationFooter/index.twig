@@ -174,7 +174,9 @@
             </div>
           {% endif %}
 
-          {% if transparencyBadge %}
+          {# TEST: badge not rendered; set showTransparencyBadge to true to show it again #}
+          {% set showTransparencyBadge = false %}
+          {% if showTransparencyBadge and transparencyBadge %}
             <div class="mt-auto flex justify-start lg:justify-end">
               {% if transparencyBadgeLink %}
                 <a href="{{ transparencyBadgeLink }}" target="_blank" rel="noreferrer noopener">
