@@ -24,7 +24,7 @@
     "src": "Components/BlockSliderLogos/script.js"
   },
   "Components/BlockVideoOembed/script.js": {
-    "file": "assets/script-d0d871e2.js",
+    "file": "assets/script-a1155090.js",
     "imports": [
       "assets/main.js"
     ],
@@ -32,7 +32,7 @@
     "src": "Components/BlockVideoOembed/script.js"
   },
   "Components/BlockVideoText/script.js": {
-    "file": "assets/script-a1155090.js",
+    "file": "assets/script-d0d871e2.js",
     "imports": [
       "assets/main.js"
     ],
