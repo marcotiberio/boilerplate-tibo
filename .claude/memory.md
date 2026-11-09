@@ -1,1 +1,2 @@
 - 2026-11-03: Links in .wysiwyg had no underline — Tailwind preflight sets text-decoration: inherit and base `a` rule only set underline-offset. Fixed in _typography.scss with `.wysiwyg a:not([class])`. dist/ is committed (WP Pusher), so rebuild with vite after SCSS changes.
+- 2026-11-09: Security kit at ~/atelier/vorkurs-security applied to brandmelder DDEV. Acorn writes PHP views to uploads/cache/acorn (included, not HTTP) — uploads PHP block is safe. DDEV nginx: use =/^~ locations, regex loses to the php location.

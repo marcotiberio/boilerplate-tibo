@@ -1,4 +1,4 @@
-# CLAUDE.md — vorkus WordPress Theme
+# CLAUDE.md — vorkurs WordPress Theme
 
 This file provides persistent context for Claude Code sessions on this project.
 Read it fully before making any changes.
@@ -8,7 +8,7 @@ Read it fully before making any changes.
 ## Project overview
 
 Custom WordPress theme built on the [Flynt boilerplate](https://flyntwp.com/).
-Developed by Marco Tiberio / vorkus — a strategic digital studio based in Amsterdam.
+Developed by Marco Tiberio / vorkurs — a strategic digital studio based in Amsterdam.
 All themes are coded from scratch using Flynt as a structural foundation.
 
 ---
