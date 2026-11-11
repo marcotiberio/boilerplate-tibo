@@ -74,14 +74,15 @@
   line-height: 1.5;
 }
 
-// Contour line art, tinted by --topo-color (white-on-transparent PNG used as a mask)
+// Contour line art, tinted by --topo-color (white-on-transparent PNG used as a mask).
+// url() paths resolve relative to assets/main.scss, which imports this partial.
 .decoration--topo::before,
 .topo {
   background-color: var(--topo-color);
   content: '';
   height: min(32vw, 386px);
   inset-inline: 0;
-  mask-image: url('../images/topo-lines.png');
+  mask-image: url('./images/topo-lines.png');
   mask-position: top center;
   mask-repeat: no-repeat;
   mask-size: 100% auto;
@@ -89,7 +90,7 @@
   position: absolute;
   top: 0;
   z-index: 0;
-  -webkit-mask-image: url('../images/topo-lines.png');
+  -webkit-mask-image: url('./images/topo-lines.png');
   -webkit-mask-position: top center;
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-size: 100% auto;
