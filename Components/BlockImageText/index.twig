@@ -1,43 +1,31 @@
-<flynt-component 
-  load:on="visible" 
-  name="BlockImageText" 
-  class=""
-  style="
-    color: {% if options.colorText %}{{ options.colorText }}{% else %}var(--blue){% endif %};
-    background-color: {% if options.colorBackground %}{{ options.colorBackground }}{% else %}transparent{% endif %};">
-  <div class="boxed">
-    <div class="flex flex-col {{ imagePosition }} gap-lg items-center h-full">
-      <div class="w-full lg:w-1/2">
-        {% if image %}
-          <figure class="figure">
-            <img class="figure-image lazyload h-full w-full object-cover"
-              src="{{ image.src | resize(32) }}"
-              data-srcset="{{function('wp_get_attachment_image_srcset', image.id)}}"
+<flynt-component
+  name="BlockImageText"
+  class="section section--{{ options.sectionTheme|default('mist') }} {{ options.decoration == 'topo' ? 'decoration--topo' }}">
+  <div class="content">
+    {% include 'templates/partials/_heading.twig' with { title: title } only %}
+    <div class="flex flex-col {{ imagePosition == 'right' ? 'lg:flex-row-reverse' : 'lg:flex-row' }} gap-md lg:gap-lg items-center">
+      {% if image %}
+        <figure class="w-full lg:w-1/2 m-0">
+          {% if image.post_mime_type == 'image/svg+xml' %}
+            <img class="w-full h-auto" src="{{ image.src|e('html_attr') }}" alt="{{ image.alt|e('html_attr') }}" loading="lazy">
+          {% else %}
+            <img
+              class="lazyload w-full h-full object-cover aspect-4/3"
+              src="{{ image.src|resize(32) }}"
+              data-srcset="{{ function('wp_get_attachment_image_srcset', image.id) }}"
               data-sizes="auto"
-              alt="{{ image.alt|e }}">
-            {% if image.caption %}
-              <figcaption class="font-bodySmall">{{ image.caption|e }}</figcaption>
-            {% endif %}
-          </figure>
-        {% endif %}
-      </div>
-      <div class="w-full lg:w-1/2 h-full flex flex-col justify-between {% if imagePosition == 'lg:flex-row' %} !mr-0 {% else %} !ml-0 {% endif %}">
+              alt="{{ image.alt|e('html_attr') }}">
+          {% endif %}
+          {% if image.caption %}
+            <figcaption class="meta">{{ image.caption|e }}</figcaption>
+          {% endif %}
+        </figure>
+      {% endif %}
+      <div class="w-full {{ image ? 'lg:w-1/2' }} flex flex-col">
         {% if contentHtml %}
-          <div class="wysiwyg">{{ contentHtml|e('wp_kses_post') }}</div>
+          <div class="wysiwyg blockImageText-text">{{ contentHtml|e('wp_kses_post') }}</div>
         {% endif %}
-        {% for panel in repeaterButtons %}
-          <div class="flex flex-col gap-sm mt-xs">
-            <a class="button button--outline button--outlineBig" href="{{panel.buttonLink.url}}" {% if panel.buttonLink.target %} target="{{ panel.buttonLink.target }}" rel="noreferrer noopener"{% endif %}>{{panel.buttonLink.title}}</a>
-          </div>
-        {% endfor %}
-        <div class="flex flex-row gap-xs mt-xs">
-          {% if buttonLink1 %}
-            <a class="button button--fullBlue" href="{{buttonLink1.url}}" {% if buttonLink1.target %} target="{{ buttonLink1.target }}" rel="noreferrer noopener"{% endif %}>{{buttonLink1.title}}</a>
-          {% endif %}
-          {% if buttonLink2 %}
-            <a class="button button--fullOrange" href="{{buttonLink2.url}}" {% if buttonLink2.target %} target="{{ buttonLink2.target }}" rel="noreferrer noopener"{% endif %}>{{buttonLink2.title}}</a>
-          {% endif %}
-        </div>
+        {% include 'templates/partials/_buttons.twig' with { buttons: buttons, class: 'mt-sm' } only %}
       </div>
     </div>
   </div>
