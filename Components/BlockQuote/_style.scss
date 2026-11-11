@@ -1,0 +1,6 @@
+flynt-component[name='BlockQuote'] {
+  .blockQuote p {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    line-height: 1.4;
+  }
+}

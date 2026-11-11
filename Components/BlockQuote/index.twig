@@ -1,0 +1,12 @@
+{% set attribution = [name, role, organisation]|filter(v => v) %}
+<flynt-component
+  name="BlockQuote"
+  class="section section--{{ options.sectionTheme|default('sage') }} {{ options.decoration == 'topo' ? 'decoration--topo' }}">
+  <div class="content">
+    <figure class="blockQuote m-0">
+      <blockquote class="m-0" lang="de">
+        <p class="!mb-0">„{{ quote|e|nl2br }}“{% if attribution %} – <cite class="not-italic">{{ attribution|join(', ')|e }}</cite>{% endif %}</p>
+      </blockquote>
+    </figure>
+  </div>
+</flynt-component>
