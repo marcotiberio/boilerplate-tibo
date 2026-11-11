@@ -21,17 +21,6 @@ flynt-component[name='HeroImage'] {
   .hero-intro {
     font-size: clamp(1rem, 1.6vw, 1.125rem);
   }
-
-  // Topo lines at the bottom edge, in the page background colour
-  .hero-topo {
-    --topo-color: var(--color-mist);
-    bottom: 0;
-    height: 5rem;
-    mask-position: bottom center;
-    top: auto;
-    z-index: 5;
-    -webkit-mask-position: bottom center;
-  }
 }
 
 flynt-component[name='HeroImage'] .button--auto {
