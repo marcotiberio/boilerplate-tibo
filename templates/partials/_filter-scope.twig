@@ -1,0 +1,2 @@
+{# Alpine scope for client-side taxonomy filtering; include inside the listing root tag #}
+x-data="{ filters: {}, toggle (g, s) { this.filters[g] = this.filters[g] === s ? '' : s }, isActive (g, s) { return this.filters[g] === s }, matches (terms) { return Object.keys(this.filters).every(g => !this.filters[g] || (terms[g] || []).includes(this.filters[g])) } }"

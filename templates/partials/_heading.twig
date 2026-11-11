@@ -1,0 +1,14 @@
+{# Eyebrow label, heading and intro text shared by section components #}
+{% if label or title or description %}
+  <div class="flex flex-col {{ class|default('mb-md') }}">
+    {% if label %}
+      <p class="eyebrow">{{ label|e }}</p>
+    {% endif %}
+    {% if title %}
+      <h2 class="h2 uppercase !mb-0 max-w-[48rem]">{{ title|e }}</h2>
+    {% endif %}
+    {% if description %}
+      <div class="wysiwyg mt-xs">{{ description|e('wp_kses_post') }}</div>
+    {% endif %}
+  </div>
+{% endif %}

@@ -1,0 +1,100 @@
+/**
+* Section themes, layout helpers and topo decoration.
+* Keys match FieldVariables\getSectionTheme() and getDecoration().
+*/
+
+.section {
+  @apply relative;
+  @apply py-lg;
+  @apply md:py-xl;
+  --topo-color: rgb(var(--color-ink-rgb) / 0.3);
+
+  &--mist {
+    @apply bg-mist text-ink;
+  }
+
+  &--white {
+    @apply bg-white text-ink;
+  }
+
+  &--sage {
+    @apply bg-sage text-ink;
+    --topo-color: rgb(255 255 255 / 0.6);
+  }
+
+  &--forest {
+    @apply bg-forest text-white;
+    --topo-color: rgb(var(--color-sage-rgb) / 0.3);
+  }
+
+  &--magenta {
+    @apply bg-magenta text-white;
+    --topo-color: rgb(255 255 255 / 0.3);
+  }
+
+  // Dark sections switch auto buttons to white
+  &--forest,
+  &--magenta {
+    .button--auto {
+      @apply bg-white text-forest border-white;
+
+      &:hover,
+      &:focus {
+        @apply bg-sage text-forest border-sage;
+      }
+    }
+  }
+}
+
+// 1072px content column with side gutters
+.content {
+  @apply relative;
+  @apply z-10;
+  @apply w-full;
+  @apply max-w-content;
+  @apply mx-auto;
+  @apply px-sm;
+  box-sizing: content-box;
+
+  @screen lg {
+    @apply px-0;
+  }
+}
+
+.eyebrow {
+  font-family: var(--primary-font-family, sans-serif);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  @apply mb-xs;
+}
+
+.meta {
+  font-family: var(--primary-font-family, sans-serif);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+// Contour line art, tinted by --topo-color (white-on-transparent PNG used as a mask)
+.decoration--topo::before,
+.topo {
+  background-color: var(--topo-color);
+  content: '';
+  height: min(32vw, 386px);
+  inset-inline: 0;
+  mask-image: url('../images/topo-lines.png');
+  mask-position: top center;
+  mask-repeat: no-repeat;
+  mask-size: 100% auto;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  -webkit-mask-image: url('../images/topo-lines.png');
+  -webkit-mask-position: top center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% auto;
+}
+
+.decoration--topo {
+  @apply pt-xxl;
+}

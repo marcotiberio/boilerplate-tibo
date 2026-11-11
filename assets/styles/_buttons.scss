@@ -10,8 +10,6 @@ button {
   line-height: var(--button-line-height, 1.2);
   font-weight: var(--button-font-weight, 500);
   @apply w-fit;
-  @apply px-xs;
-  @apply py-[7px];
   @apply flex;
   @apply justify-center;
   @apply items-center;
@@ -39,46 +37,67 @@ button {
     }
   }
 
-  // &--primary {
-  //   @apply text-white;
-  //   @apply bg-black;
-  //   @apply border;
-  //   @apply border-black;
+  // Brand variants (pill, sentence case)
+  @apply rounded-button;
+  @apply px-sm;
+  @apply py-xs;
+  @apply border;
+  @apply border-transparent;
+  @apply transition-colors;
 
-  //   &:hover,
-  //   &:focus {
-  //     @apply text-white;
-  //     @apply bg-grey-700;
-  //     @apply border-grey-700;
-  //   }
-  // }
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
 
-  // &--secondary {
-  //   @apply text-white;
-  //   @apply bg-grey-600;
-  //   @apply border;
-  //   @apply border-grey-600;
+  &--forest,
+  &--auto {
+    @apply bg-forest text-white border-forest;
 
-  //   &:hover,
-  //   &:focus {
-  //     @apply text-white;
-  //     @apply bg-grey-800;
-  //     @apply border-grey-800;
-  //   }
-  // }
+    &:hover,
+    &:focus {
+      @apply bg-ink text-white border-ink;
+    }
+  }
 
-  // &--outline {
-  //   @apply text-black;
-  //   @apply bg-transparent;
-  //   @apply border;
-  //   @apply border-black;
+  &--white {
+    @apply bg-white text-forest border-white;
 
-  //   &:hover,
-  //   &:focus {
-  //     color: var(--white) !important;
-  //     @apply bg-black;
-  //   }
-  // }
+    &:hover,
+    &:focus {
+      @apply bg-sage text-forest border-sage;
+    }
+  }
+
+  &--magenta {
+    @apply bg-magenta text-white border-magenta;
+
+    &:hover,
+    &:focus {
+      @apply bg-forest text-white border-forest;
+    }
+  }
+
+  &--outline {
+    @apply bg-transparent text-current border-current;
+
+    &:hover,
+    &:focus {
+      @apply bg-forest text-white border-forest;
+    }
+  }
+
+  // Filter chip: small outline pill, forest when active
+  &--chip {
+    @apply px-xs py-min bg-white text-ink border-sage-muted;
+    font-size: 0.875rem;
+
+    &:hover,
+    &:focus,
+    &[aria-pressed='true'] {
+      @apply bg-forest text-white border-forest;
+    }
+  }
 }
 
 .wpcf7-submit {
@@ -90,13 +109,13 @@ button {
   @apply py-xs;
   @apply px-sm;
   @apply text-white;
-  @apply bg-black;
+  @apply bg-magenta;
   @apply justify-center;
   @apply border;
-  @apply border-black;
+  @apply border-magenta;
   @apply rounded-button;
   @apply whitespace-nowrap;
-  @apply w-full;
+  @apply w-fit;
   @apply flex;
   @apply justify-center;
   @apply items-center;
@@ -107,7 +126,7 @@ button {
 
   &:hover,
   &:focus {
-    @apply bg-grey-700;
-    @apply border-grey-700;
+    @apply bg-forest;
+    @apply border-forest;
   }
 }

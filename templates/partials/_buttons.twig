@@ -1,0 +1,15 @@
+{# Renders FieldVariables\getButtons(): [{ link, style }] #}
+{% if buttons %}
+  <div class="flex flex-wrap gap-xs {{ class|default('') }}">
+    {% for button in buttons %}
+      {% if button.link %}
+        <a
+          class="button button--{{ button.style|default('auto') }}"
+          href="{{ button.link.url|e('esc_url') }}"
+          {% if button.link.target %}target="{{ button.link.target|e('html_attr') }}" rel="noopener noreferrer"{% endif %}>
+          {{ button.link.title|e }}
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}

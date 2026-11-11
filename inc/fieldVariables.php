@@ -150,3 +150,106 @@ function getFirstComponent()
         ],
     ];
 }
+
+/**
+ * Section colour theme, mapped to .section--{key} in assets/styles/_sections.scss.
+ */
+function getSectionTheme($default = 'mist')
+{
+    return [
+        'label' => __('Section Theme', 'flynt'),
+        'name' => 'sectionTheme',
+        'type' => 'select',
+        'choices' => [
+            'mist' => __('Mist (page background)', 'flynt'),
+            'white' => __('White', 'flynt'),
+            'sage' => __('Sage', 'flynt'),
+            'forest' => __('Forest', 'flynt'),
+            'magenta' => __('Magenta', 'flynt'),
+        ],
+        'default_value' => $default,
+        'return_format' => 'value',
+        'wrapper' => [
+            'width' => 50,
+        ],
+    ];
+}
+
+/**
+ * Optional topo contour line art at the top edge of a section.
+ */
+function getDecoration($default = 'none')
+{
+    return [
+        'label' => __('Decoration', 'flynt'),
+        'name' => 'decoration',
+        'type' => 'select',
+        'choices' => [
+            'none' => __('None', 'flynt'),
+            'topo' => __('Topo lines (top)', 'flynt'),
+        ],
+        'default_value' => $default,
+        'return_format' => 'value',
+        'wrapper' => [
+            'width' => 50,
+        ],
+    ];
+}
+
+/**
+ * Small eyebrow label above a heading.
+ */
+function getLabel()
+{
+    return [
+        'label' => __('Label', 'flynt'),
+        'instructions' => __('Small line above the heading, e.g. "Unser Betriebssystem".', 'flynt'),
+        'name' => 'label',
+        'type' => 'text',
+    ];
+}
+
+/**
+ * Repeater of 0–$max buttons, rendered by templates/partials/_buttons.twig.
+ */
+function getButtons($max = 2)
+{
+    return [
+        'label' => __('Buttons', 'flynt'),
+        'name' => 'buttons',
+        'type' => 'repeater',
+        'layout' => 'table',
+        'min' => 0,
+        'max' => $max,
+        'button_label' => __('Add Button', 'flynt'),
+        'sub_fields' => [
+            [
+                'label' => __('Link', 'flynt'),
+                'name' => 'link',
+                'type' => 'link',
+                'return_format' => 'array',
+                'required' => 1,
+                'wrapper' => [
+                    'width' => 60,
+                ],
+            ],
+            [
+                'label' => __('Style', 'flynt'),
+                'name' => 'style',
+                'type' => 'select',
+                'choices' => [
+                    'auto' => __('Auto (forest, white on dark)', 'flynt'),
+                    'forest' => __('Forest', 'flynt'),
+                    'white' => __('White', 'flynt'),
+                    'magenta' => __('Magenta', 'flynt'),
+                    'outline' => __('Outline', 'flynt'),
+                ],
+                'default_value' => 'auto',
+                'return_format' => 'value',
+                'wrapper' => [
+                    'width' => 40,
+                ],
+            ],
+        ],
+    ];
+}

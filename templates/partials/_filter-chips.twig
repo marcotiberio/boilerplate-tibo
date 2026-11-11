@@ -1,0 +1,30 @@
+{#
+  Filter chip row. Expects an enclosing Alpine scope with:
+  filters (object), toggle(group, slug), isActive(group, slug).
+  groups: [{ key, label, terms: [{ slug, name }] }]
+#}
+{% for group in groups %}
+  {% if group.terms %}
+    <div class="flex flex-col gap-xs mb-sm" role="group" aria-label="{{ group.label|e }}">
+      <p class="eyebrow !mb-0">{{ group.label|e }}</p>
+      <div class="flex flex-wrap gap-xs">
+        <button
+          type="button"
+          class="button button--chip"
+          :aria-pressed="!filters['{{ group.key|e('js') }}'] ? 'true' : 'false'"
+          @click="filters['{{ group.key|e('js') }}'] = ''">
+          {{ allLabel|default('Alle')|e }}
+        </button>
+        {% for term in group.terms %}
+          <button
+            type="button"
+            class="button button--chip"
+            :aria-pressed="isActive('{{ group.key|e('js') }}', '{{ term.slug|e('js') }}') ? 'true' : 'false'"
+            @click="toggle('{{ group.key|e('js') }}', '{{ term.slug|e('js') }}')">
+            {{ term.name|e }}
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+{% endfor %}
