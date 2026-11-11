@@ -5,7 +5,7 @@
         {% if menuTitle %}
           <p class="navigationFooter-title uppercase !mb-xs">{{ menuTitle|e }}</p>
         {% endif %}
-        <ul class="navigationFooter-menu list-none p-0 m-0 grid grid-cols-2 gap-x-md gap-y-min">
+        <ul class="navigationFooter-menu list-none p-0 m-0 grid grid-cols-2 grid-rows-3 grid-flow-col gap-x-md gap-y-min">
           {% for item in menu.items %}
             <li>
               <a class="meta underline underline-offset-4 hover:no-underline" href="{{ item.link|e('esc_url') }}" {{ item.target == '_blank' ? 'target="_blank" rel="noopener noreferrer"' }}>{{ item.title|e }}</a>
