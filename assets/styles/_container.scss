@@ -153,3 +153,14 @@ flynt-component {
 .siteHeader {
   top: var(--wp-admin--admin-bar--height, 0);
 }
+
+// Desktop header menus: compact so they clear the centred logo badge
+.navigationMainSide {
+  .menu {
+    @apply gap-sm;
+    font-family: var(--primary-font-family, sans-serif);
+    font-size: 0.9375rem;
+    justify-content: flex-start;
+    width: auto;
+  }
+}

@@ -1,4 +1,4 @@
-<flynt-component name="NavigationMainLeft" class="flex justify-start items-center">
+<flynt-component name="NavigationMainLeft" class="navigationMainSide w-[calc(50%-5.5rem)] flex justify-start items-center">
   <nav class="navigation" aria-label="{{ labels.ariaLabel|e('html_attr') }}">
     {% if menu %}
       {% include 'Partials/_menu.twig' with { 'items': menu.items } only %}
