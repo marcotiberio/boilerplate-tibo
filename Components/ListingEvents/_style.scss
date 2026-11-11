@@ -1,0 +1,15 @@
+flynt-component[name='ListingEvents'] {
+  .listingEvents-date {
+    @screen md {
+      min-height: 6.5rem;
+      width: 9.5rem;
+    }
+  }
+
+  .listingEvents-day {
+    font-family: var(--primary-font-family, sans-serif);
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+}
