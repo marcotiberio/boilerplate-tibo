@@ -209,25 +209,25 @@
         },
         {
             "name": "flyntwp/acf-field-group-composer",
-            "version": "v1.0.2",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/flyntwp/acf-field-group-composer.git",
-                "reference": "02e4afbcf5dd8e211b8f6ca381fdc52591816864"
+                "reference": "5ed52d01b68860ed2dc305960187c3a4d251c591"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flyntwp/acf-field-group-composer/zipball/02e4afbcf5dd8e211b8f6ca381fdc52591816864",
-                "reference": "02e4afbcf5dd8e211b8f6ca381fdc52591816864",
+                "url": "https://api.github.com/repos/flyntwp/acf-field-group-composer/zipball/5ed52d01b68860ed2dc305960187c3a4d251c591",
+                "reference": "5ed52d01b68860ed2dc305960187c3a4d251c591",
                 "shasum": ""
             },
             "require": {
-                "composer/installers": "~1.0"
+                "composer/installers": "~1.0 || ~2.0"
             },
             "require-dev": {
-                "brain/monkey": "1.*",
-                "phpunit/phpunit": "^5.6",
-                "squizlabs/php_codesniffer": "~2.0"
+                "brain/monkey": "^2.6",
+                "phpunit/phpunit": "^9.6",
+                "squizlabs/php_codesniffer": "^3.7"
             },
             "type": "wordpress-plugin",
             "autoload": {
@@ -244,9 +244,9 @@
             ],
             "support": {
                 "issues": "https://github.com/flyntwp/acf-field-group-composer/issues",
-                "source": "https://github.com/flyntwp/acf-field-group-composer/tree/v1.0.2"
+                "source": "https://github.com/flyntwp/acf-field-group-composer/tree/v1.1.0"
             },
-            "time": "2020-09-11T08:52:18+00:00"
+            "time": "2023-12-18T09:20:25+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -689,12 +689,12 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.4"
     },
-    "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
 }

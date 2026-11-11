@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/flyntwp/acf-field-group-composer/compare/v1.0.3...v1.1.0) (2023-12-18)
+
+
+### Features
+
+* **composer:** allow composers/installers version 2 ([a7960ac](https://github.com/flyntwp/acf-field-group-composer/commit/a7960ac))
+
+
+
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/flyntwp/acf-field-group-composer/compare/v1.0.2...v1.0.3) (2023-11-22)
+
+
+### Bug Fixes
+
+* **resolveConfig:** PHP 8.2 deprecated notices ([6f39570](https://github.com/flyntwp/acf-field-group-composer/commit/6f39570))
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/flyntwp/acf-field-group-composer/compare/v1.0.1...v1.0.2) (2020-09-11)
 

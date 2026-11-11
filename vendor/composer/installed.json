@@ -209,28 +209,28 @@
                 },
                 {
                         "name": "flyntwp/acf-field-group-composer",
-                        "version": "v1.0.2",
-                        "version_normalized": "1.0.2.0",
+                        "version": "v1.1.0",
+                        "version_normalized": "1.1.0.0",
                         "source": {
                                 "type": "git",
                                 "url": "https://github.com/flyntwp/acf-field-group-composer.git",
-                                "reference": "02e4afbcf5dd8e211b8f6ca381fdc52591816864"
+                                "reference": "5ed52d01b68860ed2dc305960187c3a4d251c591"
                         },
                         "dist": {
                                 "type": "zip",
-                                "url": "https://api.github.com/repos/flyntwp/acf-field-group-composer/zipball/02e4afbcf5dd8e211b8f6ca381fdc52591816864",
-                                "reference": "02e4afbcf5dd8e211b8f6ca381fdc52591816864",
+                                "url": "https://api.github.com/repos/flyntwp/acf-field-group-composer/zipball/5ed52d01b68860ed2dc305960187c3a4d251c591",
+                                "reference": "5ed52d01b68860ed2dc305960187c3a4d251c591",
                                 "shasum": ""
                         },
                         "require": {
-                                "composer/installers": "~1.0"
+                                "composer/installers": "~1.0 || ~2.0"
                         },
                         "require-dev": {
-                                "brain/monkey": "1.*",
-                                "phpunit/phpunit": "^5.6",
-                                "squizlabs/php_codesniffer": "~2.0"
+                                "brain/monkey": "^2.6",
+                                "phpunit/phpunit": "^9.6",
+                                "squizlabs/php_codesniffer": "^3.7"
                         },
-                        "time": "2020-09-11T08:52:18+00:00",
+                        "time": "2023-12-18T09:20:25+00:00",
                         "type": "wordpress-plugin",
                         "installation-source": "dist",
                         "autoload": {
@@ -247,7 +247,7 @@
                         ],
                         "support": {
                                 "issues": "https://github.com/flyntwp/acf-field-group-composer/issues",
-                                "source": "https://github.com/flyntwp/acf-field-group-composer/tree/v1.0.2"
+                                "source": "https://github.com/flyntwp/acf-field-group-composer/tree/v1.1.0"
                         },
                         "install-path": "../flyntwp/acf-field-group-composer"
                 },
