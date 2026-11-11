@@ -1,0 +1,17 @@
+<flynt-component
+  name="BlockKeyFigures"
+  class="section section--{{ options.sectionTheme|default('sage') }} {{ options.decoration == 'topo' ? 'decoration--topo' }}">
+  <div class="content">
+    {% include 'templates/partials/_heading.twig' with { title: title } only %}
+    {% if figures %}
+      <dl class="grid grid-cols-2 lg:grid-cols-4 gap-sm">
+        {% for figure in figures %}
+          <div class="flex flex-col-reverse gap-xs">
+            <dt class="meta">{{ figure.label|e }}</dt>
+            <dd class="keyFigures-value m-0">{{ figure.value|e }}</dd>
+          </div>
+        {% endfor %}
+      </dl>
+    {% endif %}
+  </div>
+</flynt-component>
