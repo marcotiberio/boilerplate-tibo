@@ -1,38 +1,32 @@
 flynt-component[name='SliderBoxText'] {
   .slider {
-    max-width: 100%;
+    overflow: visible;
     position: relative;
 
-    .swiper-wrapper {
-      box-sizing: inherit;
-      justify-content: space-between;
-    }
-
     .swiper-slide {
-      display: flex;
+      box-sizing: border-box;
+      height: auto;
     }
-    
-    &-button {
-      align-items: center;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      z-index: 10;
+  }
 
-      &.swiper-button-disabled {
-        opacity: 0.5;
-        pointer-events: none;
-      }
+  .slider-quote {
+    font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+    line-height: 1.4;
+  }
+
+  .slider-button {
+    @apply flex items-center justify-center rounded-full bg-forest text-white cursor-pointer;
+    height: 2.25rem;
+    width: 2.25rem;
+
+    &:hover,
+    &:focus-visible {
+      @apply bg-ink;
     }
 
-    .swiper-pagination-bullet {
-      @apply w-[65px];
-      @apply h-[2px];
-      @apply rounded-none;
-      
-      &-active {
-        background: var(--black);
-      }
+    &.swiper-button-disabled {
+      opacity: 0.4;
+      pointer-events: none;
     }
   }
 }

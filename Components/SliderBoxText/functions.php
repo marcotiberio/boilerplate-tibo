@@ -8,7 +8,7 @@ use Flynt\Utils\Options;
 add_filter('Flynt/addComponentData?name=SliderBoxText', function ($data) {
     $translatableOptions = Options::getTranslatable('SliderOptions');
     $data['jsonData'] = [
-        'options' => array_merge($translatableOptions, $data['options']),
+        'options' => array_merge($translatableOptions ?: [], $data['options'] ?? []),
     ];
     return $data;
 });
@@ -17,7 +17,7 @@ function getACFLayout()
 {
     return [
         'name' => 'SliderBoxText',
-        'label' => 'Carousel: Text',
+        'label' => __('Carousel: Testimonials', 'flynt'),
         'sub_fields' => [
             [
                 'label' => __('General', 'flynt'),
@@ -29,26 +29,29 @@ function getACFLayout()
             [
                 'label' => __('Title', 'flynt'),
                 'name' => 'title',
-                'type' => 'text'
+                'type' => 'text',
             ],
             [
-                'label' => __('Boxes', 'flynt'),
+                'label' => __('Testimonials', 'flynt'),
                 'name' => 'boxes',
                 'type' => 'repeater',
-                'layout' => 'row',
+                'layout' => 'block',
                 'min' => 1,
-                'button_label' => __('Add Step', 'flynt'),
+                'button_label' => __('Add Testimonial', 'flynt'),
                 'sub_fields' => [
-                    FieldVariables\getColorBackground(),
                     [
-                        'label' => __('Title', 'flynt'),
-                        'name' => 'title',
-                        'type' => 'text'
+                        'label' => __('Quote', 'flynt'),
+                        'instructions' => __('Without quotation marks; they are added automatically.', 'flynt'),
+                        'name' => 'quote',
+                        'type' => 'textarea',
+                        'rows' => 3,
+                        'required' => 1,
                     ],
                     [
-                        'label' => __('Text', 'flynt'),
-                        'name' => 'text',
-                        'type' => 'textarea',
+                        'label' => __('Attribution', 'flynt'),
+                        'instructions' => __('e.g. "Name, Leiterin Wirtschaftsförderung, Stadt"', 'flynt'),
+                        'name' => 'attribution',
+                        'type' => 'text',
                     ],
                 ],
             ],
@@ -57,7 +60,7 @@ function getACFLayout()
                 'name' => 'optionsTab',
                 'type' => 'tab',
                 'placement' => 'top',
-                'endpoint' => 0
+                'endpoint' => 0,
             ],
             [
                 'label' => '',
@@ -65,10 +68,10 @@ function getACFLayout()
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => [
-                    FieldVariables\getColorBackground(),
-                    FieldVariables\getColorText(),
-                ]
-            ]
-        ]
+                    FieldVariables\getSectionTheme(),
+                    FieldVariables\getDecoration(),
+                ],
+            ],
+        ],
     ];
 }

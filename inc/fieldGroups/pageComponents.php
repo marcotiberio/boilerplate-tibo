@@ -92,6 +92,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockSpacer\getACFLayout(),
                     Components\ListingArticles\getACFLayout(),
                     Components\SliderBox\getACFLayout(),
+                    Components\SliderBoxText\getACFLayout(),
                 ],
             ],
         ],
