@@ -1,72 +1,44 @@
 flynt-component[name='HeroImage'] {
-  // Prevent horizontal overflow on mobile
-  overflow-x: hidden !important;
+  min-height: 480px;
 
-  .marquee-container {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    
-    .marquee-content {
-      will-change: transform;
-      display: inline-flex;
-      flex-wrap: nowrap;
-      min-width: fit-content;
-      
-      figure {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
-      
-      img {
-        flex-shrink: 0;
-      }
+  &.hero--tall {
+    @screen md {
+      min-height: 640px;
     }
   }
 
-  .video {
-    margin: 0 auto;
-    position: relative;
-
-    &-player {
-      @apply aspect-9/16;
-      @apply lg:aspect-16/10;
-      height: auto;
-      position: relative;
-      z-index: 10;
-
-      &[data-state='isLoading'] {
-        .video-loader {
-          display: block;
-        }
-
-        .video-playButton {
-          display: none;
-        }
-      }
-
-      &[data-state='isLoaded'] {
-        .video-loader,
-        .video-playButton {
-          display: none;
-        }
-
-        iframe {
-          display: block;
-        }
-      }
+  &.hero--short {
+    @screen md {
+      min-height: 510px;
     }
+  }
 
-    iframe {
-      display: none;
-      height: 100%;
-      inset-block-start: 0;
-      inset-inline-start: 0;
-      position: relative;
-      width: 100%;
-    }
+  .hero-title {
+    font-size: clamp(2.25rem, 5.5vw, 4.25rem);
+    line-height: 1;
+  }
+
+  .hero-intro {
+    font-size: clamp(1rem, 1.6vw, 1.125rem);
+  }
+
+  // Topo lines at the bottom edge, in the page background colour
+  .hero-topo {
+    --topo-color: var(--color-mist);
+    bottom: 0;
+    height: 5rem;
+    mask-position: bottom center;
+    top: auto;
+    z-index: 5;
+    -webkit-mask-position: bottom center;
+  }
+}
+
+flynt-component[name='HeroImage'] .button--auto {
+  @apply bg-white text-forest border-white;
+
+  &:hover,
+  &:focus {
+    @apply bg-sage text-forest border-sage;
   }
 }

@@ -3,25 +3,6 @@
 namespace Flynt\Components\HeroImage;
 
 use Flynt\FieldVariables;
-use Flynt\Utils\Asset;
-use Flynt\Utils\Options;
-use Timber\Timber;
-
-add_action('init', function () {
-    register_nav_menus([
-        'navigation_main' => __('Navigation Main', 'flynt')
-    ]);
-});
-
-add_filter('Flynt/addComponentData?name=HeroImage', function ($data) {
-    $data['menu'] = Timber::get_menu('navigation_main') ?? Timber::get_pages_menu();
-    $data['logo'] = [
-        'src' => get_theme_mod('custom_header_logo') ? get_theme_mod('custom_header_logo') : Asset::requireUrl('assets/images/logo.svg'),
-        'alt' => get_bloginfo('name')
-    ];
-
-    return $data;
-});
 
 function getACFLayout()
 {
@@ -38,71 +19,62 @@ function getACFLayout()
             ],
             [
                 'label' => __('Image Desktop', 'flynt'),
-                'instructions' => __('Image-Format: JPG, PNG, SVG.', 'flynt'),
+                'instructions' => __('Image-Format: JPG, PNG, WEBP. Shown with a forest tint.', 'flynt'),
                 'name' => 'image',
                 'type' => 'image',
                 'preview_size' => 'medium',
                 'required' => 0,
-                'mime_types' => 'jpg,jpeg,png,svg,webp',
+                'mime_types' => 'jpg,jpeg,png,webp',
                 'wrapper' => [
-                    'width' => 50
+                    'width' => 50,
                 ],
             ],
             [
                 'label' => __('Image Mobile', 'flynt'),
-                'instructions' => __('Image-Format: JPG, PNG, SVG.', 'flynt'),
+                'instructions' => __('Optional. Falls back to the desktop image.', 'flynt'),
                 'name' => 'imageMobile',
                 'type' => 'image',
                 'preview_size' => 'medium',
                 'required' => 0,
-                'mime_types' => 'jpg,jpeg,png,svg,webp',
+                'mime_types' => 'jpg,jpeg,png,webp',
                 'wrapper' => [
-                    'width' => 50
+                    'width' => 50,
                 ],
             ],
             [
                 'label' => __('Height', 'flynt'),
                 'name' => 'height',
-                'type' => 'select',
-                'default_value' => 'h-screen',
+                'type' => 'button_group',
                 'choices' => [
-                    'h-screen' => __('Full Screen', 'flynt'),
-                    'h-[75vh]' => __('2/3 Screen', 'flynt'),
+                    'tall' => __('Tall (home, content pages)', 'flynt'),
+                    'short' => __('Short (overview pages)', 'flynt'),
                 ],
-                'wrapper' => [
-                    'width' => 100
-                ],
+                'default_value' => 'tall',
             ],
             [
                 'label' => __('Content', 'flynt'),
                 'name' => 'contentTab',
                 'type' => 'tab',
                 'placement' => 'top',
-                'endpoint' => 0
+                'endpoint' => 0,
             ],
+            FieldVariables\getLabel(),
             [
                 'label' => __('Title', 'flynt'),
-                'name' => 'titleHtml',
-                'type' => 'wysiwyg',
-                'tabs' => 'visual',
-                'toolbar' => 'default',
-                'media_upload' => 0,
-                'delay' => 1,
-                'wrapper' => [
-                    'width' => 100
-                ],
+                'instructions' => __('Page title (H1).', 'flynt'),
+                'name' => 'title',
+                'type' => 'textarea',
+                'rows' => 2,
+                'new_lines' => 'br',
+                'required' => 1,
             ],
             [
-                'label' => __('Button', 'flynt'),
-                'name' => 'buttonLink',
-                'type' => 'link',
-                'required' => 0,
-                'wrapper' => [
-                    'width' => 100
-                ],
+                'label' => __('Intro', 'flynt'),
+                'name' => 'intro',
+                'type' => 'textarea',
+                'rows' => 3,
             ],
-        ]
-
+            FieldVariables\getButtons(2),
+        ],
     ];
 }
-    

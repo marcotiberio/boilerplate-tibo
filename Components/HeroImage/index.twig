@@ -1,32 +1,30 @@
+{% set mobileImage = imageMobile ?: image %}
 <flynt-component
-  load:on="visible" name="HeroImage"
-  class="w-full lgplus:w-screen {{ height|default('h-screen') }} mx-auto relative overflow-hidden">
+  name="HeroImage"
+  class="hero hero--{{ height|default('tall') }} relative flex items-end overflow-hidden bg-forest text-white">
   {% if image %}
-    <img 
-      data-ref="backgroundImageDesktop"
-      class="hidden lgplus:block figure-image w-full h-full max-h-screen object-cover rounded-image"
-      src="{{ image.src }}"
-      alt="{{ image.alt|e | default('') }}"
-      loading="eager"
-    />
+    <picture class="absolute inset-0">
+      <source media="(min-width: 780px)" srcset="{{ image.src|e('html_attr') }}">
+      <img
+        class="w-full h-full object-cover"
+        src="{{ mobileImage.src|e('html_attr') }}"
+        alt="{{ image.alt|e('html_attr') }}"
+        fetchpriority="high"
+        loading="eager">
+    </picture>
   {% endif %}
-  {% if imageMobile %}
-    <img 
-      data-ref="backgroundImageMobile"
-      class="block lgplus:hidden figure-image w-full h-full max-h-screen object-cover rounded-image"
-      src="{{ imageMobile.src }}"
-      alt="{{ imageMobile.alt|e | default('') }}"
-      loading="eager"
-    />
-  {% endif %}
-  <div class="absolute inset-0 z-10 pointer-events-none"></div>
-    <div class="boxed px-xs py-sm md:p-sm flex flex-col gap-sm">
-      <div class="wysiwyg">{{ titleHtml|e('wp_kses_post') }}</div>
-      {# {% if buttonLink %}
-        <a class="button button--fullRed" href="{{ buttonLink.url }}" target="{{ buttonLink.target }}" rel="noreferrer noopener">
-          {{ buttonLink.title }}
-        </a>
-      {% endif %} #}
-    </div>
+  <div class="absolute inset-0 bg-forest/50" aria-hidden="true"></div>
+
+  <div class="content pb-xxl pt-max">
+    {% if label %}
+      <p class="eyebrow">{{ label|e }}</p>
+    {% endif %}
+    <h1 class="hero-title uppercase !mb-0 max-w-[44rem]">{{ title|e('wp_kses_post') }}</h1>
+    {% if intro %}
+      <p class="hero-intro mt-sm !mb-0 max-w-[50rem]">{{ intro|e }}</p>
+    {% endif %}
+    {% include 'templates/partials/_buttons.twig' with { buttons: buttons, class: 'mt-md' } only %}
   </div>
+
+  <div class="hero-topo topo" aria-hidden="true"></div>
 </flynt-component>
