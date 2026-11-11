@@ -1,0 +1,30 @@
+<flynt-component
+  name="ListingPublications"
+  class="section section--{{ options.sectionTheme|default('mist') }} {{ options.decoration == 'topo' ? 'decoration--topo' }}">
+  <div class="content" {% include 'templates/partials/_filter-scope.twig' %}>
+    {% include 'templates/partials/_heading.twig' with { title: title } only %}
+
+    {% if filterGroups %}
+      {% include 'templates/partials/_filter-chips.twig' with { groups: filterGroups, allLabel: labels.filterAll } only %}
+    {% endif %}
+
+    {% if items %}
+      <ul class="listing-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-sm list-none p-0 m-0">
+        {% for item in items %}
+          <li x-show="matches({{ item.filterTerms|json_encode|e('html_attr') }})" x-transition.opacity>
+            {% include 'templates/partials/_card.twig' with item only %}
+          </li>
+        {% endfor %}
+      </ul>
+      {% if filterGroups %}
+        <p class="mt-sm" x-cloak x-show="{{ items|map(i => i.filterTerms)|json_encode|e('html_attr') }}.every(t => !matches(t))">{{ labels.noResults|e }}</p>
+      {% endif %}
+    {% endif %}
+
+    {% if allLink %}
+      <div class="flex justify-center mt-md">
+        <a class="button button--auto" href="{{ allLink.url|e('esc_url') }}" {% if allLink.target %}target="{{ allLink.target|e('html_attr') }}" rel="noopener noreferrer"{% endif %}>{{ allLink.title|e }}</a>
+      </div>
+    {% endif %}
+  </div>
+</flynt-component>
