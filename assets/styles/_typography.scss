@@ -196,3 +196,20 @@ blockquote,
     font-size: 10pt;
   }
 }
+
+// Vertical rhythm inside rich text
+.wysiwyg {
+  > * + * {
+    margin-block-start: 1em;
+  }
+
+  > * + h2,
+  > * + h3 {
+    margin-block-start: 1.5em;
+  }
+
+  > h2 + *,
+  > h3 + * {
+    margin-block-start: 0.5em;
+  }
+}

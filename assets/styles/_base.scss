@@ -38,7 +38,23 @@ html {
 
 body {
   @apply text-ink;
-  font-family: var(--primary-font-family, 'Inter', Arial, sans-serif);
+  font-family: var(--secondary-font-family, Georgia, serif);
+  line-height: 1.6;
+
+  @screen desktop {
+    font-size: 1.125rem;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--primary-font-family, Arial, sans-serif);
+  font-weight: 700;
+  line-height: 1.1;
 }
 
 // ── Halftone SVG hover effect ─────────────────────────────────────────────────
