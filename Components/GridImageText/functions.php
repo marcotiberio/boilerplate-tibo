@@ -3,7 +3,6 @@
 namespace Flynt\Components\GridImageText;
 
 use Flynt\FieldVariables;
-use Flynt\Options;
 
 function getACFLayout()
 {
@@ -16,26 +15,28 @@ function getACFLayout()
                 'name' => 'generalTab',
                 'type' => 'tab',
                 'placement' => 'top',
-                'endpoint' => 0
+                'endpoint' => 0,
             ],
             [
                 'label' => __('Title', 'flynt'),
-                'instructions' => __('Want to add a headline? Go ahead! Or just leave it empty and nothing will be shown.', 'flynt'),
                 'name' => 'headlineTitle',
                 'type' => 'text',
             ],
-            // [
-            //     'label' => __('Button', 'flynt'),
-            //     'name' => 'footerButton',
-            //     'type' => 'link',
-            //     'return_format' => 'array'
-            // ],
+            [
+                'label' => __('Intro', 'flynt'),
+                'name' => 'intro',
+                'type' => 'wysiwyg',
+                'tabs' => 'visual',
+                'toolbar' => 'basic',
+                'media_upload' => 0,
+                'delay' => 1,
+            ],
             [
                 'label' => __('Items', 'flynt'),
                 'name' => 'itemsTab',
                 'type' => 'tab',
                 'placement' => 'top',
-                'endpoint' => 0
+                'endpoint' => 0,
             ],
             [
                 'label' => __('Items', 'flynt'),
@@ -45,79 +46,69 @@ function getACFLayout()
                 'layout' => 'block',
                 'button_label' => __('Add Item', 'flynt'),
                 'sub_fields' => [
-                    // [
-                    //     'label' => __('Color Background Box', 'flynt'),
-                    //     'name' => 'colorBoxBackground',
-                    //     'type' => 'color_picker',
-                    //     'wrapper' => [
-                    //         'width' => 100,
-                    //     ],
-                    // ],
                     [
                         'label' => __('Image', 'flynt'),
-                        'instructions' => __('Image-Format: JPG, PNG, SVG', 'flynt'),
+                        'instructions' => __('Optional. Image-Format: JPG, PNG, WEBP, SVG.', 'flynt'),
                         'name' => 'image',
                         'type' => 'image',
                         'preview_size' => 'medium',
                         'mime_types' => 'jpg,jpeg,png,svg,webp',
                         'wrapper' => [
-                            'width' => 50
+                            'width' => 30,
                         ],
                     ],
-                    // [
-                    //     'label' => __('Add rounded corners to image?', 'flynt'),
-                    //     'name' => 'imageRoundedCorners',
-                    //     'type' => 'true_false',
-                    //     'default_value' => 0,
-                    //     'ui' => 1,
-                    //     'wrapper' => [
-                    //         'width' => 50
-                    //     ],
-                    // ],
                     [
-                        'label' => __('Title', 'flynt'),
-                        'name' => 'imageBoxTitle',
+                        'label' => __('Label', 'flynt'),
+                        'instructions' => __('Optional tag, e.g. "Im Umbau".', 'flynt'),
+                        'name' => 'label',
                         'type' => 'text',
                         'wrapper' => [
-                            'width' => 50
+                            'width' => 30,
                         ],
                     ],
                     [
-                        'label' => __('Link', 'flynt'),
-                        'name' => 'imageLink',
-                        'type' => 'link',
-                        'return_format' => 'array',
+                        'label' => __('Title', 'flynt'),
+                        'name' => 'title',
+                        'type' => 'text',
                         'wrapper' => [
-                            'width' => 50
+                            'width' => 40,
                         ],
                     ],
-                    // [
-                    //     'label' => __('Title', 'flynt'),
-                    //     'name' => 'title',
-                    //     'type' => 'text',
-                    //     'wrapper' => [
-                    //         'width' => 50
-                    //     ],
-                    // ],
                     [
                         'label' => __('Content', 'flynt'),
                         'name' => 'contentHtml',
                         'type' => 'wysiwyg',
                         'tabs' => 'visual',
+                        'toolbar' => 'basic',
                         'media_upload' => 0,
                         'delay' => 1,
+                    ],
+                    [
+                        'label' => __('Footnote', 'flynt'),
+                        'instructions' => __('Optional small line, e.g. "Auftrag: Bildung".', 'flynt'),
+                        'name' => 'footnote',
+                        'type' => 'text',
                         'wrapper' => [
-                            'width' => 100
+                            'width' => 50,
                         ],
                     ],
-                ]
+                    [
+                        'label' => __('Link', 'flynt'),
+                        'name' => 'itemLink',
+                        'type' => 'link',
+                        'return_format' => 'array',
+                        'wrapper' => [
+                            'width' => 50,
+                        ],
+                    ],
+                ],
             ],
             [
                 'label' => __('Options', 'flynt'),
                 'name' => 'optionsTab',
                 'type' => 'tab',
                 'placement' => 'top',
-                'endpoint' => 0
+                'endpoint' => 0,
             ],
             [
                 'label' => '',
@@ -126,37 +117,30 @@ function getACFLayout()
                 'layout' => 'row',
                 'sub_fields' => [
                     [
+                        'label' => __('Look', 'flynt'),
+                        'name' => 'look',
+                        'type' => 'button_group',
+                        'choices' => [
+                            'columns' => __('Columns with top rule', 'flynt'),
+                            'cards' => __('Dark cards', 'flynt'),
+                        ],
+                        'default_value' => 'columns',
+                    ],
+                    [
                         'label' => __('Grid Columns', 'flynt'),
                         'name' => 'gridColumns',
                         'type' => 'button_group',
                         'choices' => [
-                            '1' => sprintf('<p>1</p>', __('1', 'flynt')),
-                            '2' => sprintf('<p>2</p>', __('2', 'flynt')),
-                            '3' => sprintf('<p>3</p>', __('3', 'flynt')),
-                            '4' => sprintf('<p>4</p>', __('4', 'flynt')),
-                            '5' => sprintf('<p>5</p>', __('5', 'flynt'))
+                            '2' => '2',
+                            '3' => '3',
+                            '4' => '4',
                         ],
                         'default_value' => '4',
                     ],
-                    // [
-                    //     'label' => __('Add border top', 'flynt'),
-                    //     'name' => 'addBorderTop',
-                    //     'type' => 'true_false',
-                    //     'default_value' => 0,
-                    //     'ui' => 1,
-                    //     'ui_on_text' => __('Yes', 'flynt'),
-                    //     'ui_off_text' => __('No', 'flynt'),
-                    //     'wrapper' => [
-                    //         'width' => 100
-                    //     ]
-                    // ],
-                ]
+                    FieldVariables\getSectionTheme(),
+                    FieldVariables\getDecoration(),
+                ],
             ],
-            [
-                'label' => __('Read More Label', 'flynt'),
-                'name' => 'readMoreLabel',
-                'type' => 'text',
-            ],
-        ]
+        ],
     ];
 }
