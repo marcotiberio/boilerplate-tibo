@@ -1,10 +1,63 @@
 flynt-component[name='NavigationFooter'] {
-  // .menu-item {
-  //   &:not(:last-child) {
-  //     &::after {
-  //       content: '/';
-  //       @apply ml-[5px];
-  //     }
-  //   }
-  // }
+  .navigationFooter-title {
+    font-family: var(--primary-font-family, sans-serif);
+    font-weight: 700;
+  }
+
+  .navigationFooter-contact {
+    font-family: var(--primary-font-family, sans-serif);
+    font-size: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .navigationFooter-social {
+    @apply flex items-center justify-center text-ink;
+    height: 1.5rem;
+    width: 1.5rem;
+
+    svg {
+      fill: currentColor;
+      height: 100%;
+      width: 100%;
+    }
+
+    &:hover,
+    &:focus-visible {
+      @apply text-forest;
+    }
+  }
+
+  // Forest landscape wave with sage contour lines (masks exported from Figma).
+  // url() paths resolve relative to assets/main.scss, which imports this file.
+  .navigationFooter-landscape {
+    aspect-ratio: 1229 / 340;
+    position: relative;
+    width: 100%;
+  }
+
+  .navigationFooter-wave,
+  .navigationFooter-topo {
+    inset: 0;
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+    position: absolute;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+  }
+
+  .navigationFooter-wave {
+    background-color: var(--color-forest);
+    mask-image: url('./images/footer-wave.png');
+    -webkit-mask-image: url('./images/footer-wave.png');
+  }
+
+  .navigationFooter-topo {
+    background-color: rgb(var(--color-sage-rgb) / 0.5);
+    mask-image: url('./images/topo-lines.png');
+    mask-position: bottom center;
+    mask-size: 100% auto;
+    -webkit-mask-image: url('./images/topo-lines.png');
+    -webkit-mask-position: bottom center;
+    -webkit-mask-size: 100% auto;
+  }
 }

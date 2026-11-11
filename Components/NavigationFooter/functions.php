@@ -3,7 +3,6 @@
 namespace Flynt\Components\NavigationFooter;
 
 use Flynt\Utils\Options;
-use Flynt\Shortcodes;
 use Timber\Timber;
 
 add_action('init', function () {
@@ -13,48 +12,12 @@ add_action('init', function () {
 });
 
 add_filter('Flynt/addComponentData?name=NavigationFooter', function ($data) {
-    $data['maxLevel'] = 0;
-    $data['menu'] = Timber::get_menu('navigation_footer') ?? Timber::get_pages_menu();
+    $data['menu'] = Timber::get_menu('navigation_footer');
 
     return $data;
 });
 
 Options::addTranslatable('NavigationFooter', [
-    [
-        'label' => __('Logo', 'flynt'),
-        'name' => 'logoTab',
-        'type' => 'tab',
-        'placement' => 'top',
-        'endpoint' => 0
-    ],
-    [
-        'label' => __('Logo', 'flynt'),
-        'name' => 'logoFooter',
-        'type' => 'image',
-        'preview_size' => 'medium',
-        'instructions' => __('Image-Format: JPG, PNG, SVG.', 'flynt'),
-        'required' => 0,
-        'mime_types' => 'jpg,jpeg,png,svg',
-        'wrapper' =>  [
-            'width' => 100,
-        ]
-    ],
-    [
-        'label' => __('Copyrighs', 'flynt'),
-        'name' => 'copyrightsTab',
-        'type' => 'tab',
-        'placement' => 'top',
-        'endpoint' => 0
-    ],
-    [
-        'label' => __('Copyrights', 'flynt'),
-        'name' => 'copyrightsHtml',
-        'type' => 'wysiwyg',
-        'tabs' => 'visual,text',
-        'toolbar' => 'default',
-        'media_upload' => 0,
-        'delay' => 1
-    ],
     [
         'label' => __('Content', 'flynt'),
         'name' => 'contentTab',
@@ -63,52 +26,54 @@ Options::addTranslatable('NavigationFooter', [
         'endpoint' => 0
     ],
     [
-        'label' => __('Columns', 'flynt'),
-        'name' => 'columns',
-        'type' => 'repeater',
-        'layout' => 'block',
-        'min' => 1,
-        'max' => 4,
-        'button_label' => __('Add Column', 'flynt'),
-        'sub_fields' => [
-            [
-                'label' => __('Content', 'flynt'),
-                'name' => 'contentHtml',
-                'type' => 'wysiwyg',
-                'tabs' => 'visual,text',
-                'delay' => 1,
-                'media_upload' => 0,
-                'required' => 0,
-                'wrapper' => [
-                    'width' => 100
-                ],
-            ],
-            // [
-            //     'label' => __('Enable Newsletter Form', 'flynt'),
-            //     'name' => 'enableNewsletter',
-            //     'type' => 'true_false',
-            //     'default_value' => 0,
-            //     'ui' => 1,
-            //     'wrapper' => [
-            //         'width' => 50
-            //     ],
-            // ],
-        ]
+        'label' => __('Menu Title', 'flynt'),
+        'name' => 'menuTitle',
+        'type' => 'text',
+        'default_value' => 'Übersicht',
+        'wrapper' => [
+            'width' => 50
+        ],
     ],
     [
-        'label' => __('Newsletter', 'flynt'),
-        'name' => 'newsletterTab',
+        'label' => __('Contact Title', 'flynt'),
+        'name' => 'contactTitle',
+        'type' => 'text',
+        'default_value' => 'Kontakt',
+        'wrapper' => [
+            'width' => 50
+        ],
+    ],
+    [
+        'label' => __('Contact', 'flynt'),
+        'instructions' => __('Address, email and phone.', 'flynt'),
+        'name' => 'contactHtml',
+        'type' => 'wysiwyg',
+        'tabs' => 'visual,text',
+        'toolbar' => 'basic',
+        'media_upload' => 0,
+        'delay' => 1
+    ],
+    [
+        'label' => __('Social', 'flynt'),
+        'name' => 'socialTab',
         'type' => 'tab',
         'placement' => 'top',
         'endpoint' => 0
     ],
     [
-        'label' => __('Newsletter Link', 'flynt'),
-        'name' => 'newsletterLink',
-        'type' => 'link',
-        'required' => 0,
+        'label' => __('Instagram URL', 'flynt'),
+        'name' => 'instagramUrl',
+        'type' => 'url',
         'wrapper' => [
-            'width' => 100
+            'width' => 50
+        ],
+    ],
+    [
+        'label' => __('LinkedIn URL', 'flynt'),
+        'name' => 'linkedinUrl',
+        'type' => 'url',
+        'wrapper' => [
+            'width' => 50
         ],
     ],
     [
@@ -123,26 +88,6 @@ Options::addTranslatable('NavigationFooter', [
         'name' => 'labels',
         'type' => 'group',
         'sub_fields' => [
-            [
-                'label' => __('Light Theme', 'flynt'),
-                'name' => 'themeLight',
-                'type' => 'text',
-                'default_value' => __('Dunkel', 'flynt'),
-                'required' => 1,
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-            [
-                'label' => __('Dark Theme', 'flynt'),
-                'name' => 'themeDark',
-                'type' => 'text',
-                'default_value' => __('Hell', 'flynt'),
-                'required' => 1,
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
             [
                 'label' => __('Aria Label', 'flynt'),
                 'name' => 'ariaLabel',

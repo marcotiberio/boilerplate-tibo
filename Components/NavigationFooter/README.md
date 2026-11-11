@@ -1,3 +1,3 @@
-# Navigation Footer
+# NavigationFooter
 
-A simple list of links generated from a WordPress menu and a content field, to be easily extended into a more complex website footer.
+Footer with an "Übersicht" link list (menu location navigation_footer), contact block, Instagram/LinkedIn icons and the forest landscape wave with contour lines. Content is set under Global Options → Navigation Footer.
