@@ -108,7 +108,7 @@ function getColorText()
 // {
 //     return [
 //         'label' => __('Custom Bottom Padding', 'flynt'),
-//         'instructions' => sprintf(  
+//         'instructions' => sprintf(
 //             'Set custom bottom padding for component.'
 //         ),
 //         'name' => 'bottomPadding',
@@ -132,7 +132,7 @@ function getFirstComponent()
 {
     return [
         'label' => __('First Component', 'flynt'),
-        'instructions' => sprintf(  
+        'instructions' => sprintf(
             'Set to "Yes" if this is the first component on the page.'
         ),
         'name' => 'firstComponent',

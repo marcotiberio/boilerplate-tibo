@@ -141,7 +141,7 @@ add_action('Flynt/afterRegisterComponents', function () {
     //     'menu_order' => 1,
     //     'position' => 'side',
     //     'fields' => [
-            
+
     //     ],
     //     'location' => [
     //         [
