@@ -10,34 +10,39 @@
           "name": "White"
         },
         {
-          "slug": "black",
-          "color": "#000000",
-          "name": "Black"
+          "slug": "mist",
+          "color": "#F7FAFC",
+          "name": "Mist"
         },
         {
-          "slug": "red",
-          "color": "#FB8666",
-          "name": "Red"
+          "slug": "forest",
+          "color": "#244740",
+          "name": "Forest"
         },
         {
-          "slug": "lightRed",
-          "color": "#FFC3A3",
-          "name": "Light Red"
+          "slug": "sage",
+          "color": "#B0D6B2",
+          "name": "Sage"
         },
         {
-          "slug": "lightBlue",
-          "color": "#BEE1FF",
-          "name": "Light Blue"
+          "slug": "sage-light",
+          "color": "#E9F0EC",
+          "name": "Sage Light"
         },
         {
-          "slug": "blue",
-          "color": "#7ABDEA",
-          "name": "Blue"
+          "slug": "magenta",
+          "color": "#DF0050",
+          "name": "Magenta"
         },
         {
-          "slug": "grey",
-          "color": "#F1F1F1",
-          "name": "Grey"
+          "slug": "ink",
+          "color": "#1A202C",
+          "name": "Ink"
+        },
+        {
+          "slug": "night",
+          "color": "#0C0C0C",
+          "name": "Night"
         }
       ]
     }

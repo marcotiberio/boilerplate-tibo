@@ -4,13 +4,13 @@
     --black: #000000;
 
     /* Colors (Tokens) */
-    --brandColor: var(--black);
-    --accentColor: var(--grey-500);
+    --brandColor: var(--color-forest);
+    --accentColor: var(--color-magenta);
 
-    --textColor: var(--black);
-    --linkColor: var(--black);
+    --textColor: var(--color-ink);
+    --linkColor: var(--color-forest);
 
-    --bgColor: var(--white);
+    --bgColor: var(--color-mist);
 
     --hoverColor: var(--grey-700);
     --activeColor: var(--grey-800);

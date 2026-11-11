@@ -16,4 +16,25 @@ $input-selectors: '[type="tel"], [type="url"], [type="text"], [type="date"], [ty
   --grey-700: #404040;
   --grey-800: #262626;
   --grey-900: #171717;
+
+  // Brand palette (RGB channels so Tailwind opacity modifiers work)
+  --color-forest-rgb: 36 71 64;        // #244740
+  --color-sage-rgb: 176 214 178;       // #B0D6B2
+  --color-sage-light-rgb: 233 240 236; // #E9F0EC
+  --color-sage-muted-rgb: 199 215 208; // #C7D7D0
+  --color-magenta-rgb: 223 0 80;       // #DF0050
+  --color-ink-rgb: 26 32 44;           // #1A202C
+  --color-ink-soft-rgb: 45 55 72;      // #2D3748
+  --color-mist-rgb: 247 250 252;       // #F7FAFC
+  --color-night-rgb: 12 12 12;         // #0C0C0C
+
+  --color-forest: rgb(var(--color-forest-rgb));
+  --color-sage: rgb(var(--color-sage-rgb));
+  --color-sage-light: rgb(var(--color-sage-light-rgb));
+  --color-magenta: rgb(var(--color-magenta-rgb));
+  --color-ink: rgb(var(--color-ink-rgb));
+  --color-mist: rgb(var(--color-mist-rgb));
+
+  // Layout
+  --max-width-content: 1072px;
 }

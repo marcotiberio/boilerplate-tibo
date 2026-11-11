@@ -12,11 +12,12 @@ module.exports = {
       1: '1px',
       3: '3px'
     },
+    // Brand tokens (Figma kJZ1lgvjMH1ZoaN4dOwZoE): square cards and images, pill buttons
     borderRadius: {
       none: '0',
-      DEFAULT: '8px',
-      image: '8px',
-      button: '50px',
+      DEFAULT: '0',
+      image: '0',
+      button: '9999px',
       full: '9999px'
     },
     colors: {
@@ -24,7 +25,21 @@ module.exports = {
       black: '#000000',
       current: 'currentColor',
       transparent: 'transparent',
-      // Project colors
+      // Brand colors — values live in assets/styles/_variables.scss (--color-*-rgb)
+      forest: 'rgb(var(--color-forest-rgb) / <alpha-value>)',
+      sage: {
+        DEFAULT: 'rgb(var(--color-sage-rgb) / <alpha-value>)',
+        light: 'rgb(var(--color-sage-light-rgb) / <alpha-value>)',
+        muted: 'rgb(var(--color-sage-muted-rgb) / <alpha-value>)'
+      },
+      magenta: 'rgb(var(--color-magenta-rgb) / <alpha-value>)',
+      ink: {
+        DEFAULT: 'rgb(var(--color-ink-rgb) / <alpha-value>)',
+        soft: 'rgb(var(--color-ink-soft-rgb) / <alpha-value>)'
+      },
+      mist: 'rgb(var(--color-mist-rgb) / <alpha-value>)',
+      night: 'rgb(var(--color-night-rgb) / <alpha-value>)',
+      // Boilerplate neutrals, still used by unused legacy components
       grei: '#f1f1f1',
       grey: {
         100: '#f5f5f5',
@@ -67,6 +82,9 @@ module.exports = {
         '3/4': '3 / 4',
         '3/2': '3 / 2',
         '2/1': '2 / 1',
+      },
+      maxWidth: {
+        content: 'var(--max-width-content, 1072px)'
       },
       borderWidth: {
         DEFAULT: '1px',

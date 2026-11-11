@@ -1,5 +1,5 @@
 html {
-  @apply bg-white text-black;
+  @apply bg-mist text-ink;
 
   &.dark {
     filter: invert(1) hue-rotate(180deg);
@@ -33,11 +33,11 @@ html {
 }
 
 ::selection {
-  @apply text-white bg-black;
+  @apply text-white bg-forest;
 }
 
 body {
-  @apply text-black;
+  @apply text-ink;
   font-family: var(--primary-font-family, 'Inter', Arial, sans-serif);
 }
 
