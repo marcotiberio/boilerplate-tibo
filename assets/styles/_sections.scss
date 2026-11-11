@@ -7,7 +7,7 @@
   @apply relative;
   @apply py-lg;
   @apply md:py-xl;
-  --topo-color: rgb(var(--color-ink-rgb) / 0.3);
+  --topo-color: rgb(var(--color-ink-soft-rgb) / 0.85);
 
   &--mist {
     @apply bg-mist text-ink;
@@ -80,7 +80,7 @@
 .topo {
   background-color: var(--topo-color);
   content: '';
-  height: min(32vw, 386px);
+  aspect-ratio: 2360 / 150;
   inset-inline: 0;
   mask-image: url('./images/topo-lines.png');
   mask-position: top center;

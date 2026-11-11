@@ -27,37 +27,11 @@ flynt-component[name='NavigationFooter'] {
     }
   }
 
-  // Forest landscape wave with sage contour lines (masks exported from Figma).
+  // Forest and sage landscape with contour lines, cut out of the Figma render.
   // url() paths resolve relative to assets/main.scss, which imports this file.
   .navigationFooter-landscape {
-    aspect-ratio: 1229 / 340;
-    position: relative;
+    aspect-ratio: 2360 / 434;
+    background: url('./images/footer-landscape.png') bottom center / 100% auto no-repeat;
     width: 100%;
-  }
-
-  .navigationFooter-wave,
-  .navigationFooter-topo {
-    inset: 0;
-    mask-repeat: no-repeat;
-    mask-size: 100% 100%;
-    position: absolute;
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-size: 100% 100%;
-  }
-
-  .navigationFooter-wave {
-    background-color: var(--color-forest);
-    mask-image: url('./images/footer-wave.png');
-    -webkit-mask-image: url('./images/footer-wave.png');
-  }
-
-  .navigationFooter-topo {
-    background-color: rgb(var(--color-sage-rgb) / 0.5);
-    mask-image: url('./images/topo-lines.png');
-    mask-position: bottom center;
-    mask-size: 100% auto;
-    -webkit-mask-image: url('./images/topo-lines.png');
-    -webkit-mask-position: bottom center;
-    -webkit-mask-size: 100% auto;
   }
 }
