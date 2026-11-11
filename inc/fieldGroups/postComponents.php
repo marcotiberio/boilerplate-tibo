@@ -6,7 +6,7 @@ use Flynt\Components;
 add_action('Flynt/afterRegisterComponents', function () {
     ACFComposer::registerFieldGroup([
         'name' => 'postMeta',
-        'title' => 'Blog Info',
+        'title' => 'Publication Info',
         'style' => '',
         'menu_order' => 1,
         'position' => 'acf_after_title',
@@ -45,6 +45,35 @@ add_action('Flynt/afterRegisterComponents', function () {
                 'max' => 0,
                 'wrapper' => [
                     'width' => 50,
+                ]
+            ],
+            [
+                'label' => __('Publication', 'flynt'),
+                'name' => 'publicationTab',
+                'type' => 'tab',
+                'placement' => 'top',
+                'endpoint' => 0
+            ],
+            [
+                'label' => __('Year', 'flynt'),
+                'name' => 'publicationYear',
+                'type' => 'number',
+                'min' => 1990,
+                'max' => 2100,
+                'step' => 1,
+                'wrapper' => [
+                    'width' => 30,
+                ]
+            ],
+            [
+                'label' => __('PDF', 'flynt'),
+                'instructions' => __('If set, the "Lesen" button opens the PDF; otherwise the publication page.', 'flynt'),
+                'name' => 'publicationPdf',
+                'type' => 'file',
+                'return_format' => 'array',
+                'mime_types' => 'pdf',
+                'wrapper' => [
+                    'width' => 70,
                 ]
             ],
             [
