@@ -1,3 +1,3 @@
-# Listing Projects
+# ListingProjects
 
-A grid-based project listing component. Allows manual selection of projects and setting the width each project thumbnail should take in a 2 or 3 column grid. Each project can be assigned a custom width for its thumbnail in the grid layout.
+Cards for the `project` post type. Teaser mode shows the 3 latest or hand-picked projects plus an optional "all projects" link; archive mode lists all projects with client-side filter chips (Thema, Zielgruppe, Status).

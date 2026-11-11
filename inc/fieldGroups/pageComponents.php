@@ -83,7 +83,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     // Components\ListingJournal\getACFLayout(),
                     Components\ListingVideoFeat\getACFLayout(),
                     Components\ListingVideo\getACFLayout(),
-                    // Components\ListingProjects\getACFLayout(),
+                    Components\ListingProjects\getACFLayout(),
                     // Components\ListingProjectsFeat\getACFLayout(),
                     Components\BlockSliderLogos\getACFLayout(),
                     Components\BlockSpacer\getACFLayout(),

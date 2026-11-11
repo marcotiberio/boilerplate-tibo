@@ -3,26 +3,43 @@
 namespace Flynt\Components\ListingProjects;
 
 use Flynt\FieldVariables;
+use Flynt\Listings;
+use Flynt\Utils\Options;
 use Timber\Timber;
-use Flynt\Utils\Oembed;
 
+const POST_TYPE = 'project';
 
 add_filter('Flynt/addComponentData?name=ListingProjects', function ($data) {
-    if (isset($data['mediaItems']) && is_array($data['mediaItems'])) {
-        foreach ($data['projects'] as &$project) {
-            if (isset($project['project']) && isset($project['project']->featVideoEmbed) && !empty($project['project']->featVideoEmbed)) {
-                $project['project']->featVideoEmbed = Oembed::setSrcAsDataAttribute(
-                    $item['oembed'],
-                    [
-                        'autoplay' => 'true',
-                        'loop' => 'true',
-                        'muted' => 'true',
-                        'controls' => 'false'
-                    ]
-                );
-            }
-        }
-    }
+    $mode = $data['mode'] ?? 'teaser';
+    $ids = Listings\getPostIds(POST_TYPE, $mode, $data['source'] ?? 'latest', $data['projects'] ?? []);
+    $labels = $data['labels'] ?? [];
+
+    $data['items'] = array_map(function ($id) use ($labels) {
+        $topic = Listings\getPostTerms($id, 'project-topic');
+        $audience = Listings\getPostTerms($id, 'audience');
+        $status = Listings\getPostTerms($id, 'project-status');
+        $thumbnailId = get_post_thumbnail_id($id);
+
+        return [
+            'title' => get_post_field('post_title', $id),
+            'link' => get_permalink($id),
+            'linkLabel' => $labels['readMore'] ?? '',
+            'image' => $thumbnailId ? Timber::get_image($thumbnailId) : null,
+            'meta' => implode(' · ', array_merge($audience['names'], $status['names'])),
+            'excerpt' => Listings\getExcerpt($id),
+            'filterTerms' => [
+                'topic' => $topic['slugs'],
+                'audience' => $audience['slugs'],
+                'status' => $status['slugs'],
+            ],
+        ];
+    }, $ids);
+
+    $data['filterGroups'] = $mode === 'archive' ? [
+        Listings\getFilterGroup('project-topic', 'topic', $labels['filterTopic'] ?? ''),
+        Listings\getFilterGroup('audience', 'audience', $labels['filterAudience'] ?? ''),
+        Listings\getFilterGroup('project-status', 'status', $labels['filterStatus'] ?? ''),
+    ] : [];
 
     return $data;
 });
@@ -31,97 +48,91 @@ function getACFLayout()
 {
     return [
         'name' => 'ListingProjects',
-        'label' => 'Listing Projects',
+        'label' => __('Listing: Projects', 'flynt'),
         'sub_fields' => [
             [
-                'label' => __('General', 'flynt'),
-                'name' => 'generalTab',
+                'label' => __('Content', 'flynt'),
+                'name' => 'contentTab',
                 'type' => 'tab',
                 'placement' => 'top',
-                'endpoint' => 0
+                'endpoint' => 0,
+            ],
+            [
+                'label' => __('Title', 'flynt'),
+                'name' => 'title',
+                'type' => 'text',
+            ],
+            [
+                'label' => __('Mode', 'flynt'),
+                'name' => 'mode',
+                'type' => 'button_group',
+                'choices' => [
+                    'teaser' => __('Teaser (3 projects)', 'flynt'),
+                    'archive' => __('Archive (all, with filters)', 'flynt'),
+                ],
+                'default_value' => 'teaser',
+                'wrapper' => [
+                    'width' => 50,
+                ],
+            ],
+            [
+                'label' => __('Source', 'flynt'),
+                'name' => 'source',
+                'type' => 'button_group',
+                'choices' => [
+                    'latest' => __('Latest', 'flynt'),
+                    'manual' => __('Hand-picked', 'flynt'),
+                ],
+                'default_value' => 'latest',
+                'conditional_logic' => [
+                    [
+                        [
+                            'fieldPath' => 'mode',
+                            'operator' => '==',
+                            'value' => 'teaser',
+                        ],
+                    ],
+                ],
+                'wrapper' => [
+                    'width' => 50,
+                ],
             ],
             [
                 'label' => __('Projects', 'flynt'),
                 'name' => 'projects',
-                'type' => 'repeater',
-                'min' => 1,
-                'layout' => 'table',
-                'button_label' => __('Add Project', 'flynt'),
-                'sub_fields' => [
+                'type' => 'relationship',
+                'post_type' => [POST_TYPE],
+                'filters' => ['search', 'taxonomy'],
+                'return_format' => 'id',
+                'max' => 3,
+                'conditional_logic' => [
                     [
-                        'label' => __('Project', 'flynt'),
-                        'name' => 'project',
-                        'type' => 'post_object',
-                        'post_type' => [
-                            'post',
+                        [
+                            'fieldPath' => 'mode',
+                            'operator' => '==',
+                            'value' => 'teaser',
                         ],
-                        'allow_null' => 0,
-                        'multiple' => 0,
-                        'return_format' => 'object',
-                        'ui' => 1,
-                        'required' => 0,
-                        'wrapper' => [
-                            'width' => 100,
-                        ]
-                    ],
-                    [
-                        'label' => __('Project Width', 'flynt'),
-                        'name' => 'width',
-                        'type' => 'button_group',
-                        'choices' => [
-                            'w-full' => sprintf('<p>Full</p>', __('Full', 'flynt')),
-                            'w-full lg:w-[calc(50%_-_10px)]' => sprintf('<p>Half</p>', __('Half', 'flynt')),
-                            'w-full lg:w-[calc(33.33%_-_10px)]' => sprintf('<p>Third</p>', __('Third', 'flynt')),
-                            'w-full lg:w-[calc(25%_-_10px)]' => sprintf('<p>Quarter</p>', __('Quarter', 'flynt')),
-                        ],
-                        'wrapper' => [
-                            'width' => 50
+                        [
+                            'fieldPath' => 'source',
+                            'operator' => '==',
+                            'value' => 'manual',
                         ],
                     ],
-                    // [
-                    //     'label' => __('Project starts in column:', 'flynt'),
-                    //     'name' => 'colStart',
-                    //     'type' => 'button_group',
-                    //     'choices' => [
-                    //         'col-start-1 lg:col-start-1' => sprintf('<p>1</p>', __('1', 'flynt')),
-                    //         'col-start-1 lg:col-start-2' => sprintf('<p>2</p>', __('2', 'flynt')),
-                    //         'col-start-1 lg:col-start-3' => sprintf('<p>3</p>', __('3', 'flynt')),
-                    //         'col-start-1 lg:col-start-4' => sprintf('<p>4</p>', __('4', 'flynt')),
-                    //         'col-start-1 lg:col-start-5' => sprintf('<p>5</p>', __('5', 'flynt')),
-                    //         'col-start-1 lg:col-start-6' => sprintf('<p>6</p>', __('6', 'flynt')),
-                    //         'col-start-1 lg:col-start-7' => sprintf('<p>7</p>', __('7', 'flynt')),
-                    //         'col-start-1 lg:col-start-8' => sprintf('<p>8</p>', __('8', 'flynt')),
-                    //         'col-start-1 lg:col-start-9' => sprintf('<p>9</p>', __('9', 'flynt')),
-                    //         'col-start-1 lg:col-start-10' => sprintf('<p>10</p>', __('10', 'flynt')),
-                    //         'col-start-1 lg:col-start-11' => sprintf('<p>11</p>', __('11', 'flynt')),
-                    //         'col-start-1 lg:col-start-12' => sprintf('<p>12</p>', __('12', 'flynt'))
-                    //     ],
-                    //     'wrapper' => [
-                    //         'width' => 50
-                    //     ],
-                    // ],
-                    // [
-                    //     'label' => __('Project ends in column:', 'flynt'),
-                    //     'name' => 'colEnd',
-                    //     'type' => 'button_group',
-                    //     'choices' => [
-                    //         'col-end-13 lg:col-end-1' => sprintf('<p>1</p>', __('1', 'flynt')),
-                    //         'col-end-13 lg:col-end-2' => sprintf('<p>2</p>', __('2', 'flynt')),
-                    //         'col-end-13 lg:col-end-3' => sprintf('<p>3</p>', __('3', 'flynt')),
-                    //         'col-end-13 lg:col-end-4' => sprintf('<p>4</p>', __('4', 'flynt')),
-                    //         'col-end-13 lg:col-end-5' => sprintf('<p>5</p>', __('5', 'flynt')),
-                    //         'col-end-13 lg:col-end-6' => sprintf('<p>6</p>', __('6', 'flynt')),
-                    //         'col-end-13 lg:col-end-7' => sprintf('<p>7</p>', __('7', 'flynt')),
-                    //         'col-end-13 lg:col-end-8' => sprintf('<p>8</p>', __('8', 'flynt')),
-                    //         'col-end-13 lg:col-end-9' => sprintf('<p>9</p>', __('9', 'flynt')),
-                    //         'col-end-13 lg:col-end-10' => sprintf('<p>10</p>', __('10', 'flynt')),
-                    //         'col-end-13 lg:col-end-11' => sprintf('<p>11</p>', __('11', 'flynt')),
-                    //         'col-end-13 lg:col-end-13' => sprintf('<p>12</p>', __('12', 'flynt')),
-                    //     ],
-                    //     'wrapper' => [
-                    //         'width' => 50
-                    //     ],
-                    // ],
+                ],
+            ],
+            [
+                'label' => __('Link to all projects', 'flynt'),
+                'name' => 'allLink',
+                'type' => 'link',
+                'return_format' => 'array',
+                'conditional_logic' => [
+                    [
+                        [
+                            'fieldPath' => 'mode',
+                            'operator' => '==',
+                            'value' => 'teaser',
+                        ],
+                    ],
                 ],
             ],
             [
@@ -129,7 +140,7 @@ function getACFLayout()
                 'name' => 'optionsTab',
                 'type' => 'tab',
                 'placement' => 'top',
-                'endpoint' => 0
+                'endpoint' => 0,
             ],
             [
                 'label' => '',
@@ -137,10 +148,75 @@ function getACFLayout()
                 'type' => 'group',
                 'layout' => 'row',
                 'sub_fields' => [
-                    FieldVariables\getColorBackground(),
-                    FieldVariables\getColorText(),
-                ]
-            ]
+                    FieldVariables\getSectionTheme(),
+                    FieldVariables\getDecoration(),
+                ],
+            ],
         ],
     ];
 }
+
+Options::addTranslatable('ListingProjects', [
+    [
+        'label' => __('Labels', 'flynt'),
+        'name' => 'labelsTab',
+        'type' => 'tab',
+        'placement' => 'top',
+        'endpoint' => 0,
+    ],
+    [
+        'label' => '',
+        'name' => 'labels',
+        'type' => 'group',
+        'sub_fields' => [
+            [
+                'label' => __('Read More', 'flynt'),
+                'name' => 'readMore',
+                'type' => 'text',
+                'default_value' => 'Mehr erfahren',
+                'required' => 1,
+                'wrapper' => ['width' => 50],
+            ],
+            [
+                'label' => __('No Results', 'flynt'),
+                'name' => 'noResults',
+                'type' => 'text',
+                'default_value' => 'Keine Projekte für diese Auswahl.',
+                'required' => 1,
+                'wrapper' => ['width' => 50],
+            ],
+            [
+                'label' => __('Filter: All', 'flynt'),
+                'name' => 'filterAll',
+                'type' => 'text',
+                'default_value' => 'Alle',
+                'required' => 1,
+                'wrapper' => ['width' => 25],
+            ],
+            [
+                'label' => __('Filter: Topic', 'flynt'),
+                'name' => 'filterTopic',
+                'type' => 'text',
+                'default_value' => 'Thema',
+                'required' => 1,
+                'wrapper' => ['width' => 25],
+            ],
+            [
+                'label' => __('Filter: Audience', 'flynt'),
+                'name' => 'filterAudience',
+                'type' => 'text',
+                'default_value' => 'Zielgruppe',
+                'required' => 1,
+                'wrapper' => ['width' => 25],
+            ],
+            [
+                'label' => __('Filter: Status', 'flynt'),
+                'name' => 'filterStatus',
+                'type' => 'text',
+                'default_value' => 'Status',
+                'required' => 1,
+                'wrapper' => ['width' => 25],
+            ],
+        ],
+    ],
+]);
