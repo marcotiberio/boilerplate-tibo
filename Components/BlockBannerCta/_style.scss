@@ -4,6 +4,7 @@ flynt-component[name='BlockBannerCta'] {
   }
 
   .bannerCta-title--statement {
+    text-transform: none;
     font-size: clamp(1.75rem, 3.5vw, 2.5rem);
     line-height: 1.2;
   }

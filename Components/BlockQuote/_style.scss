@@ -1,4 +1,11 @@
 flynt-component[name='BlockQuote'] {
+  blockquote {
+    border: 0;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+  }
+
   .blockQuote p {
     font-size: clamp(1.125rem, 2vw, 1.5rem);
     line-height: 1.4;
