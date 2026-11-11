@@ -1,0 +1,21 @@
+flynt-component[name='BlockList'] {
+  .blockList-items {
+    @apply list-none p-0 m-0;
+
+    li {
+      @apply relative pl-sm;
+      border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+
+      &::before {
+        content: '•';
+        inset-inline-start: 0.25rem;
+        position: absolute;
+      }
+    }
+  }
+
+  .blockList-conclusion {
+    font-family: var(--primary-font-family, sans-serif);
+    font-weight: 700;
+  }
+}

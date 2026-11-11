@@ -1,0 +1,17 @@
+<flynt-component
+  name="BlockList"
+  class="section section--{{ options.sectionTheme|default('mist') }} {{ options.decoration == 'topo' ? 'decoration--topo' }}">
+  <div class="content">
+    {% include 'templates/partials/_heading.twig' with { title: title } only %}
+    {% if items %}
+      <ul class="blockList-items">
+        {% for item in items %}
+          <li class="py-sm">{{ item.text|e }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if conclusion %}
+      <p class="blockList-conclusion bg-sage text-ink uppercase p-sm mt-md !mb-0">{{ conclusion|e }}</p>
+    {% endif %}
+  </div>
+</flynt-component>
