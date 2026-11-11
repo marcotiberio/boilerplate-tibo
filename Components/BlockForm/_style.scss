@@ -1,0 +1,62 @@
+// Styling layer for Event Tickets RSVP and Contact Form 7 inside BlockForm
+flynt-component[name='BlockForm'] {
+  .blockForm-form {
+    label,
+    .tribe-common-b3 {
+      @apply text-ink;
+      font-family: var(--primary-font-family, sans-serif);
+      font-size: 0.875rem;
+    }
+
+    input[type='text'],
+    input[type='email'],
+    input[type='tel'],
+    input[type='number'],
+    textarea,
+    select {
+      @apply bg-white text-ink w-full p-xs mb-0;
+      border: 1px solid transparent !important;
+      background-color: var(--white) !important;
+      padding: 0.625rem 0.75rem !important;
+
+      &:focus {
+        border-color: var(--color-forest) !important;
+      }
+    }
+
+    textarea {
+      min-height: 7.5rem;
+    }
+
+    input[type='checkbox'] {
+      accent-color: var(--color-forest);
+      height: 1rem;
+      width: 1rem;
+    }
+
+    .wpcf7-form p,
+    .tribe-tickets__rsvp-form-field {
+      @apply mb-sm;
+    }
+
+    // Submit buttons: magenta pill
+    button[type='submit'],
+    input[type='submit'],
+    .tribe-tickets__rsvp-form-button,
+    .tribe-common-c-btn {
+      @apply bg-magenta text-white border-0 rounded-button px-sm py-xs w-fit cursor-pointer;
+      font-family: var(--button-font-family, sans-serif);
+
+      &:hover,
+      &:focus {
+        @apply bg-forest;
+      }
+    }
+
+    // Event Tickets RSVP card chrome
+    .tribe-tickets__rsvp-wrapper,
+    .tribe-tickets__rsvp {
+      @apply bg-transparent border-0 p-0;
+    }
+  }
+}

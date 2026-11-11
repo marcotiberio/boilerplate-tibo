@@ -1,0 +1,10 @@
+<flynt-component
+  name="BlockForm"
+  class="section section--{{ options.sectionTheme|default('sage') }} {{ options.decoration == 'topo' ? 'decoration--topo' }}">
+  <div class="content">
+    {% include 'templates/partials/_heading.twig' with { title: title, description: description } only %}
+    {% if formHtml %}
+      <div class="blockForm-form">{{ formHtml }}</div>
+    {% endif %}
+  </div>
+</flynt-component>
