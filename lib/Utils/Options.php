@@ -196,17 +196,27 @@ class Options
 
     public static function addOptions($scope, $fields, $type, $category = 'Default')
     {
-        static::createOptionSubPage($type, $category);
-        $fieldGroupTitle = StringHelpers::splitCamelCase($scope);
-        $optionsPageSlug = self::$optionPages[$type]['sub_pages'][$category]['menu_slug'];
-        $fieldGroupName = implode('_', [$type, $scope]);
-        static::addOptionsFieldGroup(
-            $fieldGroupName,
-            $fieldGroupTitle,
-            $optionsPageSlug,
-            $fields
-        );
         static::registerOptionNames($type, $scope, $fields);
+
+        // Option pages load ACF translations, so wait for acf/init (WP 6.7+ warns about earlier loading).
+        $register = function () use ($scope, $fields, $type, $category) {
+            static::createOptionSubPage($type, $category);
+            $fieldGroupTitle = StringHelpers::splitCamelCase($scope);
+            $optionsPageSlug = self::$optionPages[$type]['sub_pages'][$category]['menu_slug'];
+            $fieldGroupName = implode('_', [$type, $scope]);
+            static::addOptionsFieldGroup(
+                $fieldGroupName,
+                $fieldGroupTitle,
+                $optionsPageSlug,
+                $fields
+            );
+        };
+
+        if (did_action('acf/init')) {
+            $register();
+        } else {
+            add_action('acf/init', $register);
+        }
     }
 
     protected static function registerOptionNames($type, $scope, $fields)
@@ -263,9 +273,9 @@ class Options
     protected static function checkRequiredHooks($optionType, $scope, $fieldName)
     {
         if (did_action('acf/init') < 1) {
-            $parameters = "${optionType}, ${scope}, ";
+            $parameters = "{$optionType}, {$scope}, ";
             $parameters .= isset($fieldName) ? $fieldName : 'NULL';
-            trigger_error("Could not get option/s for [${parameters}]. Required hooks have not yet been executed! Please make sure to run `Options::get()` after the `acf/init` action is finished.", E_USER_WARNING);
+            trigger_error("Could not get option/s for [{$parameters}]. Required hooks have not yet been executed! Please make sure to run `Options::get()` after the `acf/init` action is finished.", E_USER_WARNING);
             return false;
         }
         return true;
