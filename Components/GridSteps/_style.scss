@@ -1,0 +1,13 @@
+flynt-component[name='GridSteps'] {
+  .steps {
+    @apply list-none p-0 m-0;
+  }
+
+  .steps-number {
+    @apply flex shrink-0 items-center justify-center rounded-full bg-forest text-white;
+    font-family: var(--primary-font-family, sans-serif);
+    font-weight: 700;
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+}
