@@ -1,3 +1,3 @@
-# Navigation Main Logo
+# NavigationMainLogo
 
-A simple navigation to be displayed on desktop viewport sizes. Needs to be used in conjuction with a mobile navigation component, or adjusted to show up on all viewport sizes.
+Round logo badge in the centre of the sticky desktop header, between NavigationMainLeft and NavigationMainRight (menus + "Mitmachen" CTA). The logo is set in the Customizer (custom_header_logo); the SVG in Assets/ is only a fallback.

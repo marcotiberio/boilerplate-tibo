@@ -1,5 +1,5 @@
-<flynt-component load:on="idle" name="NavigationMainLogo" class="w-[255px] h-auto flex justify-center items-center">
-  <a class="logo" href="{{ site.link }}">
-    <img class="logo-image" src="{{ logo.src }}" alt="{{ logo.alt }}">
+<flynt-component name="NavigationMainLogo" class="navigationMainLogo absolute left-1/2 top-xs -translate-x-1/2 z-20">
+  <a class="logo flex items-center justify-center rounded-full bg-white" href="{{ site.link|e('esc_url') }}" aria-label="{{ logo.alt|e('html_attr') }} – {{ __('Home', 'flynt')|e('html_attr') }}">
+    <img class="logo-image w-full h-full object-contain" src="{{ logo.src|e('html_attr') }}" alt="{{ logo.alt|e('html_attr') }}">
   </a>
 </flynt-component>

@@ -10,22 +10,17 @@
     {% block layout %}
       <div 
         class="pageWrapper">
-        <header class="w-full">
+        <header class="siteHeader w-full sticky z-[3000] bg-white text-ink">
           {% block header %}
-            <div class="wrapper wrapper--menu flex justify-center items-center w-full h-[87px] lg:h-auto fixed top-0 left-0 z-[3000] transition ease-in-out delay-300">
-              <div class="hidden lg:block w-full boxed !max-w-screen-box mx-aut bg-white">
-                <div class="boxed !p-0 flex flex-row justify-between gap-sm">
-                  {{ renderComponent('NavigationMainLeft') }}
-                  {{ renderComponent('NavigationMainLogo') }}
-                  {{ renderComponent('NavigationMainRight') }}
-                </div>
+            <div class="hidden lg:block">
+              <div class="content relative flex flex-row items-center justify-between h-[94px]">
+                {{ renderComponent('NavigationMainLeft') }}
+                {{ renderComponent('NavigationMainLogo') }}
+                {{ renderComponent('NavigationMainRight') }}
               </div>
-              <div class="block lg:hidden w-screen fixed top-0 left-0">
-                {{ renderComponent('NavigationBurger') }}
-              </div>
-              {# <div class="boxed flex flex-row justify-between gap-sm">
-                {{ renderComponent('NavigationMain') }}
-              </div> #}
+            </div>
+            <div class="block lg:hidden">
+              {{ renderComponent('NavigationBurger') }}
             </div>
           {% endblock %}
         </header>

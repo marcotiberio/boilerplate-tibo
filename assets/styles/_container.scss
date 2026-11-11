@@ -148,3 +148,8 @@ flynt-component {
     clip-path: polygon(0 0, 0 100%, 90% 100%, 100% 90%, 100% 0);
   }
 }
+
+// Sticky header sits below the WP admin bar when logged in
+.siteHeader {
+  top: var(--wp-admin--admin-bar--height, 0);
+}

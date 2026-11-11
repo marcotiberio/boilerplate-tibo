@@ -21,10 +21,4 @@ flynt-component[name='NavigationMainRight'] {
     top: 40px;
     width: fit-content;
   }
-
-  .button {
-    @screen desktop {
-      font-size: 1.25rem;
-    }
-  }
 }
