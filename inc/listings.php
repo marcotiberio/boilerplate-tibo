@@ -27,7 +27,8 @@ function getFilterGroup($taxonomy, $key, $label)
         'terms' => array_map(function ($term) {
             return [
                 'slug' => $term->slug,
-                'name' => $term->name,
+                // Term names are stored HTML-escaped; Twig escapes on output.
+                'name' => wp_specialchars_decode($term->name, ENT_QUOTES),
             ];
         }, $terms),
     ];
@@ -47,7 +48,9 @@ function getPostTerms($postId, $taxonomy)
 
     return [
         'slugs' => wp_list_pluck($terms, 'slug'),
-        'names' => wp_list_pluck($terms, 'name'),
+        'names' => array_map(function ($name) {
+            return wp_specialchars_decode($name, ENT_QUOTES);
+        }, wp_list_pluck($terms, 'name')),
     ];
 }
 
