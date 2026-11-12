@@ -9,6 +9,7 @@
     {{ function('wp_head') }}
   </head>
   <body>
+    {{ function('wp_body_open') }}
     {% block layout %}
       {# Fixed background grid lines — 5 on mobile, 7 on desktop, aligned to the .boxed container #}
       <div class="backgroundLines" aria-hidden="true">
