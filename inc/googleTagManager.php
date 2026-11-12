@@ -4,7 +4,8 @@
  * Google Tag Manager with Consent Mode v2.
  *
  * GTM loads on every page, but Google tags start with all consent "denied".
- * The cookie banner (Complianz) sends the consent update once the visitor chooses.
+ * Complianz's banner events are turned into consent updates here, because Complianz
+ * only does that itself when it inserts GTM (set to "No" in its wizard).
  */
 
 namespace Flynt\GoogleTagManager;
@@ -74,11 +75,34 @@ gtag('consent', 'default', {
   ad_user_data: 'denied',
   ad_personalization: 'denied',
   analytics_storage: 'denied',
+  personalization_storage: 'denied',
   functionality_storage: 'granted',
   security_storage: 'granted',
   wait_for_update: 500
 });
 gtag('set', 'ads_data_redaction', true);
+
+// Complianz only sends consent updates from its own GTM snippet, which is off.
+// Mirror its consent-mode logic: map banner categories to Google consent types.
+function jgiConsentUpdate(categories) {
+  var has = function (category) { return categories.indexOf(category) !== -1 ? 'granted' : 'denied'; };
+  var marketing = has('marketing');
+  gtag('consent', 'update', {
+    ad_storage: marketing,
+    ad_user_data: marketing,
+    ad_personalization: marketing,
+    analytics_storage: has('statistics'),
+    personalization_storage: has('preferences'),
+    functionality_storage: 'granted',
+    security_storage: 'granted'
+  });
+}
+document.addEventListener('cmplz_fire_categories', function (e) {
+  jgiConsentUpdate((e.detail && e.detail.categories) || []);
+});
+document.addEventListener('cmplz_revoke', function () {
+  jgiConsentUpdate([]);
+});
 </script>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
