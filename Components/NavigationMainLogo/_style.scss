@@ -1,9 +1,13 @@
 // Round logo badge centred in the header; overlaps the hero below
 flynt-component[name='NavigationMainLogo'] {
   .logo {
-    box-shadow: 0 0 0 6px var(--white);
-    height: 7.8rem;
-    padding: 0.75rem;
-    width: 7.8rem;
+    height: 6.8rem;
+    padding: 0.1rem;
+    width: 6.8rem;
+  }
+
+  // The uploaded logo has built-in margin; scale it up to tighten the white rim
+  .logo-image {
+    transform: scale(1.1);
   }
 }

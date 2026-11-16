@@ -1,4 +1,4 @@
-const domain = 'localhost:10130'
+const domain = 'circular-black-forest.ddev.site'
 const dest = './dist'
 
 const host = `https://${domain}`
