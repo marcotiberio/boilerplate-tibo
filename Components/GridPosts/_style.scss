@@ -1,0 +1,22 @@
+flynt-component[name='GridPosts'] {
+  // Same card surface as SliderCards (shared Partials/_card.twig).
+  .card {
+    background-color: theme('colors.moss');
+
+    &:hover {
+      background-color: theme('colors.jungle');
+    }
+  }
+
+  .pagination-link {
+    @apply flex h-11 min-w-14 items-center justify-center rounded-cta bg-beige px-xs text-dark-green no-underline transition-colors;
+
+    &.is-current {
+      @apply bg-dark-green text-white;
+    }
+  }
+
+  a.pagination-link:hover {
+    @apply bg-[#DECBB7];
+  }
+}

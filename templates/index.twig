@@ -8,6 +8,6 @@
       {{ renderComponent(component) }}
     {% endfor %}
   {% else %}
-    {{ renderComponent('GridPostsArchive', { posts: posts }) }}
+    {{ renderComponent('GridPosts', { posts: posts }) }}
   {% endif %}
 {% endblock %}

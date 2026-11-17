@@ -53,7 +53,7 @@ function registerChimpanzeePostType()
         'show_in_admin_bar'     => true,
         'show_in_nav_menus'     => true,
         'can_export'            => true,
-        'has_archive'           => true,
+        'has_archive'           => false, // Overview is a normal page (/patenschaft/)
         'exclude_from_search'   => false,
         'publicly_queryable'    => true,
         'show_in_rest'          => true,
@@ -64,6 +64,30 @@ function registerChimpanzeePostType()
 }
 
 add_action('init', '\\Flynt\\CustomPostTypes\\registerChimpanzeePostType');
+
+/**
+ * The old /chimpanzee/ archive is gone: send it to the sponsorship page.
+ */
+add_action('template_redirect', function () {
+    $path = trim((string) wp_parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH), '/');
+    if ($path !== 'chimpanzee') {
+        return;
+    }
+    $page = get_page_by_path('patenschaft');
+    wp_safe_redirect($page ? get_permalink($page) : home_url('/'), 301);
+    exit;
+});
+
+/**
+ * Flush rewrite rules once after the archive was turned off.
+ */
+add_action('init', function () {
+    if (get_option('jgi_chimpanzee_rewrite') === 'no-archive') {
+        return;
+    }
+    flush_rewrite_rules(false);
+    update_option('jgi_chimpanzee_rewrite', 'no-archive');
+}, 20);
 
 /**
  * Force the classic editor for the Chimpanzee CPT (keeps REST enabled for ACF).

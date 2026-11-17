@@ -104,24 +104,35 @@ function getPostCards($postType, $postCount)
     }
 
     foreach ($posts as $post) {
-        $thumbnail = get_the_post_thumbnail_url($post->ID, 'medium_large');
-        $excerpt = $post->post_excerpt ?: $post->post_content;
-
-        $cards[] = [
-            'image' => [
-                'src' => $thumbnail ?: '',
-                'alt' => $post->title,
-            ],
-            'title' => $post->title,
-            'excerpt' => truncateAtSentence($excerpt),
-            'link' => [
-                'url' => $post->link,
-                'title' => __('Mehr lesen', 'flynt'),
-            ],
-        ];
+        $cards[] = postToCard($post);
     }
 
     return $cards;
+}
+
+/**
+ * Card data for one article. Shared with GridPosts (the news overview).
+ *
+ * @param \Timber\Post $post
+ * @return array
+ */
+function postToCard($post)
+{
+    $thumbnail = get_the_post_thumbnail_url($post->ID, 'medium_large');
+    $excerpt = $post->post_excerpt ?: $post->post_content;
+
+    return [
+        'image' => [
+            'src' => $thumbnail ?: '',
+            'alt' => $post->title,
+        ],
+        'title' => $post->title,
+        'excerpt' => truncateAtSentence($excerpt),
+        'link' => [
+            'url' => $post->link,
+            'title' => __('Mehr lesen', 'flynt'),
+        ],
+    ];
 }
 
 /**
