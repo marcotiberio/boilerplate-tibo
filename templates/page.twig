@@ -1,7 +1,14 @@
 {% extends 'templates/_document.twig' %}
 
 {% block content %}
-  {% for component in post.meta('pageComponents') %}
+  {% set components = post.meta('pageComponents') %}
+
+  {# Pages that don't open with a hero would start under the fixed nav: push the first module down. #}
+  {% if components and (components|first).acf_fc_layout != 'BlockHero' %}
+    <div class="pt-lg desktop:pt-xl" aria-hidden="true"></div>
+  {% endif %}
+
+  {% for component in components %}
     {{ renderComponent(component) }}
   {% endfor %}
 {% endblock %}

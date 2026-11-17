@@ -1,7 +1,8 @@
 <flynt-component name="GridPosts" class="w-full">
-  <div class="boxed pt-xxl lg:pt-max flex flex-col gap-lg">
+  <div class="boxed{% if isArchive %} pt-xxl lg:pt-max{% endif %} flex flex-col gap-lg">
     {% if title %}
-      <h1 class="font-h1 text-dark-brown">{{ title }}</h1>
+      {% set tag = titleTag|default('h2') %}
+      <{{ tag }} class="font-{{ titleSize|default('h2') }} text-dark-brown">{{ title }}</{{ tag }}>
     {% endif %}
 
     {% if cards %}

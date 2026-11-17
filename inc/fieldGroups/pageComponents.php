@@ -70,6 +70,7 @@ add_action('Flynt/afterRegisterComponents', function () {
                     Components\BlockIcons\getACFLayout(),
                     Components\BlockGallery\getACFLayout(),
                     Components\SliderCards\getACFLayout(),
+                    Components\GridPosts\getACFLayout(),
                     Components\SliderImages\getACFLayout(),
                     Components\BlockMediaQuote\getACFLayout(),
                     Components\BlockDonationForm\getACFLayout(),
