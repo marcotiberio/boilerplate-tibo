@@ -65,6 +65,13 @@ function getACFLayout()
                 'new_lines' => '',
                 'required' => 0,
             ],
+            [
+                'label' => __('Author', 'flynt'),
+                'instructions' => __('Optional. Shown below the quote at eyebrow size.', 'flynt'),
+                'name' => 'author',
+                'type' => 'text',
+                'required' => 0,
+            ],
         ]
     ];
 }

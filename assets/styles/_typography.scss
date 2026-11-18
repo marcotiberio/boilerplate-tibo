@@ -35,6 +35,8 @@ blockquote,
 // Long German compounds (e.g. "Schimpansenschutzgebiet") don't fit a phone
 // line at heading sizes and get clipped. Below lg, hyphenate per the page
 // language and, as a last resort, break the word instead of overflowing.
+// `anywhere` (not `break-word`) also shrinks the min-content width, so a
+// heading inside a centred flex item can't push its box past the screen.
 h1,
 .h1,
 .font-h1,
@@ -54,7 +56,7 @@ h6,
 .h6,
 .font-h6 {
   hyphens: auto;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 
   @screen lg {
     hyphens: manual;

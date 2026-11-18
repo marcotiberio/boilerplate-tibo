@@ -40,37 +40,38 @@
   {# Overlay between media and text for legibility #}
   <div class="absolute inset-0 z-[5] bg-[#000]/80 pointer-events-none"></div>
 
-  {# Sound + play / pause controls (only when a video is set) #}
+  {# Sound + play / pause controls (only when a video is set). Top-right so
+     they don't cover subtitles burned into the bottom of the video. #}
   {% if video.url %}
-    <div class="absolute right-sm bottom-sm z-20 flex gap-min lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2">
+    <div class="absolute right-xs top-xs z-20 flex gap-min lg:right-sm lg:top-1/2 lg:-translate-y-1/2">
       <button
         type="button"
-        class="flex items-center justify-center w-14 h-11 rounded-cta bg-off-white/20 backdrop-blur-sm text-off-white transition-colors hover:bg-off-white/30"
+        class="flex items-center justify-center w-11 h-9 rounded-cta bg-off-white/20 backdrop-blur-sm text-off-white transition-colors hover:bg-off-white/30"
         @click="muted = !muted; $refs.video.muted = muted; if (!muted && !playing) { $refs.video.play(); playing = true }"
         :aria-label="muted ? '{{ __('Unmute video', 'flynt') }}' : '{{ __('Mute video', 'flynt') }}'">
         {# Muted icon #}
-        <svg x-show="muted" class="w-4 h-4" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <svg x-show="muted" class="w-3 h-3" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path d="M1 5h2.5L7 2v10L3.5 9H1Z" fill="currentColor" />
           <path d="m9.5 5 3.5 4m0-4-3.5 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
         </svg>
         {# Sound icon #}
-        <svg x-show="!muted" x-cloak class="w-4 h-4" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <svg x-show="!muted" x-cloak class="w-3 h-3" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path d="M1 5h2.5L7 2v10L3.5 9H1Z" fill="currentColor" />
           <path d="M9.5 4.5a3.5 3.5 0 0 1 0 5M11.25 2.5a6.5 6.5 0 0 1 0 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
         </svg>
       </button>
       <button
         type="button"
-        class="flex items-center justify-center w-14 h-11 rounded-cta bg-off-white/20 backdrop-blur-sm text-off-white transition-colors hover:bg-off-white/30"
+        class="flex items-center justify-center w-11 h-9 rounded-cta bg-off-white/20 backdrop-blur-sm text-off-white transition-colors hover:bg-off-white/30"
         @click="playing ? $refs.video.pause() : $refs.video.play(); playing = !playing"
         :aria-label="playing ? '{{ __('Pause video', 'flynt') }}' : '{{ __('Play video', 'flynt') }}'">
         {# Pause icon #}
-        <svg x-show="playing" class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+        <svg x-show="playing" class="w-3 h-3" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
           <rect x="2.2" y="0.2" width="3" height="14" rx="1" />
           <rect x="9.2" y="0.2" width="3" height="14" rx="1" />
         </svg>
         {# Play icon #}
-        <svg x-show="!playing" x-cloak class="w-4 h-4" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+        <svg x-show="!playing" x-cloak class="w-3 h-3" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
           <path d="M2 1.2 12.5 7 2 12.8Z" />
         </svg>
       </button>
@@ -80,8 +81,13 @@
   {# Quote #}
   <div class="relative z-10 boxed min-h-screen flex items-center justify-center text-center">
     {% if highlight or quote %}
-      <div class="font-h2 max-w-screen-tablet">
-        {% if highlight %}<span class="text-off-white">{{ highlight }} </span>{% endif %}{% if quote %}<span data-ref="quoteFill" class="text-off-white/30">{{ quote }}</span>{% endif %}
+      <div class="flex flex-col items-center gap-sm w-full max-w-screen-tablet">
+        <div class="font-h2">
+          {% if highlight %}<span class="text-off-white">{{ highlight }} </span>{% endif %}{% if quote %}<span data-ref="quoteFill" class="text-off-white/30">{{ quote }}</span>{% endif %}
+        </div>
+        {% if author %}
+          <p class="font-body text-off-white opacity-90">{{ author }}</p>
+        {% endif %}
       </div>
     {% endif %}
   </div>

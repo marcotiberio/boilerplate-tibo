@@ -8,13 +8,14 @@
   <div class="boxed">
     {% if title %}
       {% set tag = titleTag|default('h2') %}
-      <{{ tag }} class="font-{{ titleSize|default('h2') }} text-dark-green mb-xl">{{ title }}</{{ tag }}>
+      <{{ tag }} class="font-{{ titleSize|default('h2') }} text-dark-green mb-xl text-center sm:text-left">{{ title }}</{{ tag }}>
     {% endif %}
 
     {% if items %}
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-lg gap-y-xl">
         {% for item in items %}
-          <div class="flex h-full flex-col gap-sm">
+          {# Centred while the grid is a single column (mobile) #}
+          <div class="flex h-full flex-col items-center gap-sm text-center sm:items-start sm:text-left">
             {% if item.icon %}
               <img
                 class="h-14 w-14 object-contain"
@@ -23,8 +24,8 @@
                 loading="lazy">
             {% endif %}
 
-            <div class="flex flex-1 flex-col items-start justify-between gap-4">
-              <div class="flex flex-col items-start gap-4">
+            <div class="flex flex-1 flex-col items-center justify-between gap-4 sm:items-start">
+              <div class="flex flex-col items-center gap-4 sm:items-start">
                 {% if item.title %}
                   <h3 class="font-{{ titleStyle|default('h2') }} text-black">{{ item.title }}</h3>
                 {% endif %}
