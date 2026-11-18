@@ -60,7 +60,7 @@ function hasDesktopOverflow($cardCount, $slidesDesktop)
  * @param int $maxLength
  * @return string
  */
-function truncateAtSentence($text, $maxLength = 150)
+function truncateAtSentence($text, $maxLength = 250)
 {
     $text = trim(wp_strip_all_tags((string) $text));
 
@@ -382,6 +382,7 @@ function getACFLayout()
                     ],
                     [
                         'label' => __('Excerpt', 'flynt'),
+                        'instructions' => __('Up to 250 characters are shown, cut at the last full sentence. Longer text is hidden on the card.', 'flynt'),
                         'name' => 'excerpt',
                         'type' => 'textarea',
                         'rows' => 3,
