@@ -40,4 +40,24 @@ flynt-component[name='BlockBannerCta'] {
       @apply text-dark-green;
     }
   }
+
+  // Light banners (beige / off-white). The card and glass variants are built
+  // for dark surfaces: their hover turns the label white over a faint white
+  // fill, so on beige the label disappears. Here both rest on the
+  // light-surface chip and bloom to solid white with dark-green text.
+  .is-light .button--glass {
+    @apply text-dark-green;
+    backdrop-filter: none;
+    background-color: rgb(28 25 24 / 5%); // dark-brown @ 5%, as .button--card
+  }
+
+  .is-light .button--card,
+  .is-light .button--glass {
+    --button-hover-fill: theme('colors.off-white');
+
+    &:hover,
+    &:focus-visible {
+      @apply text-dark-green;
+    }
+  }
 }

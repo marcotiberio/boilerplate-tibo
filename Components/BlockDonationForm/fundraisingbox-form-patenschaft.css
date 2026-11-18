@@ -257,6 +257,12 @@ body,
   padding: 2px;
 }
 
+/* Selected radio option: label goes from the muted caption colour to
+   dark-brown, so the choice reads as active (&why feedback, Nov 2026). */
+#fbPaymentForm .radio input[type='radio']:checked + label {
+  color: var(--jgi-dark-brown);
+}
+
 /* "Als Unternehmen spenden" switch — Figma has no switch, so it borrows the
    selection colour of the radios. */
 #fbPaymentForm .toggle {

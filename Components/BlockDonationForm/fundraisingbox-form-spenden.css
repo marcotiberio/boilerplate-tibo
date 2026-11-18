@@ -270,6 +270,13 @@ body,
   border-color: var(--jgi-white);
 }
 
+/* Selected radio option: label goes from the muted caption colour to
+   full white on this dark card, so the choice reads as active
+   (&why feedback, Nov 2026). */
+#fbPaymentForm .radio input[type='radio']:checked + label {
+  color: var(--jgi-white);
+}
+
 /* "Als Unternehmen spenden" switch — Figma has no switch, so it borrows the
    moss accent of the CTA. */
 #fbPaymentForm .toggle {

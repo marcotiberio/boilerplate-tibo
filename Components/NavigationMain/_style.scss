@@ -1,16 +1,31 @@
 flynt-component[name='NavigationMain'] {
-  // Nav links — muted at rest, full dark-green on hover / current page.
-  // Same treatment for top-level items and submenu children.
+  // Nav links — same colours as the mobile menu for contrast: top level
+  // dark-green, submenu dark-brown. Hover and open turn leaf green
+  // (per &why's nav mock).
   .item > .link {
-    @apply text-dark-green/60 transition-colors;
+    @apply text-dark-green transition-colors;
 
     &:hover {
-      @apply text-dark-green;
+      @apply text-leaf;
+    }
+  }
+
+  // Parent stays green while its submenu is open (mouse or keyboard).
+  .item:hover > .link,
+  .item:has(> .submenu-toggle[aria-expanded='true']) > .link {
+    @apply text-leaf;
+  }
+
+  .submenu .item > .link {
+    @apply text-dark-brown;
+
+    &:hover {
+      @apply text-leaf;
     }
   }
 
   .menu > .item.current-menu-item > .link {
-    @apply text-dark-green underline underline-offset-4;
+    @apply underline underline-offset-4;
   }
 
   .submenu {
@@ -36,19 +51,17 @@ flynt-component[name='NavigationMain'] {
   }
 
   // Down chevron next to dropdown items — marks the submenu and toggles it.
-  // Follows the link colour: muted at rest, full while the item is hovered,
-  // open or current.
+  // Follows the parent link: dark-green at rest, leaf while hovered or open.
   .submenu-toggle {
-    @apply text-dark-green/60 transition-colors;
+    @apply text-dark-green transition-colors;
     align-items: center;
     display: flex;
     padding: 2px;
   }
 
   .item:hover > .submenu-toggle,
-  .submenu-toggle[aria-expanded='true'],
-  .item.current-menu-item > .submenu-toggle {
-    @apply text-dark-green;
+  .submenu-toggle[aria-expanded='true'] {
+    @apply text-leaf;
   }
 
   // CTA buttons

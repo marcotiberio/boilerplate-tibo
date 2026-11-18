@@ -15,7 +15,8 @@
   load:on="idle"
   name="BlockBannerCta"
   class="w-full">
-  <div class="boxed">
+  {# is-light / is-dark lets button variants adapt to the banner surface #}
+  <div class="boxed {{ isDark ? 'is-dark' : 'is-light' }}">
     {% if layout == 'split' %}
 
       {# Split — title and body side by side on desktop, icon badge top-right #}

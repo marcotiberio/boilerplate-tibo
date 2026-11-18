@@ -33,6 +33,7 @@ module.exports = {
       'dark-green': '#113328',    // dark-green
       jungle: '#294a3e',          // green
       moss: '#d2e8c3',            // moss
+      leaf: '#2c6b4b',            // nav hover/open green — sampled from &why's nav mock (Nov 2026), not in theme.json
       beige: '#f0e6d9',           // beige
       'warmer-beige': '#f2e3d3',  // warmerbeige (info/caption pills)
       'off-white': '#fcfbfa',     // white
