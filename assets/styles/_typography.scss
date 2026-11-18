@@ -32,26 +32,36 @@ blockquote,
   }
 }
 
-h1 .h1 .font-h1,
-h2 .h2 .font-h2,
-h3 .h3 .font-h3,
-h4 .h4 .font-h4,
-h5 .h5 .font-h5,
-h6 .h6 .font-h6 {
+// Long German compounds (e.g. "Schimpansenschutzgebiet") don't fit a phone
+// line at heading sizes and get clipped. Below lg, hyphenate per the page
+// language and, as a last resort, break the word instead of overflowing.
+h1,
+.h1,
+.font-h1,
+h2,
+.h2,
+.font-h2,
+h3,
+.h3,
+.font-h3,
+h4,
+.h4,
+.font-h4,
+h5,
+.h5,
+.font-h5,
+h6,
+.h6,
+.font-h6 {
   hyphens: auto;
+  overflow-wrap: break-word;
+
+  @screen lg {
+    hyphens: manual;
+  }
 }
 
 .wysiwyg {
-  h1 .h1 .font-h1,
-  h2 .h2 .font-h2,
-  h3 .h3 .font-h3,
-  h4 .h4 .font-h4,
-  h5 .h5 .font-h5,
-  h6 .h6 .font-h6 {
-    hyphens: auto;
-    margin-bottom: 1rem;
-  }
-
   button {
     text-decoration: none;
   }
