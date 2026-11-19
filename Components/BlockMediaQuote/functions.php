@@ -67,7 +67,7 @@ function getACFLayout()
             ],
             [
                 'label' => __('Author', 'flynt'),
-                'instructions' => __('Optional. Shown below the quote at eyebrow size.', 'flynt'),
+                'instructions' => __('Optional. Shown above the quote at eyebrow size.', 'flynt'),
                 'name' => 'author',
                 'type' => 'text',
                 'required' => 0,

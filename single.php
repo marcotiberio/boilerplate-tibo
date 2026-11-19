@@ -12,4 +12,9 @@ if (!$newsPageId) {
 }
 $context['newsUrl'] = $newsPageId ? get_permalink($newsPageId) : '';
 
+// Roots & Shoots group articles are reached from the groups page, not the news list.
+if (has_category('root-shoots')) {
+    $context['newsUrl'] = '';
+}
+
 Timber::render('templates/single.twig', $context);

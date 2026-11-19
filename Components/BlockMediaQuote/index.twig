@@ -82,12 +82,12 @@
   <div class="relative z-10 boxed min-h-screen flex items-center justify-center text-center">
     {% if highlight or quote %}
       <div class="flex flex-col items-center gap-sm w-full max-w-screen-tablet">
-        <div class="font-h2">
-          {% if highlight %}<span class="text-off-white">{{ highlight }} </span>{% endif %}{% if quote %}<span data-ref="quoteFill" class="text-off-white/30">{{ quote }}</span>{% endif %}
-        </div>
         {% if author %}
           <p class="font-body text-off-white opacity-90">{{ author }}</p>
         {% endif %}
+        <div class="font-h2">
+          {% if highlight %}<span class="text-off-white">{{ highlight }} </span>{% endif %}{% if quote %}<span data-ref="quoteFill" class="text-off-white/30">{{ quote }}</span>{% endif %}
+        </div>
       </div>
     {% endif %}
   </div>
